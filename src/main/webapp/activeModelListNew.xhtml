@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+ <h:body>
+ <ui:composition template="/WEB-INF/facelets/template.xhtml">
+ <ui:param name="page" value="activeModelList" />
+ <ui:define name="title">Environmet Details
+ <div class="card">
+ <h:form id="form">
+		        
+		   
+			    
+			    <p:toolbar>
+		            <f:facet name="left">
+		                <h:outputText style="font-size:10px;" value="Environmet Details" />
+		            </f:facet>
+		            <f:facet name="right">
+		                <h:outputText value="Export  : " style="font-size:10px;" />
+		                 <h:commandLink style="font-size:10px;" value=" Environmet Details" styleClass="ui-rad-link-horizontal rad-ui-icon-tlb-excel">
+		                             
+		                   <p:dataExporter type="csv" target=":form:title" fileName="Environmet Details"/>
+		                 </h:commandLink>
+		            </f:facet>
+		        </p:toolbar>
+		        
+					<p:dataTable  id="title" style="font-size:8px;"  var="product" widgetVar="wvDtSearchOUGroups" value="#{activeModelListServiceNew.active}" 
+                         rowIndexVar="riLdGrp"
+                         paginator="true" rows="20" rowsPerPageTemplate="5,10,15,20,30,50,100" paginatorPosition="bottom"
+                         emptyMessage="No Data">
+                         
+		
+				      <p:column  headerText="Dataset Id" sortBy="#{product.datasetId}" filterBy="#{product.datasetId}" filterMatchMode="contains">
+			                   <h:outputText value="#{product.datasetId}"/>
+	                  </p:column>
+						
+					  <p:column headerText="Server Host" sortBy="#{product.serverHost}" filterBy="#{product.serverHost}" filterMatchMode="contains">
+			                    <h:outputText value="#{product.serverHost}"/>
+			          </p:column>   
+			          
+			          <p:column   headerText="Server Port" sortBy="#{product.serverPort}" filterBy="#{product.serverPort}" filterMatchMode="contains">
+			                    <h:outputText value="#{product.serverPort}"/>
+			          </p:column>
+			          
+			          <p:column   headerText="Model Name" sortBy="#{product.modelName}" filterBy="#{product.modelName}" filterMatchMode="contains">
+			                    <h:outputText value="#{product.modelName}"/>
+			          </p:column>
+			          
+			          <p:column   headerText="Model Register Env" sortBy="#{product.model_register_env}" filterBy="#{product.model_register_env}" filterMatchMode="contains">
+			                    <h:outputText value="#{product.model_register_env}"/>
+			          </p:column>
+			          
+			           <p:column  headerText="Source DB" sortBy="#{product.source_db}" filterBy="#{product.source_db}" filterMatchMode="contains">
+			                    <h:outputText value="#{product.source_db}"/>
+			          </p:column>
+			          
+			            <p:column  headerText="Unify Groups" sortBy="#{product.unify_groups}" filterBy="#{product.unify_groups}" filterMatchMode="contains">
+			                    <h:outputText value="#{product.unify_groups}"/>
+			          </p:column>
+					
+			    </p:dataTable>
+			    
+</h:form>
+</div>
+</ui:define>
+</ui:composition>
+</h:body>
+</html>
+

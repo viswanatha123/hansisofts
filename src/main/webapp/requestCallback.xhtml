@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+       <h:body>
+
+        
+  <ui:composition template="/WEB-INF/facelets/requestCallBackTemplate.xhtml">
+  <ui:param name="page" value="Request call Back" />
+  <ui:define name="title" >
+  <div class="card">
+  <h:form id="form">
+    
+  
+  							<table width="100%" style="background: #43C6DB;">
+  									<br></br><br></br>
+													<center>
+													<h:outputText style="font-weight: bold; font-size: 35px;color:white; text-align:left;" value="Book Your Plot Now" />
+													</center>
+												   		<tr>
+									                    <th><h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" /></th>
+									                    <th><h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" /></th>
+									                    </tr>
+														<tr>
+															<th style="text-align:center;">
+		                        					 	   		<h:outputText style="font-weight: bold; font-size: 18px;color:white;" value="Name : " />
+		                        					 	   </th>
+		                        					 	   <th>
+										                       <h:inputText id="name"  style="width:400px;height:30px;" value="#{requestCallBackService.name}" required="true" requiredMessage="Name is required">
+										                       </h:inputText>
+									                       </th>
+									                    </tr>
+									                    
+									                    <tr>
+									                    <th><h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" /></th>
+									                    <th><h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" /></th>
+									                    </tr>
+									                    
+									                    <tr>
+									                    	<th style="text-align:center;">
+									                    		<h:outputText style="font-weight: bold; font-size: 18px;color:white; text-align:left;" value="Email : " />
+									                    	</th>
+									                    	<th>
+									                    		<h:inputText id="email"  style="width:400px;height:30px;" value="#{requestCallBackService.email}" required="true" requiredMessage="Email is required">
+									                    		</h:inputText> 
+									                    	</th>
+									                    </tr>
+									                    
+									                    
+									                    <tr>
+									                    <th><h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" /></th>
+									                    <th><h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" /></th>
+									                    </tr>
+									                    
+									                    
+									                    <tr>
+									                    	<th style="text-align:center;">
+									                    		<h:outputText style="font-weight: bold; font-size: 18px;color:white; text-align:left; " value="Phone : " />
+									                    	</th>
+									                    	<th>
+									                   			<h:inputText id="phone"  style="width:400px;height:30px;" value="#{requestCallBackService.phone}" required="true" requiredMessage="Phone is required">
+									                    		</h:inputText>
+									                    	</th>
+									                    </tr>
+									                    
+									                    
+									  					<tr>
+									                    <th><h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" /></th>
+									                    <th><h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" /></th>
+									                    </tr>
+									  
+									  
+							             				
+							             				<tr>
+							             					<th style="text-align:center;">
+								                				<h:commandButton value="Submit" action="#{requestCallBackService.submitEnquiry}" >
+																</h:commandButton>
+															</th>
+										                    
+										                    <th> 
+											                   <h:commandButton id="discardChangesButton"
+												                                   process="@this"
+												                                   value="Clear"
+											                                           update="@form"
+												                                   action="#{requestCallBackService.clear()}" >
+												                                   
+												                   <p:resetInput target="form"/>
+												              </h:commandButton>
+											              </th>
+										              </tr>
+										              <tr>
+									                    <th><h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" /></th>
+									                    <th><h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" /></th>
+									                    </tr>
+										         </table>
+  
+ </h:form>
+</div>
+</ui:define>
+</ui:composition>
+</h:body>
+</html>

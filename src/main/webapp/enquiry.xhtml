@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+       <h:body>
+
+        
+  <ui:composition template="/WEB-INF/facelets/template.xhtml">
+  <ui:param name="page" value="Layout Details" />
+  <ui:define name="title">Enquiry
+  <div class="card">
+  <h:form id="form">
+  <br></br>
+  
+  			<center>
+  			  <p:panel  style="background: #800000;width:50%; height:300px;font-size: 15px" >
+		            <br></br><br></br>
+		             <h:outputText style="font-weight: bold; font-size: 14px;color:white; text-align:left;" value="Please provide your contact details. " />
+		             <h:outputText style="font-weight: bold; font-size: 14px;color:white; text-align:left;" value="We will contact you soon. " />
+		             <br></br><br></br>
+		             
+		                <h:panelGrid columns="2" cellpadding="5" style="width: 50;"> 
+		                      <h:outputText style="font-weight: bold; font-size: 14px;color:white; text-align:left;" value="Name : " />
+		                      <h:inputText id="name"  value="#{enquiryService.name}" required="true" requiredMessage="Name is required">
+		                      </h:inputText>
+		                    
+		                    <h:outputText style="font-weight: bold; font-size: 14px;color:white; text-align:left;" value="Email : " />
+		                    <h:inputText id="email"  value="#{enquiryService.email}" required="true" requiredMessage="Email is required">
+		                    </h:inputText> 
+		                    
+		                    
+		                    <h:outputText style="font-weight: bold; font-size: 14px;color:white; text-align:left; " value="Phone : " />
+		                    <h:inputText id="phone"  value="#{enquiryService.phone}" required="true" requiredMessage="Phone is required">
+		                    </h:inputText>
+		                    
+		                    <h:outputText style="font-weight: bold; font-size: 14px;color:#800000; text-align:left;" value="space" />
+		                    <h:outputText style="font-weight: bold; font-size: 14px;color:#800000; text-align:left;" value="space" />
+		                    
+		   				<h:outputText/>
+		   				<h:outputText/>
+             
+		                		<h:commandButton value="Submit" action="#{enquiryService.submitEnquiry}" >
+								</h:commandButton>
+				
+				                    
+				                     
+				                   <h:commandButton id="discardChangesButton"
+					                                   process="@this"
+					                                   value="Clear"
+				                                           update="@form"
+					                                   action="#{enquiryService.clear()}" >
+					                                   
+					                   <p:resetInput target="form"/>
+					              </h:commandButton>
+		                    
+		                 
+               			</h:panelGrid>                    
+              </p:panel>
+  
+			</center>
+  
+ </h:form>
+</div>
+</ui:define>
+</ui:composition>
+</h:body>
+</html>
+      

@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+       <h:body>
+
+        
+  <ui:composition template="/WEB-INF/facelets/template.xhtml">
+  <ui:param name="page" value="Layout Details" />
+  <ui:define name="title">Sales for Individual Site
+  <div class="card">
+  <h:form id="form">
+  <br></br>
+  
+   <p:panel  style="background: #800000;width: 100%; height:50px;font-size: 15px">   
+              
+                        <h:panelGrid columns="5" cellpadding="5" style="width: 100%;">  
+                            <p:outputLabel for="country" style="font-weight: bold; color:white" value="Primary Location : " />  
+                        
+                            <p:selectOneMenu id="country" value="#{individualSiteService.country}" style="width:200px">  
+                            <p:ajax listener="#{individualSiteService.onCountryChange}" update="city" />  
+                            <f:selectItem itemLabel="Select Primary Location" itemValue="" noSelectionOption="true" />  
+                            <f:selectItems value="#{individualSiteService.countries}" />  
+                            </p:selectOneMenu> 
+                        
+                            <p:outputLabel for="city" style="font-weight: bold; color:white" value="Secondry Location : " />  
+                            <p:selectOneMenu id="city" value="#{individualSiteService.city}" style="width:200px">  
+                            <f:selectItem itemLabel="Select Secondry Location" itemValue="" noSelectionOption="true" />  
+                            <f:selectItems value="#{individualSiteService.cities}" />  
+                            </p:selectOneMenu> 
+                            
+                            <h:commandButton value="Search"  type="submit"  actionListener="#{individualSiteService.displayLocation}" />
+                        </h:panelGrid>  
+
+           </p:panel>
+           
+           
+           <p:dataScroller value="#{individualSiteService.individualSiteList}" var="product" chunkSize="10">
+                  <p:panel  style="background-image: url('ackGroundGlass.png'); width: 100%; height:340px; box-shadow: 10px 10px 5px grey; " >
+                  
+                  			<h:panelGrid   columns="3" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
+                  				<h:outputText style="font-weight: bold;color: green;font-size:15px;" value="Owner Name  : #{product.ownerName}" />
+                  				<h:outputText style="font-weight: bold;color: block; font-size:15px; float:right" value="Cost : Negotiation" />
+                  				<h:outputText class="pi pi-globe" style="font-weight: bold;color: brown;font-size:15px; float:right" value=" Sales for Individual Site in #{individualSiteService.locationMessage}" />
+              				</h:panelGrid>
+              				<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
+              						<p:graphicImage width="200" height="200" stream="false" cache="false" value="#{product.streamedContent}" />
+                     				<h:outputText style="font-weight: bold;color: red;font-size: 15px"  value="Rs #{product.totalPrice}" />
+                     				<h:panelGrid   columns="2" width="60%"  columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
+                     			 
+                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: blue;font-size: 15px" value=" Per Sqft : " />
+                     			 				<h:outputText style="font-weight: normal;color: blue;font-size: 15px" value="#{product.persqft}" />
+                     			 				
+                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: blue;font-size: 15px" value=" Dimensiond : "/>
+                     			 				<h:outputText  style="font-weight: normal;color: blue;font-size: 15px" value="#{product.length} X #{product.width}"/>
+                     			 				
+                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: blue;font-size: 15px" value=" Plot Area : " />
+                     			 				<h:outputText  style="font-weight: normal;color: blue;font-size: 15px" value="#{product.length*product.width}" />
+                     			 		                                                  
+                                                <h:outputText class="pi pi-check" style="font-weight: normal;color: blue;font-size: 15px" value=" Site Number  :  "/>
+                                                <h:outputText  style="font-weight: normal;color: blue;font-size: 15px" value="#{product.siteNo}"/>
+                                                
+                                                <h:outputText class="pi pi-check" style="font-weight: normal;color: blue;font-size: 15px" value=" Facing : "/>
+                                                <h:outputText  style="font-weight: normal;color: blue;font-size: 15px" value="#{product.facing}"/>
+                                                
+                                               
+                                   </h:panelGrid>
+                                    <h:panelGrid   columns="2" width="60%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right">
+                                			   <h:outputText class="pi pi-user" style="font-weight: normal; font-size: 15px" value=" Contact Name : " />
+                                			   <h:outputText  style="font-weight: normal; font-size: 15px" value="#{product.agentName}" />
+                                			   
+                                               <h:outputText class="pi pi-phone" style="font-weight: normal; font-size: 15px" value=" Contact Number : " />
+                                               <h:outputText  style="font-weight: normal; font-size: 15px" value="#{product.contactNo}" />
+                                              
+                                               <h:outputText class="pi pi-user-plus" style="font-weight: normal; font-size: 15px" value=" Wonership : " />
+                                               <h:outputText style="font-weight: normal; font-size: 15px" value="#{product.wonership}" />
+                                                                                           
+                                              <h:outputText class="pi pi-th-large" style="font-weight: normal; font-size: 15px" value=" Transaction : " /> 
+                                              <h:outputText  style="font-weight: normal; font-size: 15px" value="#{product.transaction}" />
+                                 </h:panelGrid>
+                  		</h:panelGrid>
+                  		
+                  		<h:panelGrid   columns="1" width="100%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
+                               					<h:outputText style="font-weight: normal; font-size: 15px" value="Location : #{product.location}" />
+                                                <h:outputText style="font-weight: normal;color: black ;font-size: 15px" value="Description : #{product.comment}" />
+                                               
+                        </h:panelGrid>
+                     
+                       <h:panelGrid   columns="3" width="100%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right">
+                          
+                          			<p:commandButton type="submit" value="Request Callback" icon="ui-icon-calculator" style="background:#FFA500;font-weight: bold;color: black;font-size: 15px" onclick="requestCallback()" />
+                          			<p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#1E90FF;font-weight: bold;color: black;font-size: 15px" onclick="requestCallback()" />
+                          		     <h:outputText value="Posted : #{product.createdOnDate}" >
+									    <f:convertDateTime type="date" dateStyle="full"/>   
+									</h:outputText>
+									                          			
+                      </h:panelGrid> 
+                  
+                  
+    
+                            
+              </p:panel>
+              <br></br>
+        </p:dataScroller>
+  
+  
+ <script type="application/javascript">        
+ function requestCallback() {
+
+                        
+             window.open("./requestCallback.xhtml", "Request Call Back", "toolbar=no,scrollbars=no,resizable=no,top=320,left=550,width=530,height=450");
+             
+         
+     return true;                  
+
+}
+ </script>   
+</h:form>
+</div>
+</ui:define>
+</ui:composition>
+</h:body>
+</html>

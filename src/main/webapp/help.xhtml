@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+       <h:body>
+
+        
+  <ui:composition template="/WEB-INF/facelets/template.xhtml">
+  <ui:param name="page" value="Layout Details" />
+  <ui:define name="title">Help
+  <div class="card">
+  <h:form id="form">
+  <br></br>
+  
+  			<center>
+  			  <p:panel  style="background: #800000;width:50%; height:45px;font-size: 15px" >
+		           
+		                  <h:panelGrid columns="4" cellpadding="5" style="width: 100%;"> 
+		                      <h:outputText style="font-weight: bold; font-size: 14px;color:white; text-align:left;" value="FAQ   : " />
+		                      <h:inputText id="name"  value="#{helpService.query}" required="true" requiredMessage="FAQ is required">
+		                      </h:inputText>
+		            
+             
+		                		<h:commandButton value="submit" action="#{helpService.submitHelp}" >
+								</h:commandButton>
+				
+				                    
+				                     
+				                   <h:commandButton id="discardChangesButton"
+					                                   process="@this"
+					                                   value="Clear"
+				                                           update="@form"
+					                                   action="#{helpService.clear()}" >
+					                                   
+					                   <p:resetInput target="form"/>
+					              </h:commandButton>
+		                    
+		                 
+               			</h:panelGrid>                    
+              </p:panel>
+  
+			</center>
+  
+ </h:form>
+</div>
+</ui:define>
+</ui:composition>
+</h:body>
+</html>
+      

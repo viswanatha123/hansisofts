@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      
+      <h:head>
+        
+      <!-- Bootstrap and PrimeFaces javascripts -->
+        <h:outputScript library="primefaces" name="jquery/jquery.js"/>
+        <h:outputScript name="bootstrap.min.js" library="js"/>
+		
+      
+          <!-- Stylesheets -->
+        <h:outputStylesheet name="logo-nav.css" library="css"/>
+        <h:outputStylesheet name="bootstrap.min.css" library="css"/>
+		
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/favicon.ico"/>
+
+     
+     
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    DIC Admin Tool
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+  <!-- CSS Files -->
+ <link href="resources/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="resources/css/demo/demo.css" rel="stylesheet" />
+  </h:head>
+  
+       <h:body>
+
+        
+  <ui:composition template="/WEB-INF/facelets/template.xhtml">
+  <ui:param name="page" value="Admin" />
+  <ui:define name="title">Agricultural Details Enter
+  <div class="card">
+  <h:form id="form" enctype="multipart/form-data">
+  
+  			<p:panel>   
+                <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                    <h:outputText style="font-weight: bold;color: red" value="#{agriculturalDataEntryhService.updateResult}" />
+                </p:panelGrid>
+             </p:panel>
+             
+             <p:panel style="background-image: url('back1.jpg'); ">   
+                  <p:panelGrid columns="2" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                
+                    
+            
+			                    <h:outputText style="font-weight: bold" value="Owner Name : " />
+			                    <h:inputText id="name" required="true" value="#{agriculturalDataEntryhService.ownerName}" >
+			                    </h:inputText>
+			                    
+			                    <h:outputText style="font-weight: bold" value="Agent Name : " />
+			                    <h:inputText id="agentName" required="true" value="#{agriculturalDataEntryhService.agentName}" >
+			                    </h:inputText>
+			                    
+			                    <h:outputText style="font-weight: bold" value="Agent Contact No : " />
+			                    <h:inputText id="contactno" required="true" value="#{agriculturalDataEntryhService.contactNo}" >
+			                    </h:inputText>
+			                    
+			                    <h:outputText style="font-weight: bold" value="Survey No : " />
+			                    <h:inputText id="surveyNo" required="true" value="#{agriculturalDataEntryhService.surveyNo}" >
+			                    </h:inputText>
+			                    
+			                    <h:outputText style="font-weight: bold" value="Location : " />
+			                    <h:inputText id="location" required="true" value="#{agriculturalDataEntryhService.location}" >
+			                    </h:inputText>
+			                    
+			                    <p:outputLabel for="wonership" value="Woner Ship : " />  
+			                            <p:selectOneMenu id="wonership" required="true"  value="#{agriculturalDataEntryhService.wonership}" requiredMessage="Woner Ship" style="width:150px">  
+			                                <f:selectItem itemLabel="Freehold" itemValue="Freehold"/>
+			                                <f:selectItem itemLabel="Buying" itemValue="Buying"/>
+			                            </p:selectOneMenu>
+			                    
+			                   <p:outputLabel for="transaction" value="Transaction : " />  
+			                            <p:selectOneMenu id="transaction" value="#{agriculturalDataEntryhService.transaction}" style="width:150px">  
+			                             <f:selectItem itemLabel="Resale" itemValue="Resale"/>
+			                             <f:selectItem itemLabel="New Property" itemValue="New Property"/>
+			                            </p:selectOneMenu>
+                    
+                    
+			                    <h:outputText style="font-weight: bold" value="Per Cent : " />
+			                    <h:inputText id="perCent" required="true" value="#{agriculturalDataEntryhService.perCent}" >
+			                    </h:inputText>  
+			                    
+			                    
+			                    <h:outputText style="font-weight: bold" value="Number Cents : " />
+			                    <h:inputText id="numberCents" required="true" value="#{agriculturalDataEntryhService.numberCents}" >
+			                    </h:inputText> 
+                    
+                      
+		                       <p:outputLabel for="waterSource" value="Water Sourec : " />  
+		                            <p:selectOneMenu id="waterSource" value="#{agriculturalDataEntryhService.waterSource}" style="width:150px">  
+		                             <f:selectItem itemLabel="Bore Well" itemValue="Bore Well"/>
+		                             <f:selectItem itemLabel="No Water" itemValue="No Water"/>
+		                             <f:selectItem itemLabel="Channel" itemValue="Channel"/>
+		                           </p:selectOneMenu>
+                    
+                     
+                    
+		                     <p:outputLabel for="crop" value="Crop :  " />  
+		                            <p:selectOneMenu id="crop" value="#{agriculturalDataEntryhService.crop}" style="width:150px">  
+		                             <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+		                             <f:selectItem itemLabel="No" itemValue="No"/>
+		                            </p:selectOneMenu>
+		                  
+             
+                    
+		                     <p:outputLabel for="country" value="Primary Location : " />  
+		                        
+		                            <p:selectOneMenu id="country" value="#{agriculturalDataEntryhService.country}" style="width:150px">  
+		                            <p:ajax listener="#{agriculturalDataEntryhService.onCountryChange}" update="city" />  
+		                            <f:selectItem itemLabel="Select Primary Location" itemValue="" noSelectionOption="true" />  
+		                            <f:selectItems value="#{agriculturalDataEntryhService.countries}" />  
+		                            </p:selectOneMenu>
+                     
+                     
+		                      <p:outputLabel for="city" value="Secondry Location : " />  
+		                            <p:selectOneMenu id="city" value="#{agriculturalDataEntryhService.city}" style="width:150px">  
+		                            <f:selectItem itemLabel="Select Secondry Location" itemValue="" noSelectionOption="true" />  
+		                            <f:selectItems value="#{agriculturalDataEntryhService.cities}" />  
+		                            </p:selectOneMenu> 
+                    
+     
+                    
+		                    <h:outputText style="font-weight: bold" value="Description : " />
+		                    <h:inputText id="comment" required="true" value="#{agriculturalDataEntryhService.comment}" >
+		                    </h:inputText>
+                    
+                    
+                    		<h:outputText style="font-weight: bold" value="Image Upload : " />
+                    
+                    
+		             		
+		             		 <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                                     <p:fileUpload value="#{agriculturalDataEntryhService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/> 
+            
+				        		 
+        			         </p:panelGrid>
+                            
+                       
+                       
+		                   <h:commandButton value="Submit"   type="submit" 
+		                                    process="@this"
+		                                    update="@form"
+		                                    actionListener="#{agriculturalDataEntryhService.upload}" >
+		                                    <p:resetInput target="form"/>
+		                   </h:commandButton>
+                   
+		                   <h:commandButton id="discardChangesButton"
+			                                   process="@this"
+			                                   value="Clear"
+		                                           update="@form"
+			                                   actionListener="#{agriculturalDataEntryhService.clear()}" >
+	                                   
+	                       <p:resetInput target="form"/>
+	                     </h:commandButton>
+                  </p:panelGrid>                     
+           </p:panel>
+            
+  
+  
+    
+  </h:form>
+</div>
+</ui:define>
+</ui:composition>
+</h:body>
+</html>

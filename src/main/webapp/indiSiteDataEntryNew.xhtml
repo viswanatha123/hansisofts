@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      
+      <h:head>
+   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+ <link href="resources/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+  <link href="resources/css/demo/demo.css" rel="stylesheet" />
+  </h:head>
+  
+ <h:body>
+ <h:form  id="form4">
+ 
+ 			<p:panel>   
+                <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                    <h:outputText style="font-weight: bold;color: red" value="#{indiSiteDataEntryService.updateResult}" />
+                </p:panelGrid>
+             </p:panel>
+ 
+ 
+  <p:panel style="background-image: url('back1.jpg'); ">   
+                <p:panelGrid columns="2" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                
+                    
+            
+                    <h:outputText style="font-weight: bold" value="Owner Name : " />
+                    <h:inputText id="name" required="true" value="#{indiSiteDataEntryService.ownerName}" >
+                    </h:inputText>
+                    
+                    <h:outputText style="font-weight: bold" value="Location : " />
+                    <h:inputText id="location" required="true" value="#{indiSiteDataEntryService.location}" >
+                    </h:inputText>
+                    
+                    
+                    <h:outputText style="font-weight: bold" value="Agent Name : " />
+                    <h:inputText id="agentName" required="true" value="#{indiSiteDataEntryService.agentName}" >
+                    </h:inputText>
+                    
+                    <h:outputText style="font-weight: bold" value="Agent Contact No : " />
+                    <h:inputText id="contactno" required="true" value="#{indiSiteDataEntryService.contactNo}" >
+                    </h:inputText>
+                    
+                    
+                     <h:outputText style="font-weight: bold" value="Site Number : " />
+                    <h:inputText id="siteno" required="true" value="#{indiSiteDataEntryService.siteNo}" >
+                    </h:inputText>
+                    
+                    
+                    <h:outputText style="font-weight: bold" value="PerSqFt : " />
+                    <h:inputText id="persqft" required="true" value="#{indiSiteDataEntryService.persqft}" >
+                    </h:inputText>
+                    
+                    
+                      <h:outputText style="font-weight: bold" value="Length : " />
+                    <h:inputText id="length" required="true" value="#{indiSiteDataEntryService.length}" >
+                    </h:inputText>
+                     
+                     
+                    <h:outputText style="font-weight: bold" value="Width : " />
+                    <h:inputText id="width" required="true" value="#{indiSiteDataEntryService.width}" >
+                    </h:inputText>
+                    
+                    
+                     <p:outputLabel for="wonership" value="Woner Ship : " />  
+                            <p:selectOneMenu id="wonership" required="true"  value="#{indiSiteDataEntryService.wonership}" requiredMessage="Woner Ship" style="width:150px">  
+                                <f:selectItem itemLabel="Freehold" itemValue="Freehold"/>
+                                <f:selectItem itemLabel="Buying" itemValue="Buying"/>
+                            </p:selectOneMenu>
+                            
+                            
+                      <p:outputLabel for="transaction" value="Transaction : " />  
+                            <p:selectOneMenu id="transaction" value="#{indiSiteDataEntryService.transaction}" style="width:150px">  
+                             <f:selectItem itemLabel="Resale" itemValue="Resale"/>
+                             <f:selectItem itemLabel="New Property" itemValue="New Property"/>
+                            </p:selectOneMenu>
+                    
+                                       
+                     <p:outputLabel for="country" value="Primary Location : " />  
+                        
+                            <p:selectOneMenu id="country" value="#{indiSiteDataEntryService.country}" style="width:150px">  
+                            <p:ajax listener="#{indiSiteDataEntryService.onCountryChange}" update="city" />  
+                            <f:selectItem itemLabel="Select Primary Location" itemValue="" noSelectionOption="true" />  
+                            <f:selectItems value="#{indiSiteDataEntryService.countries}" />  
+                            </p:selectOneMenu>
+                     
+                     
+                      <p:outputLabel for="city" value="Secondry Location : " />  
+                            <p:selectOneMenu id="city" value="#{indiSiteDataEntryService.city}" style="width:150px">  
+                            <f:selectItem itemLabel="Select Secondry Location" itemValue="" noSelectionOption="true" />  
+                            <f:selectItems value="#{indiSiteDataEntryService.cities}" />  
+                            </p:selectOneMenu> 
+                            
+    
+                    
+                    <h:outputText style="font-weight: bold" value="Description : " />
+                    <h:inputText id="comment" required="true" value="#{indiSiteDataEntryService.comment}" >
+                    </h:inputText>
+                    
+                    <p:outputLabel for="facing" value="Facing : " />  
+                            <p:selectOneMenu id="facing" value="#{indiSiteDataEntryService.facing}" style="width:150px"> 
+                            <f:selectItem itemLabel="--" itemValue="--"/> 
+                            <f:selectItem itemLabel="East" itemValue="East"/>
+                            <f:selectItem itemLabel="West" itemValue="West"/>
+                            <f:selectItem itemLabel="North" itemValue="North"/>
+                            <f:selectItem itemLabel="South" itemValue="South"/>
+                            </p:selectOneMenu>
+                      
+                            
+                            
+     				 <h:outputText style="font-weight: bold" value="Image Upload : " />
+                    
+                    
+                    <p:panel>   
+               		 <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                      
+				                  <p:fileUpload listener="#{indiSiteDataEntryService.handleFileUpload}" mode="advanced" dragDropSupport="false"
+				                      update="messages" sizeLimit="1000000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+				                      validateContentType="false" accept=".gif,.jpg,.jpeg,.png"
+				                      onupload="return confirm('Are you sure?')"/>
+				
+				        		 <p:growl id="messages" showDetail="true"/>
+        			  </p:panelGrid>
+             		</p:panel>	
+                    
+                    
+                       
+                   <h:commandButton value="Submit"   type="submit" 
+                                    process="@this"
+                                    update="@form4"
+                                    actionListener="#{indiSiteDataEntryService.submitIndiDataEntryService}" >
+                                    <p:resetInput target="form4"/>
+                   </h:commandButton>
+                   
+                   <h:commandButton id="discardChangesButton"
+	                                   process="@this"
+	                                   value="Clear"
+                                           update="@form4"
+	                                   actionListener="#{indiSiteDataEntryService.clear()}" >
+	                                   
+	                   <p:resetInput target="form4"/>
+	          </h:commandButton>
+                </p:panelGrid>                     
+                    
+                    
+                          
+                       
+            </p:panel>
+            
+ 
+ 
+  </h:form>
+</h:body>
+</html>

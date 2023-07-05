@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+        <ui:composition>
+            <h:form id="login_form" class="navbar-form navbar-right">
+                <c:if test="#{!user.authenticated}">
+                    <div class="input-group">
+                        <span class="input-group-addon fa fa-user"></span>
+                        <p:inputText value="#{user.username}" placeholder="e-mail"/>
+                    </div><br/>
+                    <div class="input-group">
+                        <span class="input-group-addon fa fa-lock"/>
+                        <p:password value="#{user.password}" placeholder="password"/>
+                    </div>
+                    <div class="input-group">
+                        <p:commandButton icon="fa fa-fw fa-sign-in" ajax="false" value="Login" action="#{user.login()}"/>
+                    </div>
+                </c:if>
+                <c:if test="#{user.authenticated}">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <span class="fa fa-fw fa-user"/>
+                            #{user.username}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li>
+                                <p:commandLink action="#{user.logout()}">
+                                    <span class="fa fa-fw fa-sign-out"/>
+                                    Logout
+                                </p:commandLink>
+                            </li>
+                        </ul>
+                    </div>
+                </c:if>
+            </h:form>
+        </ui:composition>
+    </body>
+</html>

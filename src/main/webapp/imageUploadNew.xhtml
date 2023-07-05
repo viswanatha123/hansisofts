@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      
+  <h:head>
+ 
+  </h:head>
+  
+ <h:body>
+
+ <h:form id="form">
+  
+  			<p:panel>   
+                <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                    <h:outputText style="font-weight: bold;color: red" value="#{imageUploadService.updateResult}" />
+                </p:panelGrid>
+             </p:panel>
+             
+             <p:panel style="background-image: url('back1.jpg'); "> 
+                <p> Image upload from D:/ only and provide only imagte name without extension</p>  
+                <p:panelGrid columns="2" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                
+                 
+                 
+                    <h:outputText style="font-weight: bold" value="Image Name : " />
+                    
+                    <h:inputText id="name" required="true" value="#{imageUploadService.imageName}" >
+                    </h:inputText>
+            
+                     <h:outputText style="font-weight: bold" value="Image Upload : " />
+                    
+                      
+               		 <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                                     <p:fileUpload value="#{imageUploadService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/> 
+            
+				        		 
+        			  </p:panelGrid>
+                    
+     
+                   
+                            
+                       
+                       
+                   <h:commandButton value="Upload Image"   type="submit" 
+                                    process="@this"
+                                    update="@form"
+                                    actionListener="#{imageUploadService.uploadImage}" >
+                                    <p:resetInput target="form"/>
+                   </h:commandButton>
+                   
+                   <h:commandButton id="discardChangesButton"
+	                                   process="@this"
+	                                   value="Clear"
+                                           update="@form"
+	                                   actionListener="#{imageUploadService.clear()}" >
+	                                   
+	                   <p:resetInput target="form"/>
+	                </h:commandButton>
+                </p:panelGrid>                     
+                    
+                    
+                          
+                       
+            </p:panel>
+            
+  
+  
+    
+  </h:form>
+</h:body>
+</html>

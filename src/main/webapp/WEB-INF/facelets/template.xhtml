@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        
+      <!-- Bootstrap and PrimeFaces javascripts -->
+        <h:outputScript library="primefaces" name="jquery/jquery.js"/>
+        <h:outputScript name="bootstrap.min.js" library="js"/>
+		
+      
+          <!-- Stylesheets -->
+        <h:outputStylesheet name="logo-nav.css" library="css"/>
+        <h:outputStylesheet name="bootstrap.min.css" library="css"/>
+		
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/favicon.ico"/>
+    
+     
+     
+		    
+    
+  </h:head>
+
+    <h:body>
+        <f:facet name="last">
+            <h:outputStylesheet name="framework.css" library="css"/>
+            <h:outputStylesheet name="custom.css" library="css"/>
+        </f:facet>
+	<!-- 
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background-image: url('head1.jpg');">
+            <div class="container">
+                <div class="navbar-header" style="text-align:left;">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapsable-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+            
+                    <div id="logo" class="navbar-brand" style="text-align:left">
+                        <h:link class="logo-text"  outcome="index">
+                            <h3 style="font-weight: bold; color: white; text-align:left">Hansi SoftSolutions</h3>
+                        </h:link>
+                    </div>
+                </div>
+                <div class="collapse navbar-collapse" id="collapsable-navbar">
+                    <ul class="nav navbar-nav">
+                        <ui:insert name="default_menu">
+                            <ui:include src="default_menu.xhtml"/>
+                        </ui:insert>
+                    </ul>
+                    
+                </div >
+
+                            <h5 style="font-weight: bold; color:white; text-align:left">Property Verification</h5>
+               </div>
+        </nav>
+        
+        -->
+        
+     
+          <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background-image: url('head4.jpg');">
+           			<div id="logo" style="text-align:left">
+           					<p:graphicImage rendered="#{product.community eq 'Yes'}" width="30" height="30" name="logo.jpg" />
+                        <h:link class="logo-text"  outcome="index">
+                            <h3 style="font-weight: bold; color: white; text-align:left; margin-left: 15%;">Hansi SoftSolutions</h3>
+                            <h5 style="font-weight: bold; color:white; text-align:left; margin-left: 15%;">Property buying and selling</h5>
+                        </h:link>
+                    </div>
+                     <div class="collapse navbar-collapse" id="collapsable-navbar" style="margin-left: 5%;">
+                    <ul class="nav navbar-nav">
+                        <ui:insert name="default_menu">
+                            <ui:include src="default_menu.xhtml"/>
+                        </ui:insert>
+                        
+                        		
+                    </ul>
+                    		                    			
+                    		   <h:link  value = " Contact Us" class="pi pi-phone" outcome = "contactUs.xhtml" style="font-weight: bold; font-size: 14px;color:white;float: right; margin-right: 100px;">
+                    		   </h:link>  
+					           <h:link  value = " About Us" class="pi pi-user" outcome = "aboutUs.xhtml" style="font-weight: bold; font-size: 14px;color:white;float: right; margin-right: 50px;">
+					           </h:link>
+					           <h:link  value = "Help" outcome = "help.xhtml" style="font-weight: bold; font-size: 14px;color:white;float: right; margin-right: 50px;">
+					           </h:link>
+					           <h:link  value = "Enquiry" outcome = "enquiry.xhtml" style="font-weight: bold; font-size: 14px;color:white;float: right; margin-right: 50px;">
+					           </h:link>
+					           <h:link  value = "Gallery" outcome = "gallery.xhtml" style="font-weight: bold; font-size: 14px;color:white;float: right; margin-right: 50px;">
+					           </h:link>
+					           <h:link  value = "Builders" outcome = "builders.xhtml" style="font-weight: bold; font-size: 14px;color:white;float: right; margin-right: 50px;">
+					           </h:link>
+					           <h:link  value = " Agents"  class="pi pi-user" outcome = "agents.xhtml" style="font-weight: bold; font-size: 14px;color:white;float: right; margin-right: 50px;">
+					           </h:link>
+					           
+					        
+                    
+                    </div >
+                                     
+                    
+          </nav>
+    <br></br><br></br><br></br>
+
+     
+        
+     <!-- Page Content -->
+      <!--   <div class="container"> -->
+            <div class="row">
+
+                <ui:insert name="sidebar">
+                    <ui:param name="no_sidebar" value="true" />
+                </ui:insert>
+
+                <div id="content" class="#{no_sidebar ? 'col-lg-12' : 'col-lg-14'}">
+                    <div class="page-title"><h2 style="font-weight: bold;color: black;font-size: 12px;"><ui:insert name="title"/></h2><ui:insert name="page_icon"/></div>
+                    <ui:insert name="content"/>
+                </div>
+            </div>
+            <ui:insert name="footer">
+                <ui:include src="footer.xhtml"/>
+            </ui:insert>
+  <!--      </div> -->
+        
+        
+
+        
+        
+    </h:body>
+</html>

@@ -1,0 +1,247 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      
+      <h:head>
+      
+
+	
+      
+      </h:head>
+      
+       <h:body>
+   
+  <ui:composition template="/WEB-INF/facelets/template.xhtml">
+  <ui:param name="page" value="Layout Details" />
+  <ui:define name="title">
+  <div class="card">
+  <h:form id="form">
+ 
+       
+       
+       		<!-- 
+            <ui:define name="title"><h2 style="font-weight: bold; color: red">Hansi SoftSolutions</h2></ui:define>
+
+            <ui:define name="page_icon"><i class="fa fa-fw fa-flag"/></ui:define>
+
+            <ui:define name="sidebar">
+                <div id="sidebar" class="col-lg-2">
+                    <h:form>
+                        <ul class="nav nav-pills nav-stacked">
+                            
+
+                            
+                        </ul>                        
+                    </h:form>
+                </div>
+            </ui:define>
+
+
+            <ui:define name="content">
+                <p>Property Verification</p>
+            </ui:define>
+
+			-->
+
+					<p:galleria value="#{imagesViewService.siteMapImage}" var="image" panelWidth="1736" panelHeight="450" numVisible="5" responsiveOptions="#{imagesViewService.images}" circular="true" autoPlay="true" transitionInterval="2000" style="height:700px; width:1600px;">
+						
+						<p:graphicImage name="images/siteMapImage/#{image}" width="100%" />
+							
+					</p:galleria>
+	
+		
+						
+						
+						<table width="100%" height="100px" style="background-image: url('head2.jpg'); ">
+							<tr>
+								<th>
+								<p style="text-align:center;font-weight: bold;color: white;font-size: 25px;font-family:Bahnschrift SemiBold;">Grow your business with our Hansi SoftSolutions website platform for real estate agents and teams.</p>
+								</th>
+							</tr>
+						</table>
+						
+						
+						
+						<table width="100%" height="400px" style="background: #43C6DB;">
+							<tr >
+									<th width="30%">
+											
+												<table width="100%" >
+													<center>
+													<h:outputText style="font-weight: bold; font-size: 35px;color:white; text-align:left;" value="Book Your Plot Now" />
+													</center>
+												<br></br><br></br>
+														<tr >
+															<th style="text-align:center;">
+		                        					 	   		<h:outputText style="font-weight: bold; font-size: 18px;color:white;" value="Name : " />
+		                        					 	   </th>
+		                        					 	   <th>
+										                       <h:inputText id="name"  style="width:400px;height:30px;" value="#{enquiryService.name}" required="true" requiredMessage="Name is required">
+										                       </h:inputText>
+									                       </th>
+									                    </tr>
+									                    
+									                    <tr>
+									                    <th><h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" /></th>
+									                    <th><h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" /></th>
+									                    </tr>
+									                    
+									                    <tr>
+									                    	<th style="text-align:center;">
+									                    		<h:outputText style="font-weight: bold; font-size: 18px;color:white; text-align:left;" value="Email : " />
+									                    	</th>
+									                    	<th>
+									                    		<h:inputText id="email"  style="width:400px;height:30px;" value="#{enquiryService.email}" required="true" requiredMessage="Email is required">
+									                    		</h:inputText> 
+									                    	</th>
+									                    </tr>
+									                    
+									                    
+									                    <tr>
+									                    <th><h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" /></th>
+									                    <th><h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" /></th>
+									                    </tr>
+									                    
+									                    
+									                    <tr>
+									                    	<th style="text-align:center;">
+									                    		<h:outputText style="font-weight: bold; font-size: 18px;color:white; text-align:left; " value="Phone : " />
+									                    	</th>
+									                    	<th>
+									                   			<h:inputText id="phone"  style="width:400px;height:30px;" value="#{enquiryService.phone}" required="true" requiredMessage="Phone is required">
+									                    		</h:inputText>
+									                    	</th>
+									                    </tr>
+									                    
+									                    
+									  					<tr>
+									                    <th><h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" /></th>
+									                    <th><h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" /></th>
+									                    </tr>
+									  
+									  
+							             				
+							             				<tr>
+							             					<th style="text-align:center;">
+								                				<h:commandButton value="Submit" action="#{enquiryService.submitEnquiry}" >
+																</h:commandButton>
+															</th>
+										                    
+										                    <th> 
+											                   <h:commandButton id="discardChangesButton"
+												                                   process="@this"
+												                                   value="Clear"
+											                                           update="@form"
+												                                   action="#{enquiryService.clear()}" >
+												                                   
+												                   <p:resetInput target="form"/>
+												              </h:commandButton>
+											              </th>
+										              </tr>
+										         </table>
+										         
+										              
+							
+									</th>
+									
+									 <th width="40%">
+									 	<p style="text-align:center;font-weight: bold;color: white; font-size: 25px;font-family:Bahnschrift SemiBold;">Hansi SoftSolutions is the website platform for real     estate which we are providing service to the customers buying and selling property like Residential plots/Land, Agricultural land and Individual site.</p>
+								
+									</th>
+									
+									<th width="30%">
+										<p:graphicImage width="100%"  height="400px" name="images/headimg.jpg" />
+									</th>
+							</tr>	
+						</table>
+						
+						
+						
+							
+						<table width="100%" height="400px" >
+						<tr>
+								<td width="30%" ><p:graphicImage width="100%"  height="400px" name="images/raji1.jpg" /></td>
+								
+								<td>
+								<p style="text-align:center;color:#000000 ; font-size: 25px;font-family:Bahnschrift SemiBold;">Looking for an Investment Property?</p>
+								<p style="text-align:center;color: blue; font-size: 20px;font-family:Century Gothic;font-weight: normal;">	If you are searching for an investment property , take a look at our property listings. We have a team of over 10 commercial real estate brokers with years of experience when it comes to listing, selling, leasing, investing, and managing properties. When working with our team, we are helping our clients to fully understand the benefits of acquisition or disposition. Our relationship won't stop there, as we continue to guide our clients through any challenges that may arise.</p>
+								
+								</td>
+						</tr>
+						</table>
+						<br></br><br></br>
+						<table width="100%" height="100px" >
+						
+							<tr>	
+									<td width="30%"><p:graphicImage width="15%"  height="40px" name="images/Youre with great people.jpg" /></td>
+									<td width="30%"><p:graphicImage width="15%"  height="40px" name="images/Team Of Laeders.jpg" /></td>
+									<td width="30%"><p:graphicImage width="15%"  height="40px" name="images/High Ranked Brokers.jpg" /></td>
+									
+							</tr>		
+									
+							<tr>		
+									<td><p style="text-align:center;color: block; font-size: 20px;font-family:Century Gothic;font-weight: normal;">Your dependable real estate advisor. All consultations and company services are provided without charge.</p></td>
+									<td><p style="text-align:center;color: block; font-size: 20px;font-family:Century Gothic;font-weight: normal;">Qualified employee with great skills which handle all the customer requirements</p></td>	
+									<td><p style="text-align:center;color: block; font-size: 20px;font-family:Century Gothic;font-weight: normal;">Many professionals with a thorough understanding of consumer requirements and current real estate market opportunities.</p></td>																											
+							</tr>
+						</table>
+						
+					<br></br><br></br>
+						<table width="100%" height="400px" >
+						<tr>
+								<td>
+								<p style="text-align:center;color:#F535AA; font-size: 25px;font-family:Bahnschrift SemiBold;">Perfect Weekend Getaway</p>
+								<p style="text-align:center;color: block; font-size: 20px;font-family:Century Gothic;font-weight: normal;">Weekend home has now become one of the emerging investments in Real Estate. we are attempting to offer peaceful living, where one can live their dream without much effort. Lead a healthy lifestyle where you can stay, work, grow, and achieve a fruitful life, while not so far from the urban needs. </p>
+								
+								</td>
+								<td width="40%" ><p:graphicImage width="100%"  height="400px" name="images/farms.jpg" /></td>
+								
+						</tr>
+						</table>
+						
+						
+						<table width="100%" height="400px" >
+						<p style="text-align:left; color:#2916F5; font-size: 25px; font-family:Bahnschrift SemiBold;">Properties are available in below states</p>
+						<tr>								
+								<td><p:graphicImage width="100%"  height="400px" name="images/coastalAndhar.jpg" /></td>
+								<td><p:graphicImage width="100%"  height="400px" name="images/karnataka.jpg" /></td>
+								<td><p:graphicImage width="100%"  height="400px" name="images/rayalaseema.jpg" /></td>
+								<td><p:graphicImage width="100%"  height="400px" name="images/Telangana.png" /></td>
+								
+						</tr>
+						</table>
+			
+			
+						
+						
+						 <table width="100%" height="400px" >
+						   <tr>
+							   	<td>
+							   			 <p:contentFlow value="#{imagesViewService.images}" var="image">
+									        <p:graphicImage name="images/gallery/#{image}" styleClass="content"/>
+									        <div class="caption">#{image}</div>
+									    </p:contentFlow>
+							   	</td>
+						   </tr>
+						 </table>
+						 
+				
+						 
+						
+
+
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
+
+
+   </h:form>
+ </div>
+ </ui:define>
+ </ui:composition>
+ </h:body>
+ </html>
+

@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      
+
+
+       <h:body>
+
+        
+  <ui:composition template="/WEB-INF/facelets/template.xhtml">
+  <ui:param name="page" value="Layout Details" />
+  <ui:define name="title" >Gallery
+  <div class="card">
+  <h:form id="form">
+  <br></br>
+  
+					   <table width="100%" height="400px" >
+							   <tr>
+								   	<td>
+								   			 <p:contentFlow value="#{imagesViewService.images}" var="image">
+										        <p:graphicImage name="images/gallery/#{image}" styleClass="content"/>
+										        <div class="caption">#{image}</div>
+										    </p:contentFlow>
+								   	</td>
+							   </tr>
+					   </table>
+  
+  			<table width="100%" height="400px" >
+					
+						<tr>								
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/1.jpg" /></td>
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/2.jpg" /></td>
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/3.jpg" /></td>
+								
+						</tr>
+						<tr>								
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/4.jpg" /></td>
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/5.jpg" /></td>
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/6.jpg" /></td>
+								
+						</tr>
+						<tr>								
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/7.jpg" /></td>
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/8.jpg" /></td>
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/9.jpg" /></td>
+								
+						</tr>
+						
+						<tr>								
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/10.jpg" /></td>
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/11.jpg" /></td>
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/12.jpg" /></td>
+								
+						</tr>
+						
+						<tr>								
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/13.jpg" /></td>
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/14.jpg" /></td>
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/15.jpg" /></td>
+								
+						</tr>
+						
+						<tr>								
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/16.jpg" /></td>
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/17.jpg" /></td>
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/18.jpg" /></td>
+								
+						</tr>
+						
+						<tr>								
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/19.jpg" /></td>
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/20.jpg" /></td>
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/21.jpg" /></td>
+								
+						</tr>
+						
+						<tr>								
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/22.jpg" /></td>
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/23.jpg" /></td>
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/24.jpg" /></td>
+								
+						</tr>
+						
+						<tr>								
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/25.jpg" /></td>
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/26.jpg" /></td>
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/27.jpg" /></td>
+								
+						</tr>
+						
+						<tr>								
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/28.jpg" /></td>
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/29.jpg" /></td>
+								<td width="33%"><p:graphicImage width="100%"  height="400px" name="images/gallery/1.jpg" /></td>
+								
+								
+						</tr>
+		   </table>
+		   
+		  
+		   
+		   
+		   
+  
+  
+   </h:form>
+</div>
+</ui:define>
+</ui:composition>
+</h:body>
+</html>
+      

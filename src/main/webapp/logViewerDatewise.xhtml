@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+ <h:body>
+ <ui:composition template="/WEB-INF/facelets/template.xhtml">
+ <ui:param name="page" value="activeModelList" />
+ <ui:define name="title">Log Viewer Datewise
+ <div class="card">
+ <h:form id="form">
+ 	
+ 	
+  <p:panel >   
+         <p:panelGrid columns="8" styleClass="noBorder"
+                         style="top : 0;left : 0; padding : 0; bottom : 0;font-size:8px">
+             
+             
+                             <h:outputText style="font-weight: bold" value="Dataset ID : " />
+                             <h:inputText id="datasetid" value="#{logViewerDatewiseService.datasetID}" >
+                                 <f:validateRegex pattern="[0-9]*" />
+                             </h:inputText>
+                                              
+                              <h:outputText style="font-weight: bold" value="Start Date : " />
+                              <p:calendar   pattern="yyyy-MM-dd"  value="#{logViewerDatewiseService.sDate}" >
+                              </p:calendar>
+                            
+                             
+                              <h:outputText  style="font-weight: bold" value="End Date : " />
+                              <p:calendar   pattern="yyyy-MM-dd"  value="#{logViewerDatewiseService.eDate}" >
+                              </p:calendar>
+                             
+                              <p:commandButton value="Submit" update=":form"  type="submit"  actionListener="#{logViewerDatewiseService.logviewerDateWise}" /> 
+                    				              
+				              <p:commandButton value="Export" type="submit">
+				              <p:dataExporter type="csv" target=":form:tb3" fileName="Environmet Details"/>
+				              </p:commandButton>
+               </p:panelGrid> 
+               
+                     
+                       
+        </p:panel> 
+ 
+ 	<p:dataTable id="tb3" style="font-size:8px;" styleClass="dtHeaderStyle" var="logViewerDatewise" widgetVar="wvDtSearchOUGroups" value="#{logViewerDatewiseService.logViewerDatewiseModel}" 
+                    paginator="true" rows="20" rowsPerPageTemplate="5,10,15,20,30,50,100" paginatorPosition="bottom"
+                         emptyMessage="No Data">
+                
+                 <p:column id="datasetId" headerText="Dataset Id" sortBy="#{logViewerDatewise.datasetId}" filterBy="#{logViewerDatewise.datasetId}" filterMatchMode="contains" style="width: 10%!important;" >
+                         <h:outputText value="#{logViewerDatewise.datasetId}"/>
+                </p:column>
+                        
+                <p:column id="serverHost"  headerText="Server Host" sortBy="#{logViewerDatewise.serverHost}" filterBy="#{logViewerDatewise.serverHost}" filterMatchMode="contains" style="width: 20%!important;" >
+                        <h:outputText value="#{logViewerDatewise.serverHost}"/>
+                </p:column>
+                
+                
+                 <p:column id="serverPort"  headerText="Server Port" sortBy="#{logViewerDatewise.serverPort}" filterBy="#{logViewerDatewise.serverPort}" filterMatchMode="contains" style="width: 10%!important;" >
+                   		<h:outputText value="#{logViewerDatewise.serverPort}"/>
+                </p:column>
+                
+                
+                <p:column id="modelName"  headerText="Model Name" sortBy="#{logViewerDatewise.modelName}" filterBy="#{logViewerDatewise.modelName}" filterMatchMode="contains" style="width: 25%!important;" >
+                        <h:outputText value="#{logViewerDatewise.modelName}"/>
+                </p:column>
+                
+                 <p:column id="dataFile"  headerText="Data File" sortBy="#{logViewerDatewise.dataFile}" filterBy="#{logViewerDatewise.dataFile}" filterMatchMode="contains" style="width: 15%!important;" >
+                            <h:outputText value="#{logViewerDatewise.dataFile}"/>
+                </p:column>
+                
+                <p:column id="createdBy"  headerText="Created By" sortBy="#{logViewerDatewise.createdBy}" filterBy="#{logViewerDatewise.createdBy}" filterMatchMode="contains" style="width: 10%!important;" >
+                           <h:outputText value="#{logViewerDatewise.createdBy}"/>
+                </p:column>
+                
+                
+                <p:column id="jobName"  headerText="Job Name" sortBy="#{logViewerDatewise.jobName}" filterBy="#{logViewerDatewise.jobName}" filterMatchMode="contains" style="width: 20%!important;" >
+                         <h:outputText value="#{logViewerDatewise.jobName}"/>
+                </p:column>
+                
+                    
+                
+                 <p:column id="createdOn"  headerText="Created On" sortBy="#{logViewerDatewise.createdOn}" filterBy="#{logViewerDatewise.createdOn}" filterMatchMode="contains" style="width: 20%!important;" >
+                       <h:outputText value="#{logViewerDatewise.createdOn}"/>
+                </p:column>
+                
+                         
+             
+             <p:column id="stepInformation"  headerText="Step Information" sortBy="#{logViewerDatewise.stepInformation}" filterBy="#{logViewerDatewise.stepInformation}" filterMatchMode="contains" style="width: 25%!important;" >
+                  <h:outputText value="#{logViewerDatewise.stepInformation}"/>
+            </p:column>
+            
+            
+            <p:column id="status"  headerText="Dataset Id" sortBy="#{logViewerDatewise.status}" filterBy="#{logViewerDatewise.status}" filterMatchMode="contains" style="width: 100px;">
+            	 <f:facet name="filter" >
+		            <p:selectOneMenu style="font-size:8px;" onchange="PF('wvDtSearchOUGroups').filter()" >
+		                <f:selectItem  itemLabel="All" itemValue="#{null}" noSelectionOption="true" />
+		                <f:selectItems  value="#{logViewerDatewiseService.items}" />
+		            </p:selectOneMenu>
+		        </f:facet>
+            
+            
+            
+                     <f:facet name="header">
+                        <h:outputText value="Status"/>
+                    </f:facet>
+                   <h:outputText style="color:green;" rendered="#{logViewerDatewise.status eq 'Success'}" value="#{logViewerDatewise.status}"/> 
+                   <h:commandLink style="color:red;" value ="Failed" rendered="#{logViewerDatewise.status eq 'Failed'}" action="#{logViewerDatewiseService.navegateToPage(logViewerDatewise)}"   />
+            </p:column>
+ 
+                 
+                         
+          </p:dataTable>
+ 
+ 
+ 
+ </h:form>
+ </div>
+ </ui:define>
+ </ui:composition>
+ </h:body>
+ </html>

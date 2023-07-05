@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      
+
+
+       <h:body>
+
+        
+  <ui:composition template="/WEB-INF/facelets/template.xhtml">
+  <ui:param name="page" value="Layout Details" />
+  <ui:define name="title" >Our Agents
+  <div class="card">
+  <h:form id="form">
+  <br></br>
+  
+  <p style="text-align:left;color:#F535AA; font-size: 25px;font-family:Bahnschrift SemiBold;">Our best Agents and clients</p>
+  <br></br><br></br>
+  		<table width="100%" height="300px" >
+						<tr>
+						<td>								
+							    <p:panelGrid columns="2" style="background:#0AFFFF">
+							        <f:facet name="header">
+							            <p:graphicImage name="images/agents/ant_rajareddy.jpg" width="300px"  height="300px"/>
+							        </f:facet>
+							
+							        <h:outputText value="Name:"/>
+							        <h:outputText value="Raja Reddy"/>
+							
+							        <h:outputText value="Contact no:"/>
+							        <h:outputText value="9533383389"/>
+							
+							        <h:outputText value="Address 1"/>
+							        <h:outputText value="Anantapur"/>
+							
+							        <h:outputText value="Address 2:"/>
+							        <h:outputText value="Pincode - 510051"/>
+							    </p:panelGrid>
+						</td>	
+						
+						
+						<td>								
+							    <p:panelGrid columns="2">
+							        <f:facet name="header">
+							            <p:graphicImage name="images/agents/M Peddanagi reddy.jpg" width="300px"  height="300px"/>
+							        </f:facet>
+							
+							        <h:outputText value="Name:"/>
+							        <h:outputText value="M Peddanagi reddy"/>
+							
+							        <h:outputText value="Contact no:"/>
+							        <h:outputText value="8106433794"/>
+							
+							        <h:outputText value="Address 1"/>
+							        <h:outputText value="P Siddarampuram, Kadiri"/>
+							
+							        <h:outputText value="Address 2:"/>
+							        <h:outputText value="Anantapur DT"/>
+							    </p:panelGrid>
+						</td>
+						
+						<td>								
+							    <p:panelGrid columns="2">
+							        <f:facet name="header">
+							            <p:graphicImage name="images/agents/T Mallikarjuna Rao1.jpg" width="300px"  height="300px"/>
+							        </f:facet>
+							
+							        <h:outputText value="Name:"/>
+							        <h:outputText value="T Mallikarjuna Rao"/>
+							
+							        <h:outputText value="Contact no:"/>
+							        <h:outputText value="9491218859"/>
+							
+							        <h:outputText value="Address 1"/>
+							        <h:outputText value="Avalahalli"/>
+							
+							        <h:outputText value="Address 2:"/>
+							        <h:outputText value="Bangalore"/>
+							    </p:panelGrid>
+						</td>												
+						</tr>
+						 </table>
+						<br></br><br></br>
+						<table width="100%" height="300px" >
+						<tr>
+						<td>								
+							    <p:panelGrid columns="2" style="background:#0AFFFF">
+							        <f:facet name="header">
+							            <p:graphicImage name="images/agents/Madhusudhana.jpg" width="300px"  height="300px"/>
+							        </f:facet>
+							
+							        <h:outputText value="Name:"/>
+							        <h:outputText value="Madhusudhana"/>
+							
+							        <h:outputText value="Contact no:"/>
+							        <h:outputText value="8297346807"/>
+							
+							        <h:outputText value="Address 1"/>
+							        <h:outputText value="Kadiri"/>
+							
+							        <h:outputText value="Address 2:"/>
+							        <h:outputText value="Anantapure DT"/>
+							    </p:panelGrid>
+						</td>	
+						<td>								
+							    <p:panelGrid columns="2" style="background:#0AFFFF">
+							        <f:facet name="header">
+							            <p:graphicImage name="images/agents/Sreenivas Reddy.jpg" width="300px"  height="300px"/>
+							        </f:facet>
+							
+							        <h:outputText value="Name:"/>
+							        <h:outputText value="Sreenivas Reddy"/>
+							
+							        <h:outputText value="Contact no:"/>
+							        <h:outputText value="9985867766"/>
+							
+							        <h:outputText value="Address 1"/>
+							        <h:outputText value="Anantapure town"/>
+							
+							        <h:outputText value="Address 2:"/>
+							        <h:outputText value="Anantapure DT"/>
+							    </p:panelGrid>
+						</td>	
+						<td>								
+							    <p:panelGrid columns="2" style="background:#0AFFFF">
+							        <f:facet name="header">
+							            <p:graphicImage name="images/agents/Sinappa.jpg" width="300px"  height="300px"/>
+							        </f:facet>
+							
+							        <h:outputText value="Name:"/>
+							        <h:outputText value="Sinappa"/>
+							
+							        <h:outputText value="Contact no:"/>
+							        <h:outputText value="7995304087"/>
+							
+							        <h:outputText value="Address 1"/>
+							        <h:outputText value="Madanapalli"/>
+							
+							        <h:outputText value="Address 2:"/>
+							        <h:outputText value="Anantapure"/>
+							    </p:panelGrid>
+						</td>	
+						</tr>
+						
+		   </table>
+		   <br></br>
+		  <table width="100%" height="400px" >
+							   <tr>
+								   	<td>
+								   			 <p:contentFlow value="#{imagesViewService.images}" var="image">
+										        <p:graphicImage name="images/gallery/#{image}" styleClass="content"/>
+										        <div class="caption">#{image}</div>
+										    </p:contentFlow>
+								   	</td>
+							   </tr>
+		 </table>
+		  
+		   
+		   
+		   
+  
+  
+   </h:form>
+</div>
+</ui:define>
+</ui:composition>
+</h:body>
+</html>
+      

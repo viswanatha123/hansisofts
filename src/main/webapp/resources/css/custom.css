@@ -1,0 +1,65 @@
+/* Restless Devil's color customization */
+a {
+    color: #22527b;
+}
+
+a:hover {
+    color: #173753;
+    text-decoration: none;
+}
+
+.navbar-inverse {
+    background-color: #eee;
+    border-color: #bbb;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #337ab7;
+}
+
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:focus, .navbar-inverse .navbar-nav > .active > a:hover {
+    border-radius: 8px;
+    background-color: #bbb;
+    color: #fff;
+}
+
+.navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > li > a:hover {
+    border-radius: 8px;
+    background-color: #bbb;
+    color: #fff;
+}
+
+.nav > li > a {
+    color: #22527b;
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
+    background: #eee;
+    color:#173753;
+}
+
+/* Custom Growl */
+.ui-growl-item-container {
+    opacity: .90;
+}
+
+.ui-growl {
+    top: 30px;
+}
+
+.ui-growl-item {
+    color:#000;
+    background-color: #fefefe;
+    border:1px solid #bbb;
+}
+
+.logo-text {
+    position: relative;
+    top:50%;
+    color:#173753;
+    font-size:1.3em;
+}
+
+#footer {
+    font-size:15px;
+}

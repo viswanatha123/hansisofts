@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+ <h:body>
+ <ui:composition template="/WEB-INF/facelets/template.xhtml">
+ <ui:param name="page" value="activeModelList" />
+ <ui:define name="title">Exception Page
+ <div class="card">
+ <h:form id="form">
+ 
+ 
+  <p:panel  > 
+            <p:panelGrid columns="6" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;font-size:8px">
+                
+                             <h:outputText style="font-weight: bold" value="Dataset ID :  "/>
+                             <h:outputText style="font-weight: normal" value="#{exceptionValueService.datasetid}" />
+                             
+			     <h:outputText style="font-weight: bold" value="Step Information :  "/>
+                             <h:outputText style="font-weight: normal" value="#{exceptionValueService.step_informationVal}" />
+                             
+                             <h:outputText style="font-weight: bold" value="Model Name :  "/>
+                             <h:outputText style="font-weight: normal" value="#{exceptionValueService.modelName}" />
+       
+
+            </p:panelGrid>
+           
+        </p:panel>
+            
+            
+             <p:dataTable id="tb3" style="font-size:8px;" styleClass="dtHeaderStyle" var="exceptionValue" widgetVar="wvDtSearchOUGroups" value="#{exceptionValueService.exceptionValueModel}" 
+                         rowIndexVar="riLdGrp" paginator="true" rows="20" rowsPerPageTemplate="5,10,15,20,30,50,100" paginatorPosition="bottom"
+                         emptyMessage="No Data">
+                
+                 
+                        
+                 
+                 <p:column id="jobName" sortBy="#{exceptionValue.dimensionName}" filterBy="#{exceptionValue.dimensionName}" filterMatchMode="contains" style="width: 15%!important;" >
+                     <f:facet name="header">
+                        <h:outputText value="Dimension Name"/>
+                    </f:facet>
+                <h:outputText value="#{exceptionValue.dimensionName}"/>
+                </p:column>
+                 
+                 
+                 <p:column id="isHierarchyCreated" sortBy="#{exceptionValue.isHierarchyCreated}" filterBy="#{exceptionValue.isHierarchyCreated}" filterMatchMode="contains" style="width: 5%!important;" >
+                     <f:facet name="header">
+                        <h:outputText value="Is Hierarchy Created"/>
+                    </f:facet>
+                <h:outputText value="#{exceptionValue.isHierarchyCreated}"/>
+                </p:column>
+                 
+                <p:column id="isHierarchyRebuilt" sortBy="#{exceptionValue.isHierarchyRebuilt}" filterBy="#{exceptionValue.isHierarchyRebuilt}" filterMatchMode="contains" style="width: 5%!important;" >
+                     <f:facet name="header">
+                        <h:outputText value="Is Hierarc HyRebuilt"/>
+                    </f:facet>
+                <h:outputText value="#{exceptionValue.isHierarchyRebuilt}"/>
+                </p:column>
+                 
+                
+                 <p:column id="exception" sortBy="#{exceptionValue.exception}" filterBy="#{exceptionValue.exception}" filterMatchMode="contains" style="width: 40%!important;" >
+                     <f:facet name="header">
+                        <h:outputText value="Exception"/>
+                    </f:facet>
+                <h:outputText value="#{exceptionValue.exception}"/>
+                </p:column>
+                 
+                 
+                 <p:column id="statusCode" sortBy="#{exceptionValue.statusCode}" filterBy="#{exceptionValue.statusCode}" filterMatchMode="contains" style="width: 5%!important;" >
+                     <f:facet name="header">
+                        <h:outputText value="StatusCode"/>
+                    </f:facet>
+                <h:outputText value="#{exceptionValue.statusCode}"/>
+                </p:column>
+                 
+                 
+                 <p:column id="lastupdated" sortBy="#{exceptionValue.lastupdated}" filterBy="#{exceptionValue.lastupdated}" filterMatchMode="contains" style="width: 15%!important;" >
+                     <f:facet name="header">
+                        <h:outputText value="Last Updated"/>
+                    </f:facet>
+                <h:outputText value="#{exceptionValue.lastupdated}"/>
+                </p:column>
+                 
+                  <p:column id="statusId" sortBy="#{exceptionValue.statusId}" filterBy="#{exceptionValue.statusId}" filterMatchMode="contains" style="width: 10%!important;" >
+                     <f:facet name="header">
+                        <h:outputText value="StatusId"/>
+                    </f:facet>
+                <h:outputText value="#{exceptionValue.statusId}"/>
+                </p:column>
+               
+          </p:dataTable> 
+ 
+ 
+ 
+ </h:form>
+ </div>
+ </ui:define>
+ </ui:composition>
+ </h:body>
+ </html>

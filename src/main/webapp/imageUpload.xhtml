@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      
+      <h:head>
+        
+      <!-- Bootstrap and PrimeFaces javascripts -->
+        <h:outputScript library="primefaces" name="jquery/jquery.js"/>
+        <h:outputScript name="bootstrap.min.js" library="js"/>
+		
+      
+          <!-- Stylesheets -->
+        <h:outputStylesheet name="logo-nav.css" library="css"/>
+        <h:outputStylesheet name="bootstrap.min.css" library="css"/>
+		
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/favicon.ico"/>
+
+     
+     
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+  <!-- CSS Files -->
+ <link href="resources/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="resources/css/demo/demo.css" rel="stylesheet" />
+  </h:head>
+  
+       <h:body>
+
+        
+  <ui:composition template="/WEB-INF/facelets/template.xhtml">
+  <ui:param name="page" value="Image upload" />
+  <ui:define name="title">Image Upload
+  <div class="card">
+  <h:form  id="form" enctype="multipart/form-data">
+  
+  			<p:panel>   
+                <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                    <h:outputText style="font-weight: bold;color: red" value="#{imageUploadService.updateResult}" />
+                </p:panelGrid>
+             </p:panel>
+             
+             <p:panel style="background-image: url('back1.jpg'); "> 
+            
+                <p:panelGrid columns="2" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                
+                 
+                 
+                     
+                     <h:outputText style="font-weight: bold" value="Image Name : " />
+                    <h:inputText id="name"  value="#{imageUploadService.imageName}" required="true" >
+                    </h:inputText>
+                    
+               
+                  
+                     <h:outputText style="font-weight: bold" value="Image Upload : " />
+                      <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                                     <p:fileUpload id="upload"  value="#{imageUploadService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/> 
+            
+				        		 
+        			  </p:panelGrid>
+        			
+                    
+     
+                   
+                            
+                       
+                       
+                   <h:commandButton value="Submit"   type="submit" 
+                                    process="@this"
+                                    update="@form"
+                                    actionListener="#{imageUploadService.upload}" >
+                                    <p:resetInput target="form"/>
+                   </h:commandButton>
+                   
+                   <h:commandButton id="discardChangesButton"
+	                                   process="@this"
+	                                   value="Clear"
+                                           update="@form"
+	                                   actionListener="#{imageUploadService.clear()}" >
+	                                   
+	                   <p:resetInput target="form"/>
+	             </h:commandButton>
+                </p:panelGrid>                     
+                    
+                    
+                          
+                       
+            </p:panel>
+            
+  
+  
+    
+  </h:form>
+</div>
+</ui:define>
+</ui:composition>
+</h:body>
+</html>

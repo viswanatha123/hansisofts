@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+       <h:body>
+
+        
+  <ui:composition template="/WEB-INF/facelets/template.xhtml">
+  <ui:param name="page" value="Admin" />
+  <ui:define name="title">Admin
+  <div class="card">
+  <h:form id="form">
+  
+  
+  			<p:panel>   
+                <p:panelGrid columns="2" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                
+           
+                    <h:outputText style="font-weight: bold" value="User Name : " />
+                    <h:inputText id="name"  value="#{adminLoginService.userName}" required="true" requiredMessage="User name is required">
+                    </h:inputText>
+                    
+                    <h:outputText style="font-weight: bold" value="Password : " />
+                    <h:inputSecret id="password"  value="#{adminLoginService.password}"   required="true" requiredMessage="Password is required">
+                    </h:inputSecret>  
+                    
+                    
+                       
+                <h:commandButton value="submit" action="#{adminLoginService.navegateToAdminLoginPage}" >
+				</h:commandButton>
+
+                    
+                     
+                   <h:commandButton id="discardChangesButton"
+	                                   process="@this"
+	                                   value="Clear"
+                                           update="@form"
+	                                   action="#{adminLoginService.clear()}" >
+	                                   
+	                   <p:resetInput target="form"/>
+	          </h:commandButton>
+                    
+               </p:panelGrid>                     
+              </p:panel>
+            
+  
+  
+  
+</h:form>
+</div>
+</ui:define>
+</ui:composition>
+</h:body>
+</html>
+      
