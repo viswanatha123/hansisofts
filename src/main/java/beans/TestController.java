@@ -21,10 +21,6 @@ public class TestController {
     }
  
     
-    // this is dummy methiod
-    public void dummyMethod()
-    {
-    	System.out.println("this is dummy method");
-    }
+
 
 }
