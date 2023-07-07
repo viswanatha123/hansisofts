@@ -19,7 +19,12 @@ public class TestController {
     public void testFunction3() {
         EventHandler.alertUserFatal("Function 3", "Fatal, your webapp is about to crash! (just kidding)");
     }
-    // visu
-    //branch yyy
+ 
+    
+    // this is dummy methiod
+    public void dummyMethod()
+    {
+    	System.out.println("this is dummy method");
+    }
 
 }
