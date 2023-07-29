@@ -17,11 +17,15 @@
   <br></br>
   
   			<center>
-  			  <p:panel  style="background: #800000;width:50%; height:45px;font-size: 15px" >
+  			  <p:panel  style="background: #800000;width:80%; height:45px;font-size: 15px" >
 		           
-		                  <h:panelGrid columns="4" cellpadding="5" style="width: 100%;"> 
+		                  <h:panelGrid columns="6" cellpadding="5" style="width: 100%;"> 
 		                      <h:outputText style="font-weight: bold; font-size: 14px;color:white; text-align:left;" value="FAQ   : " />
 		                      <h:inputText id="name"  value="#{helpService.query}" required="true" requiredMessage="FAQ is required">
+		                      </h:inputText>
+		                      
+		                      <h:outputText style="font-weight: bold; font-size: 14px;color:white; text-align:left;" value="Phone No   : " />
+		                       <h:inputText id="phone"   value="#{helpService.phone}" required="true" requiredMessage="Phone No is required">
 		                      </h:inputText>
 		            
              

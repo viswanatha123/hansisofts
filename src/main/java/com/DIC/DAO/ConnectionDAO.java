@@ -9,24 +9,38 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class ConnectionDAO {
 	
+	
+
+	
+		
+<<<<<<< HEAD
+	
 	  //Hani Prod Database
-		private final static String url="jdbc:postgresql://localhost:5432/postgres";
+		//private final static String url="jdbc:postgresql://localhost:5432/postgres";
+=======
+		
+	  //Hani QA Database
+		//private final static String url="jdbc:postgresql://localhost:5432/qa";
+>>>>>>> f31b32de0749cc34b3ce7ce1d6cb96219581a97d
+		//private final static String username="postgres";
+		//private final static String password="admin";
+		
+	  //Hani QA Database
+		private final static String url="jdbc:postgresql://localhost:5432/qa";
 		private final static String username="postgres";
 		private final static String password="admin";
 		
 		
-	  //Hani QA Database
-		//private final static String url="jdbc:postgresql://localhost:5432/qa";
-		//private final static String username="postgres";
-		//private final static String password="admin";
-		
-		
 		//New prod
+		
 	     private final static String urlnew="jdbc:postgresql://lnx1540.ch3.prod.i.com:5432/db_internalapp_intgtncloud_prod_01";
 	     private final static String usernamenew="vis_rep_connectors_p1";
 	     private final static String passwordnew="Passw0rd";
 		
 		public ConnectionDAO() {
+			
+	
+			
 	    }
 		
 		public static Connection getConnection()
