@@ -13,9 +13,15 @@ public class ConnectionDAO {
 
 	
 		
+<<<<<<< HEAD
 	
 	  //Hani Prod Database
 		//private final static String url="jdbc:postgresql://localhost:5432/postgres";
+=======
+		
+	  //Hani QA Database
+		//private final static String url="jdbc:postgresql://localhost:5432/qa";
+>>>>>>> f31b32de0749cc34b3ce7ce1d6cb96219581a97d
 		//private final static String username="postgres";
 		//private final static String password="admin";
 		
