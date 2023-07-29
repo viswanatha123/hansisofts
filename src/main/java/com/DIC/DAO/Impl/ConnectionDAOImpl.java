@@ -21,6 +21,7 @@ import com.DIC.model.AgriculturalModel;
 import com.DIC.model.ConnectorMode;
 import com.DIC.model.EnquiryDataEntryModel;
 import com.DIC.model.ExceptionValueModel;
+import com.DIC.model.HelpModel;
 import com.DIC.model.ImageUploadModel;
 import com.DIC.model.IndiSiteDataEntryModel;
 import com.DIC.model.IndividualSiteModel;
@@ -81,6 +82,11 @@ public class ConnectionDAOImpl {
 			
 			String SQL_AGRIDATAENTRY_INSERT = "INSERT INTO hansi_agricultural (agri_id,owner_name, contact_no, survey_no, location, wonership, transaction, per_cent, number_cents, water_source, crop, prim_location, seco_location, create_date, is_active, comment,agent_name,cost,image) VALUES(nextval('hansi_agricultural_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp, 1, ?,?,?,?)";
 			String SQL_ENQU_INSERT="INSERT INTO hansi_enquiry (enqi_id, name, email, phone, create_date, is_active) VALUES(nextval('hansi_enquiry_seq'),?, ?, ?, current_timestamp, 1)";
+			String SQL_HELP_INSERT="INSERT INTO hansi_help (query_id, query, phone, create_date,is_active) VALUES(nextval('hansi_help_seq'),?, ?, current_timestamp,1)";
+			
+			//String SQL_ENQU_INSERT="INSERT INTO hansi_enquiry (enqi_id, name, email, phone, create_date, is_active) VALUES(nextval('hansi_enquiry_seq'),?, ?, ?, current_timestamp, 1)";
+			
+			
 			String SQL_IMAGE_UPLOAD="insert into hansi_property_image (prop_img_id,img_name,image) values (nextval('hansi_imageUpload_seq'),?,?)";
 			
 			String SQL_IMAGE_DEFAULT="select image from hansi_property_image where prop_img_id=6";
@@ -926,6 +932,50 @@ public class ConnectionDAOImpl {
         
         return 1;
     }
+    
+    //***************************************** Question updated ***********************************
+    
+    public int updateHelpDataEntry(HelpModel helpModel)
+    {
+        try {
+            Connection con = null;
+            PreparedStatement pstmt = null;
+            con=ConnectionDAO.getConnection();
+            
+            StringBuilder sql_help_insert = new StringBuilder(Constants.SQL.SQL_HELP_INSERT);
+            
+            pstmt = con.prepareStatement(sql_help_insert.toString());
+            
+            pstmt.setString(1,helpModel.getQuery());
+            pstmt.setString(2, helpModel.getPhone());
+           
+                 
+           
+            int res=pstmt.executeUpdate();
+            if(res > 0)
+            {
+               return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        
+   
+        
+        } catch (Exception e) {
+                
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	      //System.exit(0);
+	}
+      
+        
+        return 1;
+    }
+    
+    
+    
 
     //***************************************** Upload Image ***********************************
     
