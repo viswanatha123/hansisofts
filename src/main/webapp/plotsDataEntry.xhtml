@@ -39,32 +39,34 @@
                 
                     
             
-                    <p:outputLabel style="font-weight: bold" value="Layout Name : " />
+                    <p:outputLabel required="true" style="font-weight: bold" for="name" indicateRequired="true" value="Layout Name : " />
                     <p:inputText id="name" value="#{plotsDataEntryService.name}" required="true" requiredMessage="Required Layout Name">
                     </p:inputText>
                     <p:message for="name" display="icon"/>
                     
-                    <p:outputLabel style="font-weight: bold" value="Location : " />
+                    <p:outputLabel style="font-weight: bold" value="Address : " />
                     <p:inputText id="location"  value="#{plotsDataEntryService.location}" >
                     </p:inputText>
                     <p:message for="location" display="icon"/>
                     
-                    <p:outputLabel style="font-weight: bold" value="PerSqFt : " />
-                    <p:inputNumber id="persqft"  value="#{plotsDataEntryService.persqft}" required="true" requiredMessage="Required Length" minValue="1"  decimalPlaces="0" modifyValueOnWheel="false" >
+                    <p:outputLabel style="font-weight: bold" for="persqft" indicateRequired="true" value="Per Squar Feet(Cost) : " />
+                    <p:inputNumber id="persqft"  value="#{plotsDataEntryService.persqft}" required="true" requiredMessage="Required Length"  modifyValueOnWheel="false" >
                    </p:inputNumber>
                     <p:message for="persqft" display="icon"/>
                     
                      
-                    <p:outputLabel style="font-weight: bold" value="Agent Name : " />
-                    <p:inputText id="agentName"  value="#{plotsDataEntryService.agentName}" >
+                    <p:outputLabel style="font-weight: bold" for="agentName" indicateRequired="true" value="Agent Name : " />
+                    <p:inputText id="agentName"  required="true" value="#{plotsDataEntryService.agentName}" >
                     </p:inputText> 
                     <p:message for="agentName" display="icon"/>
                                   
                     
-                    <p:outputLabel style="font-weight: bold" value="Agent Contact No : " />
-                    <p:inputText id="contactOwner"  value="#{plotsDataEntryService.contactOwner}" >
+                    <p:outputLabel style="font-weight: bold" for="contactOwner" indicateRequired="true" value="Agent Contact No : " />
+                    <p:inputText id="contactOwner"  required="true"  maxlength="10" value="#{plotsDataEntryService.contactOwner}" >
+                    	<p:keyFilter mask="num" />
                     </p:inputText>
                     <p:message for="contactOwner" display="icon"/>
+            		
                     
                     <p:outputLabel style="font-weight: bold" value="Owner Name : " />
                     <p:inputText id="ownerName"  value="#{plotsDataEntryService.ownerName}" >
@@ -73,7 +75,7 @@
                     
                    
                    <p:outputLabel for="wonership" value="Woner Ship : " />  
-                            <p:selectOneMenu id="wonership" required="true"  value="#{plotsDataEntryService.wonership}" requiredMessage="Woner Ship" style="width:150px">  
+                            <p:selectOneMenu id="wonership" value="#{plotsDataEntryService.wonership}" requiredMessage="Woner Ship" style="width:150px">  
                                 <f:selectItem itemLabel="Freehold" itemValue="Freehold"/>
                                 <f:selectItem itemLabel="Buying" itemValue="Buying"/>
                             </p:selectOneMenu>
@@ -94,14 +96,14 @@
                     </p:inputText>
                     <p:message for="comment" display="icon"/>
                     
-                     <p:outputLabel style="font-weight: bold" value="Length : " />
-                    <p:inputNumber id="length" value="#{plotsDataEntryService.length}" required="true" requiredMessage="Required Length" minValue="1"  decimalPlaces="0" modifyValueOnWheel="false">
+                    <p:outputLabel style="font-weight: bold" for="length" indicateRequired="true" value="Length (Feets)  : " />
+                    <p:inputNumber id="length" value="#{plotsDataEntryService.length}" required="true" requiredMessage="Required Length"  decimalPlaces="0" modifyValueOnWheel="false">
                     </p:inputNumber>
                     <p:message for="length" display="icon"/>
                      
                      
-                    <p:outputLabel style="font-weight: bold" value="Width : " />
-                    <p:inputNumber id="width" value="#{plotsDataEntryService.width}" required="true" requiredMessage="Required Width" minValue="1"  decimalPlaces="0" modifyValueOnWheel="false">
+                    <p:outputLabel style="font-weight: bold" for="width" indicateRequired="true" value="Width (Feets)  : " />
+                    <p:inputNumber id="width" value="#{plotsDataEntryService.width}" required="true" requiredMessage="Required Width"  decimalPlaces="0" modifyValueOnWheel="false">
                     </p:inputNumber>
                     <p:message for="width" display="icon"/>
           
@@ -127,7 +129,7 @@
                             </p:selectOneMenu> 
                             <p:message for="swimingPool" display="icon"/>
                       
-                      <p:outputLabel for="playground" value="Playground : " />  
+                      <p:outputLabel for="playground" value="Play Ground : " />  
                             <p:selectOneMenu id="playground" value="#{plotsDataEntryService.playground}" style="width:150px">  
                              <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                              <f:selectItem itemLabel="No" itemValue="No"/>
@@ -135,21 +137,21 @@
                             <p:message for="playground" display="icon"/>
                       
                       <p:outputLabel for="park" value="Park : " />  
-                            <p:selectOneMenu id="park" value="#{plotsDataEntryService.park}" style="width:150px">  
+                            <p:selectOneMenu id="park" value="#{plotsDataEntryService.park}"  style="width:150px">  
                              <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                              <f:selectItem itemLabel="No" itemValue="No"/>
                             </p:selectOneMenu>
                             <p:message for="park" display="icon"/>
                       
-                      <p:outputLabel for="wall" value="Boundary Wall : " />  
-                            <p:selectOneMenu id="wall" value="#{plotsDataEntryService.wall}" style="width:150px">  
+                      <p:outputLabel for="wall" value="Compound Wall : " />  
+                            <p:selectOneMenu id="wall" value="#{plotsDataEntryService.wall}"  style="width:150px">  
                              <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                              <f:selectItem itemLabel="No" itemValue="No"/>
                             </p:selectOneMenu>
                             <p:message for="wall" display="icon"/>
                     
-                      <p:outputLabel for="community" value="Greater Community : " />  
-                            <p:selectOneMenu id="community" value="#{plotsDataEntryService.community}" style="width:150px">  
+                      <p:outputLabel for="community" value="Gated Community(Security) : " />  
+                            <p:selectOneMenu id="community" value="#{plotsDataEntryService.community}"  style="width:150px">  
                             <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                              <f:selectItem itemLabel="No" itemValue="No"/>
                             </p:selectOneMenu>
