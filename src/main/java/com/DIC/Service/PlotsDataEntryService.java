@@ -50,14 +50,9 @@ public class PlotsDataEntryService implements Serializable{
 	  
 	  private String name;
 	  private String location;
-	  //private int persqft;
-	  private Double persqft = Double.valueOf(0);
-	  
-
-
-
-
-	private int plotarea;
+	  private int persqft;
+	  //private Double persqft = Double.valueOf(0);
+	  private int plotarea;
 	  private String contactOwner;
 	  private String ownerName;
 	  private String wonership;
@@ -90,7 +85,8 @@ public class PlotsDataEntryService implements Serializable{
 	   
 	   public PlotsDataEntryService()
 	   {
-		   persqft=0d;
+		   //persqft=0;
+		   //persqft=0d;
 		   
 	   }
 	   
@@ -475,11 +471,11 @@ public class PlotsDataEntryService implements Serializable{
 				this.agentName = agentName;
 			}
 			
-			public Double getPersqft() {
+			public int getPersqft() {
 				return persqft;
 			}
 
-			public void setPersqft(Double persqft) {
+			public void setPersqft(int persqft) {
 				this.persqft = persqft;
 			}
 	      

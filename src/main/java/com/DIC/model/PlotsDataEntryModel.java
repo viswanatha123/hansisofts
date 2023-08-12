@@ -9,9 +9,9 @@ public class PlotsDataEntryModel implements Serializable{
 	
 	private String name;
 	private String location;
-	//private int persqft;
+	private int persqft;
 	
-	  private Double persqft = Double.valueOf(0);
+	//private Double persqft = Double.valueOf(0);
 
 
 
@@ -229,11 +229,11 @@ public class PlotsDataEntryModel implements Serializable{
 			this.agentName = agentName;
 		}
 		
-		public Double getPersqft() {
+		public int getPersqft() {
 			return persqft;
 		}
 
-		public void setPersqft(Double persqft) {
+		public void setPersqft(int persqft) {
 			this.persqft = persqft;
 		}
 	    

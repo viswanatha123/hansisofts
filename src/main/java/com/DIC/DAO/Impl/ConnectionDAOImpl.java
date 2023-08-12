@@ -947,7 +947,7 @@ public class ConnectionDAOImpl {
             pstmt = con.prepareStatement(sql_help_insert.toString());
             
             pstmt.setString(1,helpModel.getQuery());
-            pstmt.setString(2, helpModel.getPhone());
+            pstmt.setLong(2, helpModel.getPhone());
            
                  
            
