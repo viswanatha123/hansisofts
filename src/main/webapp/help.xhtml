@@ -14,19 +14,23 @@
   <ui:define name="title">Help
   <div class="card">
   <h:form id="form">
+  <p:messages id="msgs"/>
   <br></br>
   
   			<center>
-  			  <p:panel  style="background: #800000;width:80%; height:45px;font-size: 15px" >
+  			  <p:panel  style="background: #B0C4DE;width:80%; height:45px;font-size: 15px" >
+  			  
 		           
 		                  <h:panelGrid columns="6" cellpadding="5" style="width: 100%;"> 
-		                      <h:outputText style="font-weight: bold; font-size: 14px;color:white; text-align:left;" value="FAQ   : " />
-		                      <h:inputText id="name"  value="#{helpService.query}" required="true" requiredMessage="FAQ is required">
-		                      </h:inputText>
+		                      <p:outputLabel style="font-weight: bold; font-size: 14px;color:black; text-align:left;" for="name" indicateRequired="true" value="FAQ   : " />
+		                      <p:inputText id="name"  required="true" value="#{helpService.query}"  requiredMessage="FAQ is required">
+		                      </p:inputText>
 		                      
-		                      <h:outputText style="font-weight: bold; font-size: 14px;color:white; text-align:left;" maxlength="10" value="Phone No   : " />
-		                       <h:inputText id="phone"   value="#{helpService.phone}" required="true" requiredMessage="Phone No is required">
-		                      </h:inputText>
+		                      <p:outputLabel style="font-weight: bold; font-size: 14px;color:black; text-align:left;" for="phone" indicateRequired="true"  value="Phone No   : " />
+							  <p:inputText id="phone"   required="true" maxlength="10" value="#{helpService.phone}"   requiredMessage="Phone No is required">
+									<p:keyFilter mask="num" />
+							  </p:inputText>
+							  
 		            
              
 		                		<h:commandButton value="submit" action="#{helpService.submitHelp}" >
@@ -45,8 +49,8 @@
 		                    
 		                 
                			</h:panelGrid>                    
-              </p:panel>
-  
+              
+  			</p:panel>
 			</center>
   
  </h:form>

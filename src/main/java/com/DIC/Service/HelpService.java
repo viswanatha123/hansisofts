@@ -18,7 +18,7 @@ public class HelpService implements Serializable{
 	private static final Logger log = Logger.getLogger(HelpService.class.getName());
 	
 	private String query;
-	private long phone;
+	private String phone;
 	
 	
 	 ConnectionDAOImpl dao;
@@ -33,18 +33,18 @@ public class HelpService implements Serializable{
 	}
 	
 	
-	 public long getPhone() {
+	 public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(long phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
 	public void clear()
      {
 		 this.query="";
-		 this.phone=0;
+		 this.phone="";
      }
 	
 	
@@ -57,7 +57,7 @@ public class HelpService implements Serializable{
 			 log.info("calling submitEnquiry()");
 		    	String pageName="adminLoginError";
 		    	
-		            if(query!=null &&  phone!=0)
+		            if(query!=null &&  phone!=null)
 		            {
 		            	log.info("Query :"+query+",  phone :"+phone);
 		            	
@@ -81,7 +81,7 @@ public class HelpService implements Serializable{
 		            
 		            }
 		            this.query="";
-		            this.phone=0;
+		            this.phone="";
 		           
 		            
 		          

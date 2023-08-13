@@ -6,19 +6,19 @@ public class HelpModel implements Serializable{
 	
 	
 	private String query;
-	private long phone;
+	private String phone;
 	
 	
 	public String getQuery() {
 		return query;
 	}
-	public long getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 	public void setQuery(String query) {
 		this.query = query;
 	}
-	public void setPhone(long phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	
