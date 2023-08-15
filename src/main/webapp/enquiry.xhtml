@@ -14,31 +14,39 @@
   <ui:define name="title">Enquiry
   <div class="card">
   <h:form id="form">
+  <p:messages id="msgs"/>
   <br></br>
   
   			<center>
-  			  <p:panel  style="background: #800000;width:50%; height:300px;font-size: 15px" >
+  			  <p:panel  style="background: #B0C4DE;width:50%; height:300px;font-size: 15px" >
 		            <br></br><br></br>
-		             <h:outputText style="font-weight: bold; font-size: 14px;color:white; text-align:left;" value="Please provide your contact details. " />
-		             <h:outputText style="font-weight: bold; font-size: 14px;color:white; text-align:left;" value="We will contact you soon. " />
+		             <h:outputText style="font-weight: bold; font-size: 14px;color:black; text-align:left;" value="Please provide your contact details. " />
+		             <h:outputText style="font-weight: bold; font-size: 14px;color:black; text-align:left;" value="We will contact you soon. " />
 		             <br></br><br></br>
 		             
-		                <h:panelGrid columns="2" cellpadding="5" style="width: 50;"> 
-		                      <h:outputText style="font-weight: bold; font-size: 14px;color:white; text-align:left;" value="Name : " />
-		                      <h:inputText id="name"  value="#{enquiryService.name}" required="true" requiredMessage="Name is required">
+		                <h:panelGrid columns="3" cellpadding="5" style="width: 50;"> 
+		                      <h:outputText style="font-weight: bold; font-size: 14px;color:black; text-align:left;" value="Name : " />
+		                      <h:outputText style="font-weight: bold; font-size: 14px;color:#B0C4DE; text-align:left;" value="space" />
+		                      <h:inputText id="name" size="30" value="#{enquiryService.name}"  requiredMessage="Name is required">
 		                      </h:inputText>
 		                    
-		                    <h:outputText style="font-weight: bold; font-size: 14px;color:white; text-align:left;" value="Email : " />
-		                    <h:inputText id="email"  value="#{enquiryService.email}" required="true" requiredMessage="Email is required">
+		                    <h:outputText style="font-weight: bold; font-size: 14px;color:black; text-align:left;" value="Email : " />
+		                    <h:outputText style="font-weight: bold; font-size: 14px;color:#B0C4DE; text-align:left;" value="space" />
+		                    <h:inputText id="email"  size="30" value="#{enquiryService.email}"  validatorMessage="Invalid email format">
+		                     <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 		                    </h:inputText> 
+		              		                    
+		                     <p:outputLabel style="font-weight: bold; font-size: 14px;color:black; text-align:left;" for="phone" indicateRequired="true"  value="Phone No  :  " />
+		                     <h:outputText style="font-weight: bold; font-size: 14px;color:#B0C4DE; text-align:left;" value="space" />
+							  <p:inputText id="phone"  size="31" required="true" maxlength="10" value="#{enquiryService.phone}"    requiredMessage="Phone No is required">
+									<p:keyFilter mask="num" />
+							 </p:inputText>
+		                    
+		                    <h:outputText style="font-weight: bold; font-size: 14px;color:#B0C4DE; text-align:left;" value="space" />
+		                    <h:outputText style="font-weight: bold; font-size: 14px;color:#B0C4DE; text-align:left;" value="space" />
 		                    
 		                    
-		                    <h:outputText style="font-weight: bold; font-size: 14px;color:white; text-align:left; " value="Phone : " />
-		                    <h:inputText id="phone"  value="#{enquiryService.phone}" required="true" requiredMessage="Phone is required">
-		                    </h:inputText>
-		                    
-		                    <h:outputText style="font-weight: bold; font-size: 14px;color:#800000; text-align:left;" value="space" />
-		                    <h:outputText style="font-weight: bold; font-size: 14px;color:#800000; text-align:left;" value="space" />
+		                   
 		                    
 		   				<h:outputText/>
 		   				<h:outputText/>
