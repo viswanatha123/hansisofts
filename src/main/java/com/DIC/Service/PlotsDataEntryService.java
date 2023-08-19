@@ -43,7 +43,8 @@ import org.primefaces.model.file.UploadedFile;
 import org.primefaces.util.EscapeUtils;
 
 @ManagedBean(name="plotsDataEntryService")
-@SessionScoped
+//@SessionScoped
+@ViewScoped
 public class PlotsDataEntryService implements Serializable{
 	
 	  private static final Logger log = Logger.getLogger(PlotsDataEntryService.class.getName());
@@ -73,98 +74,34 @@ public class PlotsDataEntryService implements Serializable{
       
      
 
-	  private final Map<String,Map<String,String>> data = new HashMap<>();
+	  //private final Map<String,Map<String,String>> data = new HashMap<>();
 	  private String country;   
-	  private String city;    
-	  private Map<String,String> countries;  
-	  private Map<String,String> cities; 
-
-
-
+	  private String city;  
+	  private Map<Long, String> primaryModel;
+	  private Map<String,String> primLocation; 
+	  private List<String> secondryLocation;
+	  	  
+	  
 	   ConnectionDAOImpl dao;
 	   
 	   public PlotsDataEntryService()
 	   {
-		   //persqft=0;
-		   //persqft=0d;
-		   
 	   }
 	   
-	      @PostConstruct 
-	      public void init()
+	   @PostConstruct 
+	   public void init()
 	      {
 	          log.log(Level.INFO, "Loading PlotsDataEntryService init()");
-	          countries  = new HashMap<>();  
-	                      //countries.put("USA", "USA");  
-	                      //countries.put("India", "India");  
-	                      //countries.put("Russia", "Russia"); 
-	                      countries.put("Anantapur", "Anantapur"); 
-	                      countries.put("Kadapa", "Kadapa");
-	                      countries.put("Kurnool", "Kurnool");
-	                      countries.put("Tirupati", "Tirupati");
-	                      countries.put("Chittoor", "Chittoor");
-	                      countries.put("Bangalore", "Bangalore");
-	                      countries.put("Ballari", "Ballari");
-	                      
-	                      Map<String,String> map = new HashMap<>();  
-	                     
-	                      //****Anantapur*****//
-	                      map = new HashMap<>();  
-	                      map.put("Kadiri", "Kadiri");  
-	                      map.put("Kadiri Rural", "Kadiri Rural");
-	                      map.put("Anantapur", "Anantapur");
-	                      map.put("Anantapur Rural", "Anantapur Rural");
-		                  map.put("Hindupur", "Hindupur");  
-	                      map.put("Dharmavaram", "Dharmavaram"); 
-	                      map.put("Tadipatri", "Tadipatri"); 
-	                      map.put("Tadipatri Rural", "Tadipatri Rural");
-	                      map.put("Gooty", "Gooty");
-	                      map.put("Gooty Rural", "Gooty Rural");
-	                      data.put("Anantapur", map);
-	                      
-	                      map = new HashMap<>();  
-	                      map.put("Pulivendula", "Pulivendula");
-	                      map.put("Pulivendula Rural", "Pulivendula Rural");
-	                      map.put("Kadapa", "Kadapa");
-	                      map.put("Kadapa Rural", "Kadapa Rural");
-	                      map.put("Proddatur", "Proddatur");
-		                  map.put("Proddatur Rural", "Proddatur Rural");
-	                      data.put("Kadapa", map);
-	                      
-	                      map = new HashMap<>();  
-		                  map.put("Kurnool", "Kurnool");
-		                  map.put("Kurnool Rural", "Kurnool Rural");
-		                  data.put("Kurnool", map);
-		                  
-		                  map = new HashMap<>();  
-		                  map.put("Tirupati", "Tirupati");
-		                  map.put("Tirupati Rural", "Tirupati Rural");
-		                  data.put("Tirupati", map);
-		                  
-		                  
-		                  map = new HashMap<>();  
-		                  map.put("Chittoor", "Chittoor");
-		                  map.put("Chittoor Rural", "Chittoor Rural");
-		                  data.put("Chittoor", map);
-	                      
-	                      //****Bangalore*****
-	                      map = new HashMap<>();  
-	                      map.put("Hoskote", "Hoskote");  
-	                      map.put("TinFactory", "TinFactory");  
-	                      map.put("K R Puram", "K R Puram"); 
-	                      map.put("Maratha Halli", "Maratha Halli");
-	                      map.put("Belathuru", "Belathuru");
-	                      map.put("Whitefield", "Whitefield");
-	                      map.put("H Cross", "H Cross");
-	                      data.put("Bangalore", map);
-	                      
-	                      
-	                    //****Ballari*****
-	                      map = new HashMap<>();  
-	                      map.put("Ballari", "Ballari");  
-	                      map.put("Ballari Rural", "Ballari Rural");  
-	                      data.put("Ballari", map);
-	          
+	          dao=new ConnectionDAOImpl();
+	          primaryModel=dao.getPrimaryLocation();
+              primLocation  = new HashMap<>(); 
+              for(Map.Entry<Long, String> pp:primaryModel.entrySet())
+              {
+            	  log.log(Level.INFO, "Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
+            	  
+            	  primLocation.put(pp.getValue(), pp.getValue());
+            	  
+              }
 	          
 	      }
 	      
@@ -174,10 +111,7 @@ public class PlotsDataEntryService implements Serializable{
 	               
 	                
 	                log.log(Level.INFO, "Selected county and city ---------->:"+country+"     "+city);
-	  	          
-	  	     
-	  	          dao=new ConnectionDAOImpl();
-	  	          
+	  	         
 	  	          PlotsDataEntryModel plotsDataEntryModel=new PlotsDataEntryModel();
 	  	          plotsDataEntryModel.setName(name);
 	  	          plotsDataEntryModel.setLocation(location);
@@ -236,12 +170,12 @@ public class PlotsDataEntryService implements Serializable{
 	    
 	    
 	     public void onCountryChange() {  
-	          if(country !=null && !country.equals(""))  
-	          cities = data.get(country);  
-	          else  
-	          cities = new HashMap<>();  
-	          }  	
-
+	          if(country !=null && !country.equals("")) 
+	          {
+				  secondryLocation=dao.getSecondryLocation(country);
+	          }
+	          	
+	     }
 	    
 	      
 	      public void clear()
@@ -295,24 +229,6 @@ public class PlotsDataEntryService implements Serializable{
 		          this.city = city;
 		      }
 
-		      public Map<String, String> getCountries() {
-		          return countries;
-		      }
-
-		      public void setCountries(Map<String, String> countries) {
-		          this.countries = countries;
-		      }
-
-		      public Map<String, String> getCities() {
-		          return cities;
-		      }
-
-		      public void setCities(Map<String, String> cities) {
-		          this.cities = cities;
-		      }
-		      
-		   
-		   
 		      public String getLocation() {
 		          return location;
 		      }
@@ -321,17 +237,7 @@ public class PlotsDataEntryService implements Serializable{
 		          this.location = location;
 		      }
 
-		      /*
-		      public int getPersqft() {
-		          return persqft;
-		      }
-
-		      public void setPersqft(int persqft) {
-		          this.persqft = persqft;
-		      }
-
-		   */
-		      public int getPlotarea() {
+		       public int getPlotarea() {
 		          return plotarea;
 		      }
 
@@ -477,6 +383,31 @@ public class PlotsDataEntryService implements Serializable{
 
 			public void setPersqft(int persqft) {
 				this.persqft = persqft;
+			}
+			
+			 public Map<Long, String> getPrimaryModel() {
+					return primaryModel;
+			}
+
+			public void setPrimaryModel(Map<Long, String> primaryModel) {
+					this.primaryModel = primaryModel;
+			}
+			
+			
+			public Map<String, String> getPrimLocation() {
+				return primLocation;
+			}
+
+			public List<String> getSecondryLocation() {
+				return secondryLocation;
+			}
+
+			public void setPrimLocation(Map<String, String> primLocation) {
+				this.primLocation = primLocation;
+			}
+
+			public void setSecondryLocation(List<String> secondryLocation) {
+				this.secondryLocation = secondryLocation;
 			}
 	      
 

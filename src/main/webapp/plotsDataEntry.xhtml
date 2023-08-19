@@ -111,14 +111,14 @@
                             <p:selectOneMenu id="country" value="#{plotsDataEntryService.country}" style="width:150px" required="true" requiredMessage="Select Primary Location">  
                             <p:ajax listener="#{plotsDataEntryService.onCountryChange}" update="city" />  
                             <f:selectItem itemLabel="Primary Location" itemValue="" noSelectionOption="true"/>  
-                            <f:selectItems value="#{plotsDataEntryService.countries}" />  
+                            <f:selectItems value="#{plotsDataEntryService.primLocation}" />  
                             </p:selectOneMenu>
                             <p:message for="country" display="icon"/>
                    
                       <p:outputLabel for="city" value="Secondry Location : " />  
                             <p:selectOneMenu id="city" value="#{plotsDataEntryService.city}" style="width:150px" required="true" requiredMessage="Select Secondry Location">  
                             <f:selectItem itemLabel="Secondry Location" itemValue="" noSelectionOption="true" />  
-                            <f:selectItems value="#{plotsDataEntryService.cities}" />  
+                            <f:selectItems value="#{plotsDataEntryService.secondryLocation}" />  
                             </p:selectOneMenu> 
                             <p:message for="city" display="icon"/>
                       

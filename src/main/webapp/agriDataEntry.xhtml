@@ -60,25 +60,25 @@
                 
                     
             
-			                    <h:outputText style="font-weight: bold" value="Owner Name : " />
-			                    <h:inputText id="name" required="true" value="#{agriculturalDataEntryhService.ownerName}" >
-			                    </h:inputText>
+			                    <p:outputLabel style="font-weight: bold" value="Owner Name : " />
+			                    <p:inputText id="name"  value="#{agriculturalDataEntryhService.ownerName}" >
+			                    </p:inputText>
 			                    
-			                    <h:outputText style="font-weight: bold" value="Agent Name : " />
-			                    <h:inputText id="agentName" required="true" value="#{agriculturalDataEntryhService.agentName}" >
-			                    </h:inputText>
+			                    <p:outputLabel style="font-weight: bold" value="Agent Name : " />
+			                    <p:inputText id="agentName"  value="#{agriculturalDataEntryhService.agentName}" >
+			                    </p:inputText>
 			                    
-			                    <h:outputText style="font-weight: bold" value="Agent Contact No : " />
-			                    <h:inputText id="contactno" required="true" value="#{agriculturalDataEntryhService.contactNo}" >
-			                    </h:inputText>
+			                    <p:outputLabel style="font-weight: bold" value="Agent Contact No : " />
+			                    <p:inputText id="contactno"  value="#{agriculturalDataEntryhService.contactNo}" >
+			                    </p:inputText>
 			                    
-			                    <h:outputText style="font-weight: bold" value="Survey No : " />
-			                    <h:inputText id="surveyNo" required="true" value="#{agriculturalDataEntryhService.surveyNo}" >
-			                    </h:inputText>
+			                    <p:outputLabel style="font-weight: bold" value="Survey No : " />
+			                    <p:inputText id="surveyNo"  value="#{agriculturalDataEntryhService.surveyNo}" >
+			                    </p:inputText>
 			                    
-			                    <h:outputText style="font-weight: bold" value="Location : " />
-			                    <h:inputText id="location" required="true" value="#{agriculturalDataEntryhService.location}" >
-			                    </h:inputText>
+			                    <p:outputLabel style="font-weight: bold" value="Location : " />
+			                    <p:inputText id="location"  value="#{agriculturalDataEntryhService.location}" >
+			                   </p:inputText>
 			                    
 			                    <p:outputLabel for="wonership" value="Woner Ship : " />  
 			                            <p:selectOneMenu id="wonership" required="true"  value="#{agriculturalDataEntryhService.wonership}" requiredMessage="Woner Ship" style="width:150px">  
@@ -93,14 +93,14 @@
 			                            </p:selectOneMenu>
                     
                     
-			                    <h:outputText style="font-weight: bold" value="Per Cent : " />
-			                    <h:inputText id="perCent" required="true" value="#{agriculturalDataEntryhService.perCent}" >
-			                    </h:inputText>  
+			                    <p:outputLabel style="font-weight: bold" value="Per Cent : " />
+			                    <p:inputText id="perCent"  value="#{agriculturalDataEntryhService.perCent}" >
+			                    </p:inputText>  
 			                    
 			                    
-			                    <h:outputText style="font-weight: bold" value="Number Cents : " />
-			                    <h:inputText id="numberCents" required="true" value="#{agriculturalDataEntryhService.numberCents}" >
-			                    </h:inputText> 
+			                    <p:outputLabel style="font-weight: bold" value="Number Cents : " />
+			                    <p:inputText id="numberCents" value="#{agriculturalDataEntryhService.numberCents}" >
+			                    </p:inputText> 
                     
                       
 		                       <p:outputLabel for="waterSource" value="Water Sourec : " />  
@@ -125,21 +125,21 @@
 		                            <p:selectOneMenu id="country" value="#{agriculturalDataEntryhService.country}" style="width:150px">  
 		                            <p:ajax listener="#{agriculturalDataEntryhService.onCountryChange}" update="city" />  
 		                            <f:selectItem itemLabel="Select Primary Location" itemValue="" noSelectionOption="true" />  
-		                            <f:selectItems value="#{agriculturalDataEntryhService.countries}" />  
+		                            <f:selectItems value="#{agriculturalDataEntryhService.primLocation}" />  
 		                            </p:selectOneMenu>
                      
                      
 		                      <p:outputLabel for="city" value="Secondry Location : " />  
 		                            <p:selectOneMenu id="city" value="#{agriculturalDataEntryhService.city}" style="width:150px">  
 		                            <f:selectItem itemLabel="Select Secondry Location" itemValue="" noSelectionOption="true" />  
-		                            <f:selectItems value="#{agriculturalDataEntryhService.cities}" />  
+		                            <f:selectItems value="#{agriculturalDataEntryhService.secondryLocation}" />  
 		                            </p:selectOneMenu> 
                     
      
                     
-		                    <h:outputText style="font-weight: bold" value="Description : " />
-		                    <h:inputText id="comment" required="true" value="#{agriculturalDataEntryhService.comment}" >
-		                    </h:inputText>
+		                    <p:outputLabel style="font-weight: bold" value="Description : " />
+		                    <p:inputText id="comment" value="#{agriculturalDataEntryhService.comment}" >
+		                    </p:inputText>
                     
                     
                     		<h:outputText style="font-weight: bold" value="Image Upload : " />

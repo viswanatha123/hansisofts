@@ -43,6 +43,7 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -77,23 +78,88 @@ public class ConnectionDAOImpl {
 					"values (nextval('hansi_layout_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?,?,?,?,?);";
 			
 			String SQL_IndividualSite="select * from hansi_individual_site where prim_location = ? and seco_location = ? order by create_date desc";
-			
 			String SQL_INDI_INSERT="INSERT INTO hansi_individual_site (ind_id,owner_name, location, contact_no, site_no, persqft, length, width, wonership, transaction, prim_location, seco_location, create_date, is_active,comment,facing,agent_name,cost,image) VALUES(nextval('hansi_individual_site_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,current_timestamp, 1, ?,?,?,?,?)";
-			
 			String SQL_AGRIDATAENTRY_INSERT = "INSERT INTO hansi_agricultural (agri_id,owner_name, contact_no, survey_no, location, wonership, transaction, per_cent, number_cents, water_source, crop, prim_location, seco_location, create_date, is_active, comment,agent_name,cost,image) VALUES(nextval('hansi_agricultural_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp, 1, ?,?,?,?)";
 			String SQL_ENQU_INSERT="INSERT INTO hansi_enquiry (enqi_id, name, email, phone, create_date, is_active) VALUES(nextval('hansi_enquiry_seq'),?, ?, ?, current_timestamp, 1)";
 			String SQL_HELP_INSERT="INSERT INTO hansi_help (query_id, query, phone, create_date,is_active) VALUES(nextval('hansi_help_seq'),?, ?, current_timestamp,1)";
-			
-			//String SQL_ENQU_INSERT="INSERT INTO hansi_enquiry (enqi_id, name, email, phone, create_date, is_active) VALUES(nextval('hansi_enquiry_seq'),?, ?, ?, current_timestamp, 1)";
-			
-			
 			String SQL_IMAGE_UPLOAD="insert into hansi_property_image (prop_img_id,img_name,image) values (nextval('hansi_imageUpload_seq'),?,?)";
-			
 			String SQL_IMAGE_DEFAULT="select image from hansi_property_image where prop_img_id=6";
-			
+			String SQL_PRIMERY_LOCATION="select prim_id,prim_name from hansi_prim_location";
+			String SQL_SECONDRY_LOCATION="select seco_name from hansi_seco_location where prim_code=? order by seco_name desc";
   			}
                 
 	}
+	
+		
+	//****************************************** Primary Location ****************************************
+	
+		public Map<Long, String> getPrimaryLocation()
+		{	
+			
+			
+			Map<Long, String> primaryModelList = new java.util.HashMap();
+				try {
+				Connection con = null;
+				Statement stmt= null;
+				
+				StringBuilder sql_primary_data = new StringBuilder(Constants.SQL.SQL_PRIMERY_LOCATION);
+				con=ConnectionDAO.getConnection();
+				stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery(sql_primary_data.toString());
+				log.info("****************** log x***************** :"+rs.getFetchSize());
+						while(rs.next())
+						{ 
+				  		 primaryModelList.put(rs.getLong("prim_id"), rs.getString("prim_name"));
+						}
+		         rs.close();
+		         stmt.close();
+		         con.close();
+				}catch (Exception e) {
+		        e.printStackTrace();
+		        System.err.println("@@@@@@@@@@@@Primary data @@@@@@@@@@@@@@@@@@@@@@@@@@ :"+e.getClass().getName()+": "+e.getMessage());
+		     }
+		return primaryModelList;		
+		}
+
+		
+		//****************************************** Secondry Locaton ****************************************
+		
+			public List<String> getSecondryLocation(String primCode)
+			{		
+				
+				
+				log.log(Level.INFO, "Primary value  in db--------->:"+primCode);
+				List<String> secondryModelList = new ArrayList<>();
+					try {
+					Connection con = null;
+					PreparedStatement pstmt = null;
+					StringBuilder sql_secondry_data = new StringBuilder(Constants.SQL.SQL_SECONDRY_LOCATION);
+					log.info("###: Secondry location query : "+sql_secondry_data.toString());
+					
+					
+					con=ConnectionDAO.getConnection();
+					pstmt = con.prepareStatement(sql_secondry_data.toString());
+	                pstmt.setString(1, primCode);
+	                ResultSet rs = pstmt.executeQuery();
+	                      	while ( rs.next() ) {
+	    	            		secondryModelList.add(rs.getString("seco_name"));
+	    	            		
+	    	            		log.log(Level.INFO, "debug x----->"+rs.getString("seco_name"));
+				          	 }	
+	                
+	                 rs.close();
+			         con.close();
+			         pstmt.close();
+			         log.info("### : *** Connection Closed from getSecondryLocation");
+			     } catch (Exception e) {
+			        e.printStackTrace();
+			        System.err.println("@@@@@@@@@@@@Primary data @@@@@@@@@@@@@@@@@@@@@@@@@@ :"+e.getClass().getName()+": "+e.getMessage());
+			        //System.exit(0);
+			     }
+			return secondryModelList;		
+			}
+			
+	
 	
 	//********************************************************************
 	
