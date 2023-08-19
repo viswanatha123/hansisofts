@@ -33,42 +33,42 @@
                 
                     
             
-                    <h:outputText style="font-weight: bold" value="Owner Name : " />
-                    <h:inputText id="name" required="true" value="#{indiSiteDataEntryService.ownerName}" >
-                    </h:inputText>
+                    <p:outputLabel style="font-weight: bold" value="Owner Name : " />
+                    <p:inputText id="name" required="true" value="#{indiSiteDataEntryService.ownerName}" >
+                    </p:inputText>
                     
-                    <h:outputText style="font-weight: bold" value="Location : " />
-                    <h:inputText id="location" required="true" value="#{indiSiteDataEntryService.location}" >
-                    </h:inputText>
-                    
-                    
-                    <h:outputText style="font-weight: bold" value="Agent Name : " />
-                    <h:inputText id="agentName" required="true" value="#{indiSiteDataEntryService.agentName}" >
-                    </h:inputText>
-                    
-                    <h:outputText style="font-weight: bold" value="Agent Contact No : " />
-                    <h:inputText id="contactno" required="true" value="#{indiSiteDataEntryService.contactNo}" >
-                    </h:inputText>
+                    <p:outputLabel style="font-weight: bold" value="Location : " />
+                    <p:inputText id="location" required="true" value="#{indiSiteDataEntryService.location}" >
+                    </p:inputText>
                     
                     
-                     <h:outputText style="font-weight: bold" value="Site Number : " />
-                    <h:inputText id="siteno" required="true" value="#{indiSiteDataEntryService.siteNo}" >
-                    </h:inputText>
+                   <p:outputLabel style="font-weight: bold" value="Agent Name : " />
+                    <p:inputText id="agentName" required="true" value="#{indiSiteDataEntryService.agentName}" >
+                   </p:inputText>
+                    
+                    <p:outputLabel style="font-weight: bold" value="Agent Contact No : " />
+                    <p:inputText id="contactno" required="true" value="#{indiSiteDataEntryService.contactNo}" >
+                    </p:inputText>
                     
                     
-                    <h:outputText style="font-weight: bold" value="PerSqFt : " />
-                    <h:inputText id="persqft" required="true" value="#{indiSiteDataEntryService.persqft}" >
-                    </h:inputText>
+                     <p:outputLabel style="font-weight: bold" value="Site Number : " />
+                    <p:inputText id="siteno" required="true" value="#{indiSiteDataEntryService.siteNo}" >
+                    </p:inputText>
                     
                     
-                      <h:outputText style="font-weight: bold" value="Length : " />
-                    <h:inputText id="length" required="true" value="#{indiSiteDataEntryService.length}" >
-                    </h:inputText>
+                    <p:outputLabel style="font-weight: bold" value="PerSqFt : " />
+                    <p:inputText id="persqft" required="true" value="#{indiSiteDataEntryService.persqft}" >
+                    </p:inputText>
+                    
+                    
+                      <p:outputLabel style="font-weight: bold" value="Length : " />
+                    <p:inputText id="length" required="true" value="#{indiSiteDataEntryService.length}" >
+                    </p:inputText>
                      
                      
-                    <h:outputText style="font-weight: bold" value="Width : " />
-                    <h:inputText id="width" required="true" value="#{indiSiteDataEntryService.width}" >
-                    </h:inputText>
+                    <p:outputLabel style="font-weight: bold" value="Width : " />
+                    <p:inputText id="width" required="true" value="#{indiSiteDataEntryService.width}" >
+                    <</p:inputText>
                     
                     
                      <p:outputLabel for="wonership" value="Woner Ship : " />  
@@ -86,25 +86,25 @@
                     
                                        
                      <p:outputLabel for="country" value="Primary Location : " />  
-                        
-                            <p:selectOneMenu id="country" value="#{indiSiteDataEntryService.country}" style="width:150px">  
+                            <p:selectOneMenu id="country" value="#{indiSiteDataEntryService.country}" style="width:150px" required="true" requiredMessage="Select Primary Location">  
                             <p:ajax listener="#{indiSiteDataEntryService.onCountryChange}" update="city" />  
-                            <f:selectItem itemLabel="Select Primary Location" itemValue="" noSelectionOption="true" />  
-                            <f:selectItems value="#{indiSiteDataEntryService.countries}" />  
+                            <f:selectItem itemLabel="Primary Location" itemValue="" noSelectionOption="true"/>  
+                            <f:selectItems value="#{indiSiteDataEntryService.primLocation}" />  
                             </p:selectOneMenu>
-                     
-                     
-                      <p:outputLabel for="city" value="Secondry Location : " />  
-                            <p:selectOneMenu id="city" value="#{indiSiteDataEntryService.city}" style="width:150px">  
-                            <f:selectItem itemLabel="Select Secondry Location" itemValue="" noSelectionOption="true" />  
-                            <f:selectItems value="#{indiSiteDataEntryService.cities}" />  
+                            <p:message for="country" display="icon"/>
+                   
+                       <p:outputLabel for="city" value="Secondry Location : " />  
+                            <p:selectOneMenu id="city" value="#{indiSiteDataEntryService.city}" style="width:150px" required="true" requiredMessage="Select Secondry Location">  
+                            <f:selectItem itemLabel="Secondry Location" itemValue="" noSelectionOption="true" />  
+                            <f:selectItems value="#{indiSiteDataEntryService.secondryLocation}" />  
                             </p:selectOneMenu> 
+                            <p:message for="city" display="icon"/>
                             
     
                     
-                    <h:outputText style="font-weight: bold" value="Description : " />
-                    <h:inputText id="comment" required="true" value="#{indiSiteDataEntryService.comment}" >
-                    </h:inputText>
+                    <p:outputLabel style="font-weight: bold" value="Description : " />
+                    <p:inputText id="comment" required="true" value="#{indiSiteDataEntryService.comment}" >
+                    </p:inputText>
                     
                     <p:outputLabel for="facing" value="Facing : " />  
                             <p:selectOneMenu id="facing" value="#{indiSiteDataEntryService.facing}" style="width:150px"> 
@@ -117,7 +117,7 @@
                       
                             
                             
-     				 <h:outputText style="font-weight: bold" value="Image Upload : " />
+     				 <p:outputLabel style="font-weight: bold" value="Image Upload : " />
                     
                     
                     <p:panel>   

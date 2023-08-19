@@ -28,13 +28,13 @@
 		                            <p:selectOneMenu id="country" value="#{layoutDetailService.country}" style="width:200px">  
 		                            <p:ajax listener="#{layoutDetailService.onCountryChange}" update="city" />  
 		                            <f:selectItem itemLabel="Select Primary Location" itemValue="" noSelectionOption="true" />  
-		                            <f:selectItems value="#{layoutDetailService.countries}" />  
+		                            <f:selectItems value="#{layoutDetailService.primLocation}" />  
 		                            </p:selectOneMenu> 
 		                        
 		                            <p:outputLabel for="city" style="font-weight: bold; color:white" value="Secondry Location : " />  
 		                            <p:selectOneMenu id="city" value="#{layoutDetailService.city}" style="width:200px">  
 		                            <f:selectItem itemLabel="Select Secondry Location" itemValue="" noSelectionOption="true" />  
-		                            <f:selectItems value="#{layoutDetailService.cities}" />  
+		                            <f:selectItems value="#{layoutDetailService.secondryLocation}" />  
 		                            </p:selectOneMenu> 
 		                            
 		                            <h:commandButton value="Search"  type="submit"   actionListener="#{layoutDetailService.displayLocation}" />

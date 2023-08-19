@@ -2,6 +2,7 @@ package com.DIC.Service;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,9 +49,12 @@ public class IndiSiteDataEntryService implements Serializable {
 	  
 	  private final Map<String,Map<String,String>> data = new HashMap<>();
 	  private String country;   
-	  private String city;    
-	  private Map<String,String> countries;  
-	  private Map<String,String> cities; 
+	  private String city;  
+	  
+	  
+	  private Map<Long, String> primaryModel;
+	  private Map<String,String> primLocation; 
+	  private List<String> secondryLocation;
 
 
 
@@ -62,91 +66,26 @@ public class IndiSiteDataEntryService implements Serializable {
       public void init()
       {
           log.log(Level.INFO, "Loading IndiDataEntryService init()");
-          countries  = new HashMap<>();  
-                      //countries.put("USA", "USA");  
-                      //countries.put("India", "India");  
-                      //countries.put("Russia", "Russia"); 
-                      countries.put("Anantapur", "Anantapur"); 
-                      countries.put("Kadapa", "Kadapa");
-                      countries.put("Kurnool", "Kurnool");
-                      countries.put("Tirupati", "Tirupati");
-                      countries.put("Chittoor", "Chittoor");
-                      countries.put("Bangalore", "Bangalore");
-                      countries.put("Ballari", "Ballari");
-                      
-                      Map<String,String> map = new HashMap<>();  
-                     
-                      
-                      //****Anantapur*****//
-                      map = new HashMap<>();  
-                      map.put("Kadiri", "Kadiri");  
-                      map.put("Kadiri Rural", "Kadiri Rural"); 
-                      map.put("Anantapur", "Anantapur");
-                      map.put("Anantapur Rural", "Anantapur Rural");
-	                  map.put("Hindupur", "Hindupur");  
-                      map.put("Dharmavaram", "Dharmavaram"); 
-                      map.put("Tadipatri", "Tadipatri"); 
-                      map.put("Tadipatri Rural", "Tadipatri Rural");
-                      map.put("Gooty", "Gooty");
-                      map.put("Gooty Rural", "Gooty Rural");
-                      data.put("Anantapur", map);
-                      
-                      
-                      map = new HashMap<>();  
-                      map.put("Pulivendula", "Pulivendula");
-                      map.put("Pulivendula Rural", "Pulivendula Rural");
-                      map.put("Kadapa", "Kadapa");
-                      map.put("Kadapa Rural", "Kadapa Rural");
-                      map.put("Proddatur", "Proddatur");
-	                  map.put("Proddatur Rural", "Proddatur Rural");
-                      data.put("Kadapa", map);
-                      
-                      map = new HashMap<>();  
-	                  map.put("Kurnool", "Kurnool");
-	                  map.put("Kurnool Rural", "Kurnool Rural");
-	                  data.put("Kurnool", map);
-	                  
-	                  
-	                  map = new HashMap<>();  
-	                  map.put("Tirupati", "Tirupati");
-	                  map.put("Tirupati Rural", "Tirupati Rural");
-	                  data.put("Tirupati", map);
-	                  
-	                  //****Chittoor*****
-	                  map = new HashMap<>();  
-	                  map.put("Chittoor", "Chittoor");
-	                  map.put("Chittoor Rural", "Chittoor Rural");
-	                  data.put("Chittoor", map);
-	                  
-	                  
-                      
-                      //****Bangalore*****//
-                      map = new HashMap<>();  
-                      map.put("Hoskote", "Hoskote");  
-                      map.put("TinFactory", "TinFactory");  
-                      map.put("K R Puram", "K R Puram"); 
-                      map.put("Maratha Halli", "Maratha Halli");
-                      map.put("Belathuru", "Belathuru");
-                      map.put("Whitefield", "Whitefield");
-                      map.put("H Cross", "H Cross");
-                      data.put("Bangalore", map);
-                      
-                    //****Ballari*****
-                      map = new HashMap<>();  
-                      map.put("Ballari", "Ballari");  
-                      map.put("Ballari Rural", "Ballari Rural");  
-                      data.put("Ballari", map);
-          
+          dao=new ConnectionDAOImpl();
+          primaryModel=dao.getPrimaryLocation();
+          primLocation  = new HashMap<>(); 
+          for(Map.Entry<Long, String> pp:primaryModel.entrySet())
+          {
+        	  log.log(Level.INFO, "Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
+        	  
+        	  primLocation.put(pp.getValue(), pp.getValue());
+        	  
+          }
           
       }
 	  
 	 	  	
 	  
 	  public void onCountryChange() {  
-          if(country !=null && !country.equals(""))  
-          cities = data.get(country);  
-          else  
-          cities = new HashMap<>();  
+			  if(country !=null && !country.equals("")) 
+	          {
+				  secondryLocation=dao.getSecondryLocation(country);
+	          }
           } 
 	  
 	  
@@ -157,9 +96,7 @@ public class IndiSiteDataEntryService implements Serializable {
 	            try {
 	               
 	                 log.log(Level.INFO, "Selected county and city ---------->:"+country+"     "+city);
-	  	             dao=new ConnectionDAOImpl();
-	  	          
-	  	
+	  	             //dao=new ConnectionDAOImpl();
 	  	          
 	  	          IndiSiteDataEntryModel indiSiteDataEntryModel=new IndiSiteDataEntryModel();
 	  	          indiSiteDataEntryModel.setOwnerName(ownerName);
@@ -392,32 +329,6 @@ public class IndiSiteDataEntryService implements Serializable {
 			this.city = city;
 		}
 
-
-
-		public Map<String, String> getCountries() {
-			return countries;
-		}
-
-
-
-		public void setCountries(Map<String, String> countries) {
-			this.countries = countries;
-		}
-
-
-
-		public Map<String, String> getCities() {
-			return cities;
-		}
-
-
-
-		public void setCities(Map<String, String> cities) {
-			this.cities = cities;
-		}
-
-
-
 		public static Logger getLog() {
 			return log;
 		}
@@ -446,6 +357,41 @@ public class IndiSiteDataEntryService implements Serializable {
 	  public void setAgentName(String agentName) {
 					this.agentName = agentName;
 	   }
+	  
+	  
+	  public Map<Long, String> getPrimaryModel() {
+			return primaryModel;
+		}
+
+
+
+		public Map<String, String> getPrimLocation() {
+			return primLocation;
+		}
+
+
+
+		public List<String> getSecondryLocation() {
+			return secondryLocation;
+		}
+
+
+
+		public void setPrimaryModel(Map<Long, String> primaryModel) {
+			this.primaryModel = primaryModel;
+		}
+
+
+
+		public void setPrimLocation(Map<String, String> primLocation) {
+			this.primLocation = primLocation;
+		}
+
+
+
+		public void setSecondryLocation(List<String> secondryLocation) {
+			this.secondryLocation = secondryLocation;
+		}
 
 	  
 

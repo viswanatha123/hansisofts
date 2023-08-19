@@ -24,13 +24,13 @@
                             <p:selectOneMenu id="country" value="#{agriculturalService.country}" style="width:200px">  
                             <p:ajax listener="#{agriculturalService.onCountryChange}" update="city" />  
                             <f:selectItem itemLabel="Select Primary Location" itemValue="" noSelectionOption="true" />  
-                            <f:selectItems value="#{agriculturalService.countries}" />  
+                            <f:selectItems value="#{agriculturalService.primLocation}" />  
                             </p:selectOneMenu> 
                         
                             <p:outputLabel for="city" style="font-weight: bold; color:white" value="Secondry Location : " />  
                             <p:selectOneMenu id="city" value="#{agriculturalService.city}" style="width:200px">  
                             <f:selectItem itemLabel="Select Secondry Location" itemValue="" noSelectionOption="true" />  
-                            <f:selectItems value="#{agriculturalService.cities}" />  
+                            <f:selectItems value="#{agriculturalService.secondryLocation}" />  
                             </p:selectOneMenu> 
                             
                             <h:commandButton value="Search"  type="submit"  actionListener="#{agriculturalService.displayLocation}" />
