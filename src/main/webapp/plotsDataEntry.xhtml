@@ -74,7 +74,7 @@
                     <p:message for="ownerName" display="icon"/>
                     
                    
-                   <p:outputLabel for="wonership" value="Woner Ship : " />  
+                   <p:outputLabel for="wonership" value="Owner Ship : " />  
                             <p:selectOneMenu id="wonership" value="#{plotsDataEntryService.wonership}" requiredMessage="Woner Ship" style="width:150px">  
                                 <f:selectItem itemLabel="Freehold" itemValue="Freehold"/>
                                 <f:selectItem itemLabel="Buying" itemValue="Buying"/>
@@ -111,7 +111,7 @@
                             <p:selectOneMenu id="country" value="#{plotsDataEntryService.country}" style="width:150px" required="true" requiredMessage="Select Primary Location">  
                             <p:ajax listener="#{plotsDataEntryService.onCountryChange}" update="city" />  
                             <f:selectItem itemLabel="Primary Location" itemValue="" noSelectionOption="true"/>  
-                            <f:selectItems value="#{plotsDataEntryService.primLocation}" />  
+                            <f:selectItems value="#{plotsDataEntryService.primLocationSort}" />  
                             </p:selectOneMenu>
                             <p:message for="country" display="icon"/>
                    

@@ -125,7 +125,7 @@
 		                            <p:selectOneMenu id="country" value="#{agriculturalDataEntryhService.country}" style="width:150px">  
 		                            <p:ajax listener="#{agriculturalDataEntryhService.onCountryChange}" update="city" />  
 		                            <f:selectItem itemLabel="Select Primary Location" itemValue="" noSelectionOption="true" />  
-		                            <f:selectItems value="#{agriculturalDataEntryhService.primLocation}" />  
+		                            <f:selectItems value="#{agriculturalDataEntryhService.primLocationSort}" />  
 		                            </p:selectOneMenu>
                      
                      

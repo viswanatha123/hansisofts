@@ -24,7 +24,7 @@
                             <p:selectOneMenu id="country" value="#{agriculturalService.country}" style="width:200px">  
                             <p:ajax listener="#{agriculturalService.onCountryChange}" update="city" />  
                             <f:selectItem itemLabel="Select Primary Location" itemValue="" noSelectionOption="true" />  
-                            <f:selectItems value="#{agriculturalService.primLocation}" />  
+                            <f:selectItems value="#{agriculturalService.primLocationSort}" />  
                             </p:selectOneMenu> 
                         
                             <p:outputLabel for="city" style="font-weight: bold; color:white" value="Secondry Location : " />  

@@ -1,9 +1,11 @@
 package com.DIC.Service;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -52,8 +54,9 @@ public class IndiSiteDataEntryService implements Serializable {
 	  private String city;  
 	  
 	  
-	  private Map<Long, String> primaryModel;
+	  private Map<String, String> primaryModel;
 	  private Map<String,String> primLocation; 
+	  private TreeMap<String, String> primLocationSort;
 	  private List<String> secondryLocation;
 
 
@@ -69,13 +72,14 @@ public class IndiSiteDataEntryService implements Serializable {
           dao=new ConnectionDAOImpl();
           primaryModel=dao.getPrimaryLocation();
           primLocation  = new HashMap<>(); 
-          for(Map.Entry<Long, String> pp:primaryModel.entrySet())
+          for(Map.Entry<String, String> pp:primaryModel.entrySet())
           {
         	  log.log(Level.INFO, "Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
         	  
         	  primLocation.put(pp.getValue(), pp.getValue());
         	  
           }
+          primLocationSort=new TreeMap<>(primLocation);
           
       }
 	  
@@ -85,6 +89,7 @@ public class IndiSiteDataEntryService implements Serializable {
 			  if(country !=null && !country.equals("")) 
 	          {
 				  secondryLocation=dao.getSecondryLocation(country);
+				  Collections.sort(secondryLocation);
 	          }
           } 
 	  
@@ -359,7 +364,7 @@ public class IndiSiteDataEntryService implements Serializable {
 	   }
 	  
 	  
-	  public Map<Long, String> getPrimaryModel() {
+	  public Map<String, String> getPrimaryModel() {
 			return primaryModel;
 		}
 
@@ -377,7 +382,7 @@ public class IndiSiteDataEntryService implements Serializable {
 
 
 
-		public void setPrimaryModel(Map<Long, String> primaryModel) {
+		public void setPrimaryModel(Map<String, String> primaryModel) {
 			this.primaryModel = primaryModel;
 		}
 
@@ -393,6 +398,13 @@ public class IndiSiteDataEntryService implements Serializable {
 			this.secondryLocation = secondryLocation;
 		}
 
+		public TreeMap<String, String> getPrimLocationSort() {
+			return primLocationSort;
+		}
+
+		public void setPrimLocationSort(TreeMap<String, String> primLocationSort) {
+			this.primLocationSort = primLocationSort;
+		}
 	  
 
 }

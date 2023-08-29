@@ -84,7 +84,7 @@ public class ConnectionDAOImpl {
 			String SQL_HELP_INSERT="INSERT INTO hansi_help (query_id, query, phone, create_date,is_active) VALUES(nextval('hansi_help_seq'),?, ?, current_timestamp,1)";
 			String SQL_IMAGE_UPLOAD="insert into hansi_property_image (prop_img_id,img_name,image) values (nextval('hansi_imageUpload_seq'),?,?)";
 			String SQL_IMAGE_DEFAULT="select image from hansi_property_image where prop_img_id=6";
-			String SQL_PRIMERY_LOCATION="select prim_id,prim_name from hansi_prim_location";
+			String SQL_PRIMERY_LOCATION="select prim_id,prim_name from hansi_prim_location order by prim_name";
 			String SQL_SECONDRY_LOCATION="select seco_name from hansi_seco_location where prim_code=? order by seco_name desc";
   			}
                 
@@ -93,11 +93,11 @@ public class ConnectionDAOImpl {
 		
 	//****************************************** Primary Location ****************************************
 	
-		public Map<Long, String> getPrimaryLocation()
+		public Map<String, String> getPrimaryLocation()
 		{	
 			
 			
-			Map<Long, String> primaryModelList = new java.util.HashMap();
+			Map<String, String> primaryModelList = new java.util.HashMap();
 				try {
 				Connection con = null;
 				Statement stmt= null;
@@ -109,7 +109,7 @@ public class ConnectionDAOImpl {
 				log.info("****************** log x***************** :"+rs.getFetchSize());
 						while(rs.next())
 						{ 
-				  		 primaryModelList.put(rs.getLong("prim_id"), rs.getString("prim_name"));
+				  		 primaryModelList.put(rs.getString("prim_name"), rs.getString("prim_name"));
 						}
 		         rs.close();
 		         stmt.close();
