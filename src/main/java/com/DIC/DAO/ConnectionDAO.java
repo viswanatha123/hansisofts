@@ -26,11 +26,14 @@ public class ConnectionDAO {
 	     private final static String urlnew="jdbc:postgresql://lnx1540.ch3.prod.i.com:5432/db_internalapp_intgtncloud_prod_01";
 	     private final static String usernamenew="vis_rep_connectors_p1";
 	     private final static String passwordnew="Passw0rd";
+	     
+	     
+	     // ************ Test ************//
+	     
+	     
 		
 		public ConnectionDAO() {
-			
-	
-			
+					
 	    }
 		
 		public static Connection getConnection()
