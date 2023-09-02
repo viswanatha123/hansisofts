@@ -17,16 +17,190 @@
   <br></br>
   
   
-<p style="color: red; font-size: 15px; font-weight: bold;">About Hansi SoftSolution</p><br></br>
-Launched in 2021, Hansi SoftSolution is India's No.1 online Property verificaiton<br></br>
-marketplace to buy, sell, and residential and commercial properties. <br></br>
-Adjudged as the most preferred real estate portal in India by various independent surveys.<br></br>
-<br></br><br></br>
+  			<table width="100%" height="100px">
+							<tr>
+								<th>
+								<p style="text-align:center;font-weight: bold;color: Block;font-size: 25px;font-family:Bahnschrift SemiBold;">About Us </p>
+								</th>
+							</tr>
+							<tr>
+								<th>
+								<p style="text-align:left;font-weight: bold;color: Block;font-size: 25px;font-family:Bahnschrift SemiBold;">Welcome to HansiSoft Solutions</p>
+								</th>
+							</tr>
+							<tr>
+								<th>
+								<p style="text-align:left;font-weight: bold;color: Block;font-size: 25px;font-family:Bahnschrift SemiBold;">(Real Estate Properties for Buying and Selling)</p>
+								</th>
+							</tr>
+							<tr>
+								<table width="100%" height="50px">
+								</table>
+							</tr>
+							<tr>
+								<th>
+								<p style="text-align:left;font-weight: bold;color: #FF00FF;font-size: 25px;font-family:Bahnschrift SemiBold;">Our History:</p>
+								</th>
+							</tr>
+							<tr>
+								<th>
+								<p style="text-align:left;font-weight: bold;color: Block;font-size: 20px;font-family:Bahnschrift SemiBold;">The Real Estate Business Launched in 2021, Hansi SoftSolutions is the India's No.1 online business marketing place to buying and selling  properties like residential and commercial properties.</p>
+								</th>
+							</tr>
+							<tr>
+								<table width="100%" height="50px">
+								</table>
+							</tr>
+							<tr>
+								<th>
+								<p style="text-align:left;font-weight: bold;color: Block;font-size: 25px;font-family:Bahnschrift SemiBold;">Agricultural Land and Building properties</p>
+								</th>
+							</tr>
+							<tr>
+								<table width="100%" height="50px">
+								</table>
+							</tr>
+							<tr>
+								<th>
+								<p style="text-align:left;font-weight: bold;color: Block;font-size: 25px;font-family:Bahnschrift SemiBold;"><a href="http://www.hansisofts.com" target="_blank">www.hansisofts.com</a>  As the most preferred real estate portal in India by various independent surveys.</p>
+								</th>
+							</tr>
+							<tr>
+								<table width="100%" height="50px">
+								</table>
+							</tr>
+							<tr>
+								<th>
+								<p style="text-align:left;font-weight: bold;color: #0000FF;font-size: 25px;font-family:Bahnschrift SemiBold;">Contact Us</p>
+								</th>
+							</tr>
+							<tr>
+								<th>
+								<p style="text-align:left;font-weight: bold;color: Block;font-size: 20px;font-family:Bahnschrift SemiBold;">Thank you for your interest in Hansi SoftSolutions Real Estate. We are here to help you with all your real estate needs, whether you're looking to buying and selling a property. Please don't hesitate to contact us with any inquiries or questions you may have any doubts clarify and interact with our team.</p>
+								</th>
+							</tr>
+							<tr>
+								<table width="100%" height="50px">
+								</table>
+							</tr>
+							<tr>
+								<th>
+								<p style="text-align:left;font-weight: bold;color: Block;font-size: 20px;font-family:Bahnschrift SemiBold;">Alternatively, you can fill out the contact form below and we will get back to you as soon as possible. We look forward to hearing from you and assisting you in any way we can.</p>
+								</th>
+							</tr>
+							<tr>
+									<table width="100%" height="400px" style="background: #43C6DB;">
+										<tr >
+											<th width="30%">
+												
+													<h:form id="form">
+											  <p:messages id="msgs"/>
+											  <br></br>
+											  
+											  			<center>
+											  			  <p:panel  style="background: #43C6DB;width:100%; height:300px;font-size: 15px" >
+													            <br></br><br></br>
+													             <h:outputText style="font-weight: bold; font-size: 14px;color:black; text-align:left;" value="Please provide your contact details. " />
+													             <h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="We will contact you soon. " />
+													             <br></br><br></br>
+													             
+													                <h:panelGrid columns="3" cellpadding="5" style="width: 50;"> 
+													                      <h:outputText style="font-weight: bold; font-size: 14px;color:black; text-align:left;" value="Name : " />
+													                      <h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" />
+													                      <h:inputText id="name" size="30" value="#{enquiryService.name}"  requiredMessage="Name is required">
+													                      </h:inputText>
+													                    
+													                    <h:outputText style="font-weight: bold; font-size: 14px;color:black; text-align:left;" value="Email : " />
+													                    <h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" />
+													                    <h:inputText id="email"  size="30" value="#{enquiryService.email}"  validatorMessage="Invalid email format">
+													                     <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+													                    </h:inputText> 
+													              		                    
+													                     <p:outputLabel style="font-weight: bold; font-size: 14px;color:black; text-align:left;" for="phone" indicateRequired="true"  value="Phone No  :  " />
+													                     <h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" />
+																		  <p:inputText id="phone"  size="31" required="true" maxlength="10" value="#{enquiryService.phone}"    requiredMessage="Phone No is required">
+																				<p:keyFilter mask="num" />
+																		 </p:inputText>
+													                    
+													                    <h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" />
+													                    <h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" />
+													                    
+													                    
+													                   
+													                    
+													   				<h:outputText/>
+													   				<h:outputText/>
+											             
+													                		<h:commandButton value="Submit" action="#{enquiryService.submitEnquiry}" >
+																			</h:commandButton>
+															
+															                    
+															                     
+															                   <h:commandButton id="discardChangesButton"
+																                                   process="@this"
+																                                   value="Clear"
+															                                           update="@form"
+																                                   action="#{enquiryService.clear()}" >
+																                                   
+																                   <p:resetInput target="form"/>
+																              </h:commandButton>
+													                    
+													                 
+											               			</h:panelGrid>                    
+											              </p:panel>
+											  
+														</center>
+											  
+											 </h:form>
+										         
+										              
+							
+									</th>
+									
+											 <th width="40%">
+											 	<p style="text-align:center;font-weight: bold;color: white; font-size: 25px;font-family:Bahnschrift SemiBold;">Get in Touch with Us</p>
+											 	<p style="text-align:center;font-weight: bold;color: white; font-size: 20px;font-family:Bahnschrift SemiBold;">Mobile:   8088471208</p>
+											 	<p style="text-align:center;font-weight: bold;color: white; font-size: 20px;font-family:Bahnschrift SemiBold;">E-mail : customer.support@hansisofts.com</p>
+												<p style="text-align:center;font-weight: bold;color: white; font-size: 20px;font-family:Bahnschrift SemiBold;"><a href="http://www.hansisofts.com" target="_blank">www.hansisofts.com</a></p>
+											 </th>
+											 
+											
+											<th width="30%">
+												<p:graphicImage width="100%"  height="400px" name="images/aboutAs.jpg" />
+											</th>
+							</tr>
+							
+						</table>
+						
+				</tr>
+				
+				<tr>
+								<table width="100%" height="50px">
+								</table>
+				</tr>
+				<tr>
+					<th>
+						<p style="text-align:left;font-weight: bold;color: Block;font-size: 20px;font-family:Bahnschrift SemiBold;">CORPORATE OFFICE</p>
+						<p style="text-align:left;font-weight: bold;color: Block;font-size: 20px;font-family:Bahnschrift SemiBold;">204,# 1st Floor,</p>
+						<p style="text-align:left;font-weight: bold;color: Block;font-size: 20px;font-family:Bahnschrift SemiBold;">Om Sree Circle, Ganagalu Road,</p>
+						<p style="text-align:left;font-weight: bold;color: Block;font-size: 20px;font-family:Bahnschrift SemiBold;">Hosekote, Bangalore - 560067</p>
+						<p style="text-align:left;font-weight: bold;color: Block;font-size: 20px;font-family:Bahnschrift SemiBold;">Telephone: +91 80 88 47 12 08</p>
+						<p style="text-align:left;font-weight: bold;color: Block;font-size: 20px;font-family:Bahnschrift SemiBold;">E-mail: customer.support@hansisofts.com</p>
+					</th>
+				</tr>
+				
+				<tr>
+					<th>
+						<p style="text-align:center;font-weight: bold;color: Block;font-size: 20px;font-family:Bahnschrift SemiBold;">Office Hours:  24/7  open</p>
+						<p style="text-align:center;font-weight: bold;color: Block;font-size: 20px;font-family:Bahnschrift SemiBold;">You can contact at any time</p>
+					</th>
+				</tr>
+				
+				
+						
+			</table>
+  
 
-<p style="color: red; font-size: 15px; font-weight: bold;"><b>Real Estate in India started</b></p>
-<p>Properties available in Bangalore , in Andhra Pradesh, in Telangana.</p><br></br>
-  
-  
   
  </h:form>
 </div>
