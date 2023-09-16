@@ -25,6 +25,7 @@ public class AgriculturalDataEntryModel implements Serializable {
 	private String agentName;
 	private InputStream inputStream;
     private UploadedFile file;
+    private String power;
     
     
    public UploadedFile getFile() {
@@ -137,6 +138,16 @@ public class AgriculturalDataEntryModel implements Serializable {
 	public void setAgentName(String agentName) {
 		this.agentName = agentName;
 	}
+
+	public String getPower() {
+		return power;
+	}
+
+	public void setPower(String power) {
+		this.power = power;
+	}
+	
+	
 	
 
 }
