@@ -170,15 +170,10 @@
                             
                             
                    <p:outputLabel style="font-weight: bold" value="Image Upload : "   />
-                    
-                    
-                     
-               		 <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
-                                     <p:fileUpload id="image" value="#{plotsDataEntryService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  required="true" requiredMessage="Upload Image" /> 
-            
-				      		 
-        			  </p:panelGrid>
-             	       <p:message for="image" display="icon"/>      
+                   <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                   <p:fileUpload id="image" value="#{plotsDataEntryService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  required="true" requiredMessage="Upload Image" /> 
+            	   </p:panelGrid>
+             	   <p:message for="image" display="icon"/>      
                     
                    <h:commandButton value="Submit"   type="submit" 
                                     process="@this"
@@ -194,7 +189,7 @@
 	                                   actionListener="#{plotsDataEntryService.clear()}" >
 	                                   
 	                   <p:resetInput target="form"/>
-	          </h:commandButton>
+	               </h:commandButton>
                 </p:panelGrid>                     
                     
                     

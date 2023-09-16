@@ -26,6 +26,7 @@ public class AgriculturalModel implements Serializable{
 	private String totalPrice;
 	private StreamedContent streamedContent;
     private Date createdOnDate;
+    private String power;
 	
 	
 	
@@ -152,6 +153,15 @@ public class AgriculturalModel implements Serializable{
 	public void setAgentName(String agentName) {
 		this.agentName = agentName;
 	}
+
+	public String getPower() {
+		return power;
+	}
+
+	public void setPower(String power) {
+		this.power = power;
+	}
+	
 	
 
 }

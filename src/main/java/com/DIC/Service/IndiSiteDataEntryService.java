@@ -172,7 +172,6 @@ public class IndiSiteDataEntryService implements Serializable {
           this.ownerName="";
           this.transaction="";
           this.agentName="";
-          
           this.updateResult="";
           System.out.println("****** Clicked on Clear button*****");
       }

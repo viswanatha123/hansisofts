@@ -48,59 +48,71 @@
   <ui:define name="title">Agricultural Details Enter
   <div class="card">
   <h:form id="form" enctype="multipart/form-data">
+  <p:messages id="msgs"/>
   
   			<p:panel>   
                 <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
-                    <h:outputText style="font-weight: bold;color: red" value="#{agriculturalDataEntryhService.updateResult}" />
+                    <h:outputText style="font-weight: bold;color: green" value="#{agriculturalDataEntryhService.updateResult}" />
                 </p:panelGrid>
              </p:panel>
              
              <p:panel style="background-image: url('back1.jpg'); ">   
-                  <p:panelGrid columns="2" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
-                
-                    
-            
-			                    <p:outputLabel style="font-weight: bold" value="Owner Name : " />
-			                    <p:inputText id="name"  value="#{agriculturalDataEntryhService.ownerName}" >
+             
+             <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+             
+                  <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                          
+			                    <p:outputLabel style="font-weight: bold" for="name" indicateRequired="true" value="Owner Name : " />
+			                    <p:inputText id="name"  value="#{agriculturalDataEntryhService.ownerName}" required="true" requiredMessage="Required Owner Name">
 			                    </p:inputText>
+			                    <p:message for="name" display="icon"/>
 			                    
 			                    <p:outputLabel style="font-weight: bold" value="Agent Name : " />
 			                    <p:inputText id="agentName"  value="#{agriculturalDataEntryhService.agentName}" >
 			                    </p:inputText>
+			                    <p:message for="agentName" display="icon"/>
 			                    
-			                    <p:outputLabel style="font-weight: bold" value="Agent Contact No : " />
-			                    <p:inputText id="contactno"  value="#{agriculturalDataEntryhService.contactNo}" >
+			                    <p:outputLabel style="font-weight: bold" for="contactno" indicateRequired="true" value="Agent Contact No : " />
+			                    <p:inputText id="contactno"  maxlength="10" value="#{agriculturalDataEntryhService.contactNo}" required="true" requiredMessage="Required Agent Contact No ">
+			                    	<p:keyFilter mask="num" />
 			                    </p:inputText>
+			                    <p:message for="contactno" display="icon"/>
 			                    
 			                    <p:outputLabel style="font-weight: bold" value="Survey No : " />
 			                    <p:inputText id="surveyNo"  value="#{agriculturalDataEntryhService.surveyNo}" >
 			                    </p:inputText>
+			                    <p:message for="surveyNo" display="icon"/>
 			                    
 			                    <p:outputLabel style="font-weight: bold" value="Location : " />
 			                    <p:inputText id="location"  value="#{agriculturalDataEntryhService.location}" >
 			                   </p:inputText>
+			                   <p:message for="location" display="icon"/>
 			                    
-			                    <p:outputLabel for="wonership" value="Woner Ship : " />  
-			                            <p:selectOneMenu id="wonership" required="true"  value="#{agriculturalDataEntryhService.wonership}" requiredMessage="Woner Ship" style="width:150px">  
+			                    <p:outputLabel for="wonership" value="Owner Ship : " />  
+			                            <p:selectOneMenu id="wonership"  value="#{agriculturalDataEntryhService.wonership}"  style="width:150px">  
 			                                <f:selectItem itemLabel="Freehold" itemValue="Freehold"/>
 			                                <f:selectItem itemLabel="Buying" itemValue="Buying"/>
-			                            </p:selectOneMenu>
+			                    		</p:selectOneMenu>
+			                    <p:message for="wonership" display="icon"/>
 			                    
 			                   <p:outputLabel for="transaction" value="Transaction : " />  
 			                            <p:selectOneMenu id="transaction" value="#{agriculturalDataEntryhService.transaction}" style="width:150px">  
 			                             <f:selectItem itemLabel="Resale" itemValue="Resale"/>
 			                             <f:selectItem itemLabel="New Property" itemValue="New Property"/>
-			                            </p:selectOneMenu>
+			                   			</p:selectOneMenu>
+			                   <p:message for="transaction" display="icon"/>
                     
                     
-			                    <p:outputLabel style="font-weight: bold" value="Per Cent : " />
-			                    <p:inputText id="perCent"  value="#{agriculturalDataEntryhService.perCent}" >
+			                    <p:outputLabel style="font-weight: bold" for="perCent" indicateRequired="true" value="Per Cent(Cost) : " />
+			                    <p:inputText id="perCent"  value="#{agriculturalDataEntryhService.perCent}" required="true" requiredMessage="Required Per Cent(Cost)">
 			                    </p:inputText>  
+			                     <p:message for="perCent" display="icon"/>
 			                    
 			                    
-			                    <p:outputLabel style="font-weight: bold" value="Number Cents : " />
-			                    <p:inputText id="numberCents" value="#{agriculturalDataEntryhService.numberCents}" >
+			                    <p:outputLabel style="font-weight: bold" for="numberCents" indicateRequired="true" value="Number of Cents : " />
+			                    <p:inputText id="numberCents" value="#{agriculturalDataEntryhService.numberCents}" required="true" requiredMessage="Required Number of Cents">
 			                    </p:inputText> 
+			                    <p:message for="numberCents" display="icon"/>
                     
                       
 		                       <p:outputLabel for="waterSource" value="Water Sourec : " />  
@@ -108,7 +120,8 @@
 		                             <f:selectItem itemLabel="Bore Well" itemValue="Bore Well"/>
 		                             <f:selectItem itemLabel="No Water" itemValue="No Water"/>
 		                             <f:selectItem itemLabel="Channel" itemValue="Channel"/>
-		                           </p:selectOneMenu>
+		                        </p:selectOneMenu>
+		                        <p:message for="waterSource" display="icon"/>
                     
                      
                     
@@ -116,42 +129,45 @@
 		                            <p:selectOneMenu id="crop" value="#{agriculturalDataEntryhService.crop}" style="width:150px">  
 		                             <f:selectItem itemLabel="Yes" itemValue="Yes"/>
 		                             <f:selectItem itemLabel="No" itemValue="No"/>
-		                            </p:selectOneMenu>
+		                     		</p:selectOneMenu>
+		                     <p:message for="crop" display="icon"/>
+		                     
+		                     <p:outputLabel for="power" value="Power Supply :  " />  
+		                            <p:selectOneMenu id="power" value="#{agriculturalDataEntryhService.power}" style="width:150px">  
+		                             <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+		                             <f:selectItem itemLabel="No" itemValue="No"/>
+		                     		</p:selectOneMenu>
+		                     <p:message for="power" display="icon"/>
 		                  
              
                     
 		                     <p:outputLabel for="country" value="Primary Location : " />  
 		                        
-		                            <p:selectOneMenu id="country" value="#{agriculturalDataEntryhService.country}" style="width:150px">  
+		                            <p:selectOneMenu id="country" value="#{agriculturalDataEntryhService.country}"  style="width:150px" required="true" requiredMessage="Select Primary Location">  
 		                            <p:ajax listener="#{agriculturalDataEntryhService.onCountryChange}" update="city" />  
 		                            <f:selectItem itemLabel="Select Primary Location" itemValue="" noSelectionOption="true" />  
 		                            <f:selectItems value="#{agriculturalDataEntryhService.primLocationSort}" />  
 		                            </p:selectOneMenu>
+                     		<p:message for="country" display="icon"/>
                      
-                     
-		                      <p:outputLabel for="city" value="Secondry Location : " />  
-		                            <p:selectOneMenu id="city" value="#{agriculturalDataEntryhService.city}" style="width:150px">  
+		                    <p:outputLabel for="city" value="Secondry Location : " /> 
+		                            <p:selectOneMenu id="city" value="#{agriculturalDataEntryhService.city}" style="width:150px" required="true" requiredMessage="Select Secondry Location">  
 		                            <f:selectItem itemLabel="Select Secondry Location" itemValue="" noSelectionOption="true" />  
 		                            <f:selectItems value="#{agriculturalDataEntryhService.secondryLocation}" />  
 		                            </p:selectOneMenu> 
-                    
+                    		<p:message for="city" display="icon"/>
      
                     
 		                    <p:outputLabel style="font-weight: bold" value="Description : " />
 		                    <p:inputText id="comment" value="#{agriculturalDataEntryhService.comment}" >
 		                    </p:inputText>
+		                    <p:message for="comment" display="icon"/>
                     
-                    
-                    		<h:outputText style="font-weight: bold" value="Image Upload : " />
-                    
-                    
-		             		
-		             		 <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
-                                     <p:fileUpload value="#{agriculturalDataEntryhService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/> 
-            
-				        		 
-        			         </p:panelGrid>
-                            
+                    		<p:outputLabel style="font-weight: bold" value="Image Upload : "   />
+                    		<p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                            <p:fileUpload id="image" value="#{agriculturalDataEntryhService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/> 
+                            </p:panelGrid>
+                            <p:message for="image" display="icon"/>
                        
                        
 		                   <h:commandButton value="Submit"   type="submit" 
@@ -169,11 +185,19 @@
 	                                   
 	                       <p:resetInput target="form"/>
 	                     </h:commandButton>
-                  </p:panelGrid>                     
+                  </p:panelGrid> 
+                  
+                  <p style="font-weight: bold;color: black; font-size: 18px"> Please provide your agricultural property details which you want to sell.</p>
+                  <p style="font-weight: bold;color: black; font-size: 18px"> Please contact our customer care ,if any further assist required.</p>
+                  <p style="font-weight: bold;color: black; font-size: 18px"> Customer care number : 8088471208.</p>
+                  <p:graphicImage width="102%"  height="400px" name="images/Agri_img.jpg" />
+                   
+               </p:panelGrid>   
+                  
+                  
+                  
+                                     
            </p:panel>
-            
-  
-  
     
   </h:form>
 </div>
