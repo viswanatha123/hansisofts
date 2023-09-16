@@ -50,6 +50,7 @@ public class AgriculturalDataEntryhService implements Serializable {
 	private String agentName;
 	private UploadedFile file;
 	private String updateResult;
+	private String power;
 	
 	
 	
@@ -110,6 +111,7 @@ public class AgriculturalDataEntryhService implements Serializable {
  	          agriculturalDataModel.setAgentName(agentName);
  	          agriculturalDataModel.setInputStream(file.getInputStream());
  	          agriculturalDataModel.setFile(file);
+ 	          agriculturalDataModel.setPower(power);
  	        
  	          
  	       
@@ -129,6 +131,7 @@ public class AgriculturalDataEntryhService implements Serializable {
  	          this.crop="";
  	          this.agentName="";
  	          this.comment="";
+ 	          this.power="";
  	          
           
  	          
@@ -177,6 +180,7 @@ public class AgriculturalDataEntryhService implements Serializable {
           this.crop="";
           this.agentName="";
           this.comment="";
+          this.power="";
           
           this.updateResult="";
           System.out.println("****** Clicked on Clear button*****");
@@ -341,6 +345,16 @@ public class AgriculturalDataEntryhService implements Serializable {
 
 	public void setPrimLocationSort(TreeMap<String, String> primLocationSort) {
 		this.primLocationSort = primLocationSort;
+	}
+
+
+	public String getPower() {
+		return power;
+	}
+
+
+	public void setPower(String power) {
+		this.power = power;
 	}
 
 	
