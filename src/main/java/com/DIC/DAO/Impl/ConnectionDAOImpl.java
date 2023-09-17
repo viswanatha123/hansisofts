@@ -79,7 +79,7 @@ public class ConnectionDAOImpl {
 			
 			String SQL_IndividualSite="select * from hansi_individual_site where prim_location = ? and seco_location = ? order by create_date desc";
 			String SQL_INDI_INSERT="INSERT INTO hansi_individual_site (ind_id,owner_name, location, contact_no, site_no, persqft, length, width, wonership, transaction, prim_location, seco_location, create_date, is_active,comment,facing,agent_name,cost,image) VALUES(nextval('hansi_individual_site_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,current_timestamp, 1, ?,?,?,?,?)";
-			String SQL_AGRIDATAENTRY_INSERT = "INSERT INTO hansi_agricultural (agri_id,owner_name, contact_no, survey_no, location, wonership, transaction, per_cent, number_cents, water_source, crop, prim_location, seco_location, create_date, is_active, comment,agent_name,cost,image,power) VALUES(nextval('hansi_agricultural_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp, 1, ?,?,?,?,?)";
+			String SQL_AGRIDATAENTRY_INSERT = "INSERT INTO hansi_agricultural (agri_id,owner_name, contact_no, survey_no, location, wonership, transaction, per_cent, number_cents, water_source, crop, prim_location, seco_location, create_date, is_active, comment,agent_name,cost,image) VALUES(nextval('hansi_agricultural_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp, 1, ?,?,?,?)";
 			String SQL_ENQU_INSERT="INSERT INTO hansi_enquiry (enqi_id, name, email, phone, create_date, is_active) VALUES(nextval('hansi_enquiry_seq'),?, ?, ?, current_timestamp, 1)";
 			String SQL_HELP_INSERT="INSERT INTO hansi_help (query_id, query, phone, create_date,is_active) VALUES(nextval('hansi_help_seq'),?, ?, current_timestamp,1)";
 			String SQL_IMAGE_UPLOAD="insert into hansi_property_image (prop_img_id,img_name,image) values (nextval('hansi_imageUpload_seq'),?,?)";
@@ -110,6 +110,7 @@ public class ConnectionDAOImpl {
 						while(rs.next())
 						{ 
 				  		 primaryModelList.put(rs.getString("prim_name"), rs.getString("prim_name"));
+					  		
 						}
 		         rs.close();
 		         stmt.close();
@@ -609,8 +610,6 @@ public class ConnectionDAOImpl {
                              
                              agriculturalModel.setTotalPrice(indianCurrence(rs.getInt("per_cent")*rs.getInt("number_cents")));
                              agriculturalModel.setCreatedOnDate(rs.getDate("create_date"));
-                             agriculturalModel.setCreatedOnDate(rs.getDate("create_date"));
-                             agriculturalModel.setPower(rs.getString("power"));
                              
                              
                              
@@ -880,7 +879,7 @@ public class ConnectionDAOImpl {
 			            int res=pstmt.executeUpdate();
 			            if(res > 0)
 			            {
-			            	succVal="Successfully submitted";
+			            	succVal="Successful updated record";
 			            }
           
           
@@ -933,7 +932,6 @@ public class ConnectionDAOImpl {
 	            InputStream fin2=agriculturalDataEntryModel.getInputStream();
 	            UploadedFile file=agriculturalDataEntryModel.getFile();
 		    pstmt.setBinaryStream(16, fin2, file.getSize());  
-		    pstmt.setString(17, agriculturalDataEntryModel.getPower());
 		
 		    int res=pstmt.executeUpdate();
 		        if(res > 0)
