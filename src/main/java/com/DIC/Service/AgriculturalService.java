@@ -15,6 +15,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
+import com.DIC.DAO.Impl.LocationDAOImpl;
 import com.DIC.model.AgriculturalModel;
 
 @ManagedBean(name="agriculturalService")
@@ -39,6 +40,7 @@ public class AgriculturalService implements Serializable{
     
 	private List<AgriculturalModel> agriculturalModelList;
 	ConnectionDAOImpl dao; 
+	LocationDAOImpl locationDao;
     
     
     @PostConstruct 
@@ -46,7 +48,8 @@ public class AgriculturalService implements Serializable{
     {
     	log.log(Level.INFO, "Loading AgriculturalService init()");
         dao=new ConnectionDAOImpl();
-        primaryModel=dao.getPrimaryLocation();
+        locationDao=new LocationDAOImpl();
+        primaryModel=locationDao.getAgriPrimaryLocation();
         primLocation  = new HashMap<>(); 
 	      for(Map.Entry<String, String> pp:primaryModel.entrySet())
 	      {
@@ -88,7 +91,8 @@ public class AgriculturalService implements Serializable{
     public void onCountryChange() {  
 	    	if(country !=null && !country.equals("")) 
 	        {
-				  secondryLocation=dao.getSecondryLocation(country);
+			      secondryLocation=locationDao.getAgriSecondryLocation(country);
+				  
 				  Collections.sort(secondryLocation);
 	        }
         }  

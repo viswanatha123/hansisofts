@@ -27,6 +27,7 @@ import javax.faces.context.FacesContext;
 
 import com.DIC.DAO.ConnectionDAO;
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
+import com.DIC.DAO.Impl.LocationDAOImpl;
 import com.DIC.model.LayoutMode;
 
 
@@ -53,14 +54,17 @@ public class LayoutDetailService implements Serializable{
 
 	    private List<LayoutMode> layoutdetails;
 	    ConnectionDAOImpl dao;
+	    LocationDAOImpl locationDao;
 	    
 	    @PostConstruct 
 	    public void init()
 	    {
 	    	log.log(Level.INFO, "Loading LayoutDetailService init()");
 	          dao=new ConnectionDAOImpl();
-	          primaryModel=dao.getPrimaryLocation();
-            primLocation  = new HashMap<>(); 
+	          locationDao=new LocationDAOImpl();
+	          primaryModel=locationDao.getLayoutPrimaryLocation();
+	          
+	          primLocation  = new HashMap<>(); 
             for(Map.Entry<String, String> pp:primaryModel.entrySet())
             {
           	  log.log(Level.INFO, "Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
@@ -99,7 +103,8 @@ public class LayoutDetailService implements Serializable{
 	        public void onCountryChange() {  
 	        	if(country !=null && !country.equals("")) 
 		          {
-					  secondryLocation=dao.getSecondryLocation(country);
+				     secondryLocation=locationDao.getLayoutSecondryLocation(country);
+					  
 					  Collections.sort(secondryLocation);
 		          }
 	        }  
