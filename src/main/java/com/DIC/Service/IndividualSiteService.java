@@ -15,6 +15,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
+import com.DIC.DAO.Impl.LocationDAOImpl;
 import com.DIC.model.AgriculturalModel;
 import com.DIC.model.IndividualSiteModel;
 
@@ -40,6 +41,7 @@ public class IndividualSiteService implements Serializable {
 	
 
 	ConnectionDAOImpl dao; 
+	LocationDAOImpl locationDao;
 	
 	
 	@PostConstruct 
@@ -48,7 +50,10 @@ public class IndividualSiteService implements Serializable {
 
 		log.log(Level.INFO, "Loading IndividualSiteService init()");
         dao=new ConnectionDAOImpl();
-        primaryModel=dao.getPrimaryLocation();
+        locationDao=new LocationDAOImpl();
+        primaryModel=locationDao.getIndivPrimaryLocation();
+        
+        
         primLocation  = new HashMap<>(); 
 	      for(Map.Entry<String, String> pp:primaryModel.entrySet())
 	      {
@@ -92,7 +97,8 @@ public class IndividualSiteService implements Serializable {
     public void onCountryChange() {  
 		    	if(country !=null && !country.equals("")) 
 		        {
-					  secondryLocation=dao.getSecondryLocation(country);
+					secondryLocation=locationDao.getIndivSecondryLocation(country);
+					  
 					  Collections.sort(secondryLocation);
 		        }
         }  
