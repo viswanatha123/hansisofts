@@ -30,13 +30,13 @@
   
  			 <p:panel>   
                 <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
-                    <h:outputText style="font-weight: bold;color: red" value="#{plotsDataEntryService.updateResult}" />
+                    <h:outputText style="font-weight: bold;color: green" value="#{plotsDataEntryService.updateResult}" />
                 </p:panelGrid>
              </p:panel>
              
              <p:panel style="background-image: url('back1.jpg'); ">   
                 <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
-                
+                	<p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
                     
             
                     <p:outputLabel required="true" style="font-weight: bold" for="name" indicateRequired="true" value="Layout Name : " />
@@ -62,9 +62,9 @@
                                   
                     
                     <p:outputLabel style="font-weight: bold" for="contactOwner" indicateRequired="true" value="Agent Contact No : " />
-                    <p:inputText id="contactOwner"  required="true"  maxlength="10" value="#{plotsDataEntryService.contactOwner}" >
-                    	<p:keyFilter mask="num" />
-                    </p:inputText>
+                    <p:inputMask id="contactOwner"  mask="9999999999" required="true"  maxlength="10" value="#{plotsDataEntryService.contactOwner}" >
+                    	
+                    </p:inputMask>
                     <p:message for="contactOwner" display="icon"/>
             		
                     
@@ -150,7 +150,7 @@
                             </p:selectOneMenu>
                             <p:message for="wall" display="icon"/>
                     
-                      <p:outputLabel for="community" value="Gated Community(Security) : " />  
+                      <p:outputLabel for="community" style="width:200px" value="Gated Community(Security) : " />  
                             <p:selectOneMenu id="community" value="#{plotsDataEntryService.community}"  style="width:150px">  
                             <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                              <f:selectItem itemLabel="No" itemValue="No"/>
@@ -191,7 +191,13 @@
 	                   <p:resetInput target="form"/>
 	               </h:commandButton>
                 </p:panelGrid>                     
-                    
+                  <p style="font-weight: bold;color: black; font-size: 18px"> Please provide your Individual Site property details which you want to sell.</p>
+                  <p style="font-weight: bold;color: black; font-size: 18px"> Please contact our customer care ,if any further assist required.</p>
+                  <p style="font-weight: bold;color: black; font-size: 18px"> Customer care number : 8088471208.</p>
+                  <p style="font-weight: bold;color: black; font-size: 18px">E-mail : customer.support@hansisofts.com</p>
+                  <p:graphicImage width="102%"  height="400px" name="images/plot.jpg" />
+                   
+               </p:panelGrid>      
                     
                           
                        

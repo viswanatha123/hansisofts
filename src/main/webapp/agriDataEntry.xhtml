@@ -73,9 +73,9 @@
 			                    <p:message for="agentName" display="icon"/>
 			                    
 			                    <p:outputLabel style="font-weight: bold" for="contactno" indicateRequired="true" value="Agent Contact No : " />
-			                    <p:inputText id="contactno"  maxlength="10" value="#{agriculturalDataEntryhService.contactNo}" required="true" requiredMessage="Required Agent Contact No ">
-			                    	<p:keyFilter mask="num" />
-			                    </p:inputText>
+			                    <p:inputMask id="contactno"  mask="9999999999"  value="#{agriculturalDataEntryhService.contactNo}" required="true" requiredMessage="Required Agent Contact No ">
+			                    			                    	
+			                    </p:inputMask>
 			                    <p:message for="contactno" display="icon"/>
 			                    
 			                    <p:outputLabel style="font-weight: bold" value="Survey No : " />
@@ -115,7 +115,7 @@
 			                    <p:message for="numberCents" display="icon"/>
                     
                       
-		                       <p:outputLabel for="waterSource" value="Water Sourec : " />  
+		                       <p:outputLabel for="waterSource" value="Water Source : " />  
 		                            <p:selectOneMenu id="waterSource" value="#{agriculturalDataEntryhService.waterSource}" style="width:150px">  
 		                             <f:selectItem itemLabel="Bore Well" itemValue="Bore Well"/>
 		                             <f:selectItem itemLabel="No Water" itemValue="No Water"/>
@@ -150,7 +150,7 @@
 		                            </p:selectOneMenu>
                      		<p:message for="country" display="icon"/>
                      
-		                    <p:outputLabel for="city" value="Secondry Location : " /> 
+		                    <p:outputLabel for="city" style="width:170px" value="Secondry Location : " /> 
 		                            <p:selectOneMenu id="city" value="#{agriculturalDataEntryhService.city}" style="width:150px" required="true" requiredMessage="Select Secondry Location">  
 		                            <f:selectItem itemLabel="Select Secondry Location" itemValue="" noSelectionOption="true" />  
 		                            <f:selectItems value="#{agriculturalDataEntryhService.secondryLocation}" />  
@@ -190,6 +190,7 @@
                   <p style="font-weight: bold;color: black; font-size: 18px"> Please provide your agricultural property details which you want to sell.</p>
                   <p style="font-weight: bold;color: black; font-size: 18px"> Please contact our customer care ,if any further assist required.</p>
                   <p style="font-weight: bold;color: black; font-size: 18px"> Customer care number : 8088471208.</p>
+                   <p style="font-weight: bold;color: black; font-size: 18px">E-mail : customer.support@hansisofts.com</p>
                   <p:graphicImage width="102%"  height="400px" name="images/Agri_img.jpg" />
                    
                </p:panelGrid>   
