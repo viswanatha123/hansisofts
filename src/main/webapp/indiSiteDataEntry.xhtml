@@ -56,9 +56,9 @@
                     <p:message for="agentName" display="icon"/>
                     
                     <p:outputLabel style="font-weight: bold" for="contactno" indicateRequired="true" value="Agent Contact No : " />
-                    <p:inputText id="contactno" maxlength="10" value="#{indiSiteDataEntryService.contactNo}" required="true" requiredMessage="Required Agent Contact No">
-                    	<p:keyFilter mask="num" />
-                    </p:inputText>
+                    <p:inputMask id="contactno" mask="9999999999" value="#{indiSiteDataEntryService.contactNo}" required="true" requiredMessage="Required Agent Contact No">
+                    	
+                    </p:inputMask>
                     <p:message for="contactno" display="icon"/>
                     
                     
@@ -68,7 +68,7 @@
                     <p:message for="siteno" display="icon"/>
                     
                     
-                    <p:outputLabel style="font-weight: bold" for="persqft" indicateRequired="true" value="Per Square Feet(Cost) : " />
+                    <p:outputLabel style="font-weight: bold;width:170px" for="persqft" indicateRequired="true" value="Per Square Feet(Cost) : " />
                     <p:inputText id="persqft"  value="#{indiSiteDataEntryService.persqft}" required="true" requiredMessage="Required Owner Name">
                     </p:inputText>
                     <p:message for="persqft" display="icon"/>
@@ -160,6 +160,7 @@
                  <p style="font-weight: bold;color: black; font-size: 18px"> Please provide your Individual Site property details which you want to sell.</p>
                   <p style="font-weight: bold;color: black; font-size: 18px"> Please contact our customer care ,if any further assist required.</p>
                   <p style="font-weight: bold;color: black; font-size: 18px"> Customer care number : 8088471208.</p>
+                  <p style="font-weight: bold;color: black; font-size: 18px">E-mail : customer.support@hansisofts.com</p>
                   <p:graphicImage width="102%"  height="400px" name="images/indiv.jpg" />
                    
                </p:panelGrid>                   
