@@ -15,7 +15,7 @@
   <ui:composition template="/WEB-INF/facelets/template.xhtml">
   <ui:param name="page" value="Layout Details" />
   <ui:define name="title" ><p style="font-weight: bold; color:blue; font-size:15px"> Sales for Residential Plot/Land</p>
-  <p>For search property, Please select Primary Location and Secondry Location than click on Search button.</p>
+  <p>For search property, Please select Primary Location and Secondary Location than click on Search button.</p>
   <div class="card">
   <h:form id="form">
   <br></br>
@@ -32,9 +32,9 @@
 		                            <f:selectItems value="#{layoutDetailService.primLocationSort}" />  
 		                            </p:selectOneMenu> 
 		                        
-		                            <p:outputLabel for="city" style="font-weight: bold; color:white" value="Secondry Location : " />  
+		                            <p:outputLabel for="city" style="font-weight: bold; color:white" value="Secondary Location : " />  
 		                            <p:selectOneMenu id="city" value="#{layoutDetailService.city}" style="width:200px">  
-		                            <f:selectItem itemLabel="Select Secondry Location" itemValue="" noSelectionOption="true" />  
+		                            <f:selectItem itemLabel="Select Secondary Location" itemValue="" noSelectionOption="true" />  
 		                            <f:selectItems value="#{layoutDetailService.secondryLocation}" />  
 		                            </p:selectOneMenu> 
 		                            

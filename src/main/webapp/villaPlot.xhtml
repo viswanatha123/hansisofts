@@ -23,8 +23,9 @@
    <h:body>
   <ui:composition template="/WEB-INF/facelets/template.xhtml" style="background-image: url('back1.jpg'); ">
   <ui:param name="page" value="Admin" />
-  <ui:define name="title"><p:outputLabel id="display1" style="color: block">Post Property &nbsp;</p:outputLabel><p:outputLabel id="display2" style="color: red">FREE</p:outputLabel>
+   <ui:define name="title"><p:outputLabel id="display1" style="color: block">Post Property &nbsp;</p:outputLabel><p:outputLabel id="display2" style="color: red">FREE</p:outputLabel>
   <div class="card">
+  			
   <h:form  id="form" enctype="multipart/form-data">
   <p:messages id="msgs"/>
    <br></br>
@@ -141,9 +142,9 @@
                     </p:selectOneMenu>
                     <p:message for="country" display="icon"/>
                    
-                    <p:outputLabel for="city" value="Secondry Location : " />  
-                            <p:selectOneMenu id="city" value="#{villaDataEntryService.city}" style="width:150px" required="true" requiredMessage="Select Secondry Location">  
-                            <f:selectItem itemLabel="Secondry Location" itemValue="" noSelectionOption="true" />  
+                    <p:outputLabel for="city" value="Secondary Location : " />  
+                            <p:selectOneMenu id="city" value="#{villaDataEntryService.city}" style="width:150px" required="true" requiredMessage="Select Secondary Location">  
+                            <f:selectItem itemLabel="Secondary Location" itemValue="" noSelectionOption="true" />  
                             <f:selectItems value="#{villaDataEntryService.secondryLocation}" />  
                    </p:selectOneMenu> 
                    <p:message for="city" display="icon"/>
