@@ -144,7 +144,7 @@ public class PlotsDataEntryService implements Serializable{
 	  	         
 	  	          this.name="";
 	  	          this.location="";
-	  	          //this.persqft=0;
+	  	          this.persqft=0;
 	  	          this.plotarea=0;
 	  	          this.contactOwner="";
 	  	          this.ownerName="";
@@ -187,7 +187,7 @@ public class PlotsDataEntryService implements Serializable{
 	      {
 	          this.name="";
 	          this.location="";
-	          //this.persqft=0;
+	          this.persqft=0;
 	          this.plotarea=0;
 	          this.contactOwner="";
 	          this.ownerName="";

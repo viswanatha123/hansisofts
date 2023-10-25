@@ -27,11 +27,11 @@
 		                      </p:inputText>
 		                      
 		                      <p:outputLabel style="font-weight: bold; font-size: 14px;color:black; text-align:left;" for="phone" indicateRequired="true"  value="Phone No   : " />
-							  <p:inputText id="phone"   required="true" maxlength="10" value="#{helpService.phone}"   requiredMessage="Phone No is required">
-									<p:keyFilter mask="num" />
-							  </p:inputText>
+							  <p:inputMask id="phone"   mask="9999999999" required="true" maxlength="10" value="#{helpService.phone}"   requiredMessage="Phone No is required">
+							  </p:inputMask>
+							  <p:message for="phone" display="icon"/>
 							  
-		            
+				     
              
 		                		<h:commandButton value="submit" action="#{helpService.submitHelp}" >
 								</h:commandButton>
