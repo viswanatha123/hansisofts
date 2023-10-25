@@ -118,9 +118,8 @@
 													              		                    
 													                     <p:outputLabel style="font-weight: bold; font-size: 14px;color:black; text-align:left;" for="phone" indicateRequired="true"  value="Phone No  :  " />
 													                     <h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" />
-																		  <p:inputText id="phone"  size="31" required="true" maxlength="10" value="#{enquiryService.phone}"    requiredMessage="Phone No is required">
-																				<p:keyFilter mask="num" />
-																		 </p:inputText>
+																		 <p:inputMask id="phone"  size="31" mask="9999999999" required="true" maxlength="10" value="#{enquiryService.phone}"    requiredMessage="Phone No is required">
+																		</p:inputMask>
 													                    
 													                    <h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" />
 													                    <h:outputText style="font-weight: bold; font-size: 14px;color:#43C6DB; text-align:left;" value="space" />

@@ -132,6 +132,8 @@ public class AgriculturalDataEntryhService implements Serializable {
  	          this.agentName="";
  	          this.comment="";
  	          this.power="";
+ 	          this.country="";
+ 	          this.city="";
  	          
           
  	          
@@ -181,6 +183,8 @@ public class AgriculturalDataEntryhService implements Serializable {
           this.agentName="";
           this.comment="";
           this.power="";
+          this.country="";
+	      this.city="";
           
           this.updateResult="";
           System.out.println("****** Clicked on Clear button*****");

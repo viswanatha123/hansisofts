@@ -139,6 +139,10 @@ public class IndiSiteDataEntryService implements Serializable {
 	  	          this.ownerName="";
 	  	          this.transaction="";
 	  	          this.agentName="";
+	  	          this.comment="";
+	  	          this.facing="";
+	  	          this.country="";
+	  	          this.city="";
 	  	          
 	 	          
 	  	          
@@ -173,6 +177,10 @@ public class IndiSiteDataEntryService implements Serializable {
           this.transaction="";
           this.agentName="";
           this.updateResult="";
+          this.comment="";
+          this.facing="";
+          this.country="";
+	      this.city="";
           System.out.println("****** Clicked on Clear button*****");
       }
       
