@@ -23,6 +23,8 @@
   <ui:param name="page" value="Admin" />
   <ui:define name="title"><p:outputLabel id="display1" style="color: block">Post Property &nbsp;</p:outputLabel><p:outputLabel id="display2" style="color: red">FREE</p:outputLabel>
    <p>Layout Data Entry</p>
+   
+   
   <div class="card">
   <h:form  id="form" enctype="multipart/form-data">
   <p:messages id="msgs"/>
@@ -50,8 +52,8 @@
                     </p:inputText>
                     <p:message for="location" display="icon"/>
                     
-                    <p:outputLabel style="font-weight: bold" for="persqft" indicateRequired="true" value="Per Square Feet(Cost) : " />
-                    <p:inputNumber id="persqft"  value="#{plotsDataEntryService.persqft}" required="true" requiredMessage="Per Square Feet"  modifyValueOnWheel="false" >
+                    <p:outputLabel style="font-weight: bold" for="persqft" indicateRequired="true" value="Per Squar Feet(Cost) : " />
+                    <p:inputNumber id="persqft"  value="#{plotsDataEntryService.persqft}" required="true" requiredMessage="Required Length"  modifyValueOnWheel="false" >
                    </p:inputNumber>
                     <p:message for="persqft" display="icon"/>
                     
@@ -144,7 +146,7 @@
                             </p:selectOneMenu>
                             <p:message for="park" display="icon"/>
                       
-                      <p:outputLabel for="wall" value="Boundary Wall   : " />  
+                      <p:outputLabel for="wall" value="Compound Wall : " />  
                             <p:selectOneMenu id="wall" value="#{plotsDataEntryService.wall}"  style="width:150px">  
                              <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                              <f:selectItem itemLabel="No" itemValue="No"/>
@@ -170,7 +172,7 @@
                             <p:message for="facing" display="icon"/>
                             
                             
-                   <p:outputLabel style="font-weight: bold" value="Image Upload : "   />
+                   <p:outputLabel style="font-weight: bold; width:210px;" value="Image Upload (JPG,PNG,JPEG) : "   />
                    <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
                    <p:fileUpload id="image" value="#{plotsDataEntryService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  required="true" requiredMessage="Upload Image" /> 
             	   </p:panelGrid>
@@ -192,7 +194,7 @@
 	                   <p:resetInput target="form"/>
 	               </h:commandButton>
                 </p:panelGrid>                     
-                  <p style="font-weight: bold;color: black; font-size: 18px"> Please provide your Residential property details which you want to sell.</p>
+                  <p style="font-weight: bold;color: black; font-size: 18px"> Please provide your Individual Site property details which you want to sell.</p>
                   <p style="font-weight: bold;color: black; font-size: 18px"> Please contact our customer care ,if any further assist required.</p>
                   <p style="font-weight: bold;color: black; font-size: 18px"> Customer care number : 8088471208.</p>
                   <p style="font-weight: bold;color: black; font-size: 18px">E-mail : customer.support@hansisofts.com</p>
