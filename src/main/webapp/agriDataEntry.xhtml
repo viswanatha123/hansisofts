@@ -45,9 +45,8 @@
         
   <ui:composition template="/WEB-INF/facelets/template.xhtml">
   <ui:param name="page" value="Admin" />
-   <ui:define name="title"><p:outputLabel id="display1" style="color: block">Post Property &nbsp;</p:outputLabel><p:outputLabel id="display2" style="color: red">FREE</p:outputLabel>
-   <p>Agricultural Details Enter</p>
-  
+  <ui:define name="title"><p:outputLabel id="display1" style="color: block">Post Property &nbsp;</p:outputLabel><p:outputLabel id="display2" style="color: red">FREE</p:outputLabel>
+  <p>Agricultural Details Enter</p>
   <div class="card">
   <h:form id="form" enctype="multipart/form-data">
   <p:messages id="msgs"/>
@@ -165,7 +164,7 @@
 		                    </p:inputText>
 		                    <p:message for="comment" display="icon"/>
                     
-                    		<p:outputLabel style="font-weight: bold" value="Image Upload : "   />
+                    		<p:outputLabel style="font-weight: bold; width:210px;" value="Image Upload (JPG,PNG,JPEG): "   />
                     		<p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
                             <p:fileUpload id="image" value="#{agriculturalDataEntryhService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/> 
                             </p:panelGrid>

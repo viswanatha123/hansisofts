@@ -160,7 +160,9 @@ public class GeneralDAOImpl {
 	        	 
 	        	 			// below for Image
 	        	 
-					        	 if(rs.getBytes("image")!=null)
+	        	 System.out.println(" Villa image : "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
+	        	 
+					        	 if(rs.getBytes("image").length!=0)
 				                 {
 				                 byte[] bb=rs.getBytes("image");
 				                 
@@ -172,7 +174,7 @@ public class GeneralDAOImpl {
 				                 else
 				                 {
 				                	// Defalut Image
-				                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =100");
+				                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
 				                	 ResultSet rsDef = pstmtDefault.executeQuery();
 				                	 while ( rsDef.next())
 				                			 {
