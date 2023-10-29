@@ -35,6 +35,9 @@ public class LocationDAOImpl {
 			
 			String SQL_INDIV_PRIMERY_LOCATION="select distinct prim_location from hansi_individual_site order by prim_location";
 			String SQL_INDIV_SECONDRY_LOCATION="select distinct seco_location from hansi_individual_site where prim_location =? order by seco_location desc";
+			
+			String SQL_VILLA_PRIMERY_LOCATION="select distinct prim_location from villa_plot  order by prim_location";
+			String SQL_VILLA_SECONDRY_LOCATION="select distinct seco_location from villa_plot where prim_location = ? order by seco_location desc";
 		}
 	}
 	
@@ -255,7 +258,76 @@ public class LocationDAOImpl {
 				return secondryModelList;		
 				}
 				
-							
+				//*********************************************************************************************************************************
+				// Villa/Plot
+				//*********************************************************************************************************************************
+			
+			public Map<String, String> getVillaPrimaryLocation()
+			{	
+				
+				
+				Map<String, String> primaryModelList = new java.util.HashMap();
+					try {
+					Connection con = null;
+					Statement stmt= null;
+					
+					StringBuilder sql_villa_primary_data = new StringBuilder(Constants.SQL.SQL_VILLA_PRIMERY_LOCATION);
+					con=ConnectionDAO.getConnection();
+					stmt = con.createStatement();
+					ResultSet rs = stmt.executeQuery(sql_villa_primary_data.toString());
+					log.info("****************** log x***************** :"+rs.getFetchSize());
+							while(rs.next())
+							{ 
+					  		 primaryModelList.put(rs.getString("prim_location"), rs.getString("prim_location"));
+			
+							}
+			         rs.close();
+			         stmt.close();
+			         con.close();
+					}catch (Exception e) {
+			        e.printStackTrace();
+			        System.err.println("@@@@@@@@@@@@Primary data @@@@@@@@@@@@@@@@@@@@@@@@@@ :"+e.getClass().getName()+": "+e.getMessage());
+			     }
+			return primaryModelList;		
+			}
+			
+			//****************************************** Secondry Locaton ****************************************
+			
+			public List<String> getVillaSecondryLocation(String primCode)
+				{		
+					
+					
+					log.log(Level.INFO, "Primary value  in db--------->:"+primCode);
+					List<String> secondryModelList = new ArrayList<>();
+						try {
+						Connection con = null;
+						PreparedStatement pstmt = null;
+						StringBuilder sql_villa_secondry_data = new StringBuilder(Constants.SQL.SQL_VILLA_SECONDRY_LOCATION);
+						log.info("###: Secondry location query : "+sql_villa_secondry_data.toString());
+						
+						
+						con=ConnectionDAO.getConnection();
+						pstmt = con.prepareStatement(sql_villa_secondry_data.toString());
+		                pstmt.setString(1, primCode);
+		                ResultSet rs = pstmt.executeQuery();
+		                      	while ( rs.next() ) {
+		    	            		secondryModelList.add(rs.getString("seco_location"));
+		    	            		
+		    	            		log.log(Level.INFO, "debug x----->"+rs.getString("seco_location"));
+					          	 }	
+		                
+		                 rs.close();
+				         con.close();
+				         pstmt.close();
+				         log.info("### : *** Connection Closed from getSecondryLocation");
+				     } catch (Exception e) {
+				        e.printStackTrace();
+				        System.err.println("@@@@@@@@@@@@Primary data @@@@@@@@@@@@@@@@@@@@@@@@@@ :"+e.getClass().getName()+": "+e.getMessage());
+				        //System.exit(0);
+				     }
+				return secondryModelList;		
+				}
+			
 			
 
 }
