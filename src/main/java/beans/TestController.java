@@ -1,6 +1,12 @@
 package beans;
 
 import framework.EventHandler;
+
+/*
+ * 
+ * Author : visu
+ * 
+ */
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -21,6 +27,4 @@ public class TestController {
     }
  
     
-
-
 }
