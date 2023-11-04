@@ -155,6 +155,11 @@ public class PlotsDataEntryService implements Serializable{
 	  	          this.width=0;
 	  	          this.country="";
 	  	          this.city="";
+	  	          this.swimingPool="";
+	  	          this.playground="";
+	  	          this.park="";
+	  	          this.wall="";
+	  	          this.community="";
 	  	          this.agentName="";
 	  	          this.facing="";
 	  	        
@@ -199,6 +204,11 @@ public class PlotsDataEntryService implements Serializable{
 	          this.agentName="";
 	          this.country="";
   	          this.city="";
+  	          this.swimingPool="";
+	          this.playground="";
+	          this.park="";
+	          this.wall="";
+	          this.community="";
   	          this.facing="";
 	          
 	          
