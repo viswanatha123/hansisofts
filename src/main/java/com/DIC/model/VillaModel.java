@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Date;
 
-
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.file.UploadedFile;
 
 public class VillaModel implements Serializable{
@@ -32,6 +32,9 @@ public class VillaModel implements Serializable{
 	private int cost;
 	private Date create_date;
 	private int is_active;
+	private StreamedContent streamedContent;
+	
+	
 	
 	private InputStream inputStream;
     private UploadedFile file;
@@ -181,6 +184,12 @@ public class VillaModel implements Serializable{
 	}
 	public void setAvail_date(Date avail_date) {
 		this.avail_date = avail_date;
+	}
+	public StreamedContent getStreamedContent() {
+		return streamedContent;
+	}
+	public void setStreamedContent(StreamedContent streamedContent) {
+		this.streamedContent = streamedContent;
 	}
 
 	

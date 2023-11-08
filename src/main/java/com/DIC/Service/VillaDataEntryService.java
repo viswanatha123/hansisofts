@@ -179,7 +179,28 @@ public class VillaDataEntryService implements Serializable{
    
    public void clear()
    {
-	   
+	    this.i_am="Owner";
+    	this.owner_name="";
+    	this.contact_owner="";
+    	this.email="";
+    	this.property_type="Villa";
+    	this.address="";
+    	this.road_width=0;
+    	this.floors=0;
+    	this.bed_rooms=0;
+    	this.bath_rooms=0;
+    	this.furnished="";
+    	this.plot_area=0;
+    	this.s_build_are=0;
+    	this.pro_avail="";
+    	this.avail_date=new Date();
+    	this.persqft=0;
+    	this.country="";
+        this.city="";
+    	//private InputStream inputStream;
+        //private UploadedFile file;
+    	this.total_feets=0;;
+    	this.cost=0;
 	   
        
        this.updateResult="";

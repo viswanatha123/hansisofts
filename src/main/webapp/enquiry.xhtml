@@ -38,38 +38,33 @@
 		              		                    
 		                     <p:outputLabel style="font-weight: bold; font-size: 14px;color:black; text-align:left;" for="phone" indicateRequired="true"  value="Phone No  :  " />
 		                     <h:outputText style="font-weight: bold; font-size: 14px;color:#B0C4DE; text-align:left;" value="space" />
-							  <p:inputText id="phone"  size="31" required="true" maxlength="10" value="#{enquiryService.phone}"    requiredMessage="Phone No is required">
-									<p:keyFilter mask="num" />
-							 </p:inputText>
-		                    
+		                     <p:inputMask id="phone"  size="30" mask="9999999999"  value="#{enquiryService.phone}" required="true" requiredMessage="Phone No  : ">
+			   				 </p:inputMask>
+			   				 <p:message for="phone" display="icon"/>
+		 
 		                    <h:outputText style="font-weight: bold; font-size: 14px;color:#B0C4DE; text-align:left;" value="space" />
 		                    <h:outputText style="font-weight: bold; font-size: 14px;color:#B0C4DE; text-align:left;" value="space" />
-		                    
-		                    
-		                   
-		                    
-		   				<h:outputText/>
-		   				<h:outputText/>
-             
-		                		<h:commandButton value="Submit" action="#{enquiryService.submitEnquiry}" >
+		                  	<h:outputText/>
+		   					<h:outputText/>
+             			</h:panelGrid> 
+               			
+               			
+               			<h:panelGrid columns="3" cellpadding="5" style="width: 50;">
+		               			<h:commandButton value="Submit" action="#{enquiryService.submitEnquiry}" >
 								</h:commandButton>
-				
-				                    
-				                     
-				                   <h:commandButton id="discardChangesButton"
-					                                   process="@this"
-					                                   value="Clear"
-				                                           update="@form"
-					                                   action="#{enquiryService.clear()}" >
-					                                   
-					                   <p:resetInput target="form"/>
-					              </h:commandButton>
-		                    
-		                 
-               			</h:panelGrid>                    
+						
+							    <h:commandButton id="discardChangesButton"
+							                                   process="@this"
+							                                   value="Clear"
+						                                           update="@form"
+							                                   action="#{enquiryService.clear()}" >
+							                                   
+							                   <p:resetInput target="form"/>
+							     </h:commandButton>
+               			</h:panelGrid>                   
               </p:panel>
   
-			</center>
+		</center>
   
  </h:form>
 </div>

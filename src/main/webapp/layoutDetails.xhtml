@@ -89,7 +89,7 @@
                                                <h:outputText class="pi pi-user-plus" style="font-weight: normal; font-size: 15px" value=" Owner Name : " />
                                                <h:outputText style="font-weight: normal; font-size: 15px" value="#{product.ownerName}" />
                                                
-                                              <h:outputText class="pi pi-users" style="font-weight: normal; font-size: 15px" value=" Wonership : " />
+                                              <h:outputText class="pi pi-users" style="font-weight: normal; font-size: 15px" value=" Owner Ship : " />
                                               <h:outputText  style="font-weight: normal; font-size: 15px" value="#{product.wonership}" />
                                               
                                               <h:outputText class="pi pi-th-large" style="font-weight: normal; font-size: 15px" value=" Transaction : " /> 
@@ -108,10 +108,10 @@
 		                                       <h:outputText rendered="#{product.park eq 'Yes'}" style="font-weight: normal;color: black;font-size: 15px" value="Park  : " />
 		                                       <p:graphicImage rendered="#{product.park eq 'Yes'}" width="30" height="30" name="images/parking.jpg" />
 		                                                     
-		                                       <h:outputText rendered="#{product.wall eq 'Yes'}" style="font-weight: normal;color: black;font-size: 15px" value="Boundary Wall  : " />
+		                                       <h:outputText rendered="#{product.wall eq 'Yes'}" style="font-weight: normal;color: black;font-size: 15px" value="Compound wall  : " />
 		                                       <p:graphicImage rendered="#{product.wall eq 'Yes'}" width="30" height="30" name="images/wall.jpg" />
 		                                                     
-		                                       <h:outputText rendered="#{product.community eq 'Yes'}" style="font-weight: normal;color: black;font-size: 15px" value="Greater Community  : " />
+		                                       <h:outputText rendered="#{product.community eq 'Yes'}" style="font-weight: normal;color: black;font-size: 15px" value="Gated Community  : " />
 		                                       <p:graphicImage rendered="#{product.community eq 'Yes'}" width="30" height="30" name="images/g_community.jpg" />
                                 </h:panelGrid>
                                
