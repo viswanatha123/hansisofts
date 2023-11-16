@@ -18,6 +18,7 @@ import org.primefaces.model.file.UploadedFile;
 
 import com.DIC.DAO.ConnectionDAO;
 import com.DIC.DAO.Impl.ConnectionDAOImpl.Constants;
+import com.DIC.model.HomeLoanDataEntryModel;
 import com.DIC.model.LayoutMode;
 import com.DIC.model.PlotsDataEntryModel;
 import com.DIC.model.VillaModel;
@@ -38,6 +39,8 @@ public class GeneralDAOImpl {
 			
 			String SQL_VILLA_DETAILS="select * from villa_plot where prim_location = ? and seco_location = ?";
 					//+ " and property_type = ? order by create_date desc";
+			String SQL_HOME_LOAN_INSERT="insert into home_loan (home_id,agent_name,cont_num,age,gender,email,loan_amt,monthly_inc,emp_type,create_date,is_active) \n"+ 
+					"values (nextval('home_loan_seq'),?,?,?,?,?,?,?,?,current_timestamp,1);";
 		}
 	}
 	
@@ -201,6 +204,56 @@ public class GeneralDAOImpl {
 	     }
 	return VillaModelList;		
 	}
+    
+    
+ // ***************** update home loan data entry **************
+    /*
+     * 
+     * developed by Parameswari
+     */
+    
+    public String updateHomeLoanDataEntry(HomeLoanDataEntryModel HomeLoanDataEntryModel)
+    {
+    	String succVal="";
+    	
+        try {
+            Connection con = null;
+            PreparedStatement pstmt = null;
+            con=ConnectionDAO.getConnection();
+            
+            StringBuilder sql_home_loan_insert = new StringBuilder(Constants.SQL.SQL_HOME_LOAN_INSERT);
+            pstmt = con.prepareStatement(sql_home_loan_insert.toString());
+            
+            pstmt.setString(1,HomeLoanDataEntryModel.getAgentName());
+            pstmt.setString(2, HomeLoanDataEntryModel.getContactNo());
+            pstmt.setInt(3, HomeLoanDataEntryModel.getAge());
+            pstmt.setString(4, HomeLoanDataEntryModel.getGender());
+            pstmt.setString(5, HomeLoanDataEntryModel.getEmail());
+            pstmt.setInt(6, HomeLoanDataEntryModel.getLoanAmt());
+            pstmt.setInt(7, HomeLoanDataEntryModel.getMonthlyInc());
+            pstmt.setString(8, HomeLoanDataEntryModel.getEmpType());
+           
+           
+            	int res=pstmt.executeUpdate();
+	            if(res > 0)
+	            {
+	            	succVal="Successful updated record";
+	            }
+          } catch (Exception e) {
+         
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	    
+	        succVal=e.getMessage();
+	        return succVal;
+	       
+          }
+      
+
+        return succVal;
+    }
+    
+	
     
 	
 	
