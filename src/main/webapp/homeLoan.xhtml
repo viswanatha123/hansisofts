@@ -47,7 +47,7 @@
                     </p:inputText>
                     <p:message for="agentName" display="icon"/>
                     
-                    <p:outputLabel style="font-weight: bold" for="age" indicateRequired="true" value=" Age : " />
+                    <p:outputLabel style="font-weight: bold" value=" Age : " />
                     <p:inputNumber id="age" required="true"  maxlength="2" maxValue="99" value="#{HomeLoanDataEntryService.age}" >
                     </p:inputNumber>
                     <p:message for="age" display="icon"/>
@@ -72,23 +72,25 @@
 		            </p:inputText>
 		            <p:message for="email" display="icon"/>
 		            
-		            <p:outputLabel style="font-weight: bold" for="loanAmt" indicateRequired="true" value=" Loan Amt : " />
+		            <p:outputLabel style="font-weight: bold" value=" Loan Amt : " />
                     <p:inputNumber id="loanAmt" required="true"   value="#{HomeLoanDataEntryService.loanAmt}" >
                     </p:inputNumber>
                     <p:message for="loanAmt" display="icon"/>
                     
-                    <p:outputLabel style="font-weight: bold" for="monthlyInc" indicateRequired="true" value=" Monthly Inc : " />
+                    <p:outputLabel style="font-weight: bold" value=" Monthly Inc : " />
                     <p:inputNumber id="monthlyInc"  required="true"   value="#{HomeLoanDataEntryService.monthlyInc}" >
                     </p:inputNumber>
                     <p:message for="monthlyInc" display="icon"/>
-                                                
-                    <p:outputLabel required="true" style="font-weight: bold" for="empType" indicateRequired="true" value="Employment Type : " />
+                    
+                    <p:outputLabel style="font-weight: bold" for="empType" value="Employment Type : " />
                     <p:selectOneRadio id="empType" value="#{HomeLoanDataEntryService.empType}" layout="lineDirection">
-			            <f:selectItem itemLabel="Salaried" itemValue="Salaried" />
-			            <f:selectItem itemLabel="Business " itemValue="Business "/>
-			            <f:selectItem itemLabel="self employed professional" itemValue="self employed professional"/>
-			        </p:selectOneRadio>
-			        <p:message for="empType" display="icon"/>
+                         <f:selectItem itemLabel="Salaried" itemValue="Salaried" />
+		                 <f:selectItem itemLabel="Business " itemValue="Business "/>
+		                 <f:selectItem itemLabel="self employed professional" itemValue="self employed professional"/>
+		            </p:selectOneRadio>
+		            <p:message for="empType" display="icon"/>
+                                                
+                    
                     
 			        <h:commandButton value="Submit"   type="submit" 
                     process="@this"
@@ -110,7 +112,7 @@
   <p style="font-weight: bold;color: black; font-size: 18px"> Please contact our customer care ,if any further assist required.</p>
   <p style="font-weight: bold;color: black; font-size: 18px"> Customer care number : 8088471208.</p>
   <p style="font-weight: bold;color: black; font-size: 18px">E-mail : customer.support@hansisofts.com</p>
-  
+  <p:graphicImage width="102%"  height="400px" name="images/homeLoan.jpg" />
   
    
 </p:panelGrid>      
