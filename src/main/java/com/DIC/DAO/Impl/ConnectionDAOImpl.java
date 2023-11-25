@@ -443,7 +443,8 @@ public class ConnectionDAOImpl {
                          layoutMode.setCreatedOnDate(rs.getDate("create_date"));
                          
                          
-                         if(rs.getBytes("image")!=null)
+                        
+                         if(rs.getBytes("image").length!=0)
                          {
                         	 System.out.println("********** not null ********* : "+rs.getBytes("image"));
                          byte[] bb=rs.getBytes("image");
@@ -455,51 +456,22 @@ public class ConnectionDAOImpl {
                          }
                          else
                          {
-                        	 System.out.println("********** null *********");
-                        	 StringBuilder sq_image_default = new StringBuilder(Constants.SQL.SQL_IMAGE_DEFAULT);
+			                	// Defalut Image
+			                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+			                	 ResultSet rsDef = pstmtDefault.executeQuery();
+			                	 while ( rsDef.next())
+			                			 {
+			                		      byte[] def=rsDef.getBytes("image");
+			                		      layoutMode.setStreamedContent(DefaultStreamedContent.builder()
+			                             .name("US_Piechart.jpg")
+			                             .contentType("image/jpg")
+			                             .stream(() -> new ByteArrayInputStream(def)).build());
+			                			 }
+			                	 
+			              }
                         	 
-                 			PreparedStatement pstmtDefault1 = null;
-                        	pstmtDefault1 = con.prepareStatement(sq_image_default.toString());
-                        	 ResultSet rsDef = pstmtDefault1.executeQuery();
-                        	
-                        		 byte[] def=rsDef.getBytes("image");
-                        		 layoutMode.setStreamedContent(DefaultStreamedContent.builder()
-                                     .name("US_Piechart.jpg")
-                                     .contentType("image/jpg")
-                                     .stream(() -> new ByteArrayInputStream(def)).build());
-                        		
-                        	 
-                         }
-                         
-                  
                        
-                        
-                         /*
-                        File file=new File("D:\\image1.jpg");
-                        FileOutputStream fos=new FileOutputStream(file);
-                        fos.write(bb);
-                       */
-                         
-                         
-                  
-                         
-                         /*
-                         StreamedContent streamedContent = DefaultStreamedContent.builder()
-                                 .name("US_Piechart.jpg")
-                                 .contentType("image/jpg")
-                                 .stream(() -> new ByteArrayInputStream(bb)).build();
-                         
-                         layoutMode.setStreamedContent(streamedContent);
-                         */
-                       
-                         
-                        
-                    
-                           
-                         
 	        	 layoutModeList.add(layoutMode);
-	       
-	            
 	         }
 	         	
 	         pstmt.close();
@@ -513,15 +485,7 @@ public class ConnectionDAOImpl {
 	     }
 	return layoutModeList;		
 	}
-    
-    
-    
-    
-    
-    
-    
-    
-    
+     
     //************************************ Price Indian format ******************************************//  
   
     public String indianCurrence(int price)
@@ -610,23 +574,10 @@ public class ConnectionDAOImpl {
                              
                              agriculturalModel.setTotalPrice(indianCurrence(rs.getInt("per_cent")*rs.getInt("number_cents")));
                              agriculturalModel.setCreatedOnDate(rs.getDate("create_date"));
-                             
-                             
-                             
-                             /*
-                             byte[] bb=rs.getBytes("image");
-                             agriculturalModel.setStreamedContent(DefaultStreamedContent.builder()
-                                     .name("US_Piechart.jpg")
-                                     .contentType("image/jpg")
-                                     .stream(() -> new ByteArrayInputStream(bb)).build());
-                             
-                             */
-                          
-                             
-                             
-                             if(rs.getBytes("image")!=null)
+                   
+                             if(rs.getBytes("image").length!=0)
                              {
-                             byte[] bb=rs.getBytes("image");
+                               byte[] bb=rs.getBytes("image");
                              
                              agriculturalModel.setStreamedContent(DefaultStreamedContent.builder()
                                      .name("US_Piechart.jpg")
@@ -635,21 +586,19 @@ public class ConnectionDAOImpl {
                              }
                              else
                              {
-                            	// Defalut Image
-                            	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =6");
-                            	 ResultSet rsDef = pstmtDefault.executeQuery();
-                            	 while ( rsDef.next())
-                            			 {
-                            		      byte[] def=rsDef.getBytes("image");
-                            	          agriculturalModel.setStreamedContent(DefaultStreamedContent.builder()
-                                         .name("US_Piechart.jpg")
-                                         .contentType("image/jpg")
-                                         .stream(() -> new ByteArrayInputStream(def)).build());
-                            			 }
-                            	 
-                              }
-                             
-                                  
+				                	// Defalut Image
+				                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+				                	 ResultSet rsDef = pstmtDefault.executeQuery();
+				                	 while ( rsDef.next())
+				                			 {
+				                		      byte[] def=rsDef.getBytes("image");
+				                		      agriculturalModel.setStreamedContent(DefaultStreamedContent.builder()
+				                             .name("US_Piechart.jpg")
+				                             .contentType("image/jpg")
+				                             .stream(() -> new ByteArrayInputStream(def)).build());
+				                			 }
+				                	 
+				                  }
     	        agriculturalModelList.add(agriculturalModel);
     	       
     	            
@@ -780,19 +729,8 @@ public class ConnectionDAOImpl {
         	        	 individualSiteModel.setAgentName(rs.getString("agent_name"));
         	        	 individualSiteModel.setTotalPrice(indianCurrence(rs.getInt("persqft") * (rs.getInt("length") * rs.getInt("width"))));
         	        	 individualSiteModel.setCreatedOnDate(rs.getDate("create_date"));
-        	        	  
         	        	 
-        	        	 /*
-        	        	 byte[] bb=rs.getBytes("image");
-
-
-        	        	  individualSiteModel.setStreamedContent(DefaultStreamedContent.builder()
-        	        	                                  .name("US_Piechart.jpg")
-        	        	                                  .contentType("image/jpg")
-        	        	                                  .stream(() -> new ByteArrayInputStream(bb)).build());
-        	        	  
-        	        	  */
-        	        	  if(rs.getBytes("image")!=null)
+        	        	 if(rs.getBytes("image").length!=0)
                           {
                           byte[] bb=rs.getBytes("image");
                           
@@ -803,26 +741,19 @@ public class ConnectionDAOImpl {
                           }
                           else
                           {
-                         	// Defalut Image
-                         	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =100");
-                         	 ResultSet rsDef = pstmtDefault.executeQuery();
-                         	 while ( rsDef.next())
-                         			 {
-                         		      byte[] def=rsDef.getBytes("image");
-                         		     individualSiteModel.setStreamedContent(DefaultStreamedContent.builder()
-                                      .name("US_Piechart.jpg")
-                                      .contentType("image/jpg")
-                                      .stream(() -> new ByteArrayInputStream(def)).build());
-                         			 }
-                         	 
-                           }
-        	        	  
-        	        	  
-        	        	  
-        	        	  
-        	        	  
-    	  
-                             
+			                	// Defalut Image
+			                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+			                	 ResultSet rsDef = pstmtDefault.executeQuery();
+			                	 while ( rsDef.next())
+			                			 {
+			                		      byte[] def=rsDef.getBytes("image");
+			                		      individualSiteModel.setStreamedContent(DefaultStreamedContent.builder()
+			                             .name("US_Piechart.jpg")
+			                             .contentType("image/jpg")
+			                             .stream(() -> new ByteArrayInputStream(def)).build());
+			                			 }
+			                	 
+			              }       
                  individualSiteModelList.add(individualSiteModel);
     	    
     	            
