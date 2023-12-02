@@ -91,15 +91,20 @@
                                                
                         </h:panelGrid>
                      
-                       <h:panelGrid   columns="3" width="100%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right">
+                       <h:panelGrid   columns="6" width="100%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right">
                           
                           			<p:commandButton type="submit" value="Request Callback" icon="ui-icon-calculator" style="background:#FFA500;font-weight: bold;color: black;font-size: 15px" onclick="requestCallback()" />
                           			<p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#1E90FF;font-weight: bold;color: black;font-size: 15px" onclick="requestCallback()" />
                           		     <h:outputText value="Posted : #{product.createdOnDate}" >
 									    <f:convertDateTime type="date" dateStyle="full"/>   
 									</h:outputText>
+									<h:link width="33%"  value = "Find Builders" class="pi pi-user" outcome = "builders.xhtml" style="font-weight: bold; font-size: 14px;color:block; margin-right: 50px; " />
+					           		<h:link width="33%"  value = "Find Agents"  class="pi pi-user" outcome = "agents.xhtml" style="font-weight: bold; font-size: 14px;color:block; margin-right: 50px;" />
+					           		<h:link width="33%"  value = "Enquiry" class="pi pi-user" outcome = "enquiry.xhtml" style="font-weight: bold; font-size: 14px;color:block; margin-right: 50px; " />
+					          
 									                          			
                       </h:panelGrid> 
+                 
                   
                   
     

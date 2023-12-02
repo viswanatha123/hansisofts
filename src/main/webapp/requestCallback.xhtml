@@ -14,6 +14,7 @@
   <ui:define name="title" >
   <div class="card">
   <h:form id="form">
+   <p:messages id="msgs"/>
     
   
   							<table width="100%" style="background: #43C6DB;">
@@ -42,11 +43,13 @@
 									                    
 									                    <tr>
 									                    	<th style="text-align:center;">
-									                    		<h:outputText style="font-weight: bold; font-size: 18px;color:white; text-align:left;" value="Email : " />
+									                    		 <h:outputText style="font-weight: bold; font-size: 18px;color:white; text-align:left;" value="Email : " />
 									                    	</th>
 									                    	<th>
-									                    		<h:inputText id="email"  style="width:400px;height:30px;" value="#{requestCallBackService.email}" required="true" requiredMessage="Email is required">
+									                    		<h:inputText id="email"  style="width:400px;height:30px;" value="#{requestCallBackService.email}" validatorMessage="Invalid email format">
+									                    		<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 									                    		</h:inputText> 
+									             									                    	
 									                    	</th>
 									                    </tr>
 									                    
@@ -59,11 +62,13 @@
 									                    
 									                    <tr>
 									                    	<th style="text-align:center;">
-									                    		<h:outputText style="font-weight: bold; font-size: 18px;color:white; text-align:left; " value="Phone : " />
+									                    		<p:outputLabel  for="phone" style="font-weight: bold; font-size: 18px;color:white; text-align:left; " indicateRequired="true" value="Phone : " />
+									                    	
 									                    	</th>
 									                    	<th>
-									                   			<h:inputText id="phone"  style="width:400px;height:30px;" value="#{requestCallBackService.phone}" required="true" requiredMessage="Phone is required">
-									                    		</h:inputText>
+									                   			 <p:inputMask id="phone"  mask="9999999999" style="width:400px;height:30px;" value="#{requestCallBackService.phone}" required="true" requiredMessage="Phone No is required">
+			   				 									 </p:inputMask>
+			   				 									 <p:message for="phone" display="icon"/>
 									                    	</th>
 									                    </tr>
 									                    
