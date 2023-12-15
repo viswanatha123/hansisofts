@@ -29,35 +29,79 @@ and open the template in the editor.
                 </p:link>
             </li>
             -->
-            
-            	
-        
-            
-              <p:menubar class="#{'active'}">
-			              <p:submenu label="Home" icon="pi pi-fw pi-home">
+           
+              <p:megaMenu class="#{'active'}">
+              
+			              <p:submenu label="Home" style="text-align: center;width: 110px;" icon="pi pi-fw pi-home">
 				                <p:menuitem value="Home" icon="pi pi-fw pi-home" outcome="index"/>
-				                
+				          </p:submenu>
+			              
+			             
+				              <p:submenu label="Buy" style="text-align: center;width: 110px;" icon="pi pi-fw pi-book">
+					               <p:column>
+					               
+					               		<p:submenu label="Property Types">
+							                <p:menuitem value="Layout" icon="pi pi-fw pi-credit-card" outcome="layoutDetails"/>
+							                <p:menuitem value="Agricultural Land" icon="pi pi-fw pi-discord" outcome="agricultural"/>
+							                <p:menuitem value="Individual Site" icon="pi pi-fw pi-tablet" outcome="individualsite"/>
+							                <p:menuitem value="Villa/Plot Site" icon="pi pi-fw pi-tablet" outcome="villaPlotSearch"/>
+						                </p:submenu>
+					               </p:column>
+					               <p:column>
+					               		<p:submenu label="Budget">
+							                <p:menuitem value="Under 50 Lac"/>
+							                <p:menuitem value="50 Lac - 1 Cr"/>
+							                <p:menuitem value="1 Cr - 2 Cr"/>
+							                <p:menuitem value="Above 2 Cr"/>
+						                </p:submenu>
+					               </p:column>
+					               
+					                <p:column>
+					               		<p:submenu label="Popular Choices">
+							                <p:menuitem value="Ready to Move"/>
+							                <p:menuitem value="Owner Properties"/>
+							            </p:submenu>
+					               </p:column>
+			            	 </p:submenu>
+			                
+			              <p:submenu label="Sell" style="text-align: center;width: 110px;" icon="pi pi-fw pi-book">
+			              <p:column>
+					        <p:submenu label="Property Types">
+					                <p:menuitem value="Layout" icon="pi pi-fw pi-credit-card" outcome="plotsDataEntry"/>
+					                <p:menuitem value="Agricultural Land" icon="pi pi-fw pi-discord" outcome="agriDataEntry"/>
+					                <p:menuitem value="Individual Site" icon="pi pi-fw pi-tablet" outcome="indiSiteDataEntry"/>
+					                <p:menuitem value="Villa/Plot Site" icon="pi pi-fw pi-tablet" outcome="villaPlotDataentry"/>
+			                </p:submenu>
+			               </p:column>
 			              </p:submenu>
 			              
-			              <p:submenu label="Buy Properties" icon="pi pi-fw pi-book">
-			                <p:menuitem value="Layout" icon="pi pi-fw pi-credit-card" outcome="layoutDetails"/>
-			                <p:menuitem value="Agricultural Land" icon="pi pi-fw pi-discord" outcome="agricultural"/>
-			                <p:menuitem value="Individual Site" icon="pi pi-fw pi-tablet" outcome="individualsite"/>
-			                <p:menuitem value="Villa/Plot Site" icon="pi pi-fw pi-tablet" outcome="villaPlotSearch"/>
+			              <p:submenu label="Rent" style="text-align: center;width: 110px;" icon="pi pi-fw pi-book">
+			              <p:column>
+					        <p:submenu label="Rented Property">
+					                <p:menuitem value="Layout for Rent"/>
+					                <p:menuitem value="Agricultural Land for Rent"/>
+					                <p:menuitem value="Individual Site for Rent"/>
+					                <p:menuitem value="Villa for Rent" />
+			                </p:submenu>
+			               </p:column>
+			               		  <p:column>
+					               	<p:submenu label="Budget">
+								        <p:menuitem value="Under 50 Lac"/>
+								        <p:menuitem value="50 Lac - 1 Cr"/>
+								        <p:menuitem value="1 Cr - 2 Cr"/>
+								        <p:menuitem value="Above 2 Cr"/>
+						             </p:submenu>
+					              </p:column>
 			              </p:submenu>
 			              
-			              <p:submenu label="Sell Properties" icon="pi pi-fw pi-book">
-			              <p:menuitem value="Layout" icon="pi pi-fw pi-credit-card" outcome="plotsDataEntry"/>
-			               <p:menuitem value="Agricultural Land" icon="pi pi-fw pi-discord" outcome="agriDataEntry"/>
-			                <p:menuitem value="Individual Site" icon="pi pi-fw pi-tablet" outcome="indiSiteDataEntry"/>
-			                <p:menuitem value="Villa/Plot Site" icon="pi pi-fw pi-tablet" outcome="villaPlotDataentry"/>
-			              </p:submenu>
 			              
-			              <p:submenu label="Admin" icon="pi pi-fw pi-cog">
+			              
+			              
+			              <p:submenu label="Admin"  style="text-align: center;width: 110px;" icon="pi pi-fw pi-cog">
 			                <p:menuitem value="Admin" icon="pi pi-fw pi-cog" outcome="adminLogin"/>
 			              </p:submenu>
               			
-			 </p:menubar>
+			 </p:megaMenu>
             
             <!-- 
             <li class="#{'active'}">
