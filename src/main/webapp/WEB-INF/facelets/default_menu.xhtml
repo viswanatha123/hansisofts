@@ -32,9 +32,13 @@ and open the template in the editor.
            
               <p:megaMenu class="#{'active'}">
               
-			              <p:submenu label="Home" style="text-align: center;width: 110px;" icon="pi pi-fw pi-home">
-				                <p:menuitem value="Home" icon="pi pi-fw pi-home" outcome="index"/>
-				          </p:submenu>
+				              <p:submenu label="Home" style="text-align: center;width: 110px;" icon="pi pi-fw pi-home">
+				               <p:column>
+				               		<p:submenu>
+					                	<p:menuitem value="Home" icon="pi pi-fw pi-home" outcome="index"/>
+					                </p:submenu>
+					           </p:column>
+					          </p:submenu>
 			              
 			             
 				              <p:submenu label="Buy" style="text-align: center;width: 110px;" icon="pi pi-fw pi-book">
