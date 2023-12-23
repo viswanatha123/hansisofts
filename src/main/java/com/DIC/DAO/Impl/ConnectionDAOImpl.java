@@ -28,7 +28,7 @@ import com.DIC.model.IndividualSiteModel;
 import com.DIC.model.LayoutMode;
 import com.DIC.model.LogViewerDatewiseModel;
 import com.DIC.model.PlotsDataEntryModel;
-
+import com.DIC.model.RentalDataEntryModel;
 
 import java.sql.PreparedStatement;
 import static java.lang.Math.log;
@@ -86,6 +86,8 @@ public class ConnectionDAOImpl {
 			String SQL_IMAGE_DEFAULT="select image from hansi_property_image where prop_img_id=6";
 			String SQL_PRIMERY_LOCATION="select prim_id,prim_name from hansi_prim_location order by prim_name";
 			String SQL_SECONDRY_LOCATION="select seco_name from hansi_seco_location where prim_code=? order by seco_name desc";
+			String SQL_RENTAL_DATA_INSERT="INSERT INTO rental_plot (rental_id,own_name,address,own_con_no,pro_type,tot_bed_rooms,tot_floors,tot_bath_rooms,furniture,rent_pref,sec_depo,mon_rent,kitc_room,facing,tot_area_sqft,prim_location,seco_location,image,create_date, is_active) VALUES (nextval('rental_plot_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,1)";
+  			
   			}
                 
 	}
@@ -1032,6 +1034,61 @@ public class ConnectionDAOImpl {
       
         
         return succVal;
+    }
+    
+    
+ // ***************** update Rental data entry **************
+    public String updateRentalDataEntry(RentalDataEntryModel rentalDataEntryModel)
+    {
+    	
+    	String succVal="";
+        try {
+            Connection con = null;
+            PreparedStatement pstmt = null;
+            con=ConnectionDAO.getConnection();
+            
+            StringBuilder sql_rentalDataEntry_insert = new StringBuilder(Constants.SQL.SQL_RENTAL_DATA_INSERT);
+            
+            pstmt = con.prepareStatement(sql_rentalDataEntry_insert.toString());
+            
+            pstmt.setString(1,rentalDataEntryModel.getOwnername());
+            pstmt.setString(2, rentalDataEntryModel.getAddress());
+            pstmt.setString(3, rentalDataEntryModel.getOwnContNum());
+            pstmt.setString(4, rentalDataEntryModel.getPropType());
+            pstmt.setInt(5, rentalDataEntryModel.getTotalBedRooms());
+            pstmt.setInt(6, rentalDataEntryModel.getTotalFloors());
+            pstmt.setInt(7, rentalDataEntryModel.getTotalBathRomms());
+            pstmt.setString(8, rentalDataEntryModel.getFurniture());
+            pstmt.setString(9, rentalDataEntryModel.getRentPrefered());
+            pstmt.setInt(10, rentalDataEntryModel.getSecurityDeposit());
+            pstmt.setInt(11, rentalDataEntryModel.getMonthlyRent());
+            pstmt.setString(12, rentalDataEntryModel.getKitchenRoom());
+            pstmt.setString(13, rentalDataEntryModel.getFacing());
+            pstmt.setInt(14, rentalDataEntryModel.getTotAreaSqft());
+            pstmt.setString(15, rentalDataEntryModel.getPrimLocation());
+            pstmt.setString(16, rentalDataEntryModel.getSecoLocation());
+            	InputStream fin2=rentalDataEntryModel.getInputStream();
+            	UploadedFile file=rentalDataEntryModel.getFile();
+		    pstmt.setBinaryStream(17, fin2, file.getSize()); 
+		
+		    int res=pstmt.executeUpdate();
+		        if(res > 0)
+		        {
+		        	succVal="Successful updated record";
+		        }
+        
+          
+        
+        } catch (Exception e) {
+                
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        succVal=e.getMessage();
+	        return succVal;
+	   }
+      
+        
+    return succVal;
     }
     
     
