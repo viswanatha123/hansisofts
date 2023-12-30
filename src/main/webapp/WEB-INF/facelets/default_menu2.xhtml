@@ -24,84 +24,18 @@ and open the template in the editor.
   </h:head>
  
 
-    <h:body>
-      <div class="card">
-  
-    	
-        <ui:composition>
-          <h:form>
-        
-	
-			 
-			 <!-- 
-            <li class="#{page == 'index' ? 'active' : null}">
-                <p:link outcome="index">
-                    <i class="fa fa-fw fa-flag"/>
-                    Index
-                </p:link>
-            </li>
-            -->
-           
-              <p:megaMenu class="#{'active'}">
-    
-			             
-				              <p:submenu label="About Us" style="text-align: center;width: 110px;" >
-					               <p:column>
-					               
-					               		<p:submenu>
-							                <p:menuitem value="About Us"  outcome="aboutUs.xhtml"/>
-							                <p:menuitem value="Contact Us"  outcome="contactUs.xhtml"/>
-							                <p:menuitem value="Help"  outcome="help.xhtml"/>
-							                <p:menuitem value="Enquiry"  outcome="enquiry.xhtml"/>
-							                <p:menuitem value="Gallery" outcome="gallery.xhtml"/>
-						                </p:submenu>
-					               </p:column>
-					               <p:column>
-					               		<p:submenu>
-							                <p:menuitem value="Builders" outcome="builders.xhtml"  />
-							                <p:menuitem value="Agents"  outcome="agents.xhtml"/>
-							                <p:menuitem value="Home Loan" outcome="homeLoan.xhtml" />
-							                <p:menuitem value="Rent"  outcome="rentalDataEntry.xhtml"/>
-							       
-							                
-						                </p:submenu>
-					               </p:column>
-			            	 </p:submenu>
-
-			 </p:megaMenu>
-            
-            <!-- 
-            <li class="#{'active'}">
-                <p:link outcome="activeModelList">
-                    <i class="fa fa-fw fa-flag"/>
-                    Active Model List
-                </p:link>
-            </li>
-            -->
-            
-            
-            <!--        
-            <li class="#{page == 'dashboard' ? 'active' : null}">
-                <p:link outcome="dashboard">
-                    <c:choose>
-                        <c:when test="#{dashboard.operational}">
-                            <i class="fa fa-fw fa-tachometer"/>
-                        </c:when>
-                        <c:otherwise>
-                            <span class="fa fa-fw fa-warning"/>
-                        </c:otherwise>
-                    </c:choose>
-                    Dashboard
-                </p:link>
-            </li>
-       		-->
-       		
-
-
-  
-  
-</h:form>
-</ui:composition>
- </div>
-</h:body>
-</html>
+  <h:body>
+ 
+      <ui:composition>
+				           
+							        <p:sidebar widgetVar="sidebar1" position="right">
+							            <h1 style="font-weight:normal">About Us</h1>
+							               <ui:insert name="default_menu">
+				                            <ui:include src="sideMenu.xhtml"/>
+				                          </ui:insert>
+							        </p:sidebar>
+							        <p:commandButton icon="fa fa-arrow-left" oncomplete="PF('sidebar1').show()" />
+	  					
+	</ui:composition>
+ </h:body>
+ </html>
