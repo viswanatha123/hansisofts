@@ -44,15 +44,18 @@
 
         
   <ui:composition template="/WEB-INF/facelets/template.xhtml">
-  <ui:param name="page" value="Admin" />
-  <ui:define name="title">Admin User
-  <p> Admin user access below options </p>
+  <ui:param name="page" value="Post Property Free" />
+  <ui:define name="title"><font size="4" color="blue" >Post Property  </font><font size="5" color="green">Free</font>
+  <p>Post your property details in below link, you will best price of your property sale </p>
   <div class="card">
   <h:form id="form">
   
   
   			<br></br>
-			 <p:panel style="background-image: url('back1.jpg'); "> 
+  			
+  			
+  			
+  			 <p:panel style="background-image: url('back1.jpg'); "> 
                <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
 		  			                         
 			                          <h:link  value = "Layout Data entry" outcome = "plotsDataEntry.xhtml" style="font-size: 14px;color:black;">
@@ -66,15 +69,12 @@
 			                          
 			                           <h:link  value = "Villa/Plot Details Enter" outcome = "villaPlotDataentry.xhtml" style="font-size: 14px;color:black;">
 			                          </h:link>
-			                          
 			                          <h:link  value = "Rent Details Enter" outcome = "rentalDataEntry.xhtml" style="font-size: 14px;color:black;">
-			                          </h:link>
-			                          
-			                          <h:link  value = "Image Upload" outcome = "imageUpload.xhtml" style="font-size: 14px;color:black;">
 			                          </h:link>
 			                        
                       </p:panelGrid> 
             </p:panel> 
+
     
   </h:form>
 </div>

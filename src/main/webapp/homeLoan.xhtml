@@ -42,8 +42,8 @@
                     
                     
                        
-                    <p:outputLabel style="font-weight: bold" value="Agent Name : " />
-                    <p:inputText id="agentName"  value="#{HomeLoanDataEntryService.agentName}" >
+                    <p:outputLabel style="font-weight: bold" indicateRequired="true" value="Agent Name : " />
+                    <p:inputText id="agentName" required="true" value="#{HomeLoanDataEntryService.agentName}" >
                     </p:inputText>
                     <p:message for="agentName" display="icon"/>
                     
@@ -52,14 +52,14 @@
                     </p:inputNumber>
                     <p:message for="age" display="icon"/>
                     
-                    <p:outputLabel required="true" style="font-weight: bold" for="gender" indicateRequired="true" value=" Gender : " />
+                    <p:outputLabel required="true" style="font-weight: bold" for="gender"  value=" Gender : " />
                     <p:selectOneRadio id="gender" value="#{HomeLoanDataEntryService.gender}" layout="lineDirection">
-			            <f:selectItem itemLabel="Female" itemValue="Female" />
-			            <f:selectItem itemLabel="Male " itemValue="Male "/>
-			    
-			        </p:selectOneRadio>
-			        <p:message for="gender" display="icon"/>
-                    
+                         <f:selectItem itemLabel="Male" itemValue="Male" />
+			             <f:selectItem itemLabel="Female" itemValue="Female" />
+			             </p:selectOneRadio>
+					        <p:message for="gender" display="icon"/>  
+			        
+			        
                     
                     <p:outputLabel style="font-weight: bold" for="contactNo" indicateRequired="true" value="Contact NO : " />
                     <p:inputMask id="contactNo"  mask="9999999999" required="true"  maxlength="10" value="#{HomeLoanDataEntryService.contactNo}" >

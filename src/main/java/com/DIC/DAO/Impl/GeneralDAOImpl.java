@@ -18,7 +18,9 @@ import org.primefaces.model.file.UploadedFile;
 
 import com.DIC.DAO.ConnectionDAO;
 import com.DIC.DAO.Impl.ConnectionDAOImpl.Constants;
+import com.DIC.model.BudgetModel;
 import com.DIC.model.HomeLoanDataEntryModel;
+import com.DIC.model.IndividualSiteModel;
 import com.DIC.model.LayoutMode;
 import com.DIC.model.PlotsDataEntryModel;
 import com.DIC.model.VillaModel;
@@ -41,6 +43,29 @@ public class GeneralDAOImpl {
 					//+ " and property_type = ? order by create_date desc";
 			String SQL_HOME_LOAN_INSERT="insert into home_loan (home_id,agent_name,cont_num,age,gender,email,loan_amt,monthly_inc,emp_type,create_date,is_active) \n"+ 
 					"values (nextval('home_loan_seq'),?,?,?,?,?,?,?,?,current_timestamp,1);";
+		
+			/*
+			String SQL_BUDGET_DETAILS="select * from (select name,cost,contact_owner,'layout' as pro_type ,create_date, image,prim_location ,seco_location,location as loca  from hansi_layout la \r\n"
+					+ "UNION all \r\n"
+					+ "select owner_name,cost,contact_no, 'agri' as pro_type ,create_date, image,prim_location ,seco_location,location  as loca  from hansi_agricultural ag \r\n"
+					+ "UNION all \r\n"
+					+ "select owner_name, cost,contact_no,'indu' as pro_type , create_date, image,prim_location ,seco_location,location  as loca from hansi_individual_site indu \r\n"
+					+ "UNION all \r\n"
+					+ "select owner_name, cost, contact_owner,'villa as pro_type', create_date,image,prim_location ,seco_location,address  as loca from villa_plot vp\r\n"
+					+ ") dum where dum.cost <800 order by create_date ;";
+			*/
+			
+			String SQL_BUDGET_DETAILS="select * from (select name,cost,contact_owner,'layout' as pro_type ,create_date, image,prim_location ,seco_location,location as loca  from hansi_layout la \r\n"
+					+ "UNION all \r\n"
+					+ "select owner_name,cost,contact_no, 'agri' as pro_type ,create_date, image,prim_location ,seco_location,location  as loca  from hansi_agricultural ag \r\n"
+					+ "UNION all \r\n"
+					+ "select owner_name, cost,contact_no,'indu' as pro_type , create_date, image,prim_location ,seco_location,location  as loca from hansi_individual_site indu \r\n"
+					+ "UNION all \r\n"
+					+ "select owner_name, cost, contact_owner,'villa as pro_type', create_date,image,prim_location ,seco_location,address  as loca from villa_plot vp\r\n"
+					+ ") dum where ";
+			
+			//dum.cost <800 order by create_date ;";
+			
 		}
 	}
 	
@@ -253,7 +278,134 @@ public class GeneralDAOImpl {
         return succVal;
     }
     
-	
+	// ************************************* Budget details *************
+    /*
+     * 
+     *  Developed by viswanatha
+     * 
+     */
+    
+    
+    public List<BudgetModel> getBudget1Details(int budVal)
+	{
+            
+        
+		log.info("### : get started :: getBudget1Details() ");
+		List<BudgetModel> BudgetModelList = new ArrayList<>();
+		try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			String sql_query="";
+			
+			StringBuilder sql_budget_details = new StringBuilder(Constants.SQL.SQL_BUDGET_DETAILS);
+					if(budVal==1)
+					{
+						sql_query=sql_budget_details.append("dum.cost < 5000000 order by create_date ;").toString();
+						log.info("###: Budget Query 1: "+sql_query);
+					}
+					if(budVal==2)
+					{
+						sql_query=sql_budget_details.append("dum.cost > 5000000 and dum.cost < 10000000 order by create_date ;").toString();
+						log.info("###: Budget Query 2: "+sql_query);
+					}
+					if(budVal==3)
+					{
+						sql_query=sql_budget_details.append("dum.cost > 10000000 and dum.cost < 20000000 order by create_date ;").toString();
+						log.info("###: Budget Query 2: "+sql_query);
+					}
+					if(budVal==4)
+					{
+						sql_query=sql_budget_details.append("dum.cost > 20000000 order by create_date ;").toString();
+						log.info("###: Budget Query 2: "+sql_query);
+					}
+			
+			
+			
+		
+					
+			
+			
+			
+			con=ConnectionDAO.getConnection();
+	                    pstmt = con.prepareStatement(sql_budget_details.toString());
+	                    ResultSet rs = pstmt.executeQuery();
+	         while ( rs.next() ) {
+	        	 BudgetModel budgetModel=new BudgetModel();
+	        	 
+	        	 budgetModel.setName(rs.getString("name"));
+	        	 budgetModel.setCost(rs.getInt("cost"));
+	        	 budgetModel.setContactNo(rs.getString("contact_owner"));
+	        	 budgetModel.setPro_type(properyType(rs.getString("pro_type")));
+	        	 budgetModel.setCreate_date(rs.getDate("create_date"));
+	        	 budgetModel.setPrim_location(rs.getString("prim_location"));
+	        	 budgetModel.setSeco_location(rs.getString("seco_location"));
+	        	 budgetModel.setLocation(rs.getString("loca"));
+	  
+    	        	 
+    	        	 if(rs.getBytes("image").length!=0)
+                      {
+                      byte[] bb=rs.getBytes("image");
+                      
+                      budgetModel.setStreamedContent(DefaultStreamedContent.builder()
+                              .name("US_Piechart.jpg")
+                              .contentType("image/jpg")
+                              .stream(() -> new ByteArrayInputStream(bb)).build());
+                      }
+                      else
+                      {
+		                	// Defalut Image
+		                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+		                	 ResultSet rsDef = pstmtDefault.executeQuery();
+		                	 while ( rsDef.next())
+		                			 {
+		                		      byte[] def=rsDef.getBytes("image");
+		                		      budgetModel.setStreamedContent(DefaultStreamedContent.builder()
+		                             .name("US_Piechart.jpg")
+		                             .contentType("image/jpg")
+		                             .stream(() -> new ByteArrayInputStream(def)).build());
+		                			 }
+		                	 
+		              }       
+    	        	 BudgetModelList.add(budgetModel);
+	    
+	            
+	         }
+	         	
+	         pstmt.close();
+	         rs.close();
+	         con.close();
+	       
+	     } catch (Exception e) {
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        
+	     }
+	return BudgetModelList;		
+	}
+
+    
+    public String properyType(String pro)
+    {
+    	String proType="";
+    	if(pro.equals("layout"))
+    	{
+    		proType="Layout";
+    	}
+    	if(pro.equals("agri"))
+    	{
+    		proType="Agriculture land";
+    	}
+    	if(pro.equals("indu"))
+    	{
+    		proType="industrial property";
+    	}
+    	if(pro.equals("villa as pro_type"))
+    	{
+    		proType="Villa Propety";
+    	}
+    	return proType;
+    }
+    
     
 	
 	

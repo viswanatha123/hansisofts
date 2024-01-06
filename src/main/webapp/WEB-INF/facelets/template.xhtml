@@ -18,9 +18,7 @@
 		
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/favicon.ico"/>
-    
-    
-    
+      
   </h:head>
 
     <h:body>
@@ -56,14 +54,17 @@
 
                             <h5 style="font-weight: bold; color:white; text-align:left">Property Verification</h5>
                </div>
+          
         </nav>
+        
+        
+        
         
         -->
         
      
           <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background-image: url('head4.jpg');">
-          
-          		<table width="100%">
+           			<table width="100%">
           			<tr>
           				
           				<td>
@@ -79,44 +80,46 @@
 	                    		    
 	                    <td>
           					<div id="logo1" style="text-align:center">
-          						<font size="4" color="white" >Post Property  </font><font size="5" color="yellow">Free</font>
+          						<h:link  outcome = "postPropetyFree.xhtml">
+          							<font size="4" color="white" >Post Property  </font><font size="5" color="yellow">Free</font>
+          						 </h:link>
           					</div>
           				</td>
                     </tr>
-                </table>    
-                    
-                    
-                    
-                     <div class="collapse navbar-collapse" id="collapsable-navbar" style="margin-left: 5%;">
-                        <ul class="nav navbar-nav">
-                            <ui:insert name="default_menu">
-                            <ui:include src="default_menu.xhtml"/>
-                        </ui:insert>
-                        
-                        		
-                    </ul>
-                       			
-		                    		   <h:link  value = " Contact Us" class="pi pi-phone" outcome = "contactUs.xhtml" style="font-weight: bold; font-size: 14px;color:white;float: right; margin-right: 100px;">
-		                    		   </h:link>  
-							           <h:link  value = " About Us" class="pi pi-user" outcome = "aboutUs.xhtml" style="font-weight: bold; font-size: 14px;color:white;float: right; margin-right: 50px;">
-							           </h:link>
-							           <h:link  value = "Help" outcome = "help.xhtml" style="font-weight: bold; font-size: 14px;color:white;float: right; margin-right: 50px;">
-							           </h:link>
-							           <h:link  value = "Enquiry" outcome = "enquiry.xhtml" style="font-weight: bold; font-size: 14px;color:white;float: right; margin-right: 50px;">
-							           </h:link>
-							           <h:link  value = "Gallery" outcome = "gallery.xhtml" style="font-weight: bold; font-size: 14px;color:white;float: right; margin-right: 50px;">
-							           </h:link>
-							           <h:link  value = "Builders" outcome = "builders.xhtml" style="font-weight: bold; font-size: 14px;color:white;float: right; margin-right: 50px;">
-							           </h:link>
-							           <h:link  value = " Agents"  class="pi pi-user" outcome = "agents.xhtml" style="font-weight: bold; font-size: 14px;color:white;float: right; margin-right: 50px;">
-							           </h:link>
-							           <h:link  value = " Home Loan"  class="pi pi-user" outcome = "homeLoan.xhtml" style="font-weight: bold; font-size: 14px;color:white;float: right; margin-right: 50px;">
-							           </h:link>
-
-                    </div >
-                                     
+                </table>  
+                <table width="100%"> 
+                  <tr>
+	                  	<td>
+		                     <div class="collapse navbar-collapse" id="collapsable-navbar" style="margin-left: 5%;">
+			                       <ul class="nav navbar-nav">
+				                          <ui:insert name="default_menu">
+				                            <ui:include src="default_menu.xhtml"/>
+				                          </ui:insert>
+		                           </ul>
+		                      </div>
+	                    </td>
+                    	<td>	
+	                    	<div class="collapse navbar-collapse" id="collapsable-navbar" style="margin-left: 5%;">
+			                       <ul class="nav navbar-nav">
+				                          <ui:insert name="default_menu">
+				                            <ui:include src="default_menu2.xhtml"/>
+				                          </ui:insert>
+		                           </ul>
+		                      </div>	                    			
+     						    
+					   </td>
+				    </tr>
+                </table>                     
                     
           </nav>
+         						<div class="card">
+                    		    <p:sidebar widgetVar="sidebar2" position="right">
+							        <h3>Right Sidebar</h3>
+							     </p:sidebar>
+							    </div> 
+          
+          
+                    
     <br></br><br></br><br></br>
 
      
@@ -145,5 +148,3 @@
         
     </h:body>
 </html>
-
-

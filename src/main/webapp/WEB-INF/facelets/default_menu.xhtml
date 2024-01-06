@@ -9,11 +9,23 @@ and open the template in the editor.
 	  xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      
+   <h:head>
+   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+ <link href="resources/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+  <link href="resources/css/demo/demo.css" rel="stylesheet" />
+  </h:head>
+ 
 
-    <body>
-   
-    <div class="card">
+    <h:body>
+      <div class="card">
   
     	
         <ui:composition>
@@ -52,11 +64,13 @@ and open the template in the editor.
 						                </p:submenu>
 					               </p:column>
 					               <p:column>
-					               		<p:submenu label="Budget">
-							                <p:menuitem value="Under 50 Lac"/>
-							                <p:menuitem value="50 Lac - 1 Cr"/>
-							                <p:menuitem value="1 Cr - 2 Cr"/>
-							                <p:menuitem value="Above 2 Cr"/>
+					               		<p:submenu label="Budget" >
+							                <p:menuitem value="Under 50 Lac" action="#{budgetService1.budgetAction1}"  />
+							                <p:menuitem value="50 Lac - 1 Cr"  action="#{budgetService2.budgetAction2}"/>
+							                <p:menuitem value="1 Cr - 2 Cr" action="#{budgetService3.budgetAction3}" />
+							                <p:menuitem value="Above 2 Cr"  action="#{budgetService4.budgetAction4}"/>
+							       
+							                
 						                </p:submenu>
 					               </p:column>
 					               
@@ -75,6 +89,7 @@ and open the template in the editor.
 					                <p:menuitem value="Agricultural Land" icon="pi pi-fw pi-discord" outcome="agriDataEntry"/>
 					                <p:menuitem value="Individual Site" icon="pi pi-fw pi-tablet" outcome="indiSiteDataEntry"/>
 					                <p:menuitem value="Villa/Plot Site" icon="pi pi-fw pi-tablet" outcome="villaPlotDataentry"/>
+					                <p:menuitem value="Rent" icon="pi pi-fw pi-tablet" outcome="rentalDataEntry"/>
 			                </p:submenu>
 			               </p:column>
 			              </p:submenu>
@@ -102,7 +117,11 @@ and open the template in the editor.
 			              
 			              
 			              <p:submenu label="Admin"  style="text-align: center;width: 110px;" icon="pi pi-fw pi-cog">
-			                <p:menuitem value="Admin" icon="pi pi-fw pi-cog" outcome="adminLogin"/>
+			                   	<p:column>
+				               		<p:submenu>
+			                			<p:menuitem value="Admin" icon="pi pi-fw pi-cog" outcome="adminLogin"/>
+			                		</p:submenu>
+					           </p:column>
 			              </p:submenu>
               			
 			 </p:megaMenu>
@@ -133,13 +152,12 @@ and open the template in the editor.
             </li>
        		-->
        		
-       		
-       		
-       		
-          </h:form>           
-        </ui:composition>
-      
-</div>
 
-    </body>
+
+  
+  
+</h:form>
+</ui:composition>
+ </div>
+</h:body>
 </html>

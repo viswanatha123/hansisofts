@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        
+      <!-- Bootstrap and PrimeFaces javascripts -->
+        <h:outputScript library="primefaces" name="jquery/jquery.js"/>
+        <h:outputScript name="bootstrap.min.js" library="js"/>
+		
+      
+          <!-- Stylesheets -->
+        <h:outputStylesheet name="logo-nav.css" library="css"/>
+        <h:outputStylesheet name="bootstrap.min.css" library="css"/>
+		
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/favicon.ico"/>
+      
+  </h:head>
+
+    <h:body>
+        <f:facet name="last">
+            <h:outputStylesheet name="framework.css" library="css"/>
+            <h:outputStylesheet name="custom.css" library="css"/>
+        </f:facet>
+
+           <h:form>			
+           
+           <hr style="border: none; height: 1px; background-color: red;" />
+                <table width="100%" style="background-color:#151B54;">
+							              	<tr>
+							              		<td>
+									               <h:link  value = " Contact Us"  outcome = "contactUs.xhtml" style="font-weight: bold; font-size: 15px;color:white ;float: left; " />
+									            </td>
+									        </tr>
+									        <tr>
+							              		<td>
+		                    		               <h:link  value = " About Us"   outcome = "aboutUs.xhtml" style="font-weight: bold; font-size: 15px;color:white ;float: left; " />
+		                    		        	</td>
+									        </tr>
+		                    		        <tr>
+							              		<td>
+										           <h:link  value = " Help"   outcome = "help.xhtml" style="font-weight: bold; font-size: 15px;color:white ;float: left; " />
+										        </td>
+									        </tr>
+										   <tr>
+							              		<td>
+										           <h:link  value = " Enquiry"   outcome = "enquiry.xhtml" style="font-weight: bold; font-size: 15px;color:white ;float: left; "  />
+										        </td>
+									        </tr>
+										   <tr>
+							              		<td>
+										           <h:link  value = " Gallery"   outcome = "gallery.xhtml" style="font-weight: bold; font-size: 15px;color:white ;float: left; " />
+										        </td>
+									        </tr>
+										   <tr>
+							              		<td>
+										           <h:link  value = " Builders"   outcome = "builders.xhtml"  style="font-weight: bold; font-size: 15px;color:white ;float: left; " />
+										        </td>
+									        </tr>
+										  <tr>
+							              		<td>
+										           <h:link  value = " Agents"   outcome = "agents.xhtml"  style="font-weight: bold; font-size: 15px;color:white ;float: left; " />
+										        </td>
+									        </tr>
+										  <tr>
+							              		<td>
+										           <h:link  value = " Home Loan"  outcome = "homeLoan.xhtml" style="font-weight: bold; font-size: 15px;color:white ;float: left; " />
+										        </td>
+									        </tr>
+										  <tr>
+							              		<td>
+										           <h:link  value = " Rent "  outcome = "rentalDataEntry.xhtml" style="font-weight: bold; font-size: 15px;color:white ;float: left; "  />
+										        </td>
+									        </tr>
+									         
+										   </table>        
+  
+         					
+
+      </h:form>
+    </h:body>
+</html>
