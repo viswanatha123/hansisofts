@@ -47,7 +47,7 @@ and open the template in the editor.
 				              <p:submenu label="Home" style="text-align: center;width: 110px;" icon="pi pi-fw pi-home">
 				               <p:column>
 				               		<p:submenu>
-					                	<p:menuitem value="Home" icon="pi pi-fw pi-home" outcome="index"/>
+				                    	<p:menuitem value="Home" rendered="#{userRoleService.userRole.contains('Home')? true : false }" icon="pi pi-fw pi-home"  outcome="index"/>
 					                </p:submenu>
 					           </p:column>
 					          </p:submenu>
@@ -57,14 +57,14 @@ and open the template in the editor.
 					               <p:column>
 					               
 					               		<p:submenu label="Property Types">
-							                <p:menuitem value="Layout" icon="pi pi-fw pi-credit-card" outcome="layoutDetails"/>
-							                <p:menuitem value="Agricultural Land" icon="pi pi-fw pi-discord" outcome="agricultural"/>
-							                <p:menuitem value="Individual Site" icon="pi pi-fw pi-tablet" outcome="individualsite"/>
-							                <p:menuitem value="Villa/Plot Site" icon="pi pi-fw pi-tablet" outcome="villaPlotSearch"/>
+							                <p:menuitem value="Layout" rendered="#{userRoleService.userRole.contains('Layout Sear')? true : false }" icon="pi pi-fw pi-credit-card" outcome="layoutDetails"/>
+							                <p:menuitem value="Agricultural Land" rendered="#{userRoleService.userRole.contains('Agri Sear')? true : false }" icon="pi pi-fw pi-discord" outcome="agricultural"/>
+							                <p:menuitem value="Individual Site" rendered="#{userRoleService.userRole.contains('Indi Sear')? true : false }" icon="pi pi-fw pi-tablet" outcome="individualsite"/>
+							                <p:menuitem value="Villa/Plot Site" rendered="#{userRoleService.userRole.contains('Villa Sear')? true : false }" icon="pi pi-fw pi-tablet" outcome="villaPlotSearch"/>
 						                </p:submenu>
 					               </p:column>
 					               <p:column>
-					               		<p:submenu label="Budget" >
+					               		<p:submenu label="Budget" rendered="#{userRoleService.userRole.contains('Budget')? true : false }">
 							                <p:menuitem value="Under 50 Lac" action="#{budgetService1.budgetAction1}"  />
 							                <p:menuitem value="50 Lac - 1 Cr"  action="#{budgetService2.budgetAction2}"/>
 							                <p:menuitem value="1 Cr - 2 Cr" action="#{budgetService3.budgetAction3}" />
@@ -76,8 +76,8 @@ and open the template in the editor.
 					               
 					                <p:column>
 					               		<p:submenu label="Popular Choices">
-							                <p:menuitem value="Ready to Move"/>
-							                <p:menuitem value="Owner Properties"/>
+							                <p:menuitem value="Ready to Move" rendered="#{userRoleService.userRole.contains('Ready To Move')? true : false }"/>
+							                <p:menuitem value="Owner Properties" rendered="#{userRoleService.userRole.contains('Owner Prop')? true : false }"/>
 							            </p:submenu>
 					               </p:column>
 			            	 </p:submenu>
@@ -85,18 +85,18 @@ and open the template in the editor.
 			              <p:submenu label="Sell" style="text-align: center;width: 110px;" icon="pi pi-fw pi-book">
 			              <p:column>
 					        <p:submenu label="Property Types">
-					                <p:menuitem value="Layout" icon="pi pi-fw pi-credit-card" outcome="plotsDataEntry"/>
-					                <p:menuitem value="Agricultural Land" icon="pi pi-fw pi-discord" outcome="agriDataEntry"/>
-					                <p:menuitem value="Individual Site" icon="pi pi-fw pi-tablet" outcome="indiSiteDataEntry"/>
-					                <p:menuitem value="Villa/Plot Site" icon="pi pi-fw pi-tablet" outcome="villaPlotDataentry"/>
-					                <p:menuitem value="Rent" icon="pi pi-fw pi-tablet" outcome="rentalDataEntry"/>
+					                <p:menuitem value="Layout" rendered="#{userRoleService.userRole.contains('Layout Entry')? true : false }" icon="pi pi-fw pi-credit-card" outcome="plotsDataEntry"/>
+					                <p:menuitem value="Agricultural Land" rendered="#{userRoleService.userRole.contains('Agri Entry')? true : false }" icon="pi pi-fw pi-discord" outcome="agriDataEntry"/>
+					                <p:menuitem value="Individual Site" rendered="#{userRoleService.userRole.contains('Indiv Entry')? true : false }" icon="pi pi-fw pi-tablet" outcome="indiSiteDataEntry"/>
+					                <p:menuitem value="Villa/Plot Site" rendered="#{userRoleService.userRole.contains('Villa Entry')? true : false }" icon="pi pi-fw pi-tablet" outcome="villaPlotDataentry"/>
+					                <p:menuitem value="Rent" rendered="#{userRoleService.userRole.contains('Rent Sear')? true : false }" icon="pi pi-fw pi-tablet" outcome="rentalDataEntry"/>
 			                </p:submenu>
 			               </p:column>
 			              </p:submenu>
 			              
 			              <p:submenu label="Rent" style="text-align: center;width: 110px;" icon="pi pi-fw pi-book">
 			              <p:column>
-					        <p:submenu label="Rented Property">
+					        <p:submenu label="Rented Property" rendered="#{userRoleService.userRole.contains('Rent Pro')? true : false }">
 					                <p:menuitem value="Layout for Rent"/>
 					                <p:menuitem value="Agricultural Land for Rent"/>
 					                <p:menuitem value="Individual Site for Rent"/>
@@ -104,7 +104,7 @@ and open the template in the editor.
 			                </p:submenu>
 			               </p:column>
 			               		  <p:column>
-					               	<p:submenu label="Budget">
+					               	<p:submenu label="Budget" rendered="#{userRoleService.userRole.contains('Rent Budget')? true : false }">
 								        <p:menuitem value="Under 50 Lac"/>
 								        <p:menuitem value="50 Lac - 1 Cr"/>
 								        <p:menuitem value="1 Cr - 2 Cr"/>
@@ -118,7 +118,7 @@ and open the template in the editor.
 			              
 			              <p:submenu label="Admin"  style="text-align: center;width: 110px;" icon="pi pi-fw pi-cog">
 			                   	<p:column>
-				               		<p:submenu>
+				               		<p:submenu rendered="#{userRoleService.userRole.contains('Admin')? true : false }">
 			                			<p:menuitem value="Admin" icon="pi pi-fw pi-cog" outcome="adminLogin"/>
 			                		</p:submenu>
 					           </p:column>
@@ -126,34 +126,7 @@ and open the template in the editor.
               			
 			 </p:megaMenu>
             
-            <!-- 
-            <li class="#{'active'}">
-                <p:link outcome="activeModelList">
-                    <i class="fa fa-fw fa-flag"/>
-                    Active Model List
-                </p:link>
-            </li>
-            -->
-            
-            
-            <!--        
-            <li class="#{page == 'dashboard' ? 'active' : null}">
-                <p:link outcome="dashboard">
-                    <c:choose>
-                        <c:when test="#{dashboard.operational}">
-                            <i class="fa fa-fw fa-tachometer"/>
-                        </c:when>
-                        <c:otherwise>
-                            <span class="fa fa-fw fa-warning"/>
-                        </c:otherwise>
-                    </c:choose>
-                    Dashboard
-                </p:link>
-            </li>
-       		-->
-       		
-
-
+    
   
   
 </h:form>

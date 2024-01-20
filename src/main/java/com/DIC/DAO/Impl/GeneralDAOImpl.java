@@ -6,8 +6,11 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.faces.bean.ApplicationScoped;
@@ -19,10 +22,13 @@ import org.primefaces.model.file.UploadedFile;
 import com.DIC.DAO.ConnectionDAO;
 import com.DIC.DAO.Impl.ConnectionDAOImpl.Constants;
 import com.DIC.model.BudgetModel;
+import com.DIC.model.ConnectorMode;
 import com.DIC.model.HomeLoanDataEntryModel;
 import com.DIC.model.IndividualSiteModel;
 import com.DIC.model.LayoutMode;
 import com.DIC.model.PlotsDataEntryModel;
+import com.DIC.model.UserDetails;
+import com.DIC.model.UserRoleModel;
 import com.DIC.model.VillaModel;
 
 @ManagedBean
@@ -64,7 +70,14 @@ public class GeneralDAOImpl {
 					+ "select owner_name, cost, contact_owner,'villa as pro_type', create_date,image,prim_location ,seco_location,address  as loca from villa_plot vp\r\n"
 					+ ") dum where ";
 			
-			//dum.cost <800 order by create_date ;";
+			String SQL_USER_ROLE="select r.role_name from user_deta u, role r,user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1'\r\n"
+					+ "and r.is_active = '1' and ur.is_active = '1' and u.user_id = ?";
+			
+			
+			String SQL_ROLE_BY_USER_ID="select user_role_id,u.user_id, u.fname,u.lname ,r.role_id,r.role_name,ur.is_active  from user_deta u, role r, user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1'\r\n"
+					+ "and r.is_active = '1' and u.user_id = ? order by role_name";
+			
+			String SQL_ALL_USERS="select * from user_deta order by fname ,lname";
 			
 		}
 	}
@@ -407,8 +420,260 @@ public class GeneralDAOImpl {
     }
     
     
+    
+ // ************************************* User Role  *************
+    /*
+     * 
+     *  Developed by viswanatha
+     * 
+     */
+    
+    public List<String> getUserRole(int userId)
+	{
+    	
+		log.info("### : get started :: getUserRole() ");
+		List<String> userRoles = new ArrayList<>();
+		try {
+			Connection con = null;
+			 PreparedStatement pstmt = null;
+			
+			StringBuilder sql_user_role = new StringBuilder(Constants.SQL.SQL_USER_ROLE);
+			log.info("###: Role Query : "+sql_user_role.toString());
+			
+			con=ConnectionDAO.getConnection();
+			pstmt = con.prepareStatement(sql_user_role.toString()); 
+            pstmt.setLong(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            		while ( rs.next() ) {
+	     	        	 System.out.println("################ Role name ################### : "+rs.getString("role_name"));
+			        	 userRoles.add(rs.getString("role_name"));
+			         }
+	         	
+	         
+	         rs.close();
+	         con.close();
+	         pstmt.close();
+	     } catch (Exception e) {
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        //System.exit(0);
+	     }
+	return userRoles;		
+	}
+    
+    // ************************************* User login  *************
+    /*
+     * 
+     *  Developed by viswanatha
+     * 
+     */
+    
+    
+    public static boolean loginValidate(String user, String password) {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = ConnectionDAO.getConnection();
+			ps = con.prepareStatement("select * from user_deta where user_name = ? and user_pass = ?");
+			ps.setString(1, user);
+			ps.setString(2, password);
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				//result found, means valid inputs
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        return false;
+		}
+		
+		return false;
+	}
+    
+    
+ // ************************************* get User id  *************
+    /*
+     * 
+     *  Developed by viswanatha
+     * 
+     */
 	
+    public UserDetails getUserDeta(String user, String password) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		UserDetails userDetails=new UserDetails();
+
+		try {
+			con = ConnectionDAO.getConnection();
+			ps = con.prepareStatement("select * from user_deta where user_name = ? and user_pass = ?");
+			ps.setString(1, user);
+			ps.setString(2, password);
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				
+				
+				
+				userDetails.setUserId(rs.getInt("user_id"));
+				userDetails.setfName(rs.getString("fname"));
+				userDetails.setlName(rs.getString("lname"));
+				userDetails.setAddress(rs.getString("address"));
+				userDetails.setUserName(rs.getString("user_name"));
+				
+					
+								
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        //return false;
+		}
+		
+		return userDetails;
+	}
+    
+    
+    
+ // ************************************* get roles by user id  *************
+    /*
+     * 
+     *  Developed by viswanatha
+     * 
+     */
 	
+    public List<UserRoleModel> getRolesByUserId(int userId) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		List<UserRoleModel> userRoleModelList=new ArrayList<>();
+		
+
+		try {
+			con = ConnectionDAO.getConnection();
+			
+			StringBuilder sql_role_by_user_id = new StringBuilder(Constants.SQL.SQL_ROLE_BY_USER_ID);
+			log.info("###: Qury roles by user id : "+sql_role_by_user_id.toString());
+			
+			ps = con.prepareStatement(sql_role_by_user_id.toString());
+			ps.setInt(1, userId);
+			ResultSet rs = ps.executeQuery();
+
+			while ( rs.next() ) {
+				
+				UserRoleModel userRoleModel=new UserRoleModel();
+				
+				userRoleModel.setUserRoleId(rs.getInt("user_role_id"));
+				userRoleModel.setUserId(rs.getInt("user_id"));
+				userRoleModel.setfName(rs.getString("fname"));
+				userRoleModel.setlName(rs.getString("lname"));
+				userRoleModel.setRoleId(rs.getInt("role_id"));
+				userRoleModel.setRoleName(rs.getString("role_name"));
+				userRoleModel.setActive(rs.getString("is_active").equals("1") ? true: false);
+				
+				userRoleModelList.add(userRoleModel);					
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        //return false;
+		}
+		
+		return userRoleModelList;
+	}
 	
+    
+    //*********************************************  Save Role  ***************************************
+    /*
+     * 
+     * Development by viswanatha
+     * 
+     */
+    
+    
+    public int saveRole(List<UserRoleModel> userRoleModelList)
+    {
+    	int count=0;
+    	
+				try {
+				Connection con = null;
+				Statement stmt= null;
+		
+				con=ConnectionDAO.getConnection();
+				stmt = con.createStatement();
+				
+						for(UserRoleModel ur: userRoleModelList)
+						{
+							
+							int isAct=ur.getActive()==true ? 1 : 0;
+						count=count+= stmt.executeUpdate("update user_map_role set is_active= "+isAct+" where user_role_id= "+ur.getUserRoleId()+"");
+						
+						}
+		       
+		         stmt.close(); 
+		         con.close();
+				}catch (Exception e) {
+		        e.printStackTrace();
+		        System.err.println("@@@@@@@@@@@@Primary data @@@@@@@@@@@@@@@@@@@@@@@@@@ :"+e.getClass().getName()+": "+e.getMessage());
+		     }
+		return count;	
+		}
+    
+    
+    
+    public List<UserDetails> getAllUsers() {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		List<UserDetails> userDetailsList=new ArrayList<>();
+		
+
+		try {
+			con = ConnectionDAO.getConnection();
+			
+			StringBuilder sql_all_users = new StringBuilder(Constants.SQL.SQL_ALL_USERS);
+			log.info("###: Qury roles by user id : "+sql_all_users.toString());
+			
+			ps = con.prepareStatement(sql_all_users.toString());
+			ResultSet rs = ps.executeQuery();
+
+			while ( rs.next() ) {
+				
+				UserDetails userDetails=new UserDetails();
+				
+				
+				userDetails.setUserId(rs.getInt("user_id"));
+				userDetails.setfName(rs.getString("fname"));
+				userDetails.setlName(rs.getString("lname"));
+				userDetails.setUserName(rs.getString("user_name"));
+				userDetails.setUserPassword(rs.getString("user_pass"));
+				userDetails.setAddress(rs.getString("address"));
+				userDetails.setPhone(rs.getString("phone"));
+				userDetails.setCreate_date(rs.getDate("create_date"));
+				userDetails.setIs_active(rs.getInt("is_active"));
+				
+				
+	
+				
+				userDetailsList.add(userDetails);					
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        //return false;
+		}
+		
+		return userDetailsList;
+	}
+    	
+   
+    
+    
+    
 
 }
