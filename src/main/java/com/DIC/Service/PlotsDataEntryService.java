@@ -110,10 +110,9 @@ public class PlotsDataEntryService implements Serializable{
 	      }
 	      
 	public void upload() {
-	           if (file != null) {
+		     if (file != null) {
 	            try {
-	               
-	                
+	            	
 	                log.log(Level.INFO, "Selected county and city ---------->:"+country+"     "+city);
 	  	         
 	  	          PlotsDataEntryModel plotsDataEntryModel=new PlotsDataEntryModel();
@@ -139,8 +138,10 @@ public class PlotsDataEntryService implements Serializable{
 	  	          plotsDataEntryModel.setAgentName(agentName);
 	  	          plotsDataEntryModel.setInputStream(file.getInputStream());
 	  	          plotsDataEntryModel.setFile(file);
+	  	          
+	  	       
 	  	          updateResult=dao.updatePlotDataEntry(plotsDataEntryModel);
-	  	              
+	  	     
 	  	         
 	  	          this.name="";
 	  	          this.location="";

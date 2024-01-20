@@ -4,7 +4,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         
       <!-- Bootstrap and PrimeFaces javascripts -->
@@ -18,49 +19,17 @@
 		
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/favicon.ico"/>
-      
+
   </h:head>
 
     <h:body>
+   
+    
         <f:facet name="last">
             <h:outputStylesheet name="framework.css" library="css"/>
             <h:outputStylesheet name="custom.css" library="css"/>
         </f:facet>
-	<!-- 
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background-image: url('head1.jpg');">
-            <div class="container">
-                <div class="navbar-header" style="text-align:left;">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapsable-navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-            
-                    <div id="logo" class="navbar-brand" style="text-align:left">
-                        <h:link class="logo-text"  outcome="index">
-                            <h3 style="font-weight: bold; color: white; text-align:left">Hansi SoftSolutions</h3>
-                        </h:link>
-                    </div>
-                </div>
-                <div class="collapse navbar-collapse" id="collapsable-navbar">
-                    <ul class="nav navbar-nav">
-                        <ui:insert name="default_menu">
-                            <ui:include src="default_menu.xhtml"/>
-                        </ui:insert>
-                    </ul>
-                    
-                </div >
-
-                            <h5 style="font-weight: bold; color:white; text-align:left">Property Verification</h5>
-               </div>
-          
-        </nav>
-        
-        
-        
-        
-        -->
+	
         
      
           <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background-image: url('head4.jpg');">
@@ -79,11 +48,31 @@
 	                    
 	                    		    
 	                    <td>
-          					<div id="logo1" style="text-align:center">
+          					<div id="logo1" style="text-align:right">
           						<h:link  outcome = "postPropetyFree.xhtml">
           							<font size="4" color="white" >Post Property  </font><font size="5" color="yellow">Free</font>
           						 </h:link>
           					</div>
+          				</td>
+          				
+          				<td>
+          					<div id="logo2" style="text-align:right">
+          					   
+          					  			  <h:form>
+	          					  			  <c:if test="#{userLoginService.userId!=0}">
+	          					  			    
+				                    		     <h:commandLink action="#{userLoginService.logout}" value="Logout" style="font-weight: bold; font-size: 16px;color:white;float: right; margin-right: 100px;"></h:commandLink>
+			                    		         <p style="font-weight: bold; font-size: 16px;color:white;float: right; margin-right: 100px;">Welcome  :  #{userLoginService.disName}</p>
+			                    		     </c:if>
+			                    		      
+		                    		      </h:form>
+		                    		   
+		                    		    
+			                    		    <c:if test="#{userLoginService.userId==0}">
+	          								   <h:link  value = " Login " class="pi pi-user" outcome = "userLogin.xhtml" style="font-weight: bold; font-size: 16px;color:white;float: right; margin-right: 100px;" />
+				                    		</c:if>
+			                    		   
+		            		</div>
           				</td>
                     </tr>
                 </table>  
@@ -123,9 +112,7 @@
     <br></br><br></br><br></br>
 
      
-        
-     <!-- Page Content -->
-      <!--   <div class="container"> -->
+
             <div class="row">
 
                 <ui:insert name="sidebar">
@@ -140,11 +127,11 @@
             <ui:insert name="footer">
                 <ui:include src="footer.xhtml"/>
             </ui:insert>
-  <!--      </div> -->
+
         
         
 
         
-        
+  
     </h:body>
 </html>
