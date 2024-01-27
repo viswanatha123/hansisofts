@@ -11,6 +11,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import org.primefaces.PrimeFaces;
+
 import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.model.UserDetails;
 
@@ -132,12 +134,12 @@ public class UserLoginService implements Serializable{
 			this.disName = disName;
 		}
 
-		public void clear()
-	    {
-	        this.userName="";
-	        this.password="";
-	        
-	    }
+
+		
+		
+		 public void reset() {
+		        PrimeFaces.current().resetInputs("form:panel1");
+		    }
 	    
 	    public String userLoingAction()
 	    {

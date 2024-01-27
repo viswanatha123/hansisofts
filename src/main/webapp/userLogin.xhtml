@@ -33,42 +33,53 @@
   		
    <br></br> <br></br><br></br>
   
-		<p:panel id="loginPnl" header="Login" style="width: 400px; height:250px; margin: 0 auto;">  
-                <p:panelGrid columns="2" style="top : 0;left : 0; padding : 0; bottom : 0">
-               
-           			<p:spacer /><p:spacer />
-                    <h:outputText style="font-weight: bold" value="User Name : " />
-                    <h:inputText id="name"  value="#{userLoginService.userName}" required="true" requiredMessage="User name is required">
-                    </h:inputText>
+		
+                
+                
+              <p:panel id="panel1" style="background-image: url('back1.jpg'); ">   
+                <p:panelGrid columns="2" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
+                	<p:panelGrid columns="2" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                
+                
+                    <p:outputLabel style="font-weight: bold"  value="User Name : " />
+                    <p:inputText id="name"  value="#{userLoginService.userName}" required="true" requiredMessage="User name is required">
+                    </p:inputText>
                     
-                    <h:outputText style="font-weight: bold" value="Password : " />
-                    <h:inputSecret id="password"  value="#{userLoginService.password}"   required="true" requiredMessage="Password is required">
-                    </h:inputSecret>  
+                    <p:outputLabel style="font-weight: bold" value="Password : " />
+                    <p:password id="password"  value="#{userLoginService.password}"   required="true" requiredMessage="Password is required">
+                    </p:password>  
                     
                     
                        
 	                <h:commandButton value="submit" action="#{userLoginService.userLoingAction}" >
 					</h:commandButton>
 	
-	                    
-	                     
-	                   <h:commandButton id="discardChangesButton"
-		                                   process="@this"
-		                                   value="Clear"
-	                                           update="@form"
-		                                   action="#{serLoginService.clear()}" >
-		                                   
-		                   <p:resetInput target="form"/>
-		          </h:commandButton>
-		      	  <p:spacer /><p:spacer />
-		      	 
-	          	   <h:link  value = " Sign Up " outcome = "userRegist.xhtml" style="font-weight: bold; font-size: 14px;color:blue;float: right; margin-right: 50px;" />
+	              
+		          
+		          <p:commandButton value="Reset" update="panel1" process="@this"
+                                 action="#{serLoginService.reset}"
+                                 styleClass="mr-2 ui-button-outlined"/>
+                                 
+                   <h:link  value = " Sign Up " outcome = "userRegist.xhtml" style="font-weight: bold; font-size: 14px;color:blue;float: right; margin-right: 50px;" />
 				   <h:link  value = " Reset Password " outcome = "" style="font-weight: bold; font-size: 14px;color:blue;float: right; margin-right: 50px;" />
 		
+                   
+                                 
+                                 
+               </p:panelGrid>                     
+                  
+                  <p:graphicImage width="102%"  height="400px" name="images/lock.jpg" />
+                   
+               </p:panelGrid>
+                                 
+               
+		      	 
+	          	   
+       	    
                     
-         </p:panelGrid>                     
-        </p:panel>
-            
+                          
+                       
+            </p:panel>
   
   
 </h:form>
