@@ -44,12 +44,14 @@ public class UserLoginService implements Serializable{
 		@PostConstruct 
 	    public void init()
 	    {
+			message="";
 			log.log(Level.INFO, "Loading UserLoginService init()");
 				
 	    	gDao=new GeneralDAOImpl();
 	    	
 	    	this.message="Welcome to HansiSoft Solutions";
 	    	valid=true;
+	    	
 	    }
 	    
 	     public String getUserName() {

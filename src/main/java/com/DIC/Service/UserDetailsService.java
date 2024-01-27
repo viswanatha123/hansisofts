@@ -8,6 +8,9 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.event.RowEditEvent;
 
 import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
@@ -48,7 +51,36 @@ public class UserDetailsService implements Serializable {
 	}
 
 
+	public void onRowEdit(RowEditEvent<UserDetails> event) {
+		/*
+        FacesMessage msg = new FacesMessage("Product Edited", String.valueOf(event.getObject().getUserId()));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        */
+      
+		int  userid=Integer.parseInt(String.valueOf(event.getObject().getUserId()));
+        		
+        		System.out.println("***********Selected user id ******* "+userid);
+ 
+        		
+        		UserDetails userDetails = userDetailsList.stream().filter(customer ->userid== customer.getUserId()).findAny().orElse(null);
+        		
+        		System.out.println("***********Selected Row ******* "+ userDetails.getUserId()+"    "+userDetails.getfName()+"   "+userDetails.getlName());
+        		
+        		String statusMessage=gDao.updateUserDetails(userDetails);
+        		System.out.println("Successful Updated user details. ");
+        		
+    }
 	
+	
+	  public void onRowCancel(RowEditEvent<UserDetails> event) {
+		  
+		  /*
+	        FacesMessage msg = new FacesMessage("Edit Cancelled", String.valueOf(event.getObject().getCode()));
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
+	      */  
+	        
+	        System.out.println("*********** Cancelled ******* "+String.valueOf(event.getObject().getUserId()));
+	    }
 	
 	
 	
