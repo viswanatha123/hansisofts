@@ -18,45 +18,124 @@
   <p>All User details</p>
   <div class="card">
 	<h:form id="form">
+	 <p:growl id="msgs" showDetail="true"/>
   <br></br>
   
-						  <p:dataTable var="product" value="#{userDetailsService.userDetailsList}">
-				            <p:column headerText="User Id">
-				                <h:outputText value="#{product.userId}" />
-				            </p:column>
-				
-				            <p:column headerText="First Name">
-				                <h:outputText value="#{product.fName}" />
-				            </p:column>
-				
-				            <p:column headerText="Last Name">
-				                <h:outputText value="#{product.lName}" />
-				            </p:column>
-				
-				            <p:column headerText="User Name">
-				                <h:outputText value="#{product.userName}" />
-				            </p:column>
+			<center>
+			  <font size="4" color="blue" style="text-align: center;">All User Details  </font>
+			</center>	
+					<br></br>	  
+						  
+				<p:dataTable id="product" var="product" value="#{userDetailsService.userDetailsList}" editable="true"  style="margin-bottom:20px">
+						  
+						  <p:ajax event="rowEdit" listener="#{userDetailsService.onRowEdit}" update=":form:msgs"/>
+            			  <p:ajax event="rowEditCancel" listener="#{userDetailsService.onRowCancel}" update=":form:msgs"/>
+            			  
+            			  
+            			  <p:column headerText="User Id">
+			                        <h:outputText value="#{product.userId}"/>
+			              </p:column>
+			            
+			            
+			              <p:column headerText="First Name">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.fName}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="fName" value="#{product.fName}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			               <p:column headerText="Last Name">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.lName}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="lName" value="#{product.lName}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			               <p:column headerText="User Name">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.userName}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="useriName" value="#{product.userName}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			              <p:column headerText="Password">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.userPassword}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="password" value="#{product.userPassword}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			               <p:column headerText="Address">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.address}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="address" value="#{product.address}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			               <p:column headerText="Phone No">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.phone}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="phone" value="#{product.phone}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			              <p:column headerText="Created Date">
+			                
+			                        <h:outputText value="#{product.create_date}"/>
+			              </p:column>
+			               
+			               
+			              <p:column headerText="Is Active">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.is_active}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="isActive" value="#{product.is_active}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			            
+			            <p:column style="width:6rem">
+			                <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
+			            </p:column>
+						  
+				        
+			
 				            
-				            <p:column headerText="User Name">
-				                <h:outputText value="#{product.userPassword}" />
-				            </p:column>
 				            
-				            <p:column headerText="User Name">
-				                <h:outputText value="#{product.phone}" />
-				            </p:column>
-				            
-				            <p:column headerText="User Name">
-				                <h:outputText value="#{product.create_date}" />
-				            </p:column>
-				            
-				            <p:column headerText="Is Active">
-				                <h:outputText value="#{product.is_active}" />
-				            </p:column>
-				            
-				            
-				            
-				            
-				        </p:dataTable>
+				</p:dataTable>
   
   
   

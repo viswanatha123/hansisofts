@@ -70,7 +70,7 @@ public class SessionUtils {
 	
 		public static String displayName(String fName,String lName)
 		{
-			return fName.substring(0,1)+""+lName.substring(0,1).toUpperCase();
+			return fName.substring(0,1).toUpperCase()+""+lName.substring(0,1).toUpperCase();
 		}
 	
 	
