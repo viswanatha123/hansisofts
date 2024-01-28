@@ -490,6 +490,41 @@ public class GeneralDAOImpl {
 	}
     
     
+    
+    // ************************************* User already login  *************
+    /*
+     * 
+     *  Developed by viswanatha
+     * 
+     */
+    
+    
+    public static boolean loginValidate(String user) {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = ConnectionDAO.getConnection();
+			ps = con.prepareStatement("select * from user_deta where user_name = ? and is_active = '1'");
+			ps.setString(1, user);
+			
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				//result found, means valid inputs
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        return false;
+		}
+		
+		return false;
+	}
+    
+    
  // ************************************* get User id  *************
     /*
      * 

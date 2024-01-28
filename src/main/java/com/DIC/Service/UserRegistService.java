@@ -58,24 +58,33 @@ public class UserRegistService implements Serializable {
 	public void save() {
 		
 		this.statusMessage="";
-		UserDetails userDetails=new UserDetails();
 		
-		userDetails.setfName(fName);
-		userDetails.setlName(lName);
-		userDetails.setUserName(userName);
-		userDetails.setUserPassword(userPassword);
-		userDetails.setAddress(address);
-		userDetails.setPhone(phone);
+		boolean valid = gdao.loginValidate(userName);
+			if(valid)
+			{
+				statusMessage="User name already exists";
+			}else
+			{
 		
-		statusMessage=gdao.saveUserRegist(userDetails);
 		
-		this.fName="";
-		this.lName="";
-		this.userName="";
-		this.userPassword="";
-		this.address="";
-		this.phone="";
-	
+					UserDetails userDetails=new UserDetails();
+					
+					userDetails.setfName(fName);
+					userDetails.setlName(lName);
+					userDetails.setUserName(userName);
+					userDetails.setUserPassword(userPassword);
+					userDetails.setAddress(address);
+					userDetails.setPhone(phone);
+					
+					statusMessage=gdao.saveUserRegist(userDetails);
+					
+					this.fName="";
+					this.lName="";
+					this.userName="";
+					this.userPassword="";
+					this.address="";
+					this.phone="";
+			}
 	}
 	
 	/*
