@@ -6,8 +6,6 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-      
-
 
        <h:body>
 		<h:form>
@@ -26,7 +24,7 @@
 			</center>	
 					<br></br>	  
 						  
-				<p:dataTable id="product" var="product" value="#{userDetailsService.userDetailsList}" editable="true"  style="margin-bottom:20px">
+				<p:dataTable id="product" var="product"  value="#{userDetailsService.userDetailsList}" editable="true"  style="margin-bottom:20px">
 						  
 						  <p:ajax event="rowEdit" listener="#{userDetailsService.onRowEdit}" update=":form:msgs"/>
             			  <p:ajax event="rowEditCancel" listener="#{userDetailsService.onRowCancel}" update=":form:msgs"/>
@@ -72,17 +70,10 @@
 			                </p:cellEditor>
 			               </p:column>
 			               
-			               
+			   		               
 			              <p:column headerText="Password">
-			                <p:cellEditor>
-			                    <f:facet name="output">
-			                        <h:outputText value="#{product.userPassword}"/>
-			                    </f:facet>
-			                    <f:facet name="input">
-			                        <p:inputText id="password" value="#{product.userPassword}" style="width:100%"/>
-			                    </f:facet>
-			                </p:cellEditor>
-			               </p:column>
+			                        <h:outputText value="xxxxxxxxxxxxx"/>
+			              </p:column>
 			               
 			               
 			               <p:column headerText="Address">
