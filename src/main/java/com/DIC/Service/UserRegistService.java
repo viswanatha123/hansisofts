@@ -30,7 +30,7 @@ public class UserRegistService implements Serializable {
 	private String userPassword;
 	private String address;
 	private String phone;
-	
+	private String errorMessage;
 	
 	private String disName;
 	
@@ -62,10 +62,10 @@ public class UserRegistService implements Serializable {
 		boolean valid = gdao.loginValidate(userName);
 			if(valid)
 			{
-				statusMessage="User name already exists";
+				errorMessage="User name already exists";
 			}else
 			{
-		
+				errorMessage="";
 		
 					UserDetails userDetails=new UserDetails();
 					
@@ -107,6 +107,16 @@ public class UserRegistService implements Serializable {
 	    }
 	
 	
+
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
 
 
 	public String getfName() {

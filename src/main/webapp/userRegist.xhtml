@@ -38,6 +38,15 @@
                 <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
                     <h:outputText style="font-weight: bold;color: green" value="#{userRegistService.statusMessage}" />
                 </p:panelGrid>
+                
+             	<c:if test="#{userRegistService.errorMessage.equals('User name already exists')}">
+					  <center>
+					  <font size="4" color="red" style="text-align: center;">User name already exists.  </font>
+					  </center>
+  			   </c:if>
+                
+                
+                
              </p:panel>
              
              <p:panel id="panel" style="background-image: url('back1.jpg'); ">   
