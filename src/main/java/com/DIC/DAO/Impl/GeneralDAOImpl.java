@@ -74,6 +74,8 @@ public class GeneralDAOImpl {
 			String SQL_FIND_USER_ID_BY_USER_DETAILS="select user_id from user_deta where fname=? and lname=? and user_name=? and  phone=?";
 			String NEW_USER_DEFAULT_ROLE="select r.role_id,ur.is_active from user_deta u, role r, user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1' and r.is_active = '1' and u.user_id = 2 order by role_id";
 			String SQL_UPDATE_USER="update user_deta set fname=?, lname=?, user_name=?, user_pass=?, address=?, phone= ? , is_active= ? where user_id = ?";
+			String SQL_FIND_USER_NAME="select * from user_deta where user_name= ? order by fname ,lname";
+			String SQL_UPDATE_PASSWORD="update user_deta set user_pass=? where user_id = ?";
 		}
 	}
 	
@@ -855,6 +857,86 @@ public class GeneralDAOImpl {
         return succVal;
 
     }
+    
+    //********************** get User Name ******************
+    
+    
+    public UserDetails getUserName(String userName) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		UserDetails userDetails=new UserDetails();
+		
+
+		try {
+			con = ConnectionDAO.getConnection();
+			
+			StringBuilder sql_find_user_name = new StringBuilder(Constants.SQL.SQL_FIND_USER_NAME);
+			log.info("###: Qury user login details : "+sql_find_user_name.toString());
+			
+			ps = con.prepareStatement(sql_find_user_name.toString());
+			ps.setString(1, userName);
+			ResultSet rs = ps.executeQuery();
+			
+			while ( rs.next() ) {
+			
+				userDetails.setUserId(rs.getInt("user_id"));
+				userDetails.setUserName(rs.getString("user_name"));
+				userDetails.setUserPassword(rs.getString("user_pass"));
+				
+			
+									
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        //return false;
+		}
+		
+		return userDetails;
+	}
+    
+    
+    //********************** Update Password ******************
+    
+    public String updatePassword(UserDetails userDetails, String password)
+    {
+    	
+    	System.out.println(" **********  Update password details : "+userDetails.getUserPassword()+"    "+userDetails.getUserId());
+    	
+    	String succVal="";
+    	
+        try {
+            Connection con = null;
+            PreparedStatement pstmt = null;
+            con=ConnectionDAO.getConnection();
+            
+            StringBuilder sql_update_password = new StringBuilder(Constants.SQL.SQL_UPDATE_PASSWORD);
+            pstmt = con.prepareStatement(sql_update_password.toString());
+            pstmt.setString(1,password);
+            pstmt.setInt(2, userDetails.getUserId());
+          	int res=pstmt.executeUpdate();
+          	
+          	System.out.println(" **********  Update password details Recod: "+res);
+	            if(res > 0)
+	            {
+	            	succVal="Successful Reset Password";
+	            }
+          } catch (Exception e) {
+         
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	       succVal=e.getMessage();
+	        return succVal;
+	       
+          }
+      
+
+        return succVal;
+
+    }
+    
+    
     	
    
     
