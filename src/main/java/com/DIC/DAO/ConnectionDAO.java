@@ -11,12 +11,12 @@ public class ConnectionDAO {
 	
 	
 	  //Hani Prod Database
-		//private final static String url="jdbc:postgresql://localhost:5432/postgres";
+		//private final static String url="jdbc:postgresql://localhost:5432/hansi-prod";
 		//private final static String username="postgres";
 		//private final static String password="admin";
 			
 	  //Hani QA Database
-		private final static String url="jdbc:postgresql://localhost:5432/qa";
+		private final static String url="jdbc:postgresql://localhost:5432/hansi-qa";
 		private final static String username="postgres";
 		private final static String password="admin";
 		
