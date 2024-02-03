@@ -10,14 +10,14 @@
 
 
        <h:body>
-
+		<h:form>
         
   <ui:composition template="/WEB-INF/facelets/template.xhtml">
   <ui:param name="page" value="" />
   <ui:define name="title" ><p style="font-weight: bold; color:blue; font-size:15px"> Sales for Villa Plots</p>
   <p>For search property, Please select Primary Location and Secondary Location than click on Search button.</p>
   <div class="card">
-  <h:form id="form">
+	<h:form id="form">
   <br></br>
   
   				<p:panel  style="background: #800000;width: 100%; height:50px;font-size: 15px" >
@@ -177,6 +177,7 @@
 </div>
 </ui:define>
 </ui:composition>
+</h:form>
 </h:body>
 </html>
       

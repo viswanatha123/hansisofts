@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      
+   <h:head>
+   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
+   <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+   <link href="resources/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+   <link href="resources/css/demo/demo.css" rel="stylesheet" />
+   </h:head>
+  
+   <h:body>
+  <ui:composition template="/WEB-INF/facelets/template.xhtml" style="background-image: url('back1.jpg'); ">
+  <ui:param name="page" value="Admin" />
+   <ui:define name="title"><p:outputLabel id="display1" style="color: block">User Registration &nbsp;</p:outputLabel><p:outputLabel id="display2" style="color: red">FREE</p:outputLabel>
+      
+   			<center>
+			  <font size="4" color="blue" style="text-align: center;">New User Registration  </font>
+			</center>
+  <div class="card">
+  			
+<h:form id="form">
+  <p:messages id="msgs"/>
+   <br></br>
+   <center>
+  		 <p:panel>   
+                <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                    <h:outputText style="font-weight: bold;color: green" value="#{userRegistService.statusMessage}" />
+                </p:panelGrid>
+                
+             	<c:if test="#{userRegistService.errorMessage.equals('User name already exists')}">
+					  <center>
+					  <font size="4" color="red" style="text-align: center;">User name already exists.  </font>
+					  </center>
+  			   </c:if>
+                
+                
+                
+             </p:panel>
+             
+             <p:panel id="panel" style="background-image: url('back1.jpg'); ">   
+                <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
+                	<p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                    
+                    
+ 
+                    
+                    <p:outputLabel style="font-weight: bold" indicateRequired="true" value="First Name : " />
+                    <p:inputText id="firstName" required="true" value="#{userRegistService.fName}" >
+                    </p:inputText>
+                    <p:message for="firstName" display="icon"/>
+                   
+                    <p:outputLabel style="font-weight: bold" indicateRequired="true" value="Last Name : " />
+                    <p:inputText id="lastName" required="true" value="#{userRegistService.lName}" >
+                    </p:inputText>
+                    <p:message for="lastName" display="icon"/>
+                    
+                    <p:outputLabel style="font-weight: bold" indicateRequired="true" value="User Name : " />
+                    <p:inputText id="userName" required="true" value="#{userRegistService.userName}" >
+                    </p:inputText>
+                    <p:message for="userName" display="icon"/>
+                    
+                    
+                    <p:outputLabel style="font-weight: bold" indicateRequired="true" value="Password : " />
+                    <p:password id="userPass" required="true" value="#{userRegistService.userPassword}" >
+                    </p:password>
+                    <p:message for="userPass" display="icon"/>
+                    
+                    
+                    <p:outputLabel style="font-weight: bold" value="Address : " />
+                    <p:inputText id="address"  value="#{userRegistService.address}" >
+                    </p:inputText>
+                    <p:message for="address" display="icon"/>
+                           
+                    <p:outputLabel style="font-weight: bold" for="contactNo" indicateRequired="true" value="Mobile Number : " />
+                    <p:inputMask id="contactNo"  mask="9999999999" required="true"  maxlength="10" value="#{userRegistService.phone}" >
+                    </p:inputMask>
+                    <p:message for="contactNo" display="icon"/>
+                    
+                               
+                         
+                    
+                   <h:commandButton value="Submit"   type="submit" 
+                                    process="@this"
+                                    update="@form"
+                                    actionListener="#{userRegistService.save}" >
+                                    <p:resetInput target="form"/>
+                   </h:commandButton>
+                   
+            	               
+	               
+	                 <p:commandButton value="Reset" update="panel" process="@this"
+                                 action="#{userRegistService.reset}"
+                                 styleClass="mr-2 ui-button-outlined"/>
+	               
+	               
+                   
+                </p:panelGrid>                     
+                  
+                  <p:graphicImage width="102%"  height="400px" name="images/newRegist.jpg" />
+                   
+               </p:panelGrid>      
+                    
+                          
+                       
+            </p:panel>
+            
+  </center>
+ 			
+    
+ </h:form>
+</div>
+</ui:define>
+</ui:composition>
+</h:body>
+</html>
+

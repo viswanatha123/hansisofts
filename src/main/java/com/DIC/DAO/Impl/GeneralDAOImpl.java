@@ -6,8 +6,11 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.faces.bean.ApplicationScoped;
@@ -19,10 +22,13 @@ import org.primefaces.model.file.UploadedFile;
 import com.DIC.DAO.ConnectionDAO;
 import com.DIC.DAO.Impl.ConnectionDAOImpl.Constants;
 import com.DIC.model.BudgetModel;
+import com.DIC.model.ConnectorMode;
 import com.DIC.model.HomeLoanDataEntryModel;
 import com.DIC.model.IndividualSiteModel;
 import com.DIC.model.LayoutMode;
 import com.DIC.model.PlotsDataEntryModel;
+import com.DIC.model.UserDetails;
+import com.DIC.model.UserRoleModel;
 import com.DIC.model.VillaModel;
 
 @ManagedBean
@@ -44,16 +50,6 @@ public class GeneralDAOImpl {
 			String SQL_HOME_LOAN_INSERT="insert into home_loan (home_id,agent_name,cont_num,age,gender,email,loan_amt,monthly_inc,emp_type,create_date,is_active) \n"+ 
 					"values (nextval('home_loan_seq'),?,?,?,?,?,?,?,?,current_timestamp,1);";
 		
-			/*
-			String SQL_BUDGET_DETAILS="select * from (select name,cost,contact_owner,'layout' as pro_type ,create_date, image,prim_location ,seco_location,location as loca  from hansi_layout la \r\n"
-					+ "UNION all \r\n"
-					+ "select owner_name,cost,contact_no, 'agri' as pro_type ,create_date, image,prim_location ,seco_location,location  as loca  from hansi_agricultural ag \r\n"
-					+ "UNION all \r\n"
-					+ "select owner_name, cost,contact_no,'indu' as pro_type , create_date, image,prim_location ,seco_location,location  as loca from hansi_individual_site indu \r\n"
-					+ "UNION all \r\n"
-					+ "select owner_name, cost, contact_owner,'villa as pro_type', create_date,image,prim_location ,seco_location,address  as loca from villa_plot vp\r\n"
-					+ ") dum where dum.cost <800 order by create_date ;";
-			*/
 			
 			String SQL_BUDGET_DETAILS="select * from (select name,cost,contact_owner,'layout' as pro_type ,create_date, image,prim_location ,seco_location,location as loca  from hansi_layout la \r\n"
 					+ "UNION all \r\n"
@@ -64,8 +60,22 @@ public class GeneralDAOImpl {
 					+ "select owner_name, cost, contact_owner,'villa as pro_type', create_date,image,prim_location ,seco_location,address  as loca from villa_plot vp\r\n"
 					+ ") dum where ";
 			
-			//dum.cost <800 order by create_date ;";
+			String SQL_USER_ROLE="select r.role_name from user_deta u, role r,user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1'\r\n"
+					+ "and r.is_active = '1' and ur.is_active = '1' and u.user_id = ?";
 			
+			
+			String SQL_ROLE_BY_USER_ID="select user_role_id,u.user_id, u.fname,u.lname ,r.role_id,r.role_name,ur.is_active  from user_deta u, role r, user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1'\r\n"
+					+ "and r.is_active = '1' and u.user_id = ? order by role_name";
+			
+			String SQL_ALL_USERS="select * from user_deta order by fname ,lname";
+			
+			String SQL_USER_REGIST="INSERT INTO user_deta (user_id, fname, lname, user_name, user_pass, address, phone, create_date, is_active) VALUES (nextval('user_seq'), ?, ?,?, ?,?,?, current_timestamp, 1);";
+			
+			String SQL_FIND_USER_ID_BY_USER_DETAILS="select user_id from user_deta where fname=? and lname=? and user_name=? and  phone=?";
+			String NEW_USER_DEFAULT_ROLE="select r.role_id,ur.is_active from user_deta u, role r, user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1' and r.is_active = '1' and u.user_id = 2 order by role_id";
+			String SQL_UPDATE_USER="update user_deta set fname=?, lname=?, user_name=?, user_pass=?, address=?, phone= ? , is_active= ? where user_id = ?";
+			String SQL_FIND_USER_NAME="select * from user_deta where user_name= ? order by fname ,lname";
+			String SQL_UPDATE_PASSWORD="update user_deta set user_pass=? where user_id = ?";
 		}
 	}
 	
@@ -407,8 +417,530 @@ public class GeneralDAOImpl {
     }
     
     
+    
+ // ************************************* User Role  *************
+    /*
+     * 
+     *  Developed by viswanatha
+     * 
+     */
+    
+    public List<String> getUserRole(int userId)
+	{
+    	
+		log.info("### : get started :: getUserRole() ");
+		List<String> userRoles = new ArrayList<>();
+		try {
+			Connection con = null;
+			 PreparedStatement pstmt = null;
+			
+			StringBuilder sql_user_role = new StringBuilder(Constants.SQL.SQL_USER_ROLE);
+			log.info("###: Role Query : "+sql_user_role.toString());
+			
+			con=ConnectionDAO.getConnection();
+			pstmt = con.prepareStatement(sql_user_role.toString()); 
+            pstmt.setLong(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            		while ( rs.next() ) {
+	     	        	 System.out.println("################ Role name ################### : "+rs.getString("role_name"));
+			        	 userRoles.add(rs.getString("role_name"));
+			         }
+	         	
+	         
+	         rs.close();
+	         con.close();
+	         pstmt.close();
+	     } catch (Exception e) {
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        //System.exit(0);
+	     }
+	return userRoles;		
+	}
+    
+    // ************************************* User login  *************
+    /*
+     * 
+     *  Developed by viswanatha
+     * 
+     */
+    
+    
+    public static boolean loginValidate(String user, String password) {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = ConnectionDAO.getConnection();
+			ps = con.prepareStatement("select * from user_deta where user_name = ? and user_pass = ?  and is_active = '1'");
+			ps.setString(1, user);
+			ps.setString(2, password);
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				//result found, means valid inputs
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        return false;
+		}
+		
+		return false;
+	}
+    
+    
+    
+    // ************************************* User already login  *************
+    /*
+     * 
+     *  Developed by viswanatha
+     * 
+     */
+    
+    
+    public static boolean loginValidate(String user) {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = ConnectionDAO.getConnection();
+			ps = con.prepareStatement("select * from user_deta where user_name = ? and is_active = '1'");
+			ps.setString(1, user);
+			
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				//result found, means valid inputs
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        return false;
+		}
+		
+		return false;
+	}
+    
+    
+ // ************************************* get User id  *************
+    /*
+     * 
+     *  Developed by viswanatha
+     * 
+     */
 	
+    public UserDetails getUserDeta(String user, String password) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		UserDetails userDetails=new UserDetails();
+
+		try {
+			con = ConnectionDAO.getConnection();
+			ps = con.prepareStatement("select * from user_deta where user_name = ? and user_pass = ?");
+			ps.setString(1, user);
+			ps.setString(2, password);
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				
+				
+				
+				userDetails.setUserId(rs.getInt("user_id"));
+				userDetails.setfName(rs.getString("fname"));
+				userDetails.setlName(rs.getString("lname"));
+				userDetails.setAddress(rs.getString("address"));
+				userDetails.setUserName(rs.getString("user_name"));
+				
+					
+								
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        //return false;
+		}
+		
+		return userDetails;
+	}
+    
+    
+    
+ // ************************************* get roles by user id  *************
+    /*
+     * 
+     *  Developed by viswanatha
+     * 
+     */
 	
+    public List<UserRoleModel> getRolesByUserId(int userId) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		List<UserRoleModel> userRoleModelList=new ArrayList<>();
+		
+
+		try {
+			con = ConnectionDAO.getConnection();
+			
+			StringBuilder sql_role_by_user_id = new StringBuilder(Constants.SQL.SQL_ROLE_BY_USER_ID);
+			log.info("###: Qury roles by user id : "+sql_role_by_user_id.toString());
+			
+			ps = con.prepareStatement(sql_role_by_user_id.toString());
+			ps.setInt(1, userId);
+			ResultSet rs = ps.executeQuery();
+
+			while ( rs.next() ) {
+				
+				UserRoleModel userRoleModel=new UserRoleModel();
+				
+				userRoleModel.setUserRoleId(rs.getInt("user_role_id"));
+				userRoleModel.setUserId(rs.getInt("user_id"));
+				userRoleModel.setfName(rs.getString("fname"));
+				userRoleModel.setlName(rs.getString("lname"));
+				userRoleModel.setRoleId(rs.getInt("role_id"));
+				userRoleModel.setRoleName(rs.getString("role_name"));
+				userRoleModel.setActive(rs.getString("is_active").equals("1") ? true: false);
+				
+				userRoleModelList.add(userRoleModel);					
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        //return false;
+		}
+		
+		return userRoleModelList;
+	}
 	
+    
+    //*********************************************  Save Role  ***************************************
+    /*
+     * 
+     * Development by viswanatha
+     * 
+     */
+    
+    
+    public int saveRole(List<UserRoleModel> userRoleModelList)
+    {
+    	int count=0;
+    	
+				try {
+				Connection con = null;
+				Statement stmt= null;
+		
+				con=ConnectionDAO.getConnection();
+				stmt = con.createStatement();
+				
+						for(UserRoleModel ur: userRoleModelList)
+						{
+							
+							int isAct=ur.getActive()==true ? 1 : 0;
+						count=count+= stmt.executeUpdate("update user_map_role set is_active= "+isAct+" where user_role_id= "+ur.getUserRoleId()+"");
+						
+						}
+		       
+		         stmt.close(); 
+		         con.close();
+				}catch (Exception e) {
+		        e.printStackTrace();
+		        System.err.println("@@@@@@@@@@@@Primary data @@@@@@@@@@@@@@@@@@@@@@@@@@ :"+e.getClass().getName()+": "+e.getMessage());
+		     }
+		return count;	
+		}
+    
+    
+    
+    public List<UserDetails> getAllUsers() {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		List<UserDetails> userDetailsList=new ArrayList<>();
+		
+
+		try {
+			con = ConnectionDAO.getConnection();
+			
+			StringBuilder sql_all_users = new StringBuilder(Constants.SQL.SQL_ALL_USERS);
+			log.info("###: Qury roles by user id : "+sql_all_users.toString());
+			
+			ps = con.prepareStatement(sql_all_users.toString());
+			ResultSet rs = ps.executeQuery();
+
+			while ( rs.next() ) {
+				
+				UserDetails userDetails=new UserDetails();
+				
+				
+				userDetails.setUserId(rs.getInt("user_id"));
+				userDetails.setfName(rs.getString("fname"));
+				userDetails.setlName(rs.getString("lname"));
+				userDetails.setUserName(rs.getString("user_name"));
+				userDetails.setUserPassword(rs.getString("user_pass"));
+				userDetails.setAddress(rs.getString("address"));
+				userDetails.setPhone(rs.getString("phone"));
+				userDetails.setCreate_date(rs.getDate("create_date"));
+				userDetails.setIs_active(rs.getInt("is_active"));
+				
+				
+	
+				
+				userDetailsList.add(userDetails);					
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        //return false;
+		}
+		
+		return userDetailsList;
+	}
+    
+   /**
+    * 
+    * 
+    * developed by viswanatha
+    *
+    */
+    
+ // ***************** Save User registation  **************
+    
+    public String saveUserRegist(UserDetails userDetails)
+    {
+    	String succVal="";
+    	
+        try {
+        	int userId;
+            Connection con = null;
+            PreparedStatement pstmt = null;
+            con=ConnectionDAO.getConnection();
+            
+            StringBuilder sql_user_regist = new StringBuilder(Constants.SQL.SQL_USER_REGIST);
+            pstmt = con.prepareStatement(sql_user_regist.toString());
+            
+            pstmt.setString(1, userDetails.getfName());
+            pstmt.setString(2, userDetails.getlName());
+            pstmt.setString(3, userDetails.getUserName());
+            pstmt.setString(4, userDetails.getUserPassword());
+            pstmt.setString(5, userDetails.getAddress());
+            pstmt.setString(6, userDetails.getPhone());
+            
+           
+            	int res=pstmt.executeUpdate();
+	            if(res > 0)
+	            {
+	            	succVal="Successful Registered.";
+	            }
+	            
+	            StringBuilder sql_find_user_id_by_user_details = new StringBuilder(Constants.SQL.SQL_FIND_USER_ID_BY_USER_DETAILS);
+	            PreparedStatement ps = con.prepareStatement(sql_find_user_id_by_user_details.toString());
+				ps.setString(1, userDetails.getfName());
+				ps.setString(2, userDetails.getlName());
+				ps.setString(3, userDetails.getUserName());
+				ps.setString(4, userDetails.getPhone());
+
+				ResultSet rs = ps.executeQuery();
+
+				if (rs.next()) {
+					userId=rs.getInt("user_id");
+					
+						System.out.println("*********** User id ************ :"+userId);
+						if(userId > 0)
+						{
+							
+							
+							PreparedStatement psRole = con.prepareStatement(createDefaultRoles(userId));
+							int createdRolesCount=psRole.executeUpdate();
+							System.out.println("*********** Role created count ************ :"+createdRolesCount+"     "+createDefaultRoles(userId));
+						}
+				}    
+	            
+	            
+	            
+	            
+          } catch (Exception e) {
+         
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	    
+	        succVal=e.getMessage();
+	        return succVal;
+	       
+          }
+      
+
+        return succVal;
+    }
+    
+    
+    
+    public String createDefaultRoles(int userId)
+    {
+    	
+    	Connection con = null;
+		PreparedStatement ps = null;
+		String newUserRole="";
+		
+		
+
+		try {
+			con = ConnectionDAO.getConnection();
+		
+			StringBuilder sql_new_user_default_role = new StringBuilder(Constants.SQL.NEW_USER_DEFAULT_ROLE);
+			ps = con.prepareStatement(sql_new_user_default_role.toString());
+			ResultSet rs = ps.executeQuery();
+
+			while ( rs.next() ) {
+				
+				System.out.println(" ****** > role id :"+rs.getInt("role_id")+"     "+rs.getInt("is_active"));
+				newUserRole+="INSERT INTO user_map_role (user_role_id, user_id, role_id, create_date, is_active) VALUES(nextval('user_map_role_seq'::regclass), "+userId+", "+rs.getInt("role_id")+", current_timestamp, "+rs.getInt("is_active")+");";
+					
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        //return false;
+		}
+		
+		
+    	return newUserRole;
+    }
+    
+    
+    public String updateUserDetails(UserDetails userDetails)
+    {
+    	
+    	String succVal="";
+    	
+        try {
+            Connection con = null;
+            PreparedStatement pstmt = null;
+            con=ConnectionDAO.getConnection();
+            
+            StringBuilder sql_update_user = new StringBuilder(Constants.SQL.SQL_UPDATE_USER);
+            pstmt = con.prepareStatement(sql_update_user.toString());
+            
+            pstmt.setString(1,userDetails.getfName());
+            pstmt.setString(2, userDetails.getlName());
+            pstmt.setString(3, userDetails.getUserName());
+            pstmt.setString(4, userDetails.getUserPassword());
+            pstmt.setString(5, userDetails.getAddress());
+            pstmt.setString(6, userDetails.getPhone());
+            pstmt.setInt(7, userDetails.getIs_active());
+            pstmt.setInt(8, userDetails.getUserId());
+            
+
+           
+           
+            	int res=pstmt.executeUpdate();
+	            if(res > 0)
+	            {
+	            	succVal="Successful updated record";
+	            }
+          } catch (Exception e) {
+         
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	       succVal=e.getMessage();
+	        return succVal;
+	       
+          }
+      
+
+        return succVal;
+
+    }
+    
+    //********************** get User Name ******************
+    
+    
+    public UserDetails getUserName(String userName) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		UserDetails userDetails=new UserDetails();
+		
+
+		try {
+			con = ConnectionDAO.getConnection();
+			
+			StringBuilder sql_find_user_name = new StringBuilder(Constants.SQL.SQL_FIND_USER_NAME);
+			log.info("###: Qury user login details : "+sql_find_user_name.toString());
+			
+			ps = con.prepareStatement(sql_find_user_name.toString());
+			ps.setString(1, userName);
+			ResultSet rs = ps.executeQuery();
+			
+			while ( rs.next() ) {
+			
+				userDetails.setUserId(rs.getInt("user_id"));
+				userDetails.setUserName(rs.getString("user_name"));
+				userDetails.setUserPassword(rs.getString("user_pass"));
+				
+			
+									
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        //return false;
+		}
+		
+		return userDetails;
+	}
+    
+    
+    //********************** Update Password ******************
+    
+    public String updatePassword(UserDetails userDetails, String password)
+    {
+    	
+    	System.out.println(" **********  Update password details : "+userDetails.getUserPassword()+"    "+userDetails.getUserId());
+    	
+    	String succVal="";
+    	
+        try {
+            Connection con = null;
+            PreparedStatement pstmt = null;
+            con=ConnectionDAO.getConnection();
+            
+            StringBuilder sql_update_password = new StringBuilder(Constants.SQL.SQL_UPDATE_PASSWORD);
+            pstmt = con.prepareStatement(sql_update_password.toString());
+            pstmt.setString(1,password);
+            pstmt.setInt(2, userDetails.getUserId());
+          	int res=pstmt.executeUpdate();
+          	
+          	System.out.println(" **********  Update password details Recod: "+res);
+	            if(res > 0)
+	            {
+	            	succVal="Successful Reset Password";
+	            }
+          } catch (Exception e) {
+         
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	       succVal=e.getMessage();
+	        return succVal;
+	       
+          }
+      
+
+        return succVal;
+
+    }
+    
+    
+    	
+   
+    
+    
+    
 
 }
