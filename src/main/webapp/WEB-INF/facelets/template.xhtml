@@ -60,9 +60,20 @@
           					   
           					  			  <h:form>
 	          					  			  <c:if test="#{userLoginService.userId!=0}">
-	          					  			    
-				                    		     <h:commandLink action="#{userLoginService.logout}" value="Logout" style="font-weight: bold; font-size: 16px;color:white;float: right; margin-right: 100px;"></h:commandLink>
-			                    		         <p style="font-weight: bold; font-size: 16px;color:white;float: right; margin-right: 100px;">Welcome  :  #{userLoginService.disName}</p>
+	          					  			
+													<p:megaMenu orientation="vertical" autoDisplay="false">
+													            <p:submenu label="Welcome  :  #{userLoginService.disName}" icon="pi pi-user">
+													                <p:column>
+													                    <p:submenu label="Video 1">
+													                        <p:menuitem value="Profile"/>
+													                        <p:menuitem value="Logout" action="#{userLoginService.logout}"/>
+													                       
+													                    </p:submenu>
+													                </p:column>
+													            </p:submenu>
+													         
+													 </p:megaMenu>
+			                    		         
 			                    		     </c:if>
 			                    		      
 		                    		      </h:form>
