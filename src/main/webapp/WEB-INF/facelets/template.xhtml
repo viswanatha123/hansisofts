@@ -56,12 +56,13 @@
           				</td>
           				
           				<td>
-          					<div id="logo2" style="text-align:right">
+          					<div id="logo2" align="center" >
           					   
           					  			  <h:form>
 	          					  			  <c:if test="#{userLoginService.userId!=0}">
 	          					  			
-													<p:megaMenu orientation="vertical" autoDisplay="false">
+	          					  
+													<p:megaMenu orientation="vertical" autoDisplay="false" style="background-color: #151B54">
 													            <p:submenu label="Welcome  :  #{userLoginService.disName}" icon="pi pi-user">
 													                <p:column>
 													                    <p:submenu label="Video 1">
@@ -73,7 +74,7 @@
 													            </p:submenu>
 													         
 													 </p:megaMenu>
-			                    		         
+			                    		     
 			                    		     </c:if>
 			                    		      
 		                    		      </h:form>

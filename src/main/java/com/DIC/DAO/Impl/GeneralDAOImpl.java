@@ -76,6 +76,7 @@ public class GeneralDAOImpl {
 			String SQL_UPDATE_USER="update user_deta set fname=?, lname=?, user_name=?, user_pass=?, address=?, phone= ? , is_active= ? where user_id = ?";
 			String SQL_FIND_USER_NAME="select * from user_deta where user_name= ? order by fname ,lname";
 			String SQL_UPDATE_PASSWORD="update user_deta set user_pass=? where user_id = ?";
+			String SQL_DEL_USER="delete from user_deta where user_id=?";
 		}
 	}
 	
@@ -936,6 +937,42 @@ public class GeneralDAOImpl {
 
     }
     
+//********************** Update Password ******************
+    
+    public String deleteUser(int userId)
+    {
+    	
+    	    	
+    	String succVal="";
+    	
+        try {
+            Connection con = null;
+            PreparedStatement pstmt = null;
+            con=ConnectionDAO.getConnection();
+            
+            StringBuilder sql_del_user = new StringBuilder(Constants.SQL.SQL_DEL_USER);
+            pstmt = con.prepareStatement(sql_del_user.toString());
+            pstmt.setInt(1, userId);
+          	int res=pstmt.executeUpdate();
+          	
+          	System.out.println(" **********  Deleted Record: "+res);
+	            if(res > 0)
+	            {
+	            	succVal="Successful Deleted User";
+	            }
+          } catch (Exception e) {
+         
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	       succVal=e.getMessage();
+	        return succVal;
+	       
+          }
+      
+
+        return succVal;
+
+    }
     
     	
    
