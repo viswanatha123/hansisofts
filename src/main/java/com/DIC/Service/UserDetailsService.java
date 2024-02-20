@@ -6,10 +6,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.RowEditEvent;
 
 import com.DIC.DAO.Impl.GeneralDAOImpl;
@@ -24,6 +26,9 @@ public class UserDetailsService implements Serializable {
 	
 	private static final Logger log = Logger.getLogger(UserDetailsService.class.getName());
 	
+	private List<UserDetails> selectedProducts;
+	
+	private UserDetails selectedProduct;
 	
 	
 	 private List<UserDetails> userDetailsList;
@@ -81,6 +86,44 @@ public class UserDetailsService implements Serializable {
 	        
 	        System.out.println("*********** Cancelled ******* "+String.valueOf(event.getObject().getUserId()));
 	    }
+	  
+	  
+	  public void deleteProduct() {
+	        //this.products.remove(this.selectedProduct);
+	       // this.selectedProducts.remove(this.selectedProduct);
+	        //this.selectedProduct = null;
+	        
+	        System.out.println("deleted id : "+this.selectedProduct.getUserId());
+	        if(this.selectedProduct.getUserId()!=0)
+	        {
+	        	String resMessage=gDao.deleteUser(this.selectedProduct.getUserId());
+	        	userDetailsList=gDao.getAllUsers();
+	        }
+	        
+	        
+	        
+	        PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
+	    }
+
+
+	public List<UserDetails> getSelectedProducts() {
+		return selectedProducts;
+	}
+
+
+	public void setSelectedProducts(List<UserDetails> selectedProducts) {
+		this.selectedProducts = selectedProducts;
+	}
+
+
+	public UserDetails getSelectedProduct() {
+		return selectedProduct;
+	}
+
+
+	public void setSelectedProduct(UserDetails selectedProduct) {
+		this.selectedProduct = selectedProduct;
+	}
 	
 	
 	

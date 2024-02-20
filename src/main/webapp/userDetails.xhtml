@@ -24,10 +24,14 @@
 			</center>	
 					<br></br>	  
 						  
-				<p:dataTable id="product" var="product"  value="#{userDetailsService.userDetailsList}" editable="true"  style="margin-bottom:20px">
+				<p:dataTable id="product" widgetVar="dtProducts" var="product"   value="#{userDetailsService.userDetailsList}" editable="true"  style="margin-bottom:20px" 
+				reflow="true" styleClass="products-table" selection="#{crudView.selectedProducts}"
+            rowKey="#{product.userId}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom" >
 						  
 						  <p:ajax event="rowEdit" listener="#{userDetailsService.onRowEdit}" update=":form:msgs"/>
             			  <p:ajax event="rowEditCancel" listener="#{userDetailsService.onRowCancel}" update=":form:msgs"/>
+            			  
+            		
             			  
             			  
             			  <p:column headerText="User Id">
@@ -121,16 +125,39 @@
 			            <p:column style="width:6rem">
 			                <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
 			            </p:column>
+			            
+				         <p:column exportable="false">
+			               <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
+			                                 process="@this" 
+			                                 oncomplete="PF('deleteProductDialog').show()">
+			                    <f:setPropertyActionListener value="#{product}" target="#{userDetailsService.selectedProduct}" />
+			                </p:commandButton>
+			            </p:column>
 						  
 				        
 			
 				            
 				            
 				</p:dataTable>
+				
   
+   		<p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
+            message="Delete the product?" header="Confirm" severity="warn">
+            <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{userDetailsService.deleteProduct}"
+                process="@this" update=":form:product"
+                oncomplete="PF('deleteProductDialog').hide()" />
+            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                onclick="PF('deleteProductDialog').hide()" />
+        </p:confirmDialog>
   
   
   </h:form>
+
+  
+      
+  
+
+  
 </div>
 </ui:define>
 </ui:composition>
