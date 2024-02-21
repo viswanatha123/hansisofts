@@ -14,7 +14,7 @@
         
   <ui:composition template="/WEB-INF/facelets/template.xhtml">
   <ui:param name="page" value="" />
-  <ui:define name="title" ><p style="font-weight: bold; color:blue; font-size:15px"> Sales for Villa Plots</p>
+  <ui:define name="title" ><p style="font-weight: bold; color:blue; font-size:15px"> Rented Places</p>
   <p>For search property, Please select Primary Location and Secondary Location than click on Search button.</p>
   <div class="card">
 	<h:form id="form">
@@ -25,29 +25,29 @@
 		                        <h:panelGrid columns="7" cellpadding="5" style="width: 100%;">  
 		                            <p:outputLabel for="country" style="font-weight: bold; color:white" value="Primary Location : " /> 
 		                            
-		                            <p:selectOneMenu id="country" value="#{villaDetailsService.country}" style="width:200px">  
-		                            <p:ajax listener="#{villaDetailsService.onCountryChange}" update="city" />  
+		                            <p:selectOneMenu id="country" value="#{RentalDetailsService.country}" style="width:200px">  
+		                            <p:ajax listener="#{RentalDetailsService.onCountryChange}" update="city" />  
 		                            <f:selectItem itemLabel="Select Primary Location" itemValue="" noSelectionOption="true" />  
-		                            <f:selectItems value="#{villaDetailsService.primLocationSort}" />  
+		                            <f:selectItems value="#{RentalDetailsService.primLocationSort}" />  
 		                            </p:selectOneMenu> 
 		                        
 		                            <p:outputLabel for="city" style="font-weight: bold; color:white" value="Secondary Location : " />  
-		                            <p:selectOneMenu id="city" value="#{villaDetailsService.city}" style="width:200px">  
+		                            <p:selectOneMenu id="city" value="#{RentalDetailsService.city}" style="width:200px">  
 		                            <f:selectItem itemLabel="Select Secondary Location" itemValue="" noSelectionOption="true" />  
-		                            <f:selectItems value="#{villaDetailsService.secondryLocation}" />  
+		                            <f:selectItems value="#{RentalDetailsService.secondryLocation}" />  
 		                            </p:selectOneMenu>
-		                            
-		                            
+	                            
 		                            <p:outputLabel for="ProType" style="font-weight: bold; color:white" value="Property Type : " />  
-		                            <p:selectOneMenu id="ProType" value="#{villaDetailsService.proType}"  style="width:100px">  
+		                            <p:selectOneMenu id="ProType" value="#{RentalDetailsService.proType}"  style="width:100px">  
 		                            <f:selectItem itemLabel="All" itemValue="All"/>
 		                             <f:selectItem itemLabel="Villa" itemValue="Villa"/>
 		                             <f:selectItem itemLabel="Plot" itemValue="Plot"/>
 		                             <f:selectItem itemLabel="House" itemValue="House"/>
+		                             <f:selectItem itemLabel="Land" itemValue="Land"/>
+		                             <f:selectItem itemLabel="Shop" itemValue="Shop"/>
 		                            </p:selectOneMenu>
 		                            
-		                            
-		                            <h:commandButton value="Search"  type="submit"   actionListener="#{villaDetailsService.getVillaDetails}" />
+		                            <h:commandButton value="Search"  type="submit"   actionListener="#{RentalDetailsService.getRentalDetails}" />
 		                         
 		                         
 		                        </h:panelGrid>  
@@ -56,38 +56,40 @@
 		     	
 		     <p:panel>   
                 <p:panelGrid columns="1" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; ">
-                    <h:outputText  style="font-weight: bold; font-style:italic; font-size:25px; color: red;" value="#{villaDetailsService.errorMessage}" />
+                    <h:outputText  style="font-weight: bold; font-style:italic; font-size:25px; color: red;" value="#{RentalDetailsService.errorMessage}" />
                 </p:panelGrid>
              </p:panel>
+		    
 		     	
-		     	<p:dataScroller value="#{villaDetailsService.villaModel}" var="product" chunkSize="10">		   	     	
+		     	<p:dataScroller value="#{RentalDetailsService.rentalDataEntryModel}" var="product" chunkSize="10">		   	     	
                     <p:panel  style="width: 100%; height:340px; box-shadow: 10px 10px 5px grey; " >
                     
                     			<h:panelGrid   columns="4" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
-                  				<h:outputText style="font-weight: bold;color: green;font-size:15px;" value="#{product.i_am} : #{product.owner_name}" />
-                   				<h:outputText style="font-weight: bold;color: block; font-size:15px; float:right" value="#{product.bed_rooms} BHK #{product.property_type} for Sale in #{villaDetailsService.locationMessage}" />
-                  				<h:outputText class="pi pi-globe" style="font-weight: bold;color: brown;font-size:15px; float:right" value=" Residential Villa/Plots for Sale in #{villaDetailsService.locationMessage}" />
+                  				<h:outputText style="font-weight: bold;color: green;font-size:15px;" value="Owner Name : #{product.own_name}" />
+                   				<h:outputText style="font-weight: bold;color: block; font-size:15px; float:right" value="#{product.tot_bed_rooms} BHK #{product.pro_type} for Rent in #{RentalDetailsService.locationMessage}" />
+                  				<h:outputText class="pi pi-globe" style="font-weight: bold;color: brown;font-size:15px; float:right" value=" Residential #{product.pro_type} for Rent in #{RentalDetailsService.locationMessage}" />
               					</h:panelGrid>
               					
-              		
               					
+              					   					
               					<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
                      			<p:graphicImage width="200" height="200" stream="false" cache="false" value="#{product.streamedContent}" />
                      			
                      			
                      				    <h:panelGrid   columns="2" style="background: #E5E4E2;" width="80%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
                      			 
-                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" #{product.i_am} : " />
-                     			 				<h:outputText style="font-weight: normal;color: block;font-size: 15px" value="#{product.owner_name}" />
+                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;  color: block;font-size: 15px" value="owner Name" />
+                     			 				<h:outputText style="font-weight: normal;color: block;font-size: 15px" value=" : #{product.own_name}" />
                      			 				
-                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" Contact : "/>
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.contact_owner}"/>
+                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value="Contact No"/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" : #{product.own_con_no}"/>
                      			 		
-                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" Email : "/>
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.email}"/>
                      			 				
-                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value="Availability Date : " />
-                     		        			<h:outputText style="font-weight: normal;color: block;font-size: 15px" value="#{product.avail_date}"/>
+                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value="Property Type"/>
+                                                <h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" : #{product.pro_type}"/>
+                     			 				
+                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value="Availability Date" />
+                     		        			<h:outputText style="font-weight: normal;color: block;font-size: 15px" value=" : "/>
                      		        				 			                                                                                          
                                                
                                                
@@ -96,44 +98,46 @@
                      			
                      					<h:panelGrid   columns="2" width="80%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
                      			 
-                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" Road width : " />
-                     			 				<h:outputText style="font-weight: normal;color: block;font-size: 15px" value="#{product.road_width}" />
-                     			 		
-                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" Floors : "/>
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.floors}"/>
+                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value="Total Area in sqft"/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" : #{product.tot_area_sqft}"/>
                      			 				
-                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" Bed Rooms : "/>
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.bed_rooms}"/>
-                     			 				                     			 			                                                                                          
-                                                <h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" Bath Rooms : "/>
-                                                <h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.bath_rooms}"/>
                                                 
-                                                 <h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" Furnished : "/>
-                                                <h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.furnished}"/>
+                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value="Total Floors"/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" : #{product.tot_floors}"/>
+                     			 				
+                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value="Total Bed Rooms"/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" : #{product.tot_bed_rooms}"/>
+                     			 				                     			 			                                                                                          
+                                                <h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value="Total Bath Rooms"/>
+                                                <h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" : #{product.tot_bath_rooms}"/>
+                                                
+                                                <h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value="Facing"/>
+                                                <h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" : #{product.facing}"/>
+                                                
+                                                 
                                        </h:panelGrid>
                                        
                                        
                                        <h:panelGrid   columns="2" width="80%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
                      			 
-                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" Plot Area : " />
-                     			 				<h:outputText style="font-weight: normal;color: block;font-size: 15px" value="#{product.plot_area}" />
+                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" Preferred Rent" />
+                     			 				<h:outputText style="font-weight: normal;color: block;font-size: 15px" value=" : #{product.rent_pref}" />
                      			 		
-                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" Super Buildup Area : "/>
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.s_build_are}"/>
+                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" Kitchen"/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" : #{product.kitc_room}"/>
                      			 				
-                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" Property Available : "/>
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.pro_avail}"/>
+                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" Furniture "/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" : #{product.furniture}"/>
                      			 				                     			 			                                                                                          
-                                                <h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" Per sqft Cost : "/>
-                                                <h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.persqft}"/>
+                                                <h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" Security Deposit"/>
+                                                <h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" : #{product.sec_depo}"/>
                                                 
-                                                <h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" Total feets : "/>
-                                                <h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.total_feets}"/>
+                                                
                                        </h:panelGrid>
                      			
                      				<h:panelGrid   columns="1" width="60%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
-                     			 				<h:outputText style="font-weight: bold;color: red;font-size: 15px"  value="Rs #{product.cost}" />
-                     			 				<p:commandButton type="submit" value="Callback" icon="ui-icon-calculator" style="background:#FFA500;font-weight: bold;color: black;font-size: 15px ; width:170px" onclick="requestCallback()" />
+                     			 				<h:outputText style="font-weight: bold;color: red;font-size: 15px"  value=" Mon Rent : Rs #{product.mon_rent}" />
+                     			 				<p:commandButton type="submit" value="Callback" icon="ui-icon-calculator" style="background:#FFA500;font-weight: bold; margin-bottom:5px; margin-top:5px; color: black;font-size: 15px ; width:170px" onclick="requestCallback()" />
                           						<p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#1E90FF;font-weight: bold;color: black;font-size: 15px; width:170px" onclick="requestCallback()" />
                           	
                      				</h:panelGrid>
@@ -160,6 +164,14 @@
 					          
 					        </h:panelGrid> 
               					
+                    
+              		
+         
+                    
+                    
+                    
+                    
+                    
                     
                     
                     </p:panel>

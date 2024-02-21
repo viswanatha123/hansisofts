@@ -122,18 +122,19 @@
 			               </p:column>
 			               
 			            
-			            <p:column style="width:6rem">
+			            <p:column style="width:6rem" rendered="#{userRoleService.userRole.contains('User Edit')? true : false }">
 			                <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
 			            </p:column>
 			            
-				         <p:column exportable="false">
+			       
+				         <p:column exportable="false" rendered="#{userRoleService.userRole.contains('User Del')? true : false }">
 			               <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
 			                                 process="@this" 
 			                                 oncomplete="PF('deleteProductDialog').show()">
 			                    <f:setPropertyActionListener value="#{product}" target="#{userDetailsService.selectedProduct}" />
 			                </p:commandButton>
-			            </p:column>
-						  
+			             </p:column>
+					
 				        
 			
 				            
