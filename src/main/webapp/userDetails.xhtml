@@ -75,8 +75,12 @@
 			               </p:column>
 			               
 			   		               
-			              <p:column headerText="Password">
+			              <p:column headerText="Password Mask">
 			                        <h:outputText value="xxxxxxxxxxxxx"/>
+			              </p:column>
+			              
+			              <p:column headerText="Password Show" rendered="#{userRoleService.userRole.contains('Password Show')? true : false }">
+			                        <h:outputText value="#{product.userPassword}"/>
 			              </p:column>
 			               
 			               
