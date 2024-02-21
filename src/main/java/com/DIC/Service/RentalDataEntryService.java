@@ -3,6 +3,7 @@ package com.DIC.Service;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,29 +29,37 @@ public class RentalDataEntryService implements Serializable {
 
 	private static final Logger log = Logger.getLogger(RentalDataEntryService.class.getName());
 	
-	private String ownername;
+
+
+
+	private String own_name;
 	private String address;
-	private String ownContNum; 
-	private String propType;
-	private int totalBedRooms;
-	private int totalFloors;
-	private int totalBathRomms;
+	private String own_con_no; 
+	private String pro_type;
+	private int tot_bed_rooms;
+	private int tot_floors;
+	private int tot_bath_rooms;
 	private String furniture;
-	private String rentPrefered;
-	private int securityDeposit;
-	private int monthlyRent;
-	private String kitchenRoom;
+	private String rent_pref;
+	private int sec_depo;
+	private int mon_rent;
+	private String kitc_room;
 	private String facing;
-	private int totAreaSqft;
+	private int tot_area_sqft;
     private UploadedFile file;
     private String updateResult;
+    private Date avail_date=new Date();
     
-      private String country;   
+  
+
+	private String country;   
 	  private String city;    
 	  private Map<String, String> primaryModel;
 	  private Map<String,String> primLocation; 
 	  private TreeMap<String, String> primLocationSort;
 	  private List<String> secondryLocation;
+	  
+	  
 	  
 	  
 	  ConnectionDAOImpl dao;
@@ -82,24 +91,25 @@ public class RentalDataEntryService implements Serializable {
                              
                log.log(Level.INFO, "Selected county and city ---------->:"+country+"     "+city);
  	          	RentalDataEntryModel rentalDataModel=new RentalDataEntryModel();
-			 	rentalDataModel.setOwnername(ownername);
+			 	rentalDataModel.setOwn_name(own_name);
 			 	rentalDataModel.setAddress(address);
-			 	rentalDataModel.setOwnContNum(ownContNum);
-			 	rentalDataModel.setPropType(propType);
-			 	rentalDataModel.setTotalBedRooms(totalBedRooms);
-			 	rentalDataModel.setTotalFloors(totalFloors);
-			 	rentalDataModel.setTotalBathRomms(totalBathRomms);
+			 	rentalDataModel.setOwn_con_no(own_con_no);
+			 	rentalDataModel.setPro_type(pro_type);
+			 	rentalDataModel.setTot_bed_rooms(tot_bed_rooms);
+			 	rentalDataModel.setTot_floors(tot_floors);
+			 	rentalDataModel.setTot_bath_rooms(tot_bath_rooms);
 			 	rentalDataModel.setFurniture(furniture);
-			 	rentalDataModel.setRentPrefered(rentPrefered);
-			 	rentalDataModel.setSecurityDeposit(securityDeposit);
-			 	rentalDataModel.setMonthlyRent(monthlyRent);
-			 	rentalDataModel.setKitchenRoom(kitchenRoom);
+			 	rentalDataModel.setRent_pref(rent_pref);
+			 	rentalDataModel.setSec_depo(sec_depo);
+			 	rentalDataModel.setMon_rent(mon_rent);
+			 	rentalDataModel.setKitc_room(kitc_room);
 			 	rentalDataModel.setFacing(facing);
-			 	rentalDataModel.setTotAreaSqft(totAreaSqft);
-			 	rentalDataModel.setPrimLocation(country);
-			 	rentalDataModel.setSecoLocation(city);
+			 	rentalDataModel.setTot_area_sqft(tot_area_sqft);
+			 	rentalDataModel.setPrim_location(country);
+			 	rentalDataModel.setSeco_location(city);
 			 	rentalDataModel.setFile(file);
 			 	rentalDataModel.setInputStream(file.getInputStream());
+			 	rentalDataModel.setAvail_date(avail_date);
 			 	
  	        
  	          
@@ -107,22 +117,23 @@ public class RentalDataEntryService implements Serializable {
  	          
  	         updateResult=dao.updateRentalDataEntry(rentalDataModel);
  	             
- 	          this.ownername="";
+ 	          this.own_name="";
  	          this.address="";
- 	          this.ownContNum="";
- 	          this.propType="";
- 	          this.totalBedRooms=0;
- 	          this.totalFloors=0;
- 	          this.totalBathRomms=0;
+ 	          this.own_con_no="";
+ 	          this.pro_type="";
+ 	          this.tot_bed_rooms=0;
+ 	          this.tot_floors=0;
+ 	          this.tot_bath_rooms=0;
  	          this.furniture="";
- 	          this.rentPrefered="";
- 	          this.securityDeposit=0;
- 	          this.monthlyRent=0;
- 	          this.kitchenRoom="";
+ 	          this.rent_pref="";
+ 	          this.sec_depo=0;
+ 	          this.mon_rent=0;
+ 	          this.kitc_room="";
  	          this.facing="";
- 	          this.totAreaSqft=0;
+ 	          this.tot_area_sqft=0;
  	          this.country="";
  		      this.city="";
+ 		      this.avail_date=new Date();
  	          
           
  	          
@@ -158,36 +169,37 @@ public class RentalDataEntryService implements Serializable {
       
       public void clear()
       {
-    	  this.ownername="";
+    	  this.own_name="";
 	          this.address="";
-	          this.ownContNum="";
-	          this.propType="";
-	          this.totalBedRooms=0;
-	          this.totalFloors=0;
-	          this.totalBathRomms=0;
+	          this.own_con_no="";
+	          this.pro_type="";
+	          this.tot_bed_rooms=0;
+	          this.tot_floors=0;
+	          this.tot_bath_rooms=0;
 	          this.furniture="";
-	          this.rentPrefered="";
-	          this.securityDeposit=0;
-	          this.monthlyRent=0;
-	          this.kitchenRoom="";
+	          this.rent_pref="";
+	          this.sec_depo=0;
+	          this.mon_rent=0;
+	          this.kitc_room="";
 	          this.facing="";
-	          this.totAreaSqft=0;
+	          this.tot_area_sqft=0;
 	          this.country="";
 		      this.city="";
+		      this.avail_date=new Date();
           
           this.updateResult="";
           System.out.println("****** Clicked on Clear button*****");
       }
       
-	  
+	 
       
-  	public String getOwnername() {
-		return ownername;
+  	public String getOwn_name() {
+		return own_name;
 	}
 
 
-	public void setOwnername(String ownername) {
-		this.ownername = ownername;
+	public void setOwn_name(String own_name) {
+		this.own_name = own_name;
 	}
 
 
@@ -201,53 +213,53 @@ public class RentalDataEntryService implements Serializable {
 	}
 
 
-	public String getOwnContNum() {
-		return ownContNum;
+	public String getOwn_con_no() {
+		return own_con_no;
 	}
 
 
-	public void setOwnContNum(String ownContNum) {
-		this.ownContNum = ownContNum;
+	public void setOwn_con_no(String own_con_no) {
+		this.own_con_no = own_con_no;
 	}
 
 
-	public String getPropType() {
-		return propType;
+	public String getPro_type() {
+		return pro_type;
 	}
 
 
-	public void setPropType(String propType) {
-		this.propType = propType;
+	public void setPro_type(String pro_type) {
+		this.pro_type = pro_type;
 	}
 
 
-	public int getTotalBedRooms() {
-		return totalBedRooms;
+	public int getTot_bed_rooms() {
+		return tot_bed_rooms;
 	}
 
 
-	public void setTotalBedRooms(int totalBedRooms) {
-		this.totalBedRooms = totalBedRooms;
+	public void setTot_bed_rooms(int tot_bed_rooms) {
+		this.tot_bed_rooms = tot_bed_rooms;
 	}
 
 
-	public int getTotalFloors() {
-		return totalFloors;
+	public int getTot_floors() {
+		return tot_floors;
 	}
 
 
-	public void setTotalFloors(int totalFloors) {
-		this.totalFloors = totalFloors;
+	public void setTot_floors(int tot_floors) {
+		this.tot_floors = tot_floors;
 	}
 
 
-	public int getTotalBathRomms() {
-		return totalBathRomms;
+	public int getTot_bath_rooms() {
+		return tot_bath_rooms;
 	}
 
 
-	public void setTotalBathRomms(int totalBathRomms) {
-		this.totalBathRomms = totalBathRomms;
+	public void setTot_bath_rooms(int tot_bath_rooms) {
+		this.tot_bath_rooms = tot_bath_rooms;
 	}
 
 
@@ -261,43 +273,43 @@ public class RentalDataEntryService implements Serializable {
 	}
 
 
-	public String getRentPrefered() {
-		return rentPrefered;
+	public String getRent_pref() {
+		return rent_pref;
 	}
 
 
-	public void setRentPrefered(String rentPrefered) {
-		this.rentPrefered = rentPrefered;
+	public void setRent_pref(String rent_pref) {
+		this.rent_pref = rent_pref;
 	}
 
 
-	public int getSecurityDeposit() {
-		return securityDeposit;
+	public int getSec_depo() {
+		return sec_depo;
 	}
 
 
-	public void setSecurityDeposit(int securityDeposit) {
-		this.securityDeposit = securityDeposit;
+	public void setSec_depo(int sec_depo) {
+		this.sec_depo = sec_depo;
 	}
 
 
-	public int getMonthlyRent() {
-		return monthlyRent;
+	public int getMon_rent() {
+		return mon_rent;
 	}
 
 
-	public void setMonthlyRent(int monthlyRent) {
-		this.monthlyRent = monthlyRent;
+	public void setMon_rent(int mon_rent) {
+		this.mon_rent = mon_rent;
 	}
 
 
-	public String getKitchenRoom() {
-		return kitchenRoom;
+	public String getKitc_room() {
+		return kitc_room;
 	}
 
 
-	public void setKitchenRoom(String kitchenRoom) {
-		this.kitchenRoom = kitchenRoom;
+	public void setKitc_room(String kitc_room) {
+		this.kitc_room = kitc_room;
 	}
 
 
@@ -311,13 +323,13 @@ public class RentalDataEntryService implements Serializable {
 	}
 
 
-	public int getTotAreaSqft() {
-		return totAreaSqft;
+	public int getTot_area_sqft() {
+		return tot_area_sqft;
 	}
 
 
-	public void setTotAreaSqft(int totAreaSqft) {
-		this.totAreaSqft = totAreaSqft;
+	public void setTot_area_sqft(int tot_area_sqft) {
+		this.tot_area_sqft = tot_area_sqft;
 	}
 
 
@@ -414,6 +426,18 @@ public class RentalDataEntryService implements Serializable {
 	public static Logger getLog() {
 		return log;
 	}
+
+    public Date getAvail_date() {
+		return avail_date;
+	}
+
+
+	public void setAvail_date(Date avail_date) {
+		this.avail_date = avail_date;
+	}
+
+	
+	
 
 	  
 }
