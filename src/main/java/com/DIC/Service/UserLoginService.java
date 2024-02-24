@@ -36,6 +36,7 @@ public class UserLoginService implements Serializable{
 	    private String message;
 	    private boolean valid;
 	    private String disName;
+	    private String fullName;
 	    
 	    
 	    
@@ -137,7 +138,15 @@ public class UserLoginService implements Serializable{
 
 		
 		
-		 public void reset() {
+		 public String getFullName() {
+			return fullName;
+		}
+
+		public void setFullName(String fullName) {
+			this.fullName = fullName;
+		}
+
+		public void reset() {
 		        PrimeFaces.current().resetInputs("form:panel1");
 		    }
 	    
@@ -159,6 +168,7 @@ public class UserLoginService implements Serializable{
 				SessionUtils.setUserDetails(userDetails);
 				
 				disName=SessionUtils.getUserDisName();
+				fullName=SessionUtils.getUserFullName();
 				
 				
 				

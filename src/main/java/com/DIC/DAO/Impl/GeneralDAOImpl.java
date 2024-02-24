@@ -64,7 +64,7 @@ public class GeneralDAOImpl {
 					+ "and r.is_active = '1' and ur.is_active = '1' and u.user_id = ?";
 			
 			
-			String SQL_ROLE_BY_USER_ID="select user_role_id,u.user_id, u.fname,u.lname ,r.role_id,r.role_name,ur.is_active  from user_deta u, role r, user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1'\r\n"
+			String SQL_ROLE_BY_USER_ID="select user_role_id,u.user_id, u.fname,u.lname ,r.role_id,r.role_name,ur.is_active,r.is_profile  from user_deta u, role r, user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1'\r\n"
 					+ "and r.is_active = '1' and u.user_id = ? order by role_name";
 			
 			String SQL_ALL_USERS="select * from user_deta order by fname ,lname";
@@ -608,6 +608,7 @@ public class GeneralDAOImpl {
 				userRoleModel.setRoleId(rs.getInt("role_id"));
 				userRoleModel.setRoleName(rs.getString("role_name"));
 				userRoleModel.setActive(rs.getString("is_active").equals("1") ? true: false);
+				userRoleModel.setProfileRole(rs.getString("is_profile"));
 				
 				userRoleModelList.add(userRoleModel);					
 			}

@@ -11,6 +11,7 @@ public class UserRoleModel implements Serializable{
 	private int roleId;
 	private String roleName;
 	private boolean isActive;
+	private String profileRole;
 	
 	
 	
@@ -62,6 +63,13 @@ public class UserRoleModel implements Serializable{
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
+	public String getProfileRole() {
+		return profileRole;
+	}
+	public void setProfileRole(String profileRole) {
+		this.profileRole = profileRole;
+	}
+	
 	
 	
 	

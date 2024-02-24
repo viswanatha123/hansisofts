@@ -43,6 +43,13 @@ public class SessionUtils {
 			return null;
 	}
 	
+	public static String getUserFullName() {
+		HttpSession session = getSession();
+		if (session != null)
+			return (String) session.getAttribute("fullName");
+		else
+			return null;
+	}
 
 	
 	
@@ -61,6 +68,7 @@ public class SessionUtils {
 						session.setAttribute("lname", UserDetails.getlName());
 						session.setAttribute("address", UserDetails.getAddress());
 						session.setAttribute("disName", SessionUtils.displayName(UserDetails.getfName(),UserDetails.getlName()));
+						session.setAttribute("fullName", SessionUtils.displayFullName(UserDetails.getfName(),UserDetails.getlName()));
 						
 						
 					}
@@ -71,6 +79,11 @@ public class SessionUtils {
 		public static String displayName(String fName,String lName)
 		{
 			return fName.substring(0,1).toUpperCase()+""+lName.substring(0,1).toUpperCase();
+		}
+		
+		public static String displayFullName(String fName,String lName)
+		{
+			return fName+" "+lName;
 		}
 	
 	
