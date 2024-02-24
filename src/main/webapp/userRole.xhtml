@@ -60,19 +60,35 @@
 	                   			<td>Last Name  : <h:outputText style="color: green ; font-size: 15px" value="#{roleUpdateService.lName}" /></td>
 	                   		</tr>
 	                   </table>
+	                   <br></br>
 	                   
-	                   
-	                   
-                 
-	                   	<br></br><br></br>
-	                   	 <p:dataScroller value="#{roleUpdateService.userRoleModelList}" var="product" >
-	                   			<h:panelGrid   columns="2" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
-	                  				<p:selectBooleanCheckbox value="#{product.active}" itemLabel="#{product.roleName}"/>
-	              				</h:panelGrid>
-	              
-	        			 </p:dataScroller>
-	                   	<br></br><br></br>
-	                   	
+	                   					 <table width="100%" border="1">
+	                   					 	<tr align="right" >
+	                   					 		<th>General Role</th>
+	                   					 		<th>Profile Role</th>
+	                   					 	</tr>
+                 							<tr>
+                 								<td>
+								                   	<br></br><br></br>
+								                   	 <p:dataScroller value="#{roleUpdateService.userRoleModelList}" var="product1" >
+								                  			<h:panelGrid    columns="2"  style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
+								                   				<p:selectBooleanCheckbox  rendered="#{product1.profileRole.contains('No')? true : false }" value="#{product1.active}" itemLabel="#{product1.roleName}"/>
+								              				</h:panelGrid>
+								            		</p:dataScroller>
+								                   	<br></br><br></br>
+								                </td>
+								                
+								                <td>
+								                   	<br></br><br></br>
+								                   	 <p:dataScroller value="#{roleUpdateService.userRoleModelList}" var="product2" >
+									                  			<h:panelGrid   columns="2" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
+									                  				<p:selectBooleanCheckbox rendered="#{product2.profileRole.contains('Yes')? true : false }" value="#{product2.active}" itemLabel="#{product2.roleName}"/>
+									              				</h:panelGrid>
+									          		 </p:dataScroller>
+								                   	<br></br><br></br>
+								                </td>
+								            </tr>
+	                   					</table>
 	                   
 						</tr>
 						<tr>

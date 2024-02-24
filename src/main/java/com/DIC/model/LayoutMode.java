@@ -10,6 +10,8 @@ import org.primefaces.model.StreamedContent;
 
 public class LayoutMode implements Serializable{
 	
+	
+	private int layoutId;
 	private String name;
 	private String location;
 	private int persqft;
@@ -40,6 +42,16 @@ public class LayoutMode implements Serializable{
 	
 	
 	
+	
+	
+	public int getLayoutId() {
+		return layoutId;
+	}
+
+	public void setLayoutId(int layoutId) {
+		this.layoutId = layoutId;
+	}
+
 	public Date getCreatedOnDate() {
 		return createdOnDate;
 	}
