@@ -38,7 +38,7 @@ public class ImagesViewService {
         
         
         siteMapImage = new ArrayList<String>();
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 10; i <= 16; i++) {
         	siteMapImage.add(i + ".jpg");
         }
         
