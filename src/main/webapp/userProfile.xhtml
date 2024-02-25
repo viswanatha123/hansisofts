@@ -18,9 +18,8 @@
   <p:messages id="msgs"/>
   <br></br>
   
-				<p:dataTable id="product" widgetVar="dtProducts" var="product"   value="#{userProfileService.userDetailsList}" editable="true"  style="margin-bottom:20px" 
-				reflow="true" styleClass="products-table" 
-            rowKey="#{product.userId}"  paginatorPosition="bottom" >
+				<p:dataTable id="product" widgetVar="dtProducts" var="product"   value="#{userProfileService.userDetailsList}" editable="true"  style="margin-bottom:20px;width:50%;" 
+				reflow="true" styleClass="products-table"  rowKey="#{product.userId}"  paginatorPosition="bottom" >
 						  
 					           			  
             			  
@@ -116,19 +115,29 @@
 				
 				<br></br><br></br><br></br>
 				
-				<p:outputLabel style="font-weight: bold"  value=" Profile Menu " />
+			
 				
-				
-				<p:dataTable id="product2" widgetVar="dtProducts" var="product1"   value="#{userProfileService.userProfileRoleModel}" editable="true"  style="margin-bottom:20px; width:25%;" 
-						reflow="true" styleClass="products-table"   paginatorPosition="bottom" >
-						
-			                 
-			                 <p:column headerText=" Menu ">
-			                       <h:link  value = "#{product1.roleName}" outcome = "#{product1.profUrl}" style="font-size: 14px;color:black;" />
-			                 </p:column>
-				
-  				</p:dataTable>
-  				
+			
+		  				<div class="card">
+					    <h:form>
+					        <h5> Profile Menu </h5>
+					     
+					        <p:megaMenu orientation="Profile Menu" autoDisplay="false">
+					            <p:submenu label="Menu" icon="pi pi-fw pi-cog">
+					                <p:column>
+					                    <p:submenu label="Options">
+					              					 <c:forEach var="item" items="#{userProfileService.userProfileRoleModel}">
+					                         			  <p:menuitem value="#{item.roleName}" icon="pi pi-fw pi-user" outcome = "#{item.profUrl}" />
+					              					  </c:forEach> 
+					                    </p:submenu>
+					                   
+					                </p:column>
+					            </p:submenu>
+					        </p:megaMenu>
+							
+					   </h:form>
+					  </div>
+		  				
   				
   			
   
