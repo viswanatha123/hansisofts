@@ -39,7 +39,7 @@ public class UserDAOImpl {
 			
 			String SQL_PROFILE_ROLE="select r.role_name,r.profile_url  \r\n"
 					+ "from user_deta u, role r, user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1'\r\n"
-					+ "and r.is_active = '1' and ur.is_active='1' and r.is_profile ='Yes' and r.is_profile_dis ='Yes' and u.user_id = ? order by role_name;";
+					+ "and r.is_active = '1' and ur.is_active='1' and r.is_profile ='Yes' and r.is_prof_menu ='Yes' and u.user_id = ? order by role_name;";
 			
 			
 		}
