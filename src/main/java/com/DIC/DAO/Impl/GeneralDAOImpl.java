@@ -64,7 +64,7 @@ public class GeneralDAOImpl {
 					+ "and r.is_active = '1' and ur.is_active = '1' and u.user_id = ?";
 			
 			
-			String SQL_ROLE_BY_USER_ID="select user_role_id,u.user_id, u.fname,u.lname ,r.role_id,r.role_name,ur.is_active  from user_deta u, role r, user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1'\r\n"
+			String SQL_ROLE_BY_USER_ID="select user_role_id,u.user_id, u.fname,u.lname ,r.role_id,r.role_name,ur.is_active,r.is_profile  from user_deta u, role r, user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1'\r\n"
 					+ "and r.is_active = '1' and u.user_id = ? order by role_name";
 			
 			String SQL_ALL_USERS="select * from user_deta order by fname ,lname";
@@ -76,6 +76,7 @@ public class GeneralDAOImpl {
 			String SQL_UPDATE_USER="update user_deta set fname=?, lname=?, user_name=?, user_pass=?, address=?, phone= ? , is_active= ? where user_id = ?";
 			String SQL_FIND_USER_NAME="select * from user_deta where user_name= ? order by fname ,lname";
 			String SQL_UPDATE_PASSWORD="update user_deta set user_pass=? where user_id = ?";
+			String SQL_DEL_USER="delete from user_deta where user_id=?";
 		}
 	}
 	
@@ -607,6 +608,7 @@ public class GeneralDAOImpl {
 				userRoleModel.setRoleId(rs.getInt("role_id"));
 				userRoleModel.setRoleName(rs.getString("role_name"));
 				userRoleModel.setActive(rs.getString("is_active").equals("1") ? true: false);
+				userRoleModel.setProfileRole(rs.getString("is_profile"));
 				
 				userRoleModelList.add(userRoleModel);					
 			}
@@ -936,6 +938,42 @@ public class GeneralDAOImpl {
 
     }
     
+//********************** Update Password ******************
+    
+    public String deleteUser(int userId)
+    {
+    	
+    	    	
+    	String succVal="";
+    	
+        try {
+            Connection con = null;
+            PreparedStatement pstmt = null;
+            con=ConnectionDAO.getConnection();
+            
+            StringBuilder sql_del_user = new StringBuilder(Constants.SQL.SQL_DEL_USER);
+            pstmt = con.prepareStatement(sql_del_user.toString());
+            pstmt.setInt(1, userId);
+          	int res=pstmt.executeUpdate();
+          	
+          	System.out.println(" **********  Deleted Record: "+res);
+	            if(res > 0)
+	            {
+	            	succVal="Successful Deleted User";
+	            }
+          } catch (Exception e) {
+         
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	       succVal=e.getMessage();
+	        return succVal;
+	       
+          }
+      
+
+        return succVal;
+
+    }
     
     	
    

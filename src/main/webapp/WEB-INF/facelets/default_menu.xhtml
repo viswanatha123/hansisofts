@@ -61,6 +61,8 @@ and open the template in the editor.
 							                <p:menuitem value="Agricultural Land" rendered="#{userRoleService.userRole.contains('Agri Sear')? true : false }" icon="pi pi-fw pi-discord" outcome="agricultural"/>
 							                <p:menuitem value="Individual Site" rendered="#{userRoleService.userRole.contains('Indi Sear')? true : false }" icon="pi pi-fw pi-tablet" outcome="individualsite"/>
 							                <p:menuitem value="Villa/Plot Site" rendered="#{userRoleService.userRole.contains('Villa Sear')? true : false }" icon="pi pi-fw pi-tablet" outcome="villaPlotSearch"/>
+						                    <p:menuitem value="Rented"  icon="pi pi-fw pi-tablet" outcome="rentalDetails"/>
+						                
 						                </p:submenu>
 					               </p:column>
 					               <p:column>

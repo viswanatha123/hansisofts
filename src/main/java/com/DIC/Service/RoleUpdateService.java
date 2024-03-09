@@ -72,7 +72,7 @@ public class RoleUpdateService {
 	        {
 	        	fName=urm.getfName();
 	        	lName=urm.getlName();
-	        	System.out.println("**** Role by user id "+urm.getUserRoleId()+"    "+urm.getUserId()+"   "+urm.getfName()+"   "+urm.getlName()+"     "+urm.getRoleId()+"   "+urm.getRoleName()+"   "+urm.getActive()+"   "+recordSize);    
+	        	System.out.println("**** Role by user id "+urm.getUserRoleId()+"    "+urm.getUserId()+"   "+urm.getfName()+"   "+urm.getlName()+"     "+urm.getRoleId()+"   "+urm.getRoleName()+"   "+urm.getActive()+"   "+urm.getProfileRole()+"  "+recordSize);    
 	        }
 	}
 	

@@ -86,9 +86,9 @@ public class ConnectionDAOImpl {
 			String SQL_IMAGE_DEFAULT="select image from hansi_property_image where prop_img_id=6";
 			String SQL_PRIMERY_LOCATION="select prim_id,prim_name from hansi_prim_location order by prim_name";
 			String SQL_SECONDRY_LOCATION="select seco_name from hansi_seco_location where prim_code=? order by seco_name desc";
-			String SQL_RENTAL_DATA_INSERT="INSERT INTO rental_plot (rental_id,own_name,address,own_con_no,pro_type,tot_bed_rooms,tot_floors,tot_bath_rooms,furniture,rent_pref,sec_depo,mon_rent,kitc_room,facing,tot_area_sqft,prim_location,seco_location,image,create_date, is_active) VALUES (nextval('rental_plot_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,1)";
-  			
-  			}
+			String SQL_RENTAL_DATA_INSERT="INSERT INTO rental_plot (rental_id,own_name,address,own_con_no,pro_type,tot_bed_rooms,tot_floors,tot_bath_rooms,furniture,rent_pref,sec_depo,mon_rent,kitc_room,facing,tot_area_sqft,prim_location,seco_location,image,create_date, is_active,avail_date) VALUES (nextval('rental_plot_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,1,?)";
+			String SQL_RENTAL_DETAILS="select * from rental_plot where prim_location = ? and seco_location = ?";
+		}
                 
 	}
 	
@@ -1038,6 +1038,7 @@ public class ConnectionDAOImpl {
     
     
  // ***************** update Rental data entry **************
+ // ***************** update Rental data entry **************
     public String updateRentalDataEntry(RentalDataEntryModel rentalDataEntryModel)
     {
     	
@@ -1051,25 +1052,26 @@ public class ConnectionDAOImpl {
             
             pstmt = con.prepareStatement(sql_rentalDataEntry_insert.toString());
             
-            pstmt.setString(1,rentalDataEntryModel.getOwnername());
+            pstmt.setString(1,rentalDataEntryModel.getOwn_name());
             pstmt.setString(2, rentalDataEntryModel.getAddress());
-            pstmt.setString(3, rentalDataEntryModel.getOwnContNum());
-            pstmt.setString(4, rentalDataEntryModel.getPropType());
-            pstmt.setInt(5, rentalDataEntryModel.getTotalBedRooms());
-            pstmt.setInt(6, rentalDataEntryModel.getTotalFloors());
-            pstmt.setInt(7, rentalDataEntryModel.getTotalBathRomms());
+            pstmt.setString(3, rentalDataEntryModel.getOwn_con_no());
+            pstmt.setString(4, rentalDataEntryModel.getPro_type());
+            pstmt.setInt(5, rentalDataEntryModel.getTot_bed_rooms());
+            pstmt.setInt(6, rentalDataEntryModel.getTot_floors());
+            pstmt.setInt(7, rentalDataEntryModel.getTot_bath_rooms());
             pstmt.setString(8, rentalDataEntryModel.getFurniture());
-            pstmt.setString(9, rentalDataEntryModel.getRentPrefered());
-            pstmt.setInt(10, rentalDataEntryModel.getSecurityDeposit());
-            pstmt.setInt(11, rentalDataEntryModel.getMonthlyRent());
-            pstmt.setString(12, rentalDataEntryModel.getKitchenRoom());
+            pstmt.setString(9, rentalDataEntryModel.getRent_pref());
+            pstmt.setInt(10, rentalDataEntryModel.getSec_depo());
+            pstmt.setInt(11, rentalDataEntryModel.getMon_rent());
+            pstmt.setString(12, rentalDataEntryModel.getKitc_room());
             pstmt.setString(13, rentalDataEntryModel.getFacing());
-            pstmt.setInt(14, rentalDataEntryModel.getTotAreaSqft());
-            pstmt.setString(15, rentalDataEntryModel.getPrimLocation());
-            pstmt.setString(16, rentalDataEntryModel.getSecoLocation());
+            pstmt.setInt(14, rentalDataEntryModel.getTot_area_sqft());
+            pstmt.setString(15, rentalDataEntryModel.getPrim_location());
+            pstmt.setString(16, rentalDataEntryModel.getSeco_location());
             	InputStream fin2=rentalDataEntryModel.getInputStream();
             	UploadedFile file=rentalDataEntryModel.getFile();
 		    pstmt.setBinaryStream(17, fin2, file.getSize()); 
+		    pstmt.setString(18, (rentalDataEntryModel.getAvail_date().toString()!=null) ? rentalDataEntryModel.getAvail_date().toString() : "" );
 		
 		    int res=pstmt.executeUpdate();
 		        if(res > 0)
@@ -1090,6 +1092,113 @@ public class ConnectionDAOImpl {
         
     return succVal;
     }
+    
+    
+//********************************************** Get Rental details *************************************************************
+    
+    public List<RentalDataEntryModel> getRentalDetails(String priLocation, String secLocation,String proType)
+	{
+            
+       System.out.println("********* Rental database : "+priLocation+"   "+secLocation+"   ");
+	
+		List<RentalDataEntryModel> RentalDataEntryModelList = new ArrayList<>();
+		try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			
+			StringBuilder sql_rental_details = new StringBuilder(Constants.SQL.SQL_RENTAL_DETAILS);
+		
+			if(proType.equals("All"))
+			{
+				sql_rental_details.append(" and pro_type in ('Villa','House','Plot','Land','Shop') order by create_date desc");
+			}
+			else
+			{
+				sql_rental_details.append(" and pro_type='"+proType+"' order by create_date desc");
+			}
+			
+			con=ConnectionDAO.getConnection();
+			
+			System.out.println("Rental Query : "+sql_rental_details.toString());
+							pstmt = con.prepareStatement(sql_rental_details.toString());
+                            pstmt.setString(1, priLocation);
+                            pstmt.setString(2, secLocation);
+                            ResultSet rs = pstmt.executeQuery();
+	         while ( rs.next() ) {
+	        	 RentalDataEntryModel rentalDataEntyModel=new RentalDataEntryModel();
+	        	 
+	        	 rentalDataEntyModel.setOwn_name(rs.getString("own_name"));
+	        	 rentalDataEntyModel.setAddress(rs.getString("address"));
+	        	 rentalDataEntyModel.setOwn_con_no(rs.getString("own_con_no"));
+	        	 rentalDataEntyModel.setPro_type(rs.getString("pro_type"));
+	        	 rentalDataEntyModel.setTot_bed_rooms(rs.getInt("tot_bed_rooms"));
+	        	 rentalDataEntyModel.setTot_floors(rs.getInt("tot_floors"));
+	        	 rentalDataEntyModel.setTot_bath_rooms(rs.getInt("tot_bath_rooms"));
+	        	 rentalDataEntyModel.setFurniture(rs.getString("furniture"));
+	        	 rentalDataEntyModel.setRent_pref(rs.getString("rent_pref"));
+	        	 rentalDataEntyModel.setSec_depo(rs.getInt("sec_depo"));
+	        	 rentalDataEntyModel.setMon_rent(rs.getInt("mon_rent"));
+	        	 rentalDataEntyModel.setKitc_room(rs.getString("kitc_room"));
+	        	 rentalDataEntyModel.setFacing(rs.getString("facing"));
+	        	 rentalDataEntyModel.setTot_area_sqft(rs.getInt("tot_area_sqft"));
+	        	 
+	        	 
+	        	 rentalDataEntyModel.setPrim_location(rs.getString("prim_location"));
+	        	 rentalDataEntyModel.setSeco_location(rs.getString("seco_location"));
+	        	 rentalDataEntyModel.setCreate_date(rs.getDate("create_date"));
+	        	 rentalDataEntyModel.setIs_active(rs.getInt("is_active"));
+	        	 
+	        	 			// below for Image
+	        	 
+	        	 System.out.println(" Villa image : "+rs.getString("own_name")+" --->"+rs.getBytes("image").length);
+	        	 
+					        	 if(rs.getBytes("image").length!=0)
+				                 {
+				                 byte[] bb=rs.getBytes("image");
+				                 
+				                 rentalDataEntyModel.setStreamedContent(DefaultStreamedContent.builder()
+				                         .name("US_Piechart.jpg")
+				                         .contentType("image/jpg")
+				                         .stream(() -> new ByteArrayInputStream(bb)).build());
+				                 }
+				                 else
+				                 {
+				                	// Defalut Image
+				                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+				                	 ResultSet rsDef = pstmtDefault.executeQuery();
+				                	 while ( rsDef.next())
+				                			 {
+				                		      byte[] def=rsDef.getBytes("image");
+				                		      rentalDataEntyModel.setStreamedContent(DefaultStreamedContent.builder()
+				                             .name("US_Piechart.jpg")
+				                             .contentType("image/jpg")
+				                             .stream(() -> new ByteArrayInputStream(def)).build());
+				                			 }
+				                	 
+				                  }
+	        	  
+	                        
+					        	 RentalDataEntryModelList.add(rentalDataEntyModel);
+             
+            
+	         }
+	         
+	         
+	         	
+	         pstmt.close();
+	         rs.close();
+	         con.close();
+	         //log.info("### : *** Connection Closed from getActiveModelList()");
+	     } catch (Exception e) {
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	     }
+		
+
+		
+	return RentalDataEntryModelList; 	
+	}
+   
     
     
     

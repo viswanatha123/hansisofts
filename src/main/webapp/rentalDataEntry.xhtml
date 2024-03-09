@@ -66,7 +66,7 @@
                   <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
                           
 			                    <p:outputLabel style="font-weight: bold" for="name" indicateRequired="true" value="Owner Name : " />
-			                    <p:inputText id="name"  value="#{rentalDataEntryService.ownername}" required="true" requiredMessage="Required Owner Name">
+			                    <p:inputText id="name"  value="#{rentalDataEntryService.own_name}" required="true" requiredMessage="Required Owner Name">
 			                    </p:inputText>
 			                    <p:message for="name" display="icon"/>
 			                    
@@ -76,13 +76,13 @@
 			                    <p:message for="address" display="icon"/>
 			                    
 			                    <p:outputLabel style="font-weight: bold" for="contactno" indicateRequired="true" value="Owner Contact No : " />
-			                    <p:inputMask id="contactno"  mask="9999999999"  value="#{rentalDataEntryService.ownContNum}" required="true" requiredMessage="Required Owner Contact No ">
+			                    <p:inputMask id="contactno"  mask="9999999999"  value="#{rentalDataEntryService.own_con_no}" required="true" requiredMessage="Required Owner Contact No ">
 			                    			                    	
 			                    </p:inputMask>
 			                    <p:message for="contactno" display="icon"/>
 			                    
 			                    <p:outputLabel for="propertyType" value="Property Type : " />  
-			                            <p:selectOneMenu id="propertyType"  value="#{rentalDataEntryService.propType}"  style="width:150px">  
+			                            <p:selectOneMenu id="propertyType"  value="#{rentalDataEntryService.pro_type}"  style="width:150px">  
 			                                <f:selectItem itemLabel="House" itemValue="House"/>
 			                                <f:selectItem itemLabel="Plot" itemValue="Plot"/>
 			                                <f:selectItem itemLabel="Villa" itemValue="Villa"/>
@@ -92,17 +92,17 @@
 			                    <p:message for="propertyType" display="icon"/>
 			                    
 			                    <p:outputLabel style="font-weight: bold" value="Total Bed Rooms : " />
-			                    <p:inputText id="totalBedRooms"  value="#{rentalDataEntryService.totalBedRooms}" >
+			                    <p:inputText id="totalBedRooms"  value="#{rentalDataEntryService.tot_bed_rooms}" >
 			                    </p:inputText>
 			                    <p:message for="totalBedRooms" display="icon"/>
 			                    
 			                    <p:outputLabel style="font-weight: bold" value="Total Floors : " />
-			                    <p:inputText id="totalFloors"  value="#{rentalDataEntryService.totalFloors}" >
+			                    <p:inputText id="totalFloors"  value="#{rentalDataEntryService.tot_floors}" >
 			                    </p:inputText>
 			                    <p:message for="totalFloors" display="icon"/>
 			                    
 			                    <p:outputLabel style="font-weight: bold" value="Total Bath Rooms : " />
-			                    <p:inputText id="totalBathRooms"  value="#{rentalDataEntryService.totalBathRomms}" >
+			                    <p:inputText id="totalBathRooms"  value="#{rentalDataEntryService.tot_bath_rooms}" >
 			                    </p:inputText>
 			                    <p:message for="totalBathRooms" display="icon"/>
 			                    
@@ -115,7 +115,7 @@
 			                    <p:message for="furniture" display="icon"/>
 			                    
 			                    <p:outputLabel for="rentPrefered" value="Rent Prefered : " />  
-			                            <p:selectOneMenu id="rentPrefered"  value="#{rentalDataEntryService.rentPrefered}"  style="width:150px">  
+			                            <p:selectOneMenu id="rentPrefered"  value="#{rentalDataEntryService.rent_pref}"  style="width:150px">  
 			                                <f:selectItem itemLabel="Family" itemValue="Family"/>
 			                                <f:selectItem itemLabel="Bachelors" itemValue="Bachelors"/>
 			                                <f:selectItem itemLabel="Business" itemValue="Business"/>
@@ -123,17 +123,17 @@
 			                    <p:message for="rentPrefered" display="icon"/>
 			                    
 			                    <p:outputLabel style="font-weight: bold" value="Security Deposit : " />
-			                    <p:inputText id="securityDeposit"  value="#{rentalDataEntryService.securityDeposit}" >
+			                    <p:inputText id="securityDeposit"  value="#{rentalDataEntryService.sec_depo}" >
 			                    </p:inputText>
 			                    <p:message for="securityDeposit" display="icon"/>
 			                    
 			                    <p:outputLabel style="font-weight: bold" value="Monthly Rent/Lease : " />
-			                    <p:inputText id="monthlyRent"  value="#{rentalDataEntryService.monthlyRent}" >
+			                    <p:inputText id="monthlyRent"  value="#{rentalDataEntryService.mon_rent}" >
 			                    </p:inputText>
 			                    <p:message for="monthlyRent" display="icon"/>
 			                    
 			                    <p:outputLabel for="kitchen" value="Kitchen Room : " />  
-			                            <p:selectOneMenu id="kitchen"  value="#{rentalDataEntryService.kitchenRoom}"  style="width:150px">  
+			                            <p:selectOneMenu id="kitchen"  value="#{rentalDataEntryService.kitc_room}"  style="width:150px">  
 			                                <f:selectItem itemLabel="Yes" itemValue="Yes"/>
 			                                <f:selectItem itemLabel="No" itemValue="No"/>
 
@@ -151,7 +151,7 @@
 			                    <p:message for="facing" display="icon"/>
 			                    
 			                    <p:outputLabel style="font-weight: bold" value="Total Area Sqft : " />
-			                    <p:inputText id="totalAreaSqft"  value="#{rentalDataEntryService.totAreaSqft}" >
+			                    <p:inputText id="totalAreaSqft"  value="#{rentalDataEntryService.tot_area_sqft}" >
 			                    </p:inputText>
 			                    <p:message for="totalAreaSqft" display="icon"/>
 			                    
@@ -180,7 +180,9 @@
                             </p:panelGrid>
                             <p:message for="image" display="icon"/>
      
-                 
+                 			<p:outputLabel for="availDate" value="Availability Date : " />
+        					<p:datePicker id="availDate" value="#{rentalDataEntryService.avail_date}" showIcon="true" />
+                   			 <p:message for="availDate" display="icon"/>
                        
                        
 		                   <h:commandButton value="Submit"   type="submit" 
@@ -204,7 +206,7 @@
                   <p style="font-weight: bold;color: black; font-size: 18px"> Please contact our customer care ,if any further assist required.</p>
                   <p style="font-weight: bold;color: black; font-size: 18px"> Customer care number : 8088471208.</p>
                    <p style="font-weight: bold;color: black; font-size: 18px">E-mail : customer.support@hansisofts.com</p>
-                  <p:graphicImage width="105%"  height="400px" name="images/Rental.jpg" />
+                  <p:graphicImage width="105%"  height="400px" name="images/Rent.jpg" />
                    
                </p:panelGrid>   
                   

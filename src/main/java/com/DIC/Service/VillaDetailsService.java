@@ -47,6 +47,19 @@ public class VillaDetailsService implements Serializable {
 	private List<String> secondryLocation; 
 	private String locationMessage;
 	private String proType;
+	private String errorMessage;
+	
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
+
+
 
 	    
 	   
@@ -102,6 +115,13 @@ public class VillaDetailsService implements Serializable {
 	                for(VillaModel x:villaModel)
 	                {
 	                    System.out.println("@@@@@@@@@@@@@@@@@@@@ :"+x.getI_am());
+	                }
+	                if(villaModel.size() == 0)
+	        		{
+	        			errorMessage="There are no records on "+proType;
+	        		}
+	                else {
+	                	errorMessage="";
 	                }
 		             
 	     }  

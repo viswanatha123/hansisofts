@@ -6,33 +6,22 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-
        <h:body>
 		<h:form>
         
   <ui:composition template="/WEB-INF/facelets/template.xhtml">
-  <ui:param name="page" value="" />
-  <ui:define name="title" ><p style="font-weight: bold; color:blue; font-size:15px"> User Details</p>
-  <p>All User details</p>
+  <ui:param name="page" value="Layout Details" />
+  <ui:define name="title"><p style="font-weight: bold; color:blue; font-size:15px">Profile</p>
+  <p>Profile</p>
   <div class="card">
-	<h:form id="form">
-	 <p:growl id="msgs" showDetail="true"/>
+  <h:form id="form">
+  <p:messages id="msgs"/>
   <br></br>
   
-			<center>
-			  <font size="4" color="blue" style="text-align: center;">All User Details  </font>
-			</center>	
-					<br></br>	  
+				<p:dataTable id="product" widgetVar="dtProducts" var="product"   value="#{userProfileService.userDetailsList}" editable="true"  style="margin-bottom:20px;width:50%;" 
+				reflow="true" styleClass="products-table"  rowKey="#{product.userId}"  paginatorPosition="bottom" >
 						  
-				<p:dataTable id="product" widgetVar="dtProducts" var="product"   value="#{userDetailsService.userDetailsList}" editable="true"  style="margin-bottom:20px" 
-				reflow="true" styleClass="products-table" selection="#{crudView.selectedProducts}"
-            rowKey="#{product.userId}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom" >
-						  
-						  <p:ajax event="rowEdit" listener="#{userDetailsService.onRowEdit}" update=":form:msgs"/>
-            			  <p:ajax event="rowEditCancel" listener="#{userDetailsService.onRowCancel}" update=":form:msgs"/>
-            			  
-            		
-            			  
+					           			  
             			  
             			  <p:column headerText="User Id">
 			                        <h:outputText value="#{product.userId}"/>
@@ -74,10 +63,7 @@
 			                </p:cellEditor>
 			               </p:column>
 			               
-			   		               
-			              <p:column headerText="Password Mask">
-			                        <h:outputText value="xxxxxxxxxxxxx"/>
-			              </p:column>
+		
 			              
 			              <p:column headerText="Password Show" rendered="#{userRoleService.userRole.contains('Password Show')? true : false }">
 			                        <h:outputText value="#{product.userPassword}"/>
@@ -124,48 +110,42 @@
 			                    </f:facet>
 			                </p:cellEditor>
 			               </p:column>
-			               
-			            
-			            <p:column style="width:6rem" rendered="#{userRoleService.userRole.contains('User Edit')? true : false }">
-			                <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
-			            </p:column>
-			            
-			       
-				         <p:column exportable="false" rendered="#{userRoleService.userRole.contains('User Del')? true : false }">
-			               <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
-			                                 process="@this" 
-			                                 oncomplete="PF('deleteProductDialog').show()">
-			                    <f:setPropertyActionListener value="#{product}" target="#{userDetailsService.selectedProduct}" />
-			                </p:commandButton>
-			             </p:column>
-					
-				        
-			
-				            
 				            
 				</p:dataTable>
 				
-  
-   		<p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
-            message="Delete the product?" header="Confirm" severity="warn">
-            <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{userDetailsService.deleteProduct}"
-                process="@this" update=":form:product"
-                oncomplete="PF('deleteProductDialog').hide()" />
-            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
-                onclick="PF('deleteProductDialog').hide()" />
-        </p:confirmDialog>
-  
+				<br></br><br></br><br></br>
+				
+			
+				
+			
+		  				<div class="card">
+					    <h:form>
+					        <h5> Profile Menu </h5>
+					     
+					        <p:megaMenu orientation="Profile Menu" autoDisplay="false">
+					            <p:submenu label="Menu" icon="pi pi-fw pi-cog">
+					                <p:column>
+					                    <p:submenu label="Options">
+					              					 <c:forEach var="item" items="#{userProfileService.userProfileRoleModel}">
+					                         			  <p:menuitem value="#{item.roleName}" icon="pi pi-fw pi-user" outcome = "#{item.profUrl}" />
+					              					  </c:forEach> 
+					                    </p:submenu>
+					                   
+					                </p:column>
+					            </p:submenu>
+					        </p:megaMenu>
+							
+					   </h:form>
+					  </div>
+		  				
+  				
+  			
   
   </h:form>
-
-  
+  </div>
+  </ui:define>
+  </ui:composition>
+  </h:form>
+  </h:body>
+  </html>
       
-  
-
-  
-</div>
-</ui:define>
-</ui:composition>
-</h:form>
-</h:body>
-</html>
