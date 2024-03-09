@@ -75,7 +75,7 @@ public class UserDAOImpl {
                          layoutMode.setWonership(rs.getString("wonership"));
                          layoutMode.setIs_active(rs.getInt("is_active"));
                          layoutMode.setTransaction(rs.getString("transaction"));
-                         layoutMode.setComment(rs.getString("comment"));
+                         //layoutMode.setComment(rs.getString("comment"));
                          layoutMode.setLength(rs.getInt("length"));
                          layoutMode.setWidth(rs.getInt("width"));
                                     int plotArea=rs.getInt("length")*rs.getInt("width");
@@ -93,6 +93,7 @@ public class UserDAOImpl {
                          layoutMode.setCreatedOnDate(rs.getDate("create_date"));
                          
                          
+                         /*
                         
                          if(rs.getBytes("image").length!=0)
                          {
@@ -120,7 +121,7 @@ public class UserDAOImpl {
 			                	 
 			              }
                         	 
-                       
+                       */
 	        	 layoutModeList.add(layoutMode);
 	         }
 	         	
