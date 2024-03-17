@@ -39,11 +39,21 @@ public class LayoutMode implements Serializable{
 	private String totalPrice;
 	private StreamedContent streamedContent;
 	private Date createdOnDate;
+	private int userId;
+	private int leadCount;
 	
 	
 	
 	
 	
+	public int getLeadCount() {
+		return leadCount;
+	}
+
+	public void setLeadCount(int leadCount) {
+		this.leadCount = leadCount;
+	}
+
 	public int getLayoutId() {
 		return layoutId;
 	}
@@ -265,6 +275,14 @@ public class LayoutMode implements Serializable{
 
 		public void setAgentName(String agentName) {
 			this.agentName = agentName;
+		}
+
+		public int getUserId() {
+			return userId;
+		}
+
+		public void setUserId(int userId) {
+			this.userId = userId;
 		}
 		
 	    

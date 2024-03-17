@@ -5,12 +5,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+
+import org.primefaces.event.FlowEvent;
+import org.primefaces.event.TabChangeEvent;
+import org.primefaces.event.TabCloseEvent;
 
 import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.DAO.Impl.UserDAOImpl;
+import com.DIC.model.LayoutMode;
+import com.DIC.model.LeadModel;
 import com.DIC.model.UserDetails;
 import com.DIC.model.UserProfileRoleModel;
 
@@ -28,6 +36,18 @@ public class UserProfileService {
 	 
 	 UserDAOImpl uDao;
 	 
+	 
+	 private String firstname;
+	 private String lastname;
+	 
+	 
+	 private List<LayoutMode> layoutdetails;
+     private LayoutMode selectedProperty;
+     
+     private List<LeadModel> leadModelList;
+	 
+	
+	 private int disLeadFlag=0;
 	 
 	 @PostConstruct 
 	    public void init()
@@ -48,11 +68,44 @@ public class UserProfileService {
 		          
 		    		    		userDetailsList=uDao.getUser(userId);
 		    		    		userProfileRoleModel=uDao.getUserProfileRoles(userId);
+		    		    		layoutdetails=uDao.getLayoutListByUserId(userId);
+		    		    		
+		    		    		for(LayoutMode lm:layoutdetails )
+		    					{
+		    		    			log.log(Level.INFO,"---------------- lead count ------->"+lm.getLeadCount());
+		    					}
 		    		    		
 		    		    }
 		    		}
 		    	}
+		    	
+	    	
+		    	
 	    }
+	 
+	 
+	 
+		
+		
+			
+	 
+	 
+	 
+	 
+	 public void propVal()
+		{
+						
+			
+			leadModelList=uDao.getLeads(selectedProperty.getLayoutId());
+    		
+    		for(LeadModel lm:leadModelList )
+			{
+				log.log(Level.INFO,"---->Leads "+lm.getLeads_id()+"  "+lm.getLeadName()+"  "+lm.getLeadContact()+"  "+lm.getLeadEmail()+"  "+lm.getProId()+"  "+lm.getUserId());
+			}
+			
+    		disLeadFlag=1;
+    		
+		}
 
 
 	public List<UserDetails> getUserDetailsList() {
@@ -74,9 +127,75 @@ public class UserProfileService {
 		this.userProfileRoleModel = userProfileRoleModel;
 	}
 
+	
+	
+    
+    public void save() {
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage("Welcome " + firstname + " " + lastname));
+        
+        log.log(Level.INFO,"***** Save ******"+ firstname + " " + lastname);
+    }
+    
+    
+    
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+
+	public List<LayoutMode> getLayoutdetails() {
+		return layoutdetails;
+	}
+
+
+	public LayoutMode getSelectedProperty() {
+		return selectedProperty;
+	}
+
+
+	public void setLayoutdetails(List<LayoutMode> layoutdetails) {
+		this.layoutdetails = layoutdetails;
+	}
+
+
+	public void setSelectedProperty(LayoutMode selectedProperty) {
+		this.selectedProperty = selectedProperty;
+	}
+
+
 
 	
-	 
+	public List<LeadModel> getLeadModelList() {
+		return leadModelList;
+	}
+
+	public void setLeadModelList(List<LeadModel> leadModelList) {
+		this.leadModelList = leadModelList;
+	}
+
+
+	public int getDisLeadFlag() {
+		return disLeadFlag;
+	}
+
+
+	public void setDisLeadFlag(int disLeadFlag) {
+		this.disLeadFlag = disLeadFlag;
+	} 
 	 
 	 
 

@@ -74,8 +74,8 @@ public class ConnectionDAOImpl {
                     "not in ('Set model access for LDAP Groups') ";
 			String SQL_AGRICULTURAL="select * from hansi_agricultural where prim_location = ? and seco_location = ? order by create_date desc";
 			
-			String SQL_LAYOUT_INSERT="insert into hansi_layout (layout_id,name,location,persqft,contact_owner,owner_name,wonership,is_active,transaction,comment,length,width,prim_location,seco_location,create_date,swimingpool,playground,park,wall,community,facing,agent_name,image,cost) \n" +
-					"values (nextval('hansi_layout_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?,?,?,?,?);";
+			String SQL_LAYOUT_INSERT="insert into hansi_layout (layout_id,name,location,persqft,contact_owner,owner_name,wonership,is_active,transaction,comment,length,width,prim_location,seco_location,create_date,swimingpool,playground,park,wall,community,facing,agent_name,image,cost,user_id) \n" +
+					"values (nextval('hansi_layout_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?,?,?,?,?,?);";
 			
 			String SQL_IndividualSite="select * from hansi_individual_site where prim_location = ? and seco_location = ? order by create_date desc";
 			String SQL_INDI_INSERT="INSERT INTO hansi_individual_site (ind_id,owner_name, location, contact_no, site_no, persqft, length, width, wonership, transaction, prim_location, seco_location, create_date, is_active,comment,facing,agent_name,cost,image) VALUES(nextval('hansi_individual_site_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,current_timestamp, 1, ?,?,?,?,?)";
@@ -418,7 +418,7 @@ public class ConnectionDAOImpl {
                             ResultSet rs = pstmt.executeQuery();
 	         while ( rs.next() ) {
 	        	 LayoutMode layoutMode=new LayoutMode();
-	        	 
+	        	 		 layoutMode.setLayoutId(rs.getInt("layout_id"));
                          layoutMode.setName(rs.getString("name"));
                          layoutMode.setLocation(rs.getString("location"));
                          layoutMode.setPersqft(rs.getInt("persqft"));
@@ -443,6 +443,7 @@ public class ConnectionDAOImpl {
                          layoutMode.setAgentName(rs.getString("agent_name"));
                          layoutMode.setTotalPrice(indianCurrence(plotArea*rs.getInt("persqft")));
                          layoutMode.setCreatedOnDate(rs.getDate("create_date"));
+                         layoutMode.setUserId(rs.getInt("user_id"));
                          
                          
                         
@@ -621,7 +622,7 @@ public class ConnectionDAOImpl {
     
     
     // ***************** update plot data entry **************
-    public String updatePlotDataEntry(PlotsDataEntryModel plotsDataEntryModel)
+    public String updatePlotDataEntry(PlotsDataEntryModel plotsDataEntryModel, int userId)
     {
     	String succVal="";
     	
@@ -659,6 +660,7 @@ public class ConnectionDAOImpl {
 		            UploadedFile file=plotsDataEntryModel.getFile();
 		    pstmt.setBinaryStream(21, fin2, file.getSize());  
 		    pstmt.setDouble(22, plotsDataEntryModel.getPersqft() * (plotsDataEntryModel.getLength() * plotsDataEntryModel.getWidth()));
+		    pstmt.setInt(23, userId);
          
             
            
