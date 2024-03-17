@@ -26,12 +26,15 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import com.DIC.DAO.ConnectionDAO;
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
 //import com.DIC.DAO.Impl.ConnectionDAOImpl.Constants;
 import com.DIC.model.LayoutMode;
 import com.DIC.model.PlotsDataEntryModel;
+
+import framework.utilities.SessionUtils;
 
 import org.primefaces.PrimeFaces;
 import org.primefaces.model.DefaultStreamedContent;
@@ -139,8 +142,31 @@ public class PlotsDataEntryService implements Serializable{
 	  	          plotsDataEntryModel.setInputStream(file.getInputStream());
 	  	          plotsDataEntryModel.setFile(file);
 	  	          
-	  	       
-	  	          updateResult=dao.updatePlotDataEntry(plotsDataEntryModel);
+	  	    
+	  	          
+	  	          		HttpSession session = SessionUtils.getSession();
+				       	if (session != null)
+				    	{
+				    		if(session.getAttribute("userId")!=null)
+				    		{
+				    		    int userId= Integer.parseInt(session.getAttribute("userId").toString());
+				    		    if(userId > 0)
+				    		    {    	
+				          
+				    		    	updateResult=dao.updatePlotDataEntry(plotsDataEntryModel, userId);
+				    		    		
+				    		    }
+				    		    
+				    		}
+				    		if(session.getAttribute("userId")==null)
+			    		    {    	
+			    		    	int defaultUserId=1;
+			    		    	updateResult=dao.updatePlotDataEntry(plotsDataEntryModel, defaultUserId);
+			    		    		
+			    		    }
+				    	}
+	  	          
+	  	          
 	  	     
 	  	         
 	  	          this.name="";

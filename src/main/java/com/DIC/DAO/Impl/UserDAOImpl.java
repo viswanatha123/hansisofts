@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.faces.bean.ApplicationScoped;
@@ -17,6 +18,7 @@ import org.primefaces.model.DefaultStreamedContent;
 import com.DIC.DAO.ConnectionDAO;
 import com.DIC.DAO.Impl.ConnectionDAOImpl.Constants;
 import com.DIC.model.LayoutMode;
+import com.DIC.model.LeadModel;
 import com.DIC.model.UserDetails;
 import com.DIC.model.UserProfileRoleModel;
 
@@ -41,7 +43,12 @@ public class UserDAOImpl {
 					+ "from user_deta u, role r, user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1'\r\n"
 					+ "and r.is_active = '1' and ur.is_active='1' and r.is_profile ='Yes' and r.is_prof_menu ='Yes' and u.user_id = ? order by role_name;";
 			
+			String SQL_LEAD_SAVE="INSERT INTO leads (leads_id, lead_name, lead_contact, lead_email, pro_id, user_id, create_date, is_active) VALUES (nextval('leads_seq'), ?, ?, ?, ?, ?, current_timestamp, 1);";
+
+			//String SQL_LISTED_PROP="select * from hansi_layout where user_id = ? order by create_date desc";
 			
+			String SQL_LISTED_PROP="select * ,(select count(*) from leads ls where pro_id =la.layout_id) lead_Count from hansi_layout la where la.user_id = ? order by create_date desc";
+			String SQL_LEADS_BY_PROP_ID="select * from leads where pro_id = ? and is_active ='1'";
 		}
 	}
 	
@@ -305,6 +312,164 @@ public class UserDAOImpl {
 		return userProfileRoleModelList;
 	}
     
+    
+    
+// ***************** Save Leads details  **************
+    
+    public String saveLeads(String leadName,String leadContact,String leadEmail,int proId, int userId)
+    {
+    	String saveMessage="";
+    	
+        try {
+        	
+            Connection con = null;
+            PreparedStatement pstmt = null;
+            con=ConnectionDAO.getConnection();
+            
+            StringBuilder sql_lead_save = new StringBuilder(Constants.SQL.SQL_LEAD_SAVE);
+            pstmt = con.prepareStatement(sql_lead_save.toString());
+            
+            pstmt.setString(1,leadName );
+            pstmt.setString(2, leadContact);
+            pstmt.setString(3, leadEmail);
+            pstmt.setInt(4, proId);
+            pstmt.setInt(5, userId);
+           
+            	int res=pstmt.executeUpdate();
+	            if(res > 0)
+	            {
+	            	saveMessage="Successful Registered.";
+	            }
+	            log.log(Level.INFO,"***** Succful saved lead values *******");
+	            
+          } catch (Exception e) {
+         
+	        e.printStackTrace();
+	        System.err.println("Leads save Error :"+e.getClass().getName()+": "+e.getMessage());
+	        log.log(Level.WARNING, "Leads save Error :"+e.getClass().getName()+": "+e.getMessage());
+	        saveMessage=e.getMessage();
+	        return saveMessage;
+	       
+          }
+      
+
+        return saveMessage;
+    }
+    
+    
+    
+    //**************** listed propertys *************
+    
+    public List<LayoutMode> getLayoutListByUserId(int userId)
+	{
+            
+      	
+		List<LayoutMode> layoutModeList = new ArrayList<>();
+		try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+		
+			
+			con=ConnectionDAO.getConnection();
+			StringBuilder sq_listed_prop = new StringBuilder(Constants.SQL.SQL_LISTED_PROP);
+			
+							pstmt = con.prepareStatement(sq_listed_prop.toString());
+							pstmt.setInt(1,userId);
+                            ResultSet rs = pstmt.executeQuery();
+	         while ( rs.next() ) {
+	        	 LayoutMode layoutMode=new LayoutMode();
+	        	 
+	        	 
+	        	 		 layoutMode.setLayoutId(rs.getInt("layout_id"));
+                         layoutMode.setName(rs.getString("name"));
+                         layoutMode.setLocation(rs.getString("location"));
+                         layoutMode.setPersqft(rs.getInt("persqft"));
+                         layoutMode.setContactOwner(rs.getString("contact_owner"));
+                         layoutMode.setOwnerName(rs.getString("owner_name"));
+                         layoutMode.setWonership(rs.getString("wonership"));
+                         layoutMode.setIs_active(rs.getInt("is_active"));
+                         layoutMode.setTransaction(rs.getString("transaction"));
+                         //layoutMode.setComment(rs.getString("comment"));
+                         layoutMode.setLength(rs.getInt("length"));
+                         layoutMode.setWidth(rs.getInt("width"));
+                                    int plotArea=rs.getInt("length")*rs.getInt("width");
+                                    layoutMode.setCost(plotArea*rs.getInt("persqft"));
+                       	 layoutMode.setPrimLocation(rs.getString("prim_location"));
+                         layoutMode.setSecoLocation(rs.getString("seco_location"));
+                         layoutMode.setSwimingPool(rs.getString("swimingpool"));
+                         layoutMode.setPlayground(rs.getString("playground"));
+                         layoutMode.setPark(rs.getString("park"));
+                         layoutMode.setWall(rs.getString("wall"));
+                         layoutMode.setCommunity(rs.getString("community"));
+                         layoutMode.setFacing(rs.getString("facing"));
+                         layoutMode.setAgentName(rs.getString("agent_name"));
+                         layoutMode.setTotalPrice(indianCurrence(plotArea*rs.getInt("persqft")));
+                         layoutMode.setCreatedOnDate(rs.getDate("create_date"));
+                         layoutMode.setLeadCount(rs.getInt("lead_Count"));
+                         
+                         
+                         
+                      
+	        	 layoutModeList.add(layoutMode);
+	         }
+	         	
+	         pstmt.close();
+	         rs.close();
+	         con.close();
+	         //log.info("### : *** Connection Closed from getActiveModelList()");
+	     } catch (Exception e) {
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        //System.exit(0);
+	     }
+	return layoutModeList;		
+	}
+    
+    
+    
+    //************************ Leads by prop id ******************
+    
+    public List<LeadModel> getLeads(int layoutId)
+	{
+            
+      	
+		List<LeadModel> leadModelList = new ArrayList<>();
+		try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+		
+			
+			con=ConnectionDAO.getConnection();
+			StringBuilder sq_leads_by_prop_id = new StringBuilder(Constants.SQL.SQL_LEADS_BY_PROP_ID);
+			
+							pstmt = con.prepareStatement(sq_leads_by_prop_id.toString());
+							pstmt.setInt(1,layoutId);
+                            ResultSet rs = pstmt.executeQuery();
+	         while ( rs.next() ) {
+	        	 LeadModel leadModel=new LeadModel();
+	        	 
+	        	 leadModel.setLeads_id(rs.getInt("leads_id"));
+	        	 leadModel.setLeadName(rs.getString("lead_name"));
+	        	 leadModel.setLeadContact(rs.getString("lead_contact"));
+	        	 leadModel.setLeadEmail(rs.getString("lead_email"));
+	        	 leadModel.setProId(rs.getInt("pro_id"));
+	        	 leadModel.setUserId(rs.getInt("user_id"));
+	        	 leadModel.setCreate_date(rs.getDate("create_date"));
+	        	 leadModel.setIs_active(rs.getInt("is_active"));
+	        	
+             leadModelList.add(leadModel);
+	         }
+	         	
+	         pstmt.close();
+	         rs.close();
+	         con.close();
+	        } catch (Exception e) {
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        log.log(Level.WARNING, "Error : "+e.getClass().getName()+": "+e.getMessage());
+	     }
+	return leadModelList;		
+	}
 	
 	
 
