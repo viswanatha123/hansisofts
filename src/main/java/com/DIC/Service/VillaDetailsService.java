@@ -17,12 +17,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+
+import org.primefaces.PrimeFaces;
 
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
+import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.LayoutMode;
 import com.DIC.model.VillaModel;
 
@@ -49,24 +53,19 @@ public class VillaDetailsService implements Serializable {
 	private String proType;
 	private String errorMessage;
 	
-	public String getErrorMessage() {
-		return errorMessage;
-	}
+	
 
 
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
-	}
+    private VillaModel selectedProperty;   
+	
+	private String custName;
+	private String contactNumber;
+	private String email;
 
-
-
-
-	    
-	   
-
-	    private List<VillaModel> villaModel;
+		    private List<VillaModel> villaModel;
 	    GeneralDAOImpl gDao;
 	    LocationDAOImpl locationDao;
+	    UserDAOImpl udo;
 	    
 	    
 	    @PostConstruct 
@@ -75,6 +74,7 @@ public class VillaDetailsService implements Serializable {
 	    	log.log(Level.INFO, "Loading LayoutDetailService init()");
 	    	gDao=new GeneralDAOImpl();
 	          locationDao=new LocationDAOImpl();
+	          udo=new UserDAOImpl();
 	          primaryModel=locationDao.getVillaPrimaryLocation();
 	          
 	          
@@ -125,6 +125,47 @@ public class VillaDetailsService implements Serializable {
 	                }
 		             
 	     }  
+	    
+	    public void submit() {
+        	
+        	log.log(Level.INFO,"Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
+        	
+        	
+        	if(selectedProperty.getVillaId()!=0)
+        	{
+        		if(custName!=null && contactNumber!=null && contactNumber!=null)
+        		{
+        			if(selectedProperty.getUserId()!=0)
+        			{
+        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getVillaId(),selectedProperty.getUserId(),"villa");
+        				log.log(Level.INFO,"***** Successful submitted lead ******");
+        			}
+        			if(selectedProperty.getUserId()==0)
+        			{
+        				int defaultUserId=1;
+        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getVillaId(),defaultUserId,"villa");
+        				log.log(Level.INFO,"***** Successful submitted lead ******");
+        			}
+        			
+        			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "We received your contact details", "Our representative contact you soon, Thank you..");
+        	        PrimeFaces.current().dialog().showMessageDynamic(message);
+        		}
+        	}
+        	
+        	villaModel=gDao.getVillaDetails(country,city, proType);
+        	this.custName="";
+        	this.contactNumber="";
+        	this.email="";
+        	
+        }
+        
+   public void reset() {
+	       PrimeFaces.current().resetInputs("form1:panelDialog");
+  }
+        
+	    
+	    
+	    
 
 
 		public String getCountry() {
@@ -215,7 +256,54 @@ public class VillaDetailsService implements Serializable {
 		}
 
 
-		
+		public String getErrorMessage() {
+			return errorMessage;
+		}
+
+
+		public void setErrorMessage(String errorMessage) {
+			this.errorMessage = errorMessage;
+		}
+
+
+		public VillaModel getSelectedProperty() {
+			return selectedProperty;
+		}
+
+
+		public String getCustName() {
+			return custName;
+		}
+
+
+		public String getContactNumber() {
+			return contactNumber;
+		}
+
+
+		public String getEmail() {
+			return email;
+		}
+
+
+		public void setSelectedProperty(VillaModel selectedProperty) {
+			this.selectedProperty = selectedProperty;
+		}
+
+
+		public void setCustName(String custName) {
+			this.custName = custName;
+		}
+
+
+		public void setContactNumber(String contactNumber) {
+			this.contactNumber = contactNumber;
+		}
+
+
+		public void setEmail(String email) {
+			this.email = email;
+		}
 	    
 		
 		

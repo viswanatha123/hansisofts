@@ -147,13 +147,13 @@ public class LayoutDetailService implements Serializable{
 	        		{
 	        			if(selectedProperty.getUserId()!=0)
 	        			{
-	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getLayoutId(),selectedProperty.getUserId());
+	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getLayoutId(),selectedProperty.getUserId(),"layout");
 	        				log.log(Level.INFO,"***** Successful submitted lead ******");
 	        			}
 	        			if(selectedProperty.getUserId()==0)
 	        			{
 	        				int defaultUserId=1;
-	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getLayoutId(),defaultUserId);
+	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getLayoutId(),defaultUserId,"layout");
 	        				log.log(Level.INFO,"***** Successful submitted lead ******");
 	        			}
 	        			

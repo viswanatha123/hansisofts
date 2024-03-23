@@ -7,7 +7,7 @@ import org.primefaces.model.StreamedContent;
 
 public class AgriculturalModel implements Serializable{
 	
-	private long agriId;
+	private int agriId;
 	private String ownerName;
 	private String contactNo;
 	private String surveyNo;
@@ -27,6 +27,7 @@ public class AgriculturalModel implements Serializable{
 	private StreamedContent streamedContent;
     private Date createdOnDate;
     private String power;
+    private int userId;
 	
 	
 	
@@ -56,10 +57,10 @@ public class AgriculturalModel implements Serializable{
 	public void setTotalPrice(String totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-	public long getAgriId() {
+	public int getAgriId() {
 		return agriId;
 	}
-	public void setAgriId(long agriId) {
+	public void setAgriId(int agriId) {
 		this.agriId = agriId;
 	}
 	public String getOwnerName() {
@@ -160,6 +161,14 @@ public class AgriculturalModel implements Serializable{
 
 	public void setPower(String power) {
 		this.power = power;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	
 	

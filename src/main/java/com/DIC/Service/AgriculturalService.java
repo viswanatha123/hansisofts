@@ -10,13 +10,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.PrimeFaces;
+
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
+import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.AgriculturalModel;
+import com.DIC.model.LayoutMode;
 
 @ManagedBean(name="agriculturalService")
 @ViewScoped
@@ -41,6 +46,14 @@ public class AgriculturalService implements Serializable{
 	private List<AgriculturalModel> agriculturalModelList;
 	ConnectionDAOImpl dao; 
 	LocationDAOImpl locationDao;
+	 UserDAOImpl udo;
+	
+	
+	private AgriculturalModel selectedProperty;   
+	
+	private String custName;
+	private String contactNumber;
+	private String email;
     
     
     @PostConstruct 
@@ -49,6 +62,7 @@ public class AgriculturalService implements Serializable{
     	log.log(Level.INFO, "Loading AgriculturalService init()");
         dao=new ConnectionDAOImpl();
         locationDao=new LocationDAOImpl();
+        udo=new UserDAOImpl();
         primaryModel=locationDao.getAgriPrimaryLocation();
         primLocation  = new HashMap<>(); 
 	      for(Map.Entry<String, String> pp:primaryModel.entrySet())
@@ -123,9 +137,55 @@ public class AgriculturalService implements Serializable{
         
         }  
         
-           public String getLocationMessage() {
+        
+        
+    public String getLocationMessage() {
         return locationMessage;
     }
+           
+           
+           
+           
+           public void submit() {
+	        	
+	        	log.log(Level.INFO,"Selected property  : "+selectedProperty.getAgriId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
+	        	
+	        	
+	        	if(selectedProperty.getAgriId()!=0)
+	        	{
+	        		if(custName!=null && contactNumber!=null && contactNumber!=null)
+	        		{
+	        			if(selectedProperty.getUserId()!=0)
+	        			{
+	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getAgriId(),selectedProperty.getUserId(),"agri");
+	        				log.log(Level.INFO,"***** Successful submitted lead ******");
+	        			}
+	        			if(selectedProperty.getUserId()==0)
+	        			{
+	        				int defaultUserId=1;
+	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getAgriId(),defaultUserId,"agri");
+	        				log.log(Level.INFO,"***** Successful submitted lead ******");
+	        			}
+	        			
+	        			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "We received your contact details", "Our representative contact you soon, Thank you..");
+	        	        PrimeFaces.current().dialog().showMessageDynamic(message);
+	        		}
+	        	}
+	        	
+	        	
+	        	agriculturalModelList=dao.getAgriculturalDetails(country,city);
+	        	this.custName="";
+	        	this.contactNumber="";
+	        	this.email="";
+	        	
+	        }
+	        
+	   public void reset() {
+		       PrimeFaces.current().resetInputs("form1:panelDialog");
+	  }
+	           
+           
+           
 
     public void setLocationMessage(String locationMessage) {
         this.locationMessage = locationMessage;
@@ -162,5 +222,44 @@ public class AgriculturalService implements Serializable{
 	public void setPrimLocationSort(TreeMap<String, String> primLocationSort) {
 		this.primLocationSort = primLocationSort;
 	}
+
+
+
+	public String getCustName() {
+		return custName;
+	}
+
+	public String getContactNumber() {
+		return contactNumber;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+	public void setCustName(String custName) {
+		this.custName = custName;
+	}
+
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public AgriculturalModel getSelectedProperty() {
+		return selectedProperty;
+	}
+
+	public void setSelectedProperty(AgriculturalModel selectedProperty) {
+		this.selectedProperty = selectedProperty;
+	}
+	
+	
+	
     
 }
