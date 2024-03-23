@@ -142,184 +142,39 @@
     
 	          <p:tab title="List Prop" >
 	          	<h:form>
-	          				 <p:dataTable id="product1" widgetVar="dtProducts" var="product1"   value="#{userProfileService.layoutdetails}" editable="true"  style="margin-bottom:20px" 
+	          				 <p:dataTable id="product1" widgetVar="dtProducts" var="product1"   value="#{userProfileService.allPropertyList}" editable="true"  style="margin-bottom:20px" 
 				reflow="true" styleClass="products-table" selection="#{crudView.selectedProducts}"
                  rowKey="#{product1.layoutId}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom" >
 						  
 						 						  
 			            
-			              <p:column headerText="Layout Name">
+			              <p:column headerText="Property Name">
 			                <p:cellEditor>
 			                    <f:facet name="output">
-			                        <h:outputText value="#{product1.name}"/>
+			                        <h:outputText value="#{product1.propName}"/>
 			                    </f:facet>
 			                    <f:facet name="input">
-			                        <p:inputText id="fName" value="#{product1.name}" style="width:100%"/>
+			                        <p:inputText id="name" value="#{product1.propName}" style="width:100%"/>
 			                    </f:facet>
 			                </p:cellEditor>
 			               </p:column>
 			               
-			                <p:column headerText="Location">
+			                <p:column headerText="Property Type">
 			                <p:cellEditor>
 			                    <f:facet name="output">
-			                        <h:outputText value="#{product1.location}"/>
+			                        <h:outputText value="#{product1.propType}"/>
 			                    </f:facet>
 			                    <f:facet name="input">
-			                        <p:inputText id="lName" value="#{product1.location}" style="width:100%"/>
-			                    </f:facet>
-			                </p:cellEditor>
-			               </p:column>
-			               
-			               
-			               <p:column headerText="Per Sqft">
-			                <p:cellEditor>
-			                    <f:facet name="output">
-			                        <h:outputText value="#{product1.persqft}"/>
-			                    </f:facet>
-			                    <f:facet name="input">
-			                        <p:inputText id="useriName" value="#{product1.persqft}" style="width:100%"/>
-			                    </f:facet>
-			                </p:cellEditor>
-			               </p:column>
-			               
-			   			               
-			               
-			               <p:column headerText="Cost">
-			                <p:cellEditor>
-			                    <f:facet name="output">
-			                        <h:outputText value="#{product1.cost}"/>
-			                    </f:facet>
-			                    <f:facet name="input">
-			                        <p:inputText id="address" value="#{product1.cost}" style="width:100%"/>
+			                        <p:inputText id="proptype" value="#{product1.propType}" style="width:100%"/>
 			                    </f:facet>
 			                </p:cellEditor>
 			               </p:column>
 			               
 			               
-			               <p:column headerText="Plot Area">
-			                <p:cellEditor>
-			                    <f:facet name="output">
-			                        <h:outputText value="#{product1.plotarea}"/>
-			                    </f:facet>
-			                    <f:facet name="input">
-			                        <p:inputText id="plotarea" value="#{product1.plotarea}" style="width:100%"/>
-			                    </f:facet>
-			                </p:cellEditor>
-			               </p:column>
-			               
-			               
-			               <p:column headerText="Contact Owner">
-			                <p:cellEditor>
-			                    <f:facet name="output">
-			                        <h:outputText value="#{product1.contactOwner}"/>
-			                    </f:facet>
-			                    <f:facet name="input">
-			                        <p:inputText id="contactOwner" value="#{product1.contactOwner}" style="width:100%"/>
-			                    </f:facet>
-			                </p:cellEditor>
-			               </p:column>
-			               
-			               <p:column headerText="Owner Name">
-			                <p:cellEditor>
-			                    <f:facet name="output">
-			                        <h:outputText value="#{product1.ownerName}"/>
-			                    </f:facet>
-			                    <f:facet name="input">
-			                        <p:inputText id="ownerName" value="#{product1.ownerName}" style="width:100%"/>
-			                    </f:facet>
-			                </p:cellEditor>
-			               </p:column>
-			               
-			            
-			               
-			               <p:column headerText="Dimensiond">
-			                <p:cellEditor>
-			                    <f:facet name="output">
-			                        <h:outputText value="#{product1.dimensiond}"/>
-			                    </f:facet>
-			                    <f:facet name="input">
-			                        <p:inputText id="dimensiond" value="#{product1.dimensiond}" style="width:100%"/>
-			                    </f:facet>
-			                </p:cellEditor>
-			               </p:column>
-			               
-			              
-			               
-			               <p:column headerText="Length">
-			                <p:cellEditor>
-			                    <f:facet name="output">
-			                        <h:outputText value="#{product1.length}"/>
-			                    </f:facet>
-			                    <f:facet name="input">
-			                        <p:inputText id="length" value="#{product1.length}" style="width:100%"/>
-			                    </f:facet>
-			                </p:cellEditor>
-			               </p:column>
-			               
-			               <p:column headerText="Width">
-			                <p:cellEditor>
-			                    <f:facet name="output">
-			                        <h:outputText value="#{product1.width}"/>
-			                    </f:facet>
-			                    <f:facet name="input">
-			                        <p:inputText id="width" value="#{product1.width}" style="width:100%"/>
-			                    </f:facet>
-			                </p:cellEditor>
-			               </p:column>
-			               
-			               
-			                <p:column headerText="PrimLocation">
-			                <p:cellEditor>
-			                    <f:facet name="output">
-			                        <h:outputText value="#{product1.primLocation}"/>
-			                    </f:facet>
-			                    <f:facet name="input">
-			                        <p:inputText id="primLocation" value="#{product1.primLocation}" style="width:100%"/>
-			                    </f:facet>
-			                </p:cellEditor>
-			               </p:column>
-			               
-			               
-			               <p:column headerText="SecoLocation">
-			                <p:cellEditor>
-			                    <f:facet name="output">
-			                        <h:outputText value="#{product1.secoLocation}"/>
-			                    </f:facet>
-			                    <f:facet name="input">
-			                        <p:inputText id="secoLocation" value="#{product1.secoLocation}" style="width:100%"/>
-			                    </f:facet>
-			                </p:cellEditor>
-			               </p:column>
-			               
-			               			               
-			               <p:column headerText="Total Price">
-			                <p:cellEditor>
-			                    <f:facet name="output">
-			                        <h:outputText value="#{product1.totalPrice}"/>
-			                    </f:facet>
-			                    <f:facet name="input">
-			                        <p:inputText id="totalPrice" value="#{product1.totalPrice}" style="width:100%"/>
-			                    </f:facet>
-			                </p:cellEditor>
-			               </p:column>
-			               
-			               
-			               <p:column headerText="Created OnDate">
-			                <p:cellEditor>
-			                    <f:facet name="output">
-			                        <h:outputText value="#{product1.createdOnDate}"/>
-			                    </f:facet>
-			                    <f:facet name="input">
-			                        <p:inputText id="createdOnDate" value="#{product1.createdOnDate}" style="width:100%"/>
-			                    </f:facet>
-			                </p:cellEditor>
-			               </p:column>
-			               
-			             
-			              
+			              1
 			               
 			               <p:column headerText="Leads">
-			               <p:commandButton value="---#{product1.leadCount}-->" icon="ui-icon-calculator" style="background:#00FF00;font-weight: bold;color: black;font-size: 15px" 
+			               <p:commandButton value="---#{product1.count}-->" icon="ui-icon-calculator" style="background:#00FF00;font-weight: bold;color: black;font-size: 15px" 
 			                                 process="@this" update="@form"
 			                                 oncomplete="PF('leadsDialog').show()" action="#{userProfileService.propVal}">
 			                    <f:setPropertyActionListener value="#{product1}" target="#{userProfileService.selectedProperty}" />
