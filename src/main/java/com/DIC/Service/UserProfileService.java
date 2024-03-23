@@ -17,6 +17,7 @@ import org.primefaces.event.TabCloseEvent;
 
 import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.DAO.Impl.UserDAOImpl;
+import com.DIC.model.AllPropertyList;
 import com.DIC.model.LayoutMode;
 import com.DIC.model.LeadModel;
 import com.DIC.model.UserDetails;
@@ -42,9 +43,12 @@ public class UserProfileService {
 	 
 	 
 	 private List<LayoutMode> layoutdetails;
-     private LayoutMode selectedProperty;
+     private AllPropertyList selectedProperty;
      
      private List<LeadModel> leadModelList;
+     
+     
+     private List<AllPropertyList> allPropertyList;
 	 
 	
 	 private int disLeadFlag=0;
@@ -70,6 +74,9 @@ public class UserProfileService {
 		    		    		userProfileRoleModel=uDao.getUserProfileRoles(userId);
 		    		    		layoutdetails=uDao.getLayoutListByUserId(userId);
 		    		    		
+		    		    		allPropertyList=uDao.getAllPropByUserId(userId);
+		    		    		
+		    		    		
 		    		    		for(LayoutMode lm:layoutdetails )
 		    					{
 		    		    			log.log(Level.INFO,"---------------- lead count ------->"+lm.getLeadCount());
@@ -83,20 +90,13 @@ public class UserProfileService {
 		    	
 	    }
 	 
-	 
-	 
-		
-		
-			
-	 
-	 
-	 
-	 
+	 	 
 	 public void propVal()
 		{
-						
+		 log.log(Level.INFO,"---->Leads parameter : "+selectedProperty.getPropId()+"   "+selectedProperty.getPropType());		
 			
-			leadModelList=uDao.getLeads(selectedProperty.getLayoutId());
+			leadModelList=uDao.getLeads(selectedProperty.getPropId(),selectedProperty.getPropType());
+			
     		
     		for(LeadModel lm:leadModelList )
 			{
@@ -162,19 +162,11 @@ public class UserProfileService {
 	}
 
 
-	public LayoutMode getSelectedProperty() {
-		return selectedProperty;
-	}
-
 
 	public void setLayoutdetails(List<LayoutMode> layoutdetails) {
 		this.layoutdetails = layoutdetails;
 	}
 
-
-	public void setSelectedProperty(LayoutMode selectedProperty) {
-		this.selectedProperty = selectedProperty;
-	}
 
 
 
@@ -195,7 +187,30 @@ public class UserProfileService {
 
 	public void setDisLeadFlag(int disLeadFlag) {
 		this.disLeadFlag = disLeadFlag;
+	}
+
+
+	public List<AllPropertyList> getAllPropertyList() {
+		return allPropertyList;
+	}
+
+
+
+	public void setAllPropertyList(List<AllPropertyList> allPropertyList) {
+		this.allPropertyList = allPropertyList;
+	}
+
+
+	public AllPropertyList getSelectedProperty() {
+		return selectedProperty;
+	}
+
+
+	public void setSelectedProperty(AllPropertyList selectedProperty) {
+		this.selectedProperty = selectedProperty;
 	} 
+	
+	
 	 
 	 
 

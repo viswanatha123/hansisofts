@@ -17,6 +17,7 @@ import org.primefaces.model.DefaultStreamedContent;
 
 import com.DIC.DAO.ConnectionDAO;
 import com.DIC.DAO.Impl.ConnectionDAOImpl.Constants;
+import com.DIC.model.AllPropertyList;
 import com.DIC.model.LayoutMode;
 import com.DIC.model.LeadModel;
 import com.DIC.model.UserDetails;
@@ -48,7 +49,19 @@ public class UserDAOImpl {
 			//String SQL_LISTED_PROP="select * from hansi_layout where user_id = ? order by create_date desc";
 			
 			String SQL_LISTED_PROP="select * ,(select count(*) from leads ls where pro_id =la.layout_id) lead_Count from hansi_layout la where la.user_id = ? order by create_date desc";
-			String SQL_LEADS_BY_PROP_ID="select * from leads where pro_id = ? and is_active ='1'";
+		
+			String SQL_LEADS_BY_PROP_ID="select * from leads where pro_id = ? and prop_type= ? and is_active ='1'";
+			
+			
+			String SQL_ALL_PROP="SELECT lay.layout_id as \"prop_id\", lay.name as name, 'layout' as \"property_type\",(select count(*) from leads ls where pro_id =lay.layout_id) as \"count\" FROM hansi_layout lay where lay.user_id=?\r\n"
+					+ "    UNION ALL\r\n"
+					+ "    SELECT agri.agri_id as \"prop_id\" ,agri.owner_name as name, 'agri' as \"property_type\" ,(select count(*) from leads ls where pro_id =agri.user_id) as \"count\" FROM hansi_agricultural agri where agri.user_id=?\r\n"
+					+ "    UNION ALL\r\n"
+					+ "    SELECT ind.ind_id as \"prop_id\" ,ind.owner_name as name,'indi' as \"property_type\",(select count(*) from leads ls where pro_id =ind.user_id) as \"count\" FROM hansi_individual_site ind where ind.user_id=?\r\n"
+					+ "    UNION ALL\r\n"
+					+ "    SELECT villa.villa_id as \"prop_id\", villa.owner_name as name,'villa' as \"property_type\" ,(select count(*) from leads ls where pro_id =villa.user_id) as \"count\"FROM villa_plot  villa where villa.user_id=?\r\n";
+					
+			
 		}
 	}
 	
@@ -426,11 +439,57 @@ public class UserDAOImpl {
 	return layoutModeList;		
 	}
     
+    //************************* get all property by user id
+    
+    
+    public List<AllPropertyList> getAllPropByUserId(int userId)
+	{
+            
+      	
+		List<AllPropertyList> allPropertyListList = new ArrayList<>();
+		try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+		
+			
+			con=ConnectionDAO.getConnection();
+			StringBuilder sql_all_prop = new StringBuilder(Constants.SQL.SQL_ALL_PROP);
+			
+							pstmt = con.prepareStatement(sql_all_prop.toString());
+							pstmt.setInt(1,userId);
+							pstmt.setInt(2,userId);
+							pstmt.setInt(3,userId);
+							pstmt.setInt(4,userId);
+                            ResultSet rs = pstmt.executeQuery();
+	         while ( rs.next() ) {
+	        	 AllPropertyList allPropertyList=new AllPropertyList();
+	        	 
+	        	 allPropertyList.setPropId(rs.getInt("prop_id"));
+	        	 allPropertyList.setPropName(rs.getString("name"));
+	        	 allPropertyList.setPropType(rs.getString("property_type"));
+	        	 allPropertyList.setCount(rs.getInt("count"));
+                         
+                     
+                allPropertyListList.add(allPropertyList);
+	            }
+	         	
+	         pstmt.close();
+	         rs.close();
+	         con.close();
+	         //log.info("### : *** Connection Closed from getActiveModelList()");
+	     } catch (Exception e) {
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        //System.exit(0);
+	     }
+	return allPropertyListList;		
+	}
+    
     
     
     //************************ Leads by prop id ******************
     
-    public List<LeadModel> getLeads(int layoutId)
+    public List<LeadModel> getLeads(int propId,String propType)
 	{
             
       	
@@ -444,7 +503,9 @@ public class UserDAOImpl {
 			StringBuilder sq_leads_by_prop_id = new StringBuilder(Constants.SQL.SQL_LEADS_BY_PROP_ID);
 			
 							pstmt = con.prepareStatement(sq_leads_by_prop_id.toString());
-							pstmt.setInt(1,layoutId);
+							pstmt.setInt(1,propId);
+							pstmt.setString(2,propType);
+							
                             ResultSet rs = pstmt.executeQuery();
 	         while ( rs.next() ) {
 	        	 LeadModel leadModel=new LeadModel();
