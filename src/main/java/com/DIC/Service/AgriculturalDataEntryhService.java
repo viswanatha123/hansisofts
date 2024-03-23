@@ -16,6 +16,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
@@ -26,6 +27,8 @@ import org.primefaces.util.EscapeUtils;
 
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.model.AgriculturalDataEntryModel;
+
+import framework.utilities.SessionUtils;
 
 
 @ManagedBean(name="agriculturalDataEntryhService")
@@ -113,11 +116,26 @@ public class AgriculturalDataEntryhService implements Serializable {
  	          agriculturalDataModel.setFile(file);
  	          agriculturalDataModel.setPower(power);
  	        
- 	          
- 	       
- 	          
- 	         updateResult=dao.updateAgriDataEntry(agriculturalDataModel);
- 	             
+ 	        HttpSession session = SessionUtils.getSession();
+	       	if (session != null)
+	    	{
+	    		if(session.getAttribute("userId")!=null)
+	    		{
+	    		    int userId= Integer.parseInt(session.getAttribute("userId").toString());
+	    		    if(userId > 0)
+	    		    {    	
+	              	updateResult=dao.updateAgriDataEntry(agriculturalDataModel,userId);
+	    		    		
+	    		    }
+	    		}
+	    		if(session.getAttribute("userId")==null)
+    		    {    	
+    		    	int defaultUserId=1;
+    		    	updateResult=dao.updateAgriDataEntry(agriculturalDataModel,defaultUserId);
+    		    		
+    		    }
+	    	}
+  	             
  	          this.ownerName="";
  	          this.contactNo="";
  	          this.surveyNo="";

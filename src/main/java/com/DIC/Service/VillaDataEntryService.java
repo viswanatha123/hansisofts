@@ -16,6 +16,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.model.file.UploadedFile;
 
@@ -24,6 +25,8 @@ import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.model.PlotsDataEntryModel;
 
 import com.DIC.model.VillaModel;
+
+import framework.utilities.SessionUtils;
 
 
 @ManagedBean(name="villaDataEntryService")
@@ -124,8 +127,25 @@ public class VillaDataEntryService implements Serializable{
              villaModel.setSeco_location(city);
              villaModel.setInputStream(file.getInputStream());
              villaModel.setFile(file);
-            
-	         updateResult=gdao.updateVillaDataEntry(villaModel);
+             
+            HttpSession session = SessionUtils.getSession();
+		       	if (session != null)
+		    	{
+		    		if(session.getAttribute("userId")!=null)
+		    		{
+		    		    int userId= Integer.parseInt(session.getAttribute("userId").toString());
+		    		    if(userId > 0)
+		    		    {    	
+			 	              	updateResult=gdao.updateVillaDataEntry(villaModel,userId);
+		    		    }
+		    		}
+		    		if(session.getAttribute("userId")==null)
+	    		    {    	
+	    		    	int defaultUserId=1;
+	      	    		    	updateResult=gdao.updateVillaDataEntry(villaModel,defaultUserId);
+	    		    		
+	    		    }
+		    	}
 	              
 	        this.i_am="Owner";
 	     	this.owner_name="";

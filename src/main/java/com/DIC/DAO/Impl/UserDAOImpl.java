@@ -43,7 +43,7 @@ public class UserDAOImpl {
 					+ "from user_deta u, role r, user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1'\r\n"
 					+ "and r.is_active = '1' and ur.is_active='1' and r.is_profile ='Yes' and r.is_prof_menu ='Yes' and u.user_id = ? order by role_name;";
 			
-			String SQL_LEAD_SAVE="INSERT INTO leads (leads_id, lead_name, lead_contact, lead_email, pro_id, user_id, create_date, is_active) VALUES (nextval('leads_seq'), ?, ?, ?, ?, ?, current_timestamp, 1);";
+			String SQL_LEAD_SAVE="INSERT INTO leads (leads_id, lead_name, lead_contact, lead_email, pro_id, user_id, create_date, is_active,prop_type) VALUES (nextval('leads_seq'), ?, ?, ?, ?, ?, current_timestamp, 1,?);";
 
 			//String SQL_LISTED_PROP="select * from hansi_layout where user_id = ? order by create_date desc";
 			
@@ -316,7 +316,7 @@ public class UserDAOImpl {
     
 // ***************** Save Leads details  **************
     
-    public String saveLeads(String leadName,String leadContact,String leadEmail,int proId, int userId)
+    public String saveLeads(String leadName,String leadContact,String leadEmail,int proId, int userId, String propType)
     {
     	String saveMessage="";
     	
@@ -334,6 +334,7 @@ public class UserDAOImpl {
             pstmt.setString(3, leadEmail);
             pstmt.setInt(4, proId);
             pstmt.setInt(5, userId);
+            pstmt.setString(6, propType);
            
             	int res=pstmt.executeUpdate();
 	            if(res > 0)
