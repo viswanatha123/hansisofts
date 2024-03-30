@@ -156,7 +156,11 @@ public class GeneralDAOImpl {
 		
 				if(proType.equals("All"))
 				{
-					sql_villa_details.append(" and property_type in ('Villa','House','Plot') order by create_date desc");
+					sql_villa_details.append(" and property_type in ('Villa','House','Plot','Flat') order by create_date desc");
+				}
+				else if(proType.equals("Flat"))
+				{
+					 sql_villa_details.append(" and property_type in ('Flat','Plot') order by create_date desc");
 				}
 				else
 				{
