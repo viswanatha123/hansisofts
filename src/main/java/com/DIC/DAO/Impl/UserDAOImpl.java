@@ -18,6 +18,7 @@ import org.primefaces.model.DefaultStreamedContent;
 import com.DIC.DAO.ConnectionDAO;
 import com.DIC.DAO.Impl.ConnectionDAOImpl.Constants;
 import com.DIC.model.AllPropertyList;
+import com.DIC.model.IndividualSiteModel;
 import com.DIC.model.LayoutMode;
 import com.DIC.model.LeadModel;
 import com.DIC.model.UserDetails;
@@ -53,15 +54,16 @@ public class UserDAOImpl {
 			String SQL_LEADS_BY_PROP_ID="select * from leads where pro_id = ? and prop_type= ? and is_active ='1'";
 			
 			
-			String SQL_ALL_PROP="SELECT lay.layout_id as \"prop_id\", lay.name as name, 'layout' as \"property_type\",(select count(*) from leads ls where pro_id =lay.layout_id) as \"count\" FROM hansi_layout lay where lay.user_id=?\r\n"
-					+ "    UNION ALL\r\n"
-					+ "    SELECT agri.agri_id as \"prop_id\" ,agri.owner_name as name, 'agri' as \"property_type\" ,(select count(*) from leads ls where pro_id =agri.user_id) as \"count\" FROM hansi_agricultural agri where agri.user_id=?\r\n"
-					+ "    UNION ALL\r\n"
-					+ "    SELECT ind.ind_id as \"prop_id\" ,ind.owner_name as name,'indi' as \"property_type\",(select count(*) from leads ls where pro_id =ind.user_id) as \"count\" FROM hansi_individual_site ind where ind.user_id=?\r\n"
-					+ "    UNION ALL\r\n"
-					+ "    SELECT villa.villa_id as \"prop_id\", villa.owner_name as name,'villa' as \"property_type\" ,(select count(*) from leads ls where pro_id =villa.user_id) as \"count\"FROM villa_plot  villa where villa.user_id=?\r\n";
-					
-			
+			String SQL_ALL_PROP="SELECT lay.layout_id as \"prop_id\", lay.name as name, 'layout' as \"property_type\",(select count(*) from leads ls where pro_id =lay.layout_id and prop_type='layout') as \"count\" FROM hansi_layout lay where lay.user_id= ?\r\n"
+					+ "	UNION ALL\r\n"
+					+ "	SELECT agri.agri_id as \"prop_id\" ,agri.owner_name as name, 'agri' as \"property_type\" ,(select count(*) from leads ls where pro_id =agri.agri_id and prop_type='agri') as \"count\" FROM hansi_agricultural agri where agri.user_id= ?\r\n"
+					+ "	UNION ALL\r\n"
+					+ "	SELECT ind.ind_id as \"prop_id\" ,ind.owner_name as name,'indi' as \"property_type\",(select count(*) from leads ls where pro_id =ind.ind_id and prop_type='indi') as \"count\" FROM hansi_individual_site ind where ind.user_id= ?\r\n"
+					+ "	UNION ALL\r\n"
+					+ "	SELECT villa.villa_id as \"prop_id\", villa.owner_name as name,'villa' as \"property_type\" ,(select count(*) from leads ls where pro_id =villa.villa_id and prop_type='villa') as \"count\"FROM villa_plot  villa where villa.user_id=?;\r\n";
+		
+			 String SQL_INDISITE_LIST="select * from hansi_individual_site order by create_date desc";
+			 String SQL_DEL_INDISITE="delete from hansi_individual_site where ind_id = ?";
 		}
 	}
 	
@@ -532,6 +534,126 @@ public class UserDAOImpl {
 	     }
 	return leadModelList;		
 	}
+    
+    
+  //************************************ IndividualSite List ******************************************// 
+	
+  		public List<IndividualSiteModel> getIndiSiteList(){
+  			List<IndividualSiteModel> individualSiteModelList = new ArrayList<>();
+      		try {
+      			Connection con = null;
+      			PreparedStatement pstmt = null;
+      			
+      			StringBuilder sql_IndividualSite_List = new StringBuilder(Constants.SQL.SQL_INDISITE_LIST);
+      			log.info("###: Query : "+sql_IndividualSite_List.toString());
+      			
+      			con=ConnectionDAO.getConnection();
+      	                    pstmt = con.prepareStatement(sql_IndividualSite_List.toString());
+                                  ResultSet rs = pstmt.executeQuery();
+      	         while ( rs.next() ) {
+      	        	 IndividualSiteModel individualSiteModel=new IndividualSiteModel();
+      	        
+      	        		
+      	        	 	 individualSiteModel.setInd_id(rs.getInt("ind_id"));
+      	        		 individualSiteModel.setOwnerName(rs.getString("owner_name"));
+      	        		 individualSiteModel.setLocation(rs.getString("location"));
+      	        		 individualSiteModel.setContactNo(rs.getString("contact_no"));
+      	        		 individualSiteModel.setSiteNo(rs.getString("site_no"));
+      	        		 individualSiteModel.setPersqft(rs.getInt("persqft"));
+      	        		 individualSiteModel.setLength(rs.getInt("length"));
+      	        		 individualSiteModel.setWidth(rs.getInt("width"));
+  		    	        		 int plotArea=rs.getInt("length")*rs.getInt("width");
+  		    	        		 individualSiteModel.setCost(plotArea*rs.getInt("persqft"));
+                           individualSiteModel.setWonership(rs.getString("wonership"));
+                           individualSiteModel.setTransaction(rs.getString("transaction"));
+                           individualSiteModel.setPrimLocation(rs.getString("prim_location"));
+          	        	 individualSiteModel.setSecoLocation(rs.getString("seco_location"));
+          	        	 individualSiteModel.setComment(rs.getString("comment"));
+          	        	 individualSiteModel.setFacing(rs.getString("facing"));
+          	        	 individualSiteModel.setAgentName(rs.getString("agent_name"));
+          	        	 individualSiteModel.setTotalPrice(indianCurrence(rs.getInt("persqft") * (rs.getInt("length") * rs.getInt("width"))));
+          	        	 individualSiteModel.setCreatedOnDate(rs.getDate("create_date"));
+          	        	 individualSiteModel.setIs_active(rs.getInt("is_active"));
+          	        	 
+          	        	 if(rs.getBytes("image").length!=0)
+                            {
+                            byte[] bb=rs.getBytes("image");
+                            
+                            individualSiteModel.setStreamedContent(DefaultStreamedContent.builder()
+                                    .name("US_Piechart.jpg")
+                                    .contentType("image/jpg")
+                                    .stream(() -> new ByteArrayInputStream(bb)).build());
+                            }
+                            else
+                            {
+  			                	// Defalut Image
+  			                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+  			                	 ResultSet rsDef = pstmtDefault.executeQuery();
+  			                	 while ( rsDef.next())
+  			                			 {
+  			                		      byte[] def=rsDef.getBytes("image");
+  			                		      individualSiteModel.setStreamedContent(DefaultStreamedContent.builder()
+  			                             .name("US_Piechart.jpg")
+  			                             .contentType("image/jpg")
+  			                             .stream(() -> new ByteArrayInputStream(def)).build());
+  			                			 }
+  			                	 
+  			              }       
+                   individualSiteModelList.add(individualSiteModel);
+      	    
+      	            
+      	         }
+      	         	
+      	         pstmt.close();
+      	         rs.close();
+      	         con.close();
+      	         //log.info("### : *** Connection Closed from getActiveModelList()");
+      	     } catch (Exception e) {
+      	        e.printStackTrace();
+      	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+      	        //System.exit(0);
+      	     }
+      	return individualSiteModelList;
+  		}
+  	
+  		
+  		
+  	    
+  	    public String deleteIndiList(long indviId)
+  	    {
+  	    	
+  	    	    	
+  	    	String succVal="";
+  	    	
+  	        try {
+  	            Connection con = null;
+  	            PreparedStatement pstmt = null;
+  	            con=ConnectionDAO.getConnection();
+  	            
+  	            StringBuilder sql_del_indiList = new StringBuilder(Constants.SQL.SQL_DEL_INDISITE);
+  	            pstmt = con.prepareStatement(sql_del_indiList.toString());
+  	            pstmt.setLong(1, indviId);
+  	          	int res=pstmt.executeUpdate();
+  	          	
+  	          	System.out.println(" **********  Deleted Record: "+res);
+  		            if(res > 0)
+  		            {
+  		            	succVal="Successful Deleted User";
+  		            }
+  	          } catch (Exception e) {
+  	         
+  		        e.printStackTrace();
+  		        System.err.println(e.getClass().getName()+": "+e.getMessage());
+  		       succVal=e.getMessage();
+  		        return succVal;
+  		       
+  	          }
+  	      
+
+  	        return succVal;
+
+  	    }
+  	
 	
 	
 

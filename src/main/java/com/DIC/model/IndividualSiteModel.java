@@ -30,6 +30,7 @@ public class IndividualSiteModel implements Serializable {
 	private StreamedContent streamedContent;
     private Date createdOnDate;
     private int userId;
+    private int is_active;
 	
 	
 	
@@ -171,6 +172,14 @@ public class IndividualSiteModel implements Serializable {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public int getIs_active() {
+		return is_active;
+	}
+
+	public void setIs_active(int is_active) {
+		this.is_active = is_active;
 	}
 
 
