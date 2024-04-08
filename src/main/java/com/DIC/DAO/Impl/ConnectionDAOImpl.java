@@ -74,12 +74,12 @@ public class ConnectionDAOImpl {
                     "not in ('Set model access for LDAP Groups') ";
 			String SQL_AGRICULTURAL="select * from hansi_agricultural where prim_location = ? and seco_location = ? order by create_date desc";
 			
-			String SQL_LAYOUT_INSERT="insert into hansi_layout (layout_id,name,location,persqft,contact_owner,owner_name,wonership,is_active,transaction,comment,length,width,prim_location,seco_location,create_date,swimingpool,playground,park,wall,community,facing,agent_name,image,cost) \n" +
-					"values (nextval('hansi_layout_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?,?,?,?,?);";
+			String SQL_LAYOUT_INSERT="insert into hansi_layout (layout_id,name,location,persqft,contact_owner,owner_name,wonership,is_active,transaction,comment,length,width,prim_location,seco_location,create_date,swimingpool,playground,park,wall,community,facing,agent_name,image,cost,user_id) \n" +
+					"values (nextval('hansi_layout_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?,?,?,?,?,?);";
 			
 			String SQL_IndividualSite="select * from hansi_individual_site where prim_location = ? and seco_location = ? order by create_date desc";
-			String SQL_INDI_INSERT="INSERT INTO hansi_individual_site (ind_id,owner_name, location, contact_no, site_no, persqft, length, width, wonership, transaction, prim_location, seco_location, create_date, is_active,comment,facing,agent_name,cost,image) VALUES(nextval('hansi_individual_site_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,current_timestamp, 1, ?,?,?,?,?)";
-			String SQL_AGRIDATAENTRY_INSERT = "INSERT INTO hansi_agricultural (agri_id,owner_name, contact_no, survey_no, location, wonership, transaction, per_cent, number_cents, water_source, crop, prim_location, seco_location, create_date, is_active, comment,agent_name,cost,image) VALUES(nextval('hansi_agricultural_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp, 1, ?,?,?,?)";
+			String SQL_INDI_INSERT="INSERT INTO hansi_individual_site (ind_id,owner_name, location, contact_no, site_no, persqft, length, width, wonership, transaction, prim_location, seco_location, create_date, is_active,comment,facing,agent_name,cost,image,user_id) VALUES(nextval('hansi_individual_site_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,current_timestamp, 1, ?,?,?,?,?,?)";
+			String SQL_AGRIDATAENTRY_INSERT = "INSERT INTO hansi_agricultural (agri_id,owner_name, contact_no, survey_no, location, wonership, transaction, per_cent, number_cents, water_source, crop, prim_location, seco_location, create_date, is_active, comment,agent_name,cost,image,user_id) VALUES(nextval('hansi_agricultural_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp, 1, ?,?,?,?,?)";
 			String SQL_ENQU_INSERT="INSERT INTO hansi_enquiry (enqi_id, name, email, phone, create_date, is_active) VALUES(nextval('hansi_enquiry_seq'),?, ?, ?, current_timestamp, 1)";
 			String SQL_HELP_INSERT="INSERT INTO hansi_help (query_id, query, phone, create_date,is_active) VALUES(nextval('hansi_help_seq'),?, ?, current_timestamp,1)";
 			String SQL_IMAGE_UPLOAD="insert into hansi_property_image (prop_img_id,img_name,image) values (nextval('hansi_imageUpload_seq'),?,?)";
@@ -418,7 +418,7 @@ public class ConnectionDAOImpl {
                             ResultSet rs = pstmt.executeQuery();
 	         while ( rs.next() ) {
 	        	 LayoutMode layoutMode=new LayoutMode();
-	        	 
+	        	 		 layoutMode.setLayoutId(rs.getInt("layout_id"));
                          layoutMode.setName(rs.getString("name"));
                          layoutMode.setLocation(rs.getString("location"));
                          layoutMode.setPersqft(rs.getInt("persqft"));
@@ -443,6 +443,7 @@ public class ConnectionDAOImpl {
                          layoutMode.setAgentName(rs.getString("agent_name"));
                          layoutMode.setTotalPrice(indianCurrence(plotArea*rs.getInt("persqft")));
                          layoutMode.setCreatedOnDate(rs.getDate("create_date"));
+                         layoutMode.setUserId(rs.getInt("user_id"));
                          
                          
                         
@@ -559,6 +560,7 @@ public class ConnectionDAOImpl {
     	         while ( rs.next() ) {
     	        	 AgriculturalModel agriculturalModel=new AgriculturalModel();
     	        	 
+    	        	 		 agriculturalModel.setAgriId(rs.getInt("agri_id"));
                              agriculturalModel.setOwnerName(rs.getString("owner_name"));
                              agriculturalModel.setContactNo(rs.getString("contact_no"));
                              agriculturalModel.setSurveyNo(rs.getString("survey_no"));
@@ -576,6 +578,8 @@ public class ConnectionDAOImpl {
                              
                              agriculturalModel.setTotalPrice(indianCurrence(rs.getInt("per_cent")*rs.getInt("number_cents")));
                              agriculturalModel.setCreatedOnDate(rs.getDate("create_date"));
+                             agriculturalModel.setUserId(rs.getInt("user_id"));
+                             
                    
                              if(rs.getBytes("image").length!=0)
                              {
@@ -621,7 +625,7 @@ public class ConnectionDAOImpl {
     
     
     // ***************** update plot data entry **************
-    public String updatePlotDataEntry(PlotsDataEntryModel plotsDataEntryModel)
+    public String updatePlotDataEntry(PlotsDataEntryModel plotsDataEntryModel, int userId)
     {
     	String succVal="";
     	
@@ -659,6 +663,7 @@ public class ConnectionDAOImpl {
 		            UploadedFile file=plotsDataEntryModel.getFile();
 		    pstmt.setBinaryStream(21, fin2, file.getSize());  
 		    pstmt.setDouble(22, plotsDataEntryModel.getPersqft() * (plotsDataEntryModel.getLength() * plotsDataEntryModel.getWidth()));
+		    pstmt.setInt(23, userId);
          
             
            
@@ -712,7 +717,7 @@ public class ConnectionDAOImpl {
     	        	 IndividualSiteModel individualSiteModel=new IndividualSiteModel();
     	        
     	        		
-    	        		
+    	        	     individualSiteModel.setInd_id(rs.getInt("ind_id"));
     	        		 individualSiteModel.setOwnerName(rs.getString("owner_name"));
     	        		 individualSiteModel.setLocation(rs.getString("location"));
     	        		 individualSiteModel.setContactNo(rs.getString("contact_no"));
@@ -731,6 +736,7 @@ public class ConnectionDAOImpl {
         	        	 individualSiteModel.setAgentName(rs.getString("agent_name"));
         	        	 individualSiteModel.setTotalPrice(indianCurrence(rs.getInt("persqft") * (rs.getInt("length") * rs.getInt("width"))));
         	        	 individualSiteModel.setCreatedOnDate(rs.getDate("create_date"));
+        	        	 individualSiteModel.setUserId(rs.getInt("user_id"));
         	        	 
         	        	 if(rs.getBytes("image").length!=0)
                           {
@@ -776,7 +782,7 @@ public class ConnectionDAOImpl {
     
     
     // ***************** update Indi data entry **************
-    public String updateIndiDataEntry(IndiSiteDataEntryModel indiSiteDataEntryModel)
+    public String updateIndiDataEntry(IndiSiteDataEntryModel indiSiteDataEntryModel,int userId)
     {
     	String succVal="";
         try {
@@ -806,6 +812,7 @@ public class ConnectionDAOImpl {
 			        		InputStream fin2=indiSiteDataEntryModel.getInputStream();
 			    			UploadedFile file=indiSiteDataEntryModel.getFile();
 			            pstmt.setBinaryStream(16, fin2, file.getSize());
+			            pstmt.setInt(17,userId);
 			    		
 			                 
 			            
@@ -834,7 +841,7 @@ public class ConnectionDAOImpl {
     
     
     // ***************** update Agricultural data entry **************
-    public String updateAgriDataEntry(AgriculturalDataEntryModel agriculturalDataEntryModel)
+    public String updateAgriDataEntry(AgriculturalDataEntryModel agriculturalDataEntryModel,int userId)
     {
     	
     	String succVal="";
@@ -865,6 +872,7 @@ public class ConnectionDAOImpl {
 	            InputStream fin2=agriculturalDataEntryModel.getInputStream();
 	            UploadedFile file=agriculturalDataEntryModel.getFile();
 		    pstmt.setBinaryStream(16, fin2, file.getSize());  
+		    pstmt.setInt(17, userId); 
 		
 		    int res=pstmt.executeUpdate();
 		        if(res > 0)
@@ -880,6 +888,7 @@ public class ConnectionDAOImpl {
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
 	        succVal=e.getMessage();
 	        return succVal;
+	        
 	   }
       
         

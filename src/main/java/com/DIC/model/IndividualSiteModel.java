@@ -9,7 +9,7 @@ public class IndividualSiteModel implements Serializable {
 	
 	
 	
-	private long ind_id;
+	private int ind_id;
 	private String ownerName;
 	private String location;
 	private String contactNo;
@@ -29,6 +29,8 @@ public class IndividualSiteModel implements Serializable {
 	private String totalPrice;
 	private StreamedContent streamedContent;
     private Date createdOnDate;
+    private int userId;
+    private int is_active;
 	
 	
 	
@@ -59,10 +61,10 @@ public class IndividualSiteModel implements Serializable {
 	public void setTotalPrice(String totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-	public long getInd_id() {
+	public int getInd_id() {
 		return ind_id;
 	}
-	public void setInd_id(long ind_id) {
+	public void setInd_id(int ind_id) {
 		this.ind_id = ind_id;
 	}
 	public String getOwnerName() {
@@ -162,6 +164,22 @@ public class IndividualSiteModel implements Serializable {
 	}
 	public void setAgentName(String agentName) {
 		this.agentName = agentName;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public int getIs_active() {
+		return is_active;
+	}
+
+	public void setIs_active(int is_active) {
+		this.is_active = is_active;
 	}
 
 

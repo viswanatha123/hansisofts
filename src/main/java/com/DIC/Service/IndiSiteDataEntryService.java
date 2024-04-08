@@ -14,6 +14,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
@@ -24,6 +25,8 @@ import org.primefaces.util.EscapeUtils;
 
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.model.IndiSiteDataEntryModel;
+
+import framework.utilities.SessionUtils;
 
 
 @ManagedBean(name="indiSiteDataEntryService")
@@ -121,10 +124,25 @@ public class IndiSiteDataEntryService implements Serializable {
 	  	          indiSiteDataEntryModel.setAgentName(agentName);
 	  	          indiSiteDataEntryModel.setInputStream(file.getInputStream());
 	  	          indiSiteDataEntryModel.setFile(file);
-	  	       
-	  	            
-	  	       
-	  	        updateResult=dao.updateIndiDataEntry(indiSiteDataEntryModel);
+	  	  	        
+	  	      HttpSession session = SessionUtils.getSession();
+		       	if (session != null)
+		    	{
+		    		if(session.getAttribute("userId")!=null)
+		    		{
+		    		    int userId= Integer.parseInt(session.getAttribute("userId").toString());
+		    		    if(userId > 0)
+		    		    {    	
+			              	updateResult=dao.updateIndiDataEntry(indiSiteDataEntryModel,userId);
+		    		    }
+		    		}
+		    		if(session.getAttribute("userId")==null)
+	    		    {    	
+	    		    	int defaultUserId=1;
+	      		    	updateResult=dao.updateIndiDataEntry(indiSiteDataEntryModel, defaultUserId);
+	    		    		
+	    		    }
+		    	}
 	  	             
 	  	  
 	  	              

@@ -9,7 +9,7 @@ import org.primefaces.model.file.UploadedFile;
 
 public class VillaModel implements Serializable{
 	
-	
+	private int villaId;
 	private String i_am;
 	private String owner_name;
 	private String contact_owner;
@@ -33,6 +33,7 @@ public class VillaModel implements Serializable{
 	private Date create_date;
 	private int is_active;
 	private StreamedContent streamedContent;
+	private int userId;
 	
 	
 	
@@ -190,6 +191,18 @@ public class VillaModel implements Serializable{
 	}
 	public void setStreamedContent(StreamedContent streamedContent) {
 		this.streamedContent = streamedContent;
+	}
+	public int getVillaId() {
+		return villaId;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setVillaId(int villaId) {
+		this.villaId = villaId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	

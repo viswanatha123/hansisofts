@@ -24,7 +24,7 @@
   <ui:composition template="/WEB-INF/facelets/template.xhtml" style="background-image: url('back1.jpg'); ">
   <ui:param name="page" value="Admin" />
    <ui:define name="title"><p:outputLabel id="display1" style="color: block">Post Property &nbsp;</p:outputLabel><p:outputLabel id="display2" style="color: red">FREE</p:outputLabel>
-   <p>Villa/Plot DataEntry</p>
+   <p>Villa/Flat DataEntry</p>
   <div class="card">
   			
   <h:form  id="form" enctype="multipart/form-data">
@@ -44,7 +44,7 @@
                     <p:selectOneRadio id="i_am" value="#{villaDataEntryService.i_am}" layout="lineDirection">
 			            <f:selectItem itemLabel="Owner" itemValue="Owner" />
 			            <f:selectItem itemLabel="Agent" itemValue="Agent"/>
-			            <f:selectItem itemLabel="Builder" itemValue="Builder"/>
+			            <f:selectItem itemLabel="Company" itemValue="Company"/>
 			        </p:selectOneRadio>
 			        <p:message for="i_am" display="icon"/>
                     
@@ -69,7 +69,7 @@
                     <p:outputLabel required="true" style="font-weight: bold" for="proType" indicateRequired="true" value="Property Type : " />
                     <p:selectOneRadio id="proType" value="#{villaDataEntryService.property_type}" layout="lineDirection">
 			            <f:selectItem itemLabel="Villa" itemValue="Villa" />
-			            <f:selectItem itemLabel="Plot" itemValue="Plot"/>
+			            <f:selectItem itemLabel="Flat" itemValue="Flat"/>
 			            <f:selectItem itemLabel="House" itemValue="House"/>
 			        </p:selectOneRadio>
 			        <p:message for="proType" display="icon"/>
@@ -107,10 +107,10 @@
                     </p:selectOneMenu>
                     <p:message for="furnishedStatus" display="icon"/>
                     
-                    <p:outputLabel style="font-weight: bold" for="plotArea" indicateRequired="true" value="Plot Area  SQ Feet   :  " />
-                    <p:inputNumber id="plotArea" value="#{villaDataEntryService.plot_area}" required="true" requiredMessage="Plot Area  SQ Feet"  decimalPlaces="0" modifyValueOnWheel="false">
+                    <p:outputLabel style="font-weight: bold" for="flatArea" indicateRequired="true" value="Flat Area  SQ Feet   :  " />
+                    <p:inputNumber id="flatArea" value="#{villaDataEntryService.plot_area}" required="true" requiredMessage="Plot Area  SQ Feet"  decimalPlaces="0" modifyValueOnWheel="false">
                     </p:inputNumber>
-                    <p:message for="plotArea" display="icon"/>
+                    <p:message for="flatArea" display="icon"/>
                     
                     <p:outputLabel style="font-weight: bold;width:200px" for="sBArea" indicateRequired="true" value="Super Buildup Area  SQ Feet" />
                     <p:inputNumber id="sBArea" value="#{villaDataEntryService.s_build_are}" required="true" requiredMessage="Super Buildup Area  SQ Feet "  decimalPlaces="0" modifyValueOnWheel="false">

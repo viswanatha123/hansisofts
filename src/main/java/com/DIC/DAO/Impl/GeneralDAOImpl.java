@@ -42,8 +42,8 @@ public class GeneralDAOImpl {
 		// SQL
 		interface SQL {
 			
-			String SQL_VILLA_INSERT="insert into villa_plot (villa_id,i_am,owner_name,contact_owner,email,property_type,address,road_width,floors,bed_rooms,bath_rooms,furnished,plot_area,s_build_are,pro_avail,avail_date,persqft,prim_location,seco_location,image,total_feets,cost,create_date,is_active) \n"+ 
-					"values (nextval('hansi_villa_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,1);";
+			String SQL_VILLA_INSERT="insert into villa_plot (villa_id,i_am,owner_name,contact_owner,email,property_type,address,road_width,floors,bed_rooms,bath_rooms,furnished,plot_area,s_build_are,pro_avail,avail_date,persqft,prim_location,seco_location,image,total_feets,cost,create_date,is_active,user_id) \n"+ 
+					"values (nextval('hansi_villa_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,1,?);";
 			
 			String SQL_VILLA_DETAILS="select * from villa_plot where prim_location = ? and seco_location = ?";
 					//+ " and property_type = ? order by create_date desc";
@@ -82,7 +82,7 @@ public class GeneralDAOImpl {
 	
 	
 	// ***************** update Villa data entry **************
-    public String updateVillaDataEntry(VillaModel villaModel)
+    public String updateVillaDataEntry(VillaModel villaModel, int userId)
     {
     	String succVal="";
     	
@@ -117,6 +117,7 @@ public class GeneralDAOImpl {
 		    pstmt.setBinaryStream(19, fin2, file.getSize());  
 		    pstmt.setInt(20, (villaModel.getPlot_area() + villaModel.getS_build_are()) );
 		    pstmt.setDouble(21, (villaModel.getPlot_area() + villaModel.getS_build_are()) * villaModel.getPersqft());
+		    pstmt.setDouble(22,userId);
             
            
             	int res=pstmt.executeUpdate();
@@ -155,7 +156,11 @@ public class GeneralDAOImpl {
 		
 				if(proType.equals("All"))
 				{
-					sql_villa_details.append(" and property_type in ('Villa','House','Plot') order by create_date desc");
+					sql_villa_details.append(" and property_type in ('Villa','House','Plot','Flat') order by create_date desc");
+				}
+				else if(proType.equals("Flat"))
+				{
+					 sql_villa_details.append(" and property_type in ('Flat','Plot') order by create_date desc");
 				}
 				else
 				{
@@ -171,6 +176,8 @@ public class GeneralDAOImpl {
 	         while ( rs.next() ) {
 	        	 VillaModel villaModel=new VillaModel();
 	        	 
+	        	 
+	        	 villaModel.setVillaId(rs.getInt("villa_id"));
 	        	 villaModel.setI_am(rs.getString("i_am"));
 	        	 villaModel.setOwner_name(rs.getString("owner_name"));
 	        	 villaModel.setContact_owner(rs.getString("contact_owner"));
@@ -185,10 +192,6 @@ public class GeneralDAOImpl {
 	        	 villaModel.setPlot_area(rs.getInt("plot_area"));
 	        	 villaModel.setS_build_are(rs.getInt("s_build_are"));
 	        	 villaModel.setPro_avail(rs.getString("pro_avail"));
-	        	 
-	        	 
-	          	
-	          	 
 	        	 villaModel.setPersqft(rs.getInt("persqft"));
 	        	 villaModel.setPrim_location(rs.getString("prim_location"));
 	        	 villaModel.setSeco_location(rs.getString("seco_location"));
@@ -196,6 +199,7 @@ public class GeneralDAOImpl {
 	        	 villaModel.setCost(rs.getInt("cost"));
 	        	 villaModel.setCreate_date(rs.getDate("create_date"));
 	        	 villaModel.setIs_active(rs.getInt("is_active"));
+	        	 villaModel.setUserId(rs.getInt("user_id"));
 	        	 
 	        	 			// below for Image
 	        	 

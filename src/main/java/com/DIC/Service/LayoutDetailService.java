@@ -23,11 +23,12 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-
+import org.primefaces.PrimeFaces;
 
 import com.DIC.DAO.ConnectionDAO;
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
+import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.LayoutMode;
 
 
@@ -49,12 +50,17 @@ public class LayoutDetailService implements Serializable{
 	private List<String> secondryLocation; 
 	private String locationMessage;
 
-	    
+	private LayoutMode selectedProperty;   
+	
+	private String custName;
+	private String contactNumber;
+	private String email;
 	   
 
 	    private List<LayoutMode> layoutdetails;
 	    ConnectionDAOImpl dao;
 	    LocationDAOImpl locationDao;
+	    UserDAOImpl udo;
 	    
 	    @PostConstruct 
 	    public void init()
@@ -62,6 +68,8 @@ public class LayoutDetailService implements Serializable{
 	    	log.log(Level.INFO, "Loading LayoutDetailService init()");
 	          dao=new ConnectionDAOImpl();
 	          locationDao=new LocationDAOImpl();
+	          udo=new UserDAOImpl();
+	          
 	          primaryModel=locationDao.getLayoutPrimaryLocation();
 	          
 	          primLocation  = new HashMap<>(); 
@@ -111,18 +119,7 @@ public class LayoutDetailService implements Serializable{
 
 
 	        public void displayLocation() {  
-	        	
-	        	
-	        	
-	        	
-	        /*	
-	        FacesMessage msg;  
-	        if(city != null && country != null)  
-	        msg = new FacesMessage("Selected", city + " of " + country);  
-	        else  
-	        msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid", "City is not selected.");   
-	        FacesContext.getCurrentInstance().addMessage(null, msg);  
-	        */
+	
 	        System.out.println(country+"     "+city);
 	        
 	        locationMessage=country+" ,   "+city;
@@ -134,41 +131,51 @@ public class LayoutDetailService implements Serializable{
 	                {
 	                    System.out.println("@@@@@@@@@@@@@@@@@@@@ :"+x.getName());
 	                }
-	                
-	              
-	              
-	                
-	                // updated image in database
-	               
-	               /*
-	                try
-	                {
-	                	
-	                	 Connection con = null;
-	                     PreparedStatement pstmt = null;
-	                     con=ConnectionDAO.getConnection();
-	                	
-	                	File file = new File("D:/img/default1.jpg");
-	                	FileInputStream fis = new FileInputStream(file);
-	                	PreparedStatement ps = con.prepareStatement("INSERT INTO hansi_property_image VALUES (?,?,?)");
-	                	ps.setInt(1, 101);
-	                	ps.setString(2, "Default Image");
-	                	ps.setBinaryStream(3, fis, (int)file.length());
-	                	ps.executeUpdate();
-	                	ps.close();
-	                	fis.close();
-
-
-	                	
-	                }catch(Exception e)
-	                {
-	                	System.out.println("Error message : "+e.getMessage());
-	                }
-	                */
-	                
-	                
-	        
+	           
 	        }  
+	        
+	        
+	       
+	        public void submit() {
+	        	
+	        	log.log(Level.INFO,"Selected property  : "+selectedProperty.getLayoutId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
+	        	
+	        	
+	        	if(selectedProperty.getLayoutId()!=0)
+	        	{
+	        		if(custName!=null && contactNumber!=null && contactNumber!=null)
+	        		{
+	        			if(selectedProperty.getUserId()!=0)
+	        			{
+	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getLayoutId(),selectedProperty.getUserId(),"layout");
+	        				log.log(Level.INFO,"***** Successful submitted lead ******");
+	        			}
+	        			if(selectedProperty.getUserId()==0)
+	        			{
+	        				int defaultUserId=1;
+	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getLayoutId(),defaultUserId,"layout");
+	        				log.log(Level.INFO,"***** Successful submitted lead ******");
+	        			}
+	        			
+	        			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "We received your contact details", "Our representative contact you soon, Thank you..");
+	        	        PrimeFaces.current().dialog().showMessageDynamic(message);
+	        		}
+	        	}
+	        	
+	        	
+	        	layoutdetails=dao.getLayoutDetails(country,city);
+	        	this.custName="";
+	        	this.contactNumber="";
+	        	this.email="";
+	        	
+	        }
+	        
+	   public void reset() {
+		       PrimeFaces.current().resetInputs("form1:panelDialog");
+	  }
+	        
+	        
+	        
 	   public List<LayoutMode> getLayoutdetails() {
 	        return layoutdetails;
 	    }
@@ -217,6 +224,38 @@ public class LayoutDetailService implements Serializable{
 
 		public void setPrimLocationSort(TreeMap<String, String> primLocationSort) {
 			this.primLocationSort = primLocationSort;
+		}
+
+		public LayoutMode getSelectedProperty() {
+			return selectedProperty;
+		}
+
+		public void setSelectedProperty(LayoutMode selectedProperty) {
+			this.selectedProperty = selectedProperty;
+		}
+
+		public String getCustName() {
+			return custName;
+		}
+
+		public void setCustName(String custName) {
+			this.custName = custName;
+		}
+
+		public String getContactNumber() {
+			return contactNumber;
+		}
+
+		public void setContactNumber(String contactNumber) {
+			this.contactNumber = contactNumber;
+		}
+
+		public String getEmail() {
+			return email;
+		}
+
+		public void setEmail(String email) {
+			this.email = email;
 		}
 	   
 	                
