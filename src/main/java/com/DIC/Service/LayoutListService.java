@@ -54,7 +54,7 @@ public class LayoutListService {
         
         
         
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
+        //PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
     }
 	
 	
