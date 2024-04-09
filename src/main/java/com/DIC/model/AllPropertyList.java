@@ -1,6 +1,7 @@
 package com.DIC.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class AllPropertyList implements Serializable{
 	
@@ -8,6 +9,7 @@ public class AllPropertyList implements Serializable{
 	private String propName;
 	private String propType;
 	private int count;
+	private Date createdOnDate;
 	
 	
 	
@@ -34,6 +36,12 @@ public class AllPropertyList implements Serializable{
 	}
 	public void setPropId(int propId) {
 		this.propId = propId;
+	}
+	public Date getCreatedOnDate() {
+		return createdOnDate;
+	}
+	public void setCreatedOnDate(Date createdOnDate) {
+		this.createdOnDate = createdOnDate;
 	}
 	
 	
