@@ -114,36 +114,7 @@ public class UserDAOImpl {
                          layoutMode.setTotalPrice(indianCurrence(plotArea*rs.getInt("persqft")));
                          layoutMode.setCreatedOnDate(rs.getDate("create_date"));
                          
-                         
-                         /*
-                        
-                         if(rs.getBytes("image").length!=0)
-                         {
-                        	 System.out.println("********** not null ********* : "+rs.getBytes("image"));
-                         byte[] bb=rs.getBytes("image");
-                         
-                         layoutMode.setStreamedContent(DefaultStreamedContent.builder()
-                                 .name("US_Piechart.jpg")
-                                 .contentType("image/jpg")
-                                 .stream(() -> new ByteArrayInputStream(bb)).build());
-                         }
-                         else
-                         {
-			                	// Defalut Image
-			                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
-			                	 ResultSet rsDef = pstmtDefault.executeQuery();
-			                	 while ( rsDef.next())
-			                			 {
-			                		      byte[] def=rsDef.getBytes("image");
-			                		      layoutMode.setStreamedContent(DefaultStreamedContent.builder()
-			                             .name("US_Piechart.jpg")
-			                             .contentType("image/jpg")
-			                             .stream(() -> new ByteArrayInputStream(def)).build());
-			                			 }
-			                	 
-			              }
-                        	 
-                       */
+                  
 	        	 layoutModeList.add(layoutMode);
 	         }
 	         	
@@ -574,31 +545,7 @@ public class UserDAOImpl {
           	        	 individualSiteModel.setTotalPrice(indianCurrence(rs.getInt("persqft") * (rs.getInt("length") * rs.getInt("width"))));
           	        	 individualSiteModel.setCreatedOnDate(rs.getDate("create_date"));
           	        	 individualSiteModel.setIs_active(rs.getInt("is_active"));
-          	        	 
-          	        	 if(rs.getBytes("image").length!=0)
-                            {
-                            byte[] bb=rs.getBytes("image");
-                            
-                            individualSiteModel.setStreamedContent(DefaultStreamedContent.builder()
-                                    .name("US_Piechart.jpg")
-                                    .contentType("image/jpg")
-                                    .stream(() -> new ByteArrayInputStream(bb)).build());
-                            }
-                            else
-                            {
-  			                	// Defalut Image
-  			                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
-  			                	 ResultSet rsDef = pstmtDefault.executeQuery();
-  			                	 while ( rsDef.next())
-  			                			 {
-  			                		      byte[] def=rsDef.getBytes("image");
-  			                		      individualSiteModel.setStreamedContent(DefaultStreamedContent.builder()
-  			                             .name("US_Piechart.jpg")
-  			                             .contentType("image/jpg")
-  			                             .stream(() -> new ByteArrayInputStream(def)).build());
-  			                			 }
-  			                	 
-  			              }       
+          	     
                    individualSiteModelList.add(individualSiteModel);
       	    
       	            
