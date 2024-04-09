@@ -54,14 +54,15 @@ public class UserDAOImpl {
 			String SQL_LEADS_BY_PROP_ID="select * from leads where pro_id = ? and prop_type= ? and is_active ='1'";
 			
 			
-			String SQL_ALL_PROP="SELECT lay.layout_id as \"prop_id\", lay.name as name, 'layout' as \"property_type\",(select count(*) from leads ls where pro_id =lay.layout_id and prop_type='layout') as \"count\" FROM hansi_layout lay where lay.user_id= ?\r\n"
+			String SQL_ALL_PROP="SELECT lay.layout_id as \"prop_id\", lay.name as name, 'layout' as \"property_type\",create_date as \"Create Date\",(select count(*) from leads ls where pro_id =lay.layout_id and prop_type='layout') as \"count\" FROM hansi_layout lay where lay.user_id= ?\r\n"
 					+ "	UNION ALL\r\n"
-					+ "	SELECT agri.agri_id as \"prop_id\" ,agri.owner_name as name, 'agri' as \"property_type\" ,(select count(*) from leads ls where pro_id =agri.agri_id and prop_type='agri') as \"count\" FROM hansi_agricultural agri where agri.user_id= ?\r\n"
+					+ "	SELECT agri.agri_id as \"prop_id\" ,agri.owner_name as name, 'agri' as \"property_type\" ,create_date as \"Create Date\",(select count(*) from leads ls where pro_id =agri.agri_id and prop_type='agri') as \"count\" FROM hansi_agricultural agri where agri.user_id= ?\r\n"
 					+ "	UNION ALL\r\n"
-					+ "	SELECT ind.ind_id as \"prop_id\" ,ind.owner_name as name,'indi' as \"property_type\",(select count(*) from leads ls where pro_id =ind.ind_id and prop_type='indi') as \"count\" FROM hansi_individual_site ind where ind.user_id= ?\r\n"
+					+ "	SELECT ind.ind_id as \"prop_id\" ,ind.owner_name as name,'indi' as \"property_type\",create_date as \"Create Date\",(select count(*) from leads ls where pro_id =ind.ind_id and prop_type='indi') as \"count\" FROM hansi_individual_site ind where ind.user_id= ?\r\n"
 					+ "	UNION ALL\r\n"
-					+ "	SELECT villa.villa_id as \"prop_id\", villa.owner_name as name,'villa' as \"property_type\" ,(select count(*) from leads ls where pro_id =villa.villa_id and prop_type='villa') as \"count\"FROM villa_plot  villa where villa.user_id=?;\r\n";
-		
+					+ "	SELECT villa.villa_id as \"prop_id\", villa.owner_name as name,'villa' as \"property_type\" ,create_date as \"Create Date\", (select count(*) from leads ls where pro_id =villa.villa_id and prop_type='villa') as \"count\"FROM villa_plot  villa where villa.user_id=?;\r\n";
+			
+			
 			 String SQL_INDISITE_LIST="select * from hansi_individual_site order by create_date desc";
 			 String SQL_DEL_INDISITE="delete from hansi_individual_site where ind_id = ?";
 		}
@@ -441,6 +442,9 @@ public class UserDAOImpl {
 	        	 allPropertyList.setPropName(rs.getString("name"));
 	        	 allPropertyList.setPropType(rs.getString("property_type"));
 	        	 allPropertyList.setCount(rs.getInt("count"));
+	        	 allPropertyList.setCreatedOnDate(rs.getDate("Create Date"));
+	        	 
+	        	 
                          
                      
                 allPropertyListList.add(allPropertyList);
