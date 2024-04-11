@@ -192,7 +192,7 @@
 							 	
 							             						                
 							                
-							          <p:dataTable var="product" value="#{userProfileService.leadModelList}">
+							          <p:dataTable var="product" value="#{userProfileService.leadModelList}" >
 								            <p:column headerText="Lead Name">
 								                <h:outputText value="#{product.leadName}" />
 								            </p:column>
@@ -201,8 +201,12 @@
 								                <h:outputText value="#{product.leadContact}" />
 								            </p:column>
 								            
-								            <p:column headerText="Lead Email">
+								            <p:column headerText="Lead Email" width="40%">
 								                <h:outputText value="#{product.leadEmail}" />
+								            </p:column>
+								            
+								             <p:column headerText="Created Date">
+								                <h:outputText value="#{product.create_date}" />
 								            </p:column>
 								            
 								        </p:dataTable>
