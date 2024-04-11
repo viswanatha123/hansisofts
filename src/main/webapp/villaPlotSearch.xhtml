@@ -128,19 +128,20 @@
                      			
                      				<h:panelGrid   columns="1" width="60%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
                      			 				<h:outputText style="font-weight: bold;color: red;font-size: 15px"  value="Rs #{product.cost}" />
+
                      			 				    <p:commandButton type="submit" value="Callback" icon="ui-icon-calculator" style="background:#FFA500;font-weight: bold;color: black;font-size: 15px" 
 															 process="@this" 
 							                                 onclick="PF('leadDialog').show()">           
 							                              <f:setPropertyActionListener value="#{product}" target="#{villaDetailsService.selectedProperty}" />
 									                </p:commandButton>
                           						
+                          						   <p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#1E90FF;font-weight: bold;color: black;font-size: 15px; width:170px" 
+															 process="@this" 
+							                                 onclick="PF('leadDialog').show()">           
+							                              <f:setPropertyActionListener value="#{product}" target="#{villaDetailsService.selectedProperty}" />
+									                </p:commandButton>
                           						
-                          						
-                          						
-                          						
-                          						<p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#1E90FF;font-weight: bold;color: black;font-size: 15px; width:170px" onclick="requestCallback()" />
-                          	
-                     				</h:panelGrid>
+                         			</h:panelGrid>
                      			
                      			
               					</h:panelGrid>
@@ -170,17 +171,7 @@
               <br></br>
               </p:dataScroller>
   
- <script type="application/javascript">        
- function requestCallback() {
-           window.open("./requestCallback.xhtml", "Request Call Back", "toolbar=no,scrollbars=no,resizable=no,top=320,left=550,width=530,height=450");
-     return true;                  
-}
- 
- function imageWindow() {
-   window.open("./imageWindow.xhtml", "Image window", "toolbar=no,scrollbars=no,resizable=no,top=320,left=550,width=530,height=450");
-       return true;            
-}
-</script>  
+
 </h:form>
 
 

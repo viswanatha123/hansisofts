@@ -98,10 +98,14 @@
 			                                 onclick="PF('leadDialog').show()">           
 			                              <f:setPropertyActionListener value="#{product}" target="#{individualSiteService.selectedProperty}" />
 					                </p:commandButton>	
+
+									<p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#1E90FF;font-weight: bold;color: black;font-size: 15px" 
+											 process="@this" 
+			                                 onclick="PF('leadDialog').show()">           
+			                              <f:setPropertyActionListener value="#{product}" target="#{individualSiteService.selectedProperty}" />
+					                </p:commandButton>	
                           			
-                          			
-                          			
-                          			<p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#1E90FF;font-weight: bold;color: black;font-size: 15px" onclick="requestCallback()" />
+           
                           		     <h:outputText value="Posted : #{product.createdOnDate}" >
 									    <f:convertDateTime type="date" dateStyle="full"/>   
 									</h:outputText>
@@ -119,19 +123,7 @@
               </p:panel>
               <br></br>
         </p:dataScroller>
-  
-  
- <script type="application/javascript">        
- function requestCallback() {
 
-                        
-             window.open("./requestCallback.xhtml", "Request Call Back", "toolbar=no,scrollbars=no,resizable=no,top=320,left=550,width=530,height=450");
-             
-         
-     return true;                  
-
-}
- </script>  
  </h:form>
  
 <h:form id="form1">
