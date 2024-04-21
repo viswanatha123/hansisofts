@@ -69,7 +69,7 @@ public class GeneralDAOImpl {
 			
 			String SQL_ALL_USERS="select * from user_deta order by fname ,lname";
 			
-			String SQL_USER_REGIST="INSERT INTO user_deta (user_id, fname, lname, user_name, user_pass, address, phone, create_date, is_active) VALUES (nextval('user_seq'), ?, ?,?, ?,?,?, current_timestamp, 1);";
+			String SQL_USER_REGIST="INSERT INTO user_deta (user_id, fname, lname, user_name, user_pass, address, phone, create_date, is_active,list_limit) VALUES (nextval('user_seq'), ?, ?,?, ?,?,?, current_timestamp, 1,?);";
 			
 			String SQL_FIND_USER_ID_BY_USER_DETAILS="select user_id from user_deta where fname=? and lname=? and user_name=? and  phone=?";
 			String NEW_USER_DEFAULT_ROLE="select r.role_id,ur.is_active from user_deta u, role r, user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1' and r.is_active = '1' and u.user_id = 2 order by role_id";
@@ -77,6 +77,9 @@ public class GeneralDAOImpl {
 			String SQL_FIND_USER_NAME="select * from user_deta where user_name= ? order by fname ,lname";
 			String SQL_UPDATE_PASSWORD="update user_deta set user_pass=? where user_id = ?";
 			String SQL_DEL_USER="delete from user_deta where user_id=?";
+			String SQL_FIND_LIST_LIMIT="select * from user_deta where user_id= ?";
+			String SQL_UPDATE_LIST_LIMIT="update user_deta set list_limit = ? where user_id = ?";
+			
 		}
 	}
 	
@@ -562,6 +565,7 @@ public class GeneralDAOImpl {
 				userDetails.setlName(rs.getString("lname"));
 				userDetails.setAddress(rs.getString("address"));
 				userDetails.setUserName(rs.getString("user_name"));
+				userDetails.setListLimit(rs.getInt("list_limit"));
 				
 					
 								
@@ -613,6 +617,8 @@ public class GeneralDAOImpl {
 				userRoleModel.setRoleName(rs.getString("role_name"));
 				userRoleModel.setActive(rs.getString("is_active").equals("1") ? true: false);
 				userRoleModel.setProfileRole(rs.getString("is_profile"));
+				
+				
 				
 				userRoleModelList.add(userRoleModel);					
 			}
@@ -718,7 +724,7 @@ public class GeneralDAOImpl {
     
  // ***************** Save User registation  **************
     
-    public String saveUserRegist(UserDetails userDetails)
+    public String saveUserRegist(UserDetails userDetails,int list_limit)
     {
     	String succVal="";
     	
@@ -737,6 +743,7 @@ public class GeneralDAOImpl {
             pstmt.setString(4, userDetails.getUserPassword());
             pstmt.setString(5, userDetails.getAddress());
             pstmt.setString(6, userDetails.getPhone());
+            pstmt.setInt(7,list_limit );
             
            
             	int res=pstmt.executeUpdate();
@@ -980,9 +987,67 @@ public class GeneralDAOImpl {
     }
     
     	
-   
+    public int getListLimit(int userId)
+    {
+    	int listLimit=0;
+    	Connection con = null;
+		PreparedStatement ps = null;
+		
+		UserDetails userDetails=new UserDetails();
+
+		try {
+			con = ConnectionDAO.getConnection();
+			StringBuilder sql_find_list_limit = new StringBuilder(Constants.SQL.SQL_FIND_LIST_LIMIT);
+			ps = con.prepareStatement(sql_find_list_limit.toString());
+			ps.setInt(1, userId);
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				listLimit=rs.getInt("list_limit");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        //return false;
+		}
+		
+		return listLimit;
+    	
+    }
     
-    
+    public int updateListLimit(int listLimit ,int userId)
+    {
+    	int succVal=0;
+    	
+    	try {
+    	Connection con = null;
+        PreparedStatement pstmt = null;
+        con=ConnectionDAO.getConnection();
+        
+        StringBuilder sql_update_list_limit = new StringBuilder(Constants.SQL.SQL_UPDATE_LIST_LIMIT);
+        pstmt = con.prepareStatement(sql_update_list_limit.toString());
+        pstmt.setInt(1, listLimit);
+        pstmt.setInt(2, userId);
+      	int res=pstmt.executeUpdate();
+      	
+      	System.out.println(" **********  Deleted Record: "+res);
+            if(res > 0)
+            {
+            	succVal=1;
+            }
+      } catch (Exception e) {
+     
+        e.printStackTrace();
+        System.err.println(e.getClass().getName()+": "+e.getMessage());
+       //succVal=e.getMessage();
+        //return succVal;
+       
+      }
+  
+
+    return succVal;
+    	
+    }
     
 
 }

@@ -69,12 +69,13 @@ public class SessionUtils {
 						session.setAttribute("address", UserDetails.getAddress());
 						session.setAttribute("disName", SessionUtils.displayName(UserDetails.getfName(),UserDetails.getlName()));
 						session.setAttribute("fullName", SessionUtils.displayFullName(UserDetails.getfName(),UserDetails.getlName()));
+						session.setAttribute("listLimit",UserDetails.getListLimit());
 						
 						
 					}
 					
-				}
-	     }
+		}
+	  }
 	
 		public static String displayName(String fName,String lName)
 		{

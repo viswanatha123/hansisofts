@@ -22,6 +22,7 @@ import org.primefaces.model.file.UploadedFile;
 
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.DAO.Impl.GeneralDAOImpl;
+import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.PlotsDataEntryModel;
 
 import com.DIC.model.VillaModel;
@@ -59,6 +60,8 @@ public class VillaDataEntryService implements Serializable{
     private UploadedFile file;
 	private int total_feets;
 	private int cost;
+	private int listLimit;
+	private int listedCount;
 	
 	
 	
@@ -73,6 +76,7 @@ public class VillaDataEntryService implements Serializable{
 	
 	 ConnectionDAOImpl dao;
 	 GeneralDAOImpl gdao;
+	 UserDAOImpl uDao;
 	
 	public VillaDataEntryService()
 	{
@@ -86,6 +90,7 @@ public class VillaDataEntryService implements Serializable{
 	          dao=new ConnectionDAOImpl();
 	          gdao=new GeneralDAOImpl();
 	          primaryModel=dao.getPrimaryLocation();
+	          uDao=new UserDAOImpl();
            primLocation  = new HashMap<>(); 
            for(Map.Entry<String, String> pp:primaryModel.entrySet())
            {
@@ -94,8 +99,33 @@ public class VillaDataEntryService implements Serializable{
          	  
            }
            primLocationSort=new TreeMap<>(primLocation);
-	          
+           
+           HttpSession session = SessionUtils.getSession();
+	       	if (session != null)
+	    	{
+	    		if(session.getAttribute("userId")!=null)
+	    		{
+	    		   
+	    		    		if(Integer.parseInt(session.getAttribute("listLimit").toString()) > 0)
+	    		    		{
+	    		    			 listLimit = Integer.parseInt(session.getAttribute("listLimit").toString());
+	    		    			 listedCount=uDao.getAllPropByUserId(Integer.parseInt(session.getAttribute("userId").toString())).size();
+	    		    			  log.log(Level.INFO, "listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
+	    		    		}
+	    		    		    		    
+	    		}
+	    		if(session.getAttribute("userId")==null)
+   		    {    	
+   		    	
+	    			listLimit=1;
+	    			listedCount=0;
+	    			
+	    			  log.log(Level.INFO, "listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
+   		    }
+	    		
 	    }
+	          
+	  }
 	
 	public void upload() {
         if (file != null) {
@@ -418,7 +448,21 @@ public class VillaDataEntryService implements Serializable{
 		this.avail_date = avail_date;
 	}
 
-	
+	public int getListLimit() {
+		return listLimit;
+	}
+
+	public void setListLimit(int listLimit) {
+		this.listLimit = listLimit;
+	}
+
+	public int getListedCount() {
+		return listedCount;
+	}
+
+	public void setListedCount(int listedCount) {
+		this.listedCount = listedCount;
+	}
 	
 	
 
