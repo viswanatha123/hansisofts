@@ -11,12 +11,15 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.servlet.http.HttpSession;
 
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
 import com.DIC.model.UserRoleModel;
 import com.DIC.model.VillaModel;
+
+import framework.utilities.SessionUtils;
 
 @ManagedBean(name="roleUpdateService")
 @ViewScoped
@@ -32,6 +35,7 @@ public class RoleUpdateService {
 	private String statusMessage;
 	private String fName;
 	private String lName;
+	private int listLimit;
 	
 	
 	GeneralDAOImpl gDao;
@@ -42,7 +46,7 @@ public class RoleUpdateService {
     	log.log(Level.INFO, "Loading RoleUpdateService init()");
      
     	gDao=new GeneralDAOImpl();
-             
+    	    
         
     }
 	
@@ -55,9 +59,7 @@ public class RoleUpdateService {
   	        
       
     	userRoleModelList=gDao.getRolesByUserId(userId);
-    	
-    	
-    	
+    	listLimit=gDao.getListLimit(userId);
     	
     	recordSize=userRoleModelList.size();
     	
@@ -94,6 +96,19 @@ public class RoleUpdateService {
 		    {
 		    	statusMessage="Error Occurred, Please contact support team.";
 		    }
+		    
+		    
+		   int val= gDao.updateListLimit(listLimit,userId);
+		   
+		   HttpSession session = SessionUtils.getSession();
+			if (session != null)
+			{
+			session.setAttribute("listLimit",gDao.getListLimit(userId));
+				
+				
+			}
+		   
+		   
 		 
 	}
 	
@@ -163,6 +178,16 @@ public class RoleUpdateService {
 
 	public void setlName(String lName) {
 		this.lName = lName;
+	}
+
+
+	public int getListLimit() {
+		return listLimit;
+	}
+
+
+	public void setListLimit(int listLimit) {
+		this.listLimit = listLimit;
 	}  
 	
 	

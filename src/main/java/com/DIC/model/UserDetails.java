@@ -14,6 +14,8 @@ public class UserDetails implements Serializable {
 	private String phone;
 	private Date create_date;
 	private int is_active;
+	private int listLimit;
+	
 	
 	private String disName;
 	
@@ -115,6 +117,16 @@ public class UserDetails implements Serializable {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+
+	public int getListLimit() {
+		return listLimit;
+	}
+
+
+	public void setListLimit(int listLimit) {
+		this.listLimit = listLimit;
 	}
 
 	

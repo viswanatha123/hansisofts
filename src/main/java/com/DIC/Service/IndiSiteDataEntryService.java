@@ -24,6 +24,7 @@ import org.primefaces.model.file.UploadedFiles;
 import org.primefaces.util.EscapeUtils;
 
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
+import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.IndiSiteDataEntryModel;
 
 import framework.utilities.SessionUtils;
@@ -49,6 +50,8 @@ public class IndiSiteDataEntryService implements Serializable {
 	  private String agentName;
 	  private UploadedFile file;
 	  private String updateResult;
+	  private int listLimit;
+  	  private int listedCount;
 	  
 	  
 	  
@@ -65,6 +68,7 @@ public class IndiSiteDataEntryService implements Serializable {
 
 
 	   ConnectionDAOImpl dao;
+	   UserDAOImpl uDao;
 	  
 	  
 	  
@@ -74,6 +78,7 @@ public class IndiSiteDataEntryService implements Serializable {
           log.log(Level.INFO, "Loading IndiDataEntryService init()");
           dao=new ConnectionDAOImpl();
           primaryModel=dao.getPrimaryLocation();
+          uDao=new UserDAOImpl();
           primLocation  = new HashMap<>(); 
           for(Map.Entry<String, String> pp:primaryModel.entrySet())
           {
@@ -83,6 +88,30 @@ public class IndiSiteDataEntryService implements Serializable {
         	  
           }
           primLocationSort=new TreeMap<>(primLocation);
+          HttpSession session = SessionUtils.getSession();
+	       	if (session != null)
+	    	{
+	    		if(session.getAttribute("userId")!=null)
+	    		{
+	    		   
+	    		    		if(Integer.parseInt(session.getAttribute("listLimit").toString()) > 0)
+	    		    		{
+	    		    			 listLimit = Integer.parseInt(session.getAttribute("listLimit").toString());
+	    		    			 listedCount=uDao.getAllPropByUserId(Integer.parseInt(session.getAttribute("userId").toString())).size();
+	    		    			  log.log(Level.INFO, "listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
+	    		    		}
+	    		    		    		    
+	    		}
+	    		if(session.getAttribute("userId")==null)
+  		    {    	
+  		    	
+	    			listLimit=1;
+	    			listedCount=0;
+	    			
+	    			  log.log(Level.INFO, "listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
+  		    }
+	    		
+	    	}
           
       }
 	  
@@ -431,5 +460,21 @@ public class IndiSiteDataEntryService implements Serializable {
 			this.primLocationSort = primLocationSort;
 		}
 	  
+		public int getListLimit() {
+			return listLimit;
+		}
+
+		public void setListLimit(int listLimit) {
+			this.listLimit = listLimit;
+		}
+
+		public int getListedCount() {
+			return listedCount;
+		}
+
+		public void setListedCount(int listedCount) {
+			this.listedCount = listedCount;
+		}
+		
 
 }

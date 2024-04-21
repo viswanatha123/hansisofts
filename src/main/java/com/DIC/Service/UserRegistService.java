@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.logging.Logger;
 import com.DIC.model.UserDetails;
 
+import framework.utilities.UtilConstants;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -76,7 +78,7 @@ public class UserRegistService implements Serializable {
 					userDetails.setAddress(address);
 					userDetails.setPhone(phone);
 					
-					statusMessage=gdao.saveUserRegist(userDetails);
+					statusMessage=gdao.saveUserRegist(userDetails,UtilConstants.BASIC_PACKAGE_LIST_LIMIT);
 					
 					this.fName="";
 					this.lName="";

@@ -34,6 +34,7 @@ public class UserProfileService {
 	
 	 private List<UserDetails> userDetailsList;
 	 private List<UserProfileRoleModel> userProfileRoleModel;
+	 private int listedCount;
 	 
 	 UserDAOImpl uDao;
 	 
@@ -75,6 +76,7 @@ public class UserProfileService {
 		    		    		layoutdetails=uDao.getLayoutListByUserId(userId);
 		    		    		
 		    		    		allPropertyList=uDao.getAllPropByUserId(userId);
+		    		    		listedCount=uDao.getAllPropByUserId(Integer.parseInt(session.getAttribute("userId").toString())).size();
 		    		    		
 		    		    		
 		    		    		for(LayoutMode lm:layoutdetails )
@@ -208,6 +210,16 @@ public class UserProfileService {
 
 	public void setSelectedProperty(AllPropertyList selectedProperty) {
 		this.selectedProperty = selectedProperty;
+	}
+
+
+	public int getListedCount() {
+		return listedCount;
+	}
+
+
+	public void setListedCount(int listedCount) {
+		this.listedCount = listedCount;
 	} 
 	
 	
