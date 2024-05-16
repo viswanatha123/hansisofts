@@ -20,6 +20,7 @@ import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.AllPropertyList;
 import com.DIC.model.LayoutMode;
 import com.DIC.model.LeadModel;
+import com.DIC.model.PackageModel;
 import com.DIC.model.UserDetails;
 import com.DIC.model.UserProfileRoleModel;
 
@@ -32,9 +33,10 @@ public class UserProfileService {
 	
 	private static final Logger log = Logger.getLogger(UserProfileService.class.getName());
 	
-	 private List<UserDetails> userDetailsList;
+	 private UserDetails userDetails;
 	 private List<UserProfileRoleModel> userProfileRoleModel;
 	 private int listedCount;
+	 private PackageModel packageModel;
 	 
 	 UserDAOImpl uDao;
 	 
@@ -71,7 +73,15 @@ public class UserProfileService {
 		    		    if(userId > 0)
 		    		    {    	
 		          
-		    		    		userDetailsList=uDao.getUser(userId);
+		    		    	    packageModel=uDao.getPackageDetails(userId);
+		    		    	    
+		    		    	
+		    		    		userDetails=uDao.getUser(userId);
+		    		    		userDetails.setListLimit(packageModel.getListLimit());
+		    		    		userDetails.setPackName(packageModel.getPackName());
+		    		    		userDetails.setIsEnable(packageModel.getIsEnable());
+		    		    		
+		    		    		
 		    		    		userProfileRoleModel=uDao.getUserProfileRoles(userId);
 		    		    		layoutdetails=uDao.getLayoutListByUserId(userId);
 		    		    		
@@ -110,14 +120,7 @@ public class UserProfileService {
 		}
 
 
-	public List<UserDetails> getUserDetailsList() {
-		return userDetailsList;
-	}
 
-
-	public void setUserDetailsList(List<UserDetails> userDetailsList) {
-		this.userDetailsList = userDetailsList;
-	}
 
 
 	public List<UserProfileRoleModel> getUserProfileRoleModel() {
@@ -220,6 +223,26 @@ public class UserProfileService {
 
 	public void setListedCount(int listedCount) {
 		this.listedCount = listedCount;
+	}
+
+
+	public PackageModel getPackageModel() {
+		return packageModel;
+	}
+
+
+	public void setPackageModel(PackageModel packageModel) {
+		this.packageModel = packageModel;
+	}
+
+
+	public UserDetails getUserDetails() {
+		return userDetails;
+	}
+
+
+	public void setUserDetails(UserDetails userDetails) {
+		this.userDetails = userDetails;
 	} 
 	
 	

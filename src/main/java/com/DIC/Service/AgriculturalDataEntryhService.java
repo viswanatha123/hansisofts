@@ -56,7 +56,9 @@ public class AgriculturalDataEntryhService implements Serializable {
 	private String updateResult;
 	private String power;
 	private int listLimit;
- 	private int listedCount;
+ 	private int listedCount=-1;
+ 	private Boolean isEnable;
+	private int userId;
 	
 	
 	
@@ -97,23 +99,28 @@ public class AgriculturalDataEntryhService implements Serializable {
 	    	{
 	    		if(session.getAttribute("userId")!=null)
 	    		{
-	    		   
+	    			userId= Integer.parseInt(session.getAttribute("userId").toString());
 	    		    		if(Integer.parseInt(session.getAttribute("listLimit").toString()) > 0)
 	    		    		{
 	    		    			 listLimit = Integer.parseInt(session.getAttribute("listLimit").toString());
 	    		    			 listedCount=uDao.getAllPropByUserId(Integer.parseInt(session.getAttribute("userId").toString())).size();
 	    		    			  log.log(Level.INFO, "listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
+	    		    			  
+	    		    		   		    			  
+	    		    			  isEnable = Boolean.valueOf(session.getAttribute("isEnable").toString());
+	    		    			  
 	    		    		}
 	    		    		    		    
 	    		}
 	    		if(session.getAttribute("userId")==null)
-  		    {    	
+	    		{    	
   		    	
+	    			userId=-1;
 	    			listLimit=1;
 	    			listedCount=0;
 	    			
 	    			  log.log(Level.INFO, "listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
-  		    }
+	    		}
 	    		
 	    	}
           
@@ -426,6 +433,21 @@ public class AgriculturalDataEntryhService implements Serializable {
 		this.listedCount = listedCount;
 	}
 	
-	
+	public Boolean getIsEnable() {
+		return isEnable;
+	}
+
+	public void setIsEnable(Boolean isEnable) {
+		this.isEnable = isEnable;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
 
 }

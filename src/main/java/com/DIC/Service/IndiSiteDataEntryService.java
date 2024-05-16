@@ -51,7 +51,9 @@ public class IndiSiteDataEntryService implements Serializable {
 	  private UploadedFile file;
 	  private String updateResult;
 	  private int listLimit;
-  	  private int listedCount;
+  	  private int listedCount=-1;
+  	  private Boolean isEnable;
+ 	  private int userId;
 	  
 	  
 	  
@@ -93,23 +95,25 @@ public class IndiSiteDataEntryService implements Serializable {
 	    	{
 	    		if(session.getAttribute("userId")!=null)
 	    		{
-	    		   
+	    			userId= Integer.parseInt(session.getAttribute("userId").toString());
 	    		    		if(Integer.parseInt(session.getAttribute("listLimit").toString()) > 0)
 	    		    		{
 	    		    			 listLimit = Integer.parseInt(session.getAttribute("listLimit").toString());
 	    		    			 listedCount=uDao.getAllPropByUserId(Integer.parseInt(session.getAttribute("userId").toString())).size();
+	    		    			 isEnable = Boolean.valueOf(session.getAttribute("isEnable").toString());
+	    		    			 
 	    		    			  log.log(Level.INFO, "listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
 	    		    		}
 	    		    		    		    
 	    		}
 	    		if(session.getAttribute("userId")==null)
-  		    {    	
-  		    	
+  		       {    	
+	    			userId=-1;
 	    			listLimit=1;
 	    			listedCount=0;
 	    			
 	    			  log.log(Level.INFO, "listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
-  		    }
+  		       }
 	    		
 	    	}
           
@@ -475,6 +479,21 @@ public class IndiSiteDataEntryService implements Serializable {
 		public void setListedCount(int listedCount) {
 			this.listedCount = listedCount;
 		}
-		
+		public Boolean getIsEnable() {
+			return isEnable;
+		}
+
+		public void setIsEnable(Boolean isEnable) {
+			this.isEnable = isEnable;
+		}
+
+		public int getUserId() {
+			return userId;
+		}
+
+		public void setUserId(int userId) {
+			this.userId = userId;
+		}
+
 
 }
