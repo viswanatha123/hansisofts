@@ -16,6 +16,8 @@ import javax.servlet.http.HttpSession;
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
+import com.DIC.DAO.Impl.UserDAOImpl;
+import com.DIC.model.PackageModel;
 import com.DIC.model.UserRoleModel;
 import com.DIC.model.VillaModel;
 
@@ -36,9 +38,12 @@ public class RoleUpdateService {
 	private String fName;
 	private String lName;
 	private int listLimit;
-	
+	private PackageModel packageModel;
+	private Boolean isEnable=false;
+		
 	
 	GeneralDAOImpl gDao;
+	UserDAOImpl uDao;
 	
 	@PostConstruct 
     public void init()
@@ -46,7 +51,7 @@ public class RoleUpdateService {
     	log.log(Level.INFO, "Loading RoleUpdateService init()");
      
     	gDao=new GeneralDAOImpl();
-    	    
+    	uDao=new UserDAOImpl();   
         
     }
 	
@@ -59,12 +64,14 @@ public class RoleUpdateService {
   	        
       
     	userRoleModelList=gDao.getRolesByUserId(userId);
-    	listLimit=gDao.getListLimit(userId);
+    	//listLimit=gDao.getListLimit(userId);
+    	packageModel=uDao.getPackageDetails(userId);
+    	isEnable=packageModel.getIsEnable();
     	
+   	
     	recordSize=userRoleModelList.size();
     	
-    	
-    	
+     	
 	    	if(recordSize==0)
 	    	{
 	    		statusMessage="User id does not exist please try differnt user id.";
@@ -98,12 +105,15 @@ public class RoleUpdateService {
 		    }
 		    
 		    
-		   int val= gDao.updateListLimit(listLimit,userId);
+		    System.out.println("----->isEanble : "+isEnable);
+		    
+		   
+		    int val= gDao.updatePackage(isEnable,userId);
 		   
 		   HttpSession session = SessionUtils.getSession();
 			if (session != null)
 			{
-			session.setAttribute("listLimit",gDao.getListLimit(userId));
+			//session.setAttribute("listLimit",gDao.getListLimit(userId));
 				
 				
 			}
@@ -188,13 +198,31 @@ public class RoleUpdateService {
 
 	public void setListLimit(int listLimit) {
 		this.listLimit = listLimit;
-	}  
-	
-	
-	
-	
-	
-	
-	
+	}
+
+
+	public PackageModel getPackageModel() {
+		return packageModel;
+	}
+
+
+	public void setPackageModel(PackageModel packageModel) {
+		this.packageModel = packageModel;
+	}
+
+
+	public Boolean getIsEnable() {
+		return isEnable;
+	}
+
+
+	public void setIsEnable(Boolean isEnable) {
+		this.isEnable = isEnable;
+	}
+
+
+
+
+
 	
 }

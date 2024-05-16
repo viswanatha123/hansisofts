@@ -59,7 +59,6 @@ public class PlotsDataEntryService implements Serializable{
 	  private String name;
 	  private String location;
 	  private int persqft;
-	  //private Double persqft = Double.valueOf(0);
 	  private int plotarea;
 	  private String contactOwner;
 	  private String ownerName;
@@ -78,13 +77,12 @@ public class PlotsDataEntryService implements Serializable{
       private String agentName;
   	  private UploadedFile file;
   	  private int listLimit;
-  	  private int listedCount;
+  	  private int listedCount=-1;
+  	  private Boolean isEnable;
+  	  private int userId;
 
       
-     
-
-	  //private final Map<String,Map<String,String>> data = new HashMap<>();
-	  private String country;   
+  	  private String country;   
 	  private String city;  
 	  private Map<String, String> primaryModel;
 	  private Map<String,String> primLocation; 
@@ -123,17 +121,23 @@ public class PlotsDataEntryService implements Serializable{
 			    		if(session.getAttribute("userId")!=null)
 			    		{
 			    		   
+			    			userId= Integer.parseInt(session.getAttribute("userId").toString());
 			    		    		if(Integer.parseInt(session.getAttribute("listLimit").toString()) > 0)
 			    		    		{
 			    		    			 listLimit = Integer.parseInt(session.getAttribute("listLimit").toString());
+			    		    			 isEnable = Boolean.valueOf(session.getAttribute("isEnable").toString());
+			    		    			 
+			    		    			 
+			    		    			 
 			    		    			 listedCount=uDao.getAllPropByUserId(Integer.parseInt(session.getAttribute("userId").toString())).size();
-			    		    			  log.log(Level.INFO, "listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
+			    		    			  log.log(Level.INFO, "listedCount  listLimit :"+listedCount+"  <=  "+listLimit+"     "+isEnable);
 			    		    		}
 			    		    		    		    
 			    		}
 			    		if(session.getAttribute("userId")==null)
 		    		    {    	
 		    		    	
+			    			userId=-1;
 			    			listLimit=1;
 			    			listedCount=0;
 			    			
@@ -505,7 +509,23 @@ public class PlotsDataEntryService implements Serializable{
 			public void setListedCount(int listedCount) {
 				this.listedCount = listedCount;
 			}
-			
+
+			public Boolean getIsEnable() {
+				return isEnable;
+			}
+
+			public void setIsEnable(Boolean isEnable) {
+				this.isEnable = isEnable;
+			}
+
+			public int getUserId() {
+				return userId;
+			}
+
+			public void setUserId(int userId) {
+				this.userId = userId;
+			}
+
 			
 	      
 

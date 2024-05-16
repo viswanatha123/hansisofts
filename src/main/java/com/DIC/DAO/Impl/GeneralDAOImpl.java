@@ -69,7 +69,7 @@ public class GeneralDAOImpl {
 			
 			String SQL_ALL_USERS="select * from user_deta order by fname ,lname";
 			
-			String SQL_USER_REGIST="INSERT INTO user_deta (user_id, fname, lname, user_name, user_pass, address, phone, create_date, is_active,list_limit) VALUES (nextval('user_seq'), ?, ?,?, ?,?,?, current_timestamp, 1,?);";
+			String SQL_USER_REGIST="INSERT INTO user_deta (user_id, fname, lname, user_name, user_pass, address, phone, create_date, is_active) VALUES (nextval('user_seq'), ?, ?,?, ?,?,?, current_timestamp, 1);";
 			
 			String SQL_FIND_USER_ID_BY_USER_DETAILS="select user_id from user_deta where fname=? and lname=? and user_name=? and  phone=?";
 			String NEW_USER_DEFAULT_ROLE="select r.role_id,ur.is_active from user_deta u, role r, user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1' and r.is_active = '1' and u.user_id = 2 order by role_id";
@@ -78,7 +78,11 @@ public class GeneralDAOImpl {
 			String SQL_UPDATE_PASSWORD="update user_deta set user_pass=? where user_id = ?";
 			String SQL_DEL_USER="delete from user_deta where user_id=?";
 			String SQL_FIND_LIST_LIMIT="select * from user_deta where user_id= ?";
-			String SQL_UPDATE_LIST_LIMIT="update user_deta set list_limit = ? where user_id = ?";
+			//String SQL_UPDATE_LIST_LIMIT="update user_deta set list_limit = ? where user_id = ?";
+			
+			String SQL_UPDATE_LIST_LIMIT="update user_map_package set is_enable=? where user_id= ?";
+			String SQL_UPDATE_DEFAULT_PACKAGE="INSERT INTO public.user_map_package (user_mp_pack_id, user_id, pack_id, create_date, is_active,is_enable)\r\n"
+					+ "VALUES(nextval('user_map_package_seq'), ?, 1, current_timestamp, 1,false);";
 			
 		}
 	}
@@ -565,7 +569,7 @@ public class GeneralDAOImpl {
 				userDetails.setlName(rs.getString("lname"));
 				userDetails.setAddress(rs.getString("address"));
 				userDetails.setUserName(rs.getString("user_name"));
-				userDetails.setListLimit(rs.getInt("list_limit"));
+				//userDetails.setListLimit(rs.getInt("list_limit"));
 				
 					
 								
@@ -727,9 +731,9 @@ public class GeneralDAOImpl {
     public String saveUserRegist(UserDetails userDetails,int list_limit)
     {
     	String succVal="";
-    	
+    	int userId=0;
         try {
-        	int userId;
+        	
             Connection con = null;
             PreparedStatement pstmt = null;
             con=ConnectionDAO.getConnection();
@@ -743,7 +747,7 @@ public class GeneralDAOImpl {
             pstmt.setString(4, userDetails.getUserPassword());
             pstmt.setString(5, userDetails.getAddress());
             pstmt.setString(6, userDetails.getPhone());
-            pstmt.setInt(7,list_limit );
+            //pstmt.setInt(7,list_limit );
             
            
             	int res=pstmt.executeUpdate();
@@ -773,8 +777,14 @@ public class GeneralDAOImpl {
 							int createdRolesCount=psRole.executeUpdate();
 							System.out.println("*********** Role created count ************ :"+createdRolesCount+"     "+createDefaultRoles(userId));
 						}
-				}    
+				} 
+				
+				if(userId > 0)
+				{
+					updateDefaultPackage(userId);
+				}
 	            
+				
 	            
 	            
 	            
@@ -986,7 +996,7 @@ public class GeneralDAOImpl {
 
     }
     
-    	
+    /*
     public int getListLimit(int userId)
     {
     	int listLimit=0;
@@ -1014,9 +1024,14 @@ public class GeneralDAOImpl {
 		return listLimit;
     	
     }
-    
-    public int updateListLimit(int listLimit ,int userId)
+    */
+    public int updatePackage(Boolean isEnable ,int userId)
     {
+    	
+    	System.out.println("------------------1-Package Eangle------>"+isEnable+"    "+userId);
+    	
+  
+    	
     	int succVal=0;
     	
     	try {
@@ -1026,7 +1041,7 @@ public class GeneralDAOImpl {
         
         StringBuilder sql_update_list_limit = new StringBuilder(Constants.SQL.SQL_UPDATE_LIST_LIMIT);
         pstmt = con.prepareStatement(sql_update_list_limit.toString());
-        pstmt.setInt(1, listLimit);
+        pstmt.setBoolean(1, isEnable);
         pstmt.setInt(2, userId);
       	int res=pstmt.executeUpdate();
       	
@@ -1046,6 +1061,42 @@ public class GeneralDAOImpl {
   
 
     return succVal;
+    	
+    }
+    
+    //**************** Map default details to user ***********
+    
+    public void updateDefaultPackage(int userId)
+    {
+    	
+    	int succVal=0;
+    	
+    	try {
+    	Connection con = null;
+        PreparedStatement pstmt = null;
+        con=ConnectionDAO.getConnection();
+        
+        StringBuilder sql_update_default_package = new StringBuilder(Constants.SQL.SQL_UPDATE_DEFAULT_PACKAGE);
+        pstmt = con.prepareStatement(sql_update_default_package.toString());
+        pstmt.setInt(1, userId);
+        
+      	int res=pstmt.executeUpdate();
+      	
+      	System.out.println(" **********  Deleted Record: "+res);
+            if(res > 0)
+            {
+            	succVal=1;
+            }
+      } catch (Exception e) {
+     
+        e.printStackTrace();
+        System.err.println(e.getClass().getName()+": "+e.getMessage());
+    
+       
+      }
+  
+
+ 
     	
     }
     

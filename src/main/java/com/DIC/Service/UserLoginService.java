@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 import org.primefaces.PrimeFaces;
 
 import com.DIC.DAO.Impl.GeneralDAOImpl;
+import com.DIC.DAO.Impl.UserDAOImpl;
+import com.DIC.model.PackageModel;
 import com.DIC.model.UserDetails;
 
 import framework.utilities.SessionUtils;
@@ -43,6 +45,7 @@ public class UserLoginService implements Serializable{
 	    
 	    
 	    GeneralDAOImpl gDao;
+	    UserDAOImpl uDao;
 		
 		@PostConstruct 
 	    public void init()
@@ -51,6 +54,7 @@ public class UserLoginService implements Serializable{
 			log.log(Level.INFO, "Loading UserLoginService init()");
 				
 	    	gDao=new GeneralDAOImpl();
+	    	uDao=new UserDAOImpl();
 	    	
 	    	this.message="Welcome to HansiSoft Solutions";
 	    	valid=true;
@@ -165,7 +169,10 @@ public class UserLoginService implements Serializable{
 				
 				UserDetails userDetails=gDao.getUserDeta(userName, password);
 				System.out.println("User Details"+userDetails.getUserId()+"    "+userDetails.getDisName()+"    "+userDetails.getUserName());
-				SessionUtils.setUserDetails(userDetails);
+				
+				PackageModel packageModel=uDao.getPackageDetails(userDetails.getUserId());
+				
+				SessionUtils.setUserDetails(userDetails,packageModel);
 				
 				disName=SessionUtils.getUserDisName();
 				fullName=SessionUtils.getUserFullName();
