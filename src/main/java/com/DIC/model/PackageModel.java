@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class PackageModel implements Serializable{
 	
 	private int packId;
-	private String PackName;
+	private String packName;
 	private int packType;
 	private int listLimit;
 	private int packCost;
@@ -15,9 +15,7 @@ public class PackageModel implements Serializable{
 	public int getPackId() {
 		return packId;
 	}
-	public String getPackName() {
-		return PackName;
-	}
+
 	public int getPackType() {
 		return packType;
 	}
@@ -34,9 +32,7 @@ public class PackageModel implements Serializable{
 	public void setPackId(int packId) {
 		this.packId = packId;
 	}
-	public void setPackName(String packName) {
-		PackName = packName;
-	}
+
 	public void setPackType(int packType) {
 		this.packType = packType;
 	}
@@ -54,6 +50,14 @@ public class PackageModel implements Serializable{
 	}
 	public void setIsEnable(Boolean isEnable) {
 		this.isEnable = isEnable;
+	}
+
+	public String getPackName() {
+		return packName;
+	}
+
+	public void setPackName(String packName) {
+		this.packName = packName;
 	}
 	
 	

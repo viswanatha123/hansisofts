@@ -84,6 +84,8 @@ public class GeneralDAOImpl {
 			String SQL_UPDATE_DEFAULT_PACKAGE="INSERT INTO public.user_map_package (user_mp_pack_id, user_id, pack_id, create_date, is_active,is_enable)\r\n"
 					+ "VALUES(nextval('user_map_package_seq'), ?, 1, current_timestamp, 1,false);";
 			
+			String SQL_UPDATE_PACK_NAME="update user_map_package set pack_id = ? where user_id = ?";
+			
 		}
 	}
 	
@@ -1069,6 +1071,55 @@ public class GeneralDAOImpl {
     public void updateDefaultPackage(int userId)
     {
     	
+			    	int succVal=0;
+			    	
+			    	try {
+			    	Connection con = null;
+			        PreparedStatement pstmt = null;
+			        con=ConnectionDAO.getConnection();
+			        
+			        StringBuilder sql_update_default_package = new StringBuilder(Constants.SQL.SQL_UPDATE_DEFAULT_PACKAGE);
+			        pstmt = con.prepareStatement(sql_update_default_package.toString());
+			        pstmt.setInt(1, userId);
+			        
+			      	int res=pstmt.executeUpdate();
+			      	
+			      	System.out.println(" **********  Deleted Record: "+res);
+			            if(res > 0)
+			            {
+			            	succVal=1;
+			            }
+			      } catch (Exception e) {
+			     
+			        e.printStackTrace();
+			        System.err.println(e.getClass().getName()+": "+e.getMessage());
+			    
+			       
+			      }
+  
+    	
+    }
+    
+    // ******************** update package Name *************
+    
+    public int updatePackageName(String packName,int userId)
+    {
+    	int packId=0;
+    	System.out.println("----PackName----userId "+packName+"   "+userId);
+    	
+    	if(packName.equals("Basic"))
+    	{
+    		packId=1;
+    	}
+    	if(packName.equals("Advance"))
+    	{
+    		packId=2;
+    	}
+    	if(packName.equals("Super"))
+    	{
+    		packId=3;
+    	}
+    	
     	int succVal=0;
     	
     	try {
@@ -1076,10 +1127,10 @@ public class GeneralDAOImpl {
         PreparedStatement pstmt = null;
         con=ConnectionDAO.getConnection();
         
-        StringBuilder sql_update_default_package = new StringBuilder(Constants.SQL.SQL_UPDATE_DEFAULT_PACKAGE);
-        pstmt = con.prepareStatement(sql_update_default_package.toString());
-        pstmt.setInt(1, userId);
-        
+        StringBuilder sql_update_pack_name = new StringBuilder(Constants.SQL.SQL_UPDATE_PACK_NAME);
+        pstmt = con.prepareStatement(sql_update_pack_name.toString());
+        pstmt.setInt(1, packId);
+        pstmt.setInt(2, userId);
       	int res=pstmt.executeUpdate();
       	
       	System.out.println(" **********  Deleted Record: "+res);
@@ -1096,9 +1147,13 @@ public class GeneralDAOImpl {
       }
   
 
- 
+    return succVal;
     	
     }
+    
+    
+    
+    
     
 
 }
