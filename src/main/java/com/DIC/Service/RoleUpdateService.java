@@ -39,7 +39,8 @@ public class RoleUpdateService {
 	private String lName;
 	private int listLimit;
 	private PackageModel packageModel;
-	private Boolean isEnable=false;
+	private Boolean isEnable;
+	private String packName;
 		
 	
 	GeneralDAOImpl gDao;
@@ -67,6 +68,7 @@ public class RoleUpdateService {
     	//listLimit=gDao.getListLimit(userId);
     	packageModel=uDao.getPackageDetails(userId);
     	isEnable=packageModel.getIsEnable();
+    	packName=packageModel.getPackName();
     	
    	
     	recordSize=userRoleModelList.size();
@@ -109,16 +111,9 @@ public class RoleUpdateService {
 		    
 		   
 		    int val= gDao.updatePackage(isEnable,userId);
+		    int val1= gDao.updatePackageName(packName,userId);
 		   
-		   HttpSession session = SessionUtils.getSession();
-			if (session != null)
-			{
-			//session.setAttribute("listLimit",gDao.getListLimit(userId));
-				
-				
-			}
-		   
-		   
+		  
 		 
 	}
 	
@@ -218,6 +213,16 @@ public class RoleUpdateService {
 
 	public void setIsEnable(Boolean isEnable) {
 		this.isEnable = isEnable;
+	}
+
+
+	public String getPackName() {
+		return packName;
+	}
+
+
+	public void setPackName(String packName) {
+		this.packName = packName;
 	}
 
 
