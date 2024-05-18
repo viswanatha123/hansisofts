@@ -11,12 +11,17 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.servlet.http.HttpSession;
 
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
+import com.DIC.DAO.Impl.UserDAOImpl;
+import com.DIC.model.PackageModel;
 import com.DIC.model.UserRoleModel;
 import com.DIC.model.VillaModel;
+
+import framework.utilities.SessionUtils;
 
 @ManagedBean(name="roleUpdateService")
 @ViewScoped
@@ -32,9 +37,14 @@ public class RoleUpdateService {
 	private String statusMessage;
 	private String fName;
 	private String lName;
-	
+	private int listLimit;
+	private PackageModel packageModel;
+	private Boolean isEnable;
+	private String packName;
+		
 	
 	GeneralDAOImpl gDao;
+	UserDAOImpl uDao;
 	
 	@PostConstruct 
     public void init()
@@ -42,7 +52,7 @@ public class RoleUpdateService {
     	log.log(Level.INFO, "Loading RoleUpdateService init()");
      
     	gDao=new GeneralDAOImpl();
-             
+    	uDao=new UserDAOImpl();   
         
     }
 	
@@ -55,14 +65,15 @@ public class RoleUpdateService {
   	        
       
     	userRoleModelList=gDao.getRolesByUserId(userId);
+    	//listLimit=gDao.getListLimit(userId);
+    	packageModel=uDao.getPackageDetails(userId);
+    	isEnable=packageModel.getIsEnable();
+    	packName=packageModel.getPackName();
     	
-    	
-    	
-    	
+   	
     	recordSize=userRoleModelList.size();
     	
-    	
-    	
+     	
 	    	if(recordSize==0)
 	    	{
 	    		statusMessage="User id does not exist please try differnt user id.";
@@ -94,6 +105,15 @@ public class RoleUpdateService {
 		    {
 		    	statusMessage="Error Occurred, Please contact support team.";
 		    }
+		    
+		    
+		    System.out.println("----->isEanble : "+isEnable);
+		    
+		   
+		    int val= gDao.updatePackage(isEnable,userId);
+		    int val1= gDao.updatePackageName(packName,userId);
+		   
+		  
 		 
 	}
 	
@@ -163,13 +183,51 @@ public class RoleUpdateService {
 
 	public void setlName(String lName) {
 		this.lName = lName;
-	}  
-	
-	
-	
-	
-	
-	
-	
+	}
+
+
+	public int getListLimit() {
+		return listLimit;
+	}
+
+
+	public void setListLimit(int listLimit) {
+		this.listLimit = listLimit;
+	}
+
+
+	public PackageModel getPackageModel() {
+		return packageModel;
+	}
+
+
+	public void setPackageModel(PackageModel packageModel) {
+		this.packageModel = packageModel;
+	}
+
+
+	public Boolean getIsEnable() {
+		return isEnable;
+	}
+
+
+	public void setIsEnable(Boolean isEnable) {
+		this.isEnable = isEnable;
+	}
+
+
+	public String getPackName() {
+		return packName;
+	}
+
+
+	public void setPackName(String packName) {
+		this.packName = packName;
+	}
+
+
+
+
+
 	
 }

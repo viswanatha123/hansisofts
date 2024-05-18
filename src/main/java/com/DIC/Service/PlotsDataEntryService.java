@@ -30,11 +30,13 @@ import javax.servlet.http.HttpSession;
 
 import com.DIC.DAO.ConnectionDAO;
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
+import com.DIC.DAO.Impl.UserDAOImpl;
 //import com.DIC.DAO.Impl.ConnectionDAOImpl.Constants;
 import com.DIC.model.LayoutMode;
 import com.DIC.model.PlotsDataEntryModel;
 
 import framework.utilities.SessionUtils;
+import framework.utilities.Utilities;
 
 import org.primefaces.PrimeFaces;
 import org.primefaces.model.DefaultStreamedContent;
@@ -57,7 +59,6 @@ public class PlotsDataEntryService implements Serializable{
 	  private String name;
 	  private String location;
 	  private int persqft;
-	  //private Double persqft = Double.valueOf(0);
 	  private int plotarea;
 	  private String contactOwner;
 	  private String ownerName;
@@ -75,12 +76,13 @@ public class PlotsDataEntryService implements Serializable{
 	  private String facing;
       private String agentName;
   	  private UploadedFile file;
+  	  private int listLimit;
+  	  private int listedCount=-1;
+  	  private Boolean isEnable;
+  	  private int userId;
 
       
-     
-
-	  //private final Map<String,Map<String,String>> data = new HashMap<>();
-	  private String country;   
+  	  private String country;   
 	  private String city;  
 	  private Map<String, String> primaryModel;
 	  private Map<String,String> primLocation; 
@@ -89,6 +91,7 @@ public class PlotsDataEntryService implements Serializable{
 	  	  
 	  
 	   ConnectionDAOImpl dao;
+	   UserDAOImpl uDao;
 	   
 	   public PlotsDataEntryService()
 	   {
@@ -98,8 +101,9 @@ public class PlotsDataEntryService implements Serializable{
 	   public void init()
 	      {
 	          log.log(Level.INFO, "Loading PlotsDataEntryService init()");
-	          dao=new ConnectionDAOImpl();
+              dao=new ConnectionDAOImpl();
 	          primaryModel=dao.getPrimaryLocation();
+	          uDao=new UserDAOImpl();
               primLocation  = new HashMap<>(); 
               for(Map.Entry<String, String> pp:primaryModel.entrySet())
               {
@@ -110,7 +114,38 @@ public class PlotsDataEntryService implements Serializable{
               }
               primLocationSort=new TreeMap<>(primLocation);
 	          
-	      }
+              
+	              HttpSession session = SessionUtils.getSession();
+			       	if (session != null)
+			    	{
+			    		if(session.getAttribute("userId")!=null)
+			    		{
+			    		   
+			    			userId= Integer.parseInt(session.getAttribute("userId").toString());
+			    		    		if(Integer.parseInt(session.getAttribute("listLimit").toString()) > 0)
+			    		    		{
+			    		    			 listLimit = Integer.parseInt(session.getAttribute("listLimit").toString());
+			    		    			 isEnable = Boolean.valueOf(session.getAttribute("isEnable").toString());
+			    		    			 
+			    		    			 
+			    		    			 
+			    		    			 listedCount=uDao.getAllPropByUserId(Integer.parseInt(session.getAttribute("userId").toString())).size();
+			    		    			  log.log(Level.INFO, "listedCount  listLimit :"+listedCount+"  <=  "+listLimit+"     "+isEnable);
+			    		    		}
+			    		    		    		    
+			    		}
+			    		if(session.getAttribute("userId")==null)
+		    		    {    	
+		    		    	
+			    			userId=-1;
+			    			listLimit=1;
+			    			listedCount=0;
+			    			
+			    			  log.log(Level.INFO, "listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
+		    		    }
+			    		
+			    	}
+	  }
 	      
 	public void upload() {
 		     if (file != null) {
@@ -458,6 +493,40 @@ public class PlotsDataEntryService implements Serializable{
 			public void setPrimLocationSort(TreeMap<String, String> primLocationSort) {
 				this.primLocationSort = primLocationSort;
 			}
+
+			public int getListLimit() {
+				return listLimit;
+			}
+
+			public void setListLimit(int listLimit) {
+				this.listLimit = listLimit;
+			}
+
+			public int getListedCount() {
+				return listedCount;
+			}
+
+			public void setListedCount(int listedCount) {
+				this.listedCount = listedCount;
+			}
+
+			public Boolean getIsEnable() {
+				return isEnable;
+			}
+
+			public void setIsEnable(Boolean isEnable) {
+				this.isEnable = isEnable;
+			}
+
+			public int getUserId() {
+				return userId;
+			}
+
+			public void setUserId(int userId) {
+				this.userId = userId;
+			}
+
+			
 	      
 
 }

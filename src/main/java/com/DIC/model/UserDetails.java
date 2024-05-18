@@ -14,6 +14,10 @@ public class UserDetails implements Serializable {
 	private String phone;
 	private Date create_date;
 	private int is_active;
+	private int listLimit;
+	private String packName;
+	private Boolean isEnable;
+	
 	
 	private String disName;
 	
@@ -117,8 +121,37 @@ public class UserDetails implements Serializable {
 		this.userName = userName;
 	}
 
-	
-	
+
+	public int getListLimit() {
+		return listLimit;
+	}
+
+
+	public void setListLimit(int listLimit) {
+		this.listLimit = listLimit;
+	}
+
+
+	public String getPackName() {
+		return packName;
+	}
+
+
+	public void setPackName(String packName) {
+		this.packName = packName;
+	}
+
+
+	public Boolean getIsEnable() {
+		return isEnable;
+	}
+
+
+	public void setIsEnable(Boolean isEnable) {
+		this.isEnable = isEnable;
+	}
+
+
 	
 
 }

@@ -12,6 +12,7 @@ public class UserRoleModel implements Serializable{
 	private String roleName;
 	private boolean isActive;
 	private String profileRole;
+	private int listLimit;
 	
 	
 	
@@ -68,6 +69,12 @@ public class UserRoleModel implements Serializable{
 	}
 	public void setProfileRole(String profileRole) {
 		this.profileRole = profileRole;
+	}
+	public int getListLimit() {
+		return listLimit;
+	}
+	public void setListLimit(int listLimit) {
+		this.listLimit = listLimit;
 	}
 	
 	

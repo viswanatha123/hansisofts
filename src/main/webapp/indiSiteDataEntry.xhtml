@@ -5,7 +5,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
       
       <h:head>
    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
@@ -23,6 +24,21 @@
   <ui:param name="page" value="Admin" />
   <ui:define name="title"><p:outputLabel id="display1" style="color: block">Post Property &nbsp;</p:outputLabel><p:outputLabel id="display2" style="color: red">FREE</p:outputLabel>
   <p>Individual Site DataEntry</p>
+  
+      
+  	    <div class="indiDataEntry" jsf:rendered="#{indiSiteDataEntryService.isEnable eq false and indiSiteDataEntryService.listedCount eq 0}">
+	   
+	       <p:panel  style="background: #FFFF00;width: 100%; height:50px;font-size: 15px ; text-align:center" >
+	  			<p:outputLabel  style="font-weight: bold; color:red;" value="Please subscribe package to listing propertys, Contact support team +91 9632152255 ." />
+	  		</p:panel>
+	   </div>
+
+      <div class="Error" jsf:rendered="#{indiSiteDataEntryService.listedCount ge indiSiteDataEntryService.listLimit and indiSiteDataEntryService.isEnable eq true}">
+	  		<p:panel  style="background: #FFFF00;width: 100%; height:50px;font-size: 15px ; text-align:center" >
+	  			<p:outputLabel  style="font-weight: bold; color:red;" value="Exceed your limits property listing.. #{indiSiteDataEntryService.listedCount}" />
+	  		</p:panel>
+	  </div>
+	  <div class="indiDataEntry" jsf:rendered="#{indiSiteDataEntryService.listedCount lt indiSiteDataEntryService.listLimit and indiSiteDataEntryService.isEnable eq true or indiSiteDataEntryService.listedCount eq 0 and indiSiteDataEntryService.userId eq -1}">
   <div class="card">
   <h:form id="form" enctype="multipart/form-data">
   <p:messages id="msgs"/>
@@ -175,6 +191,7 @@
   
   
 </h:form>
+</div>
 </div>
 </ui:define>
 </ui:composition>

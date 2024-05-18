@@ -77,6 +77,15 @@ public class GeneralDAOImpl {
 			String SQL_FIND_USER_NAME="select * from user_deta where user_name= ? order by fname ,lname";
 			String SQL_UPDATE_PASSWORD="update user_deta set user_pass=? where user_id = ?";
 			String SQL_DEL_USER="delete from user_deta where user_id=?";
+			String SQL_FIND_LIST_LIMIT="select * from user_deta where user_id= ?";
+			//String SQL_UPDATE_LIST_LIMIT="update user_deta set list_limit = ? where user_id = ?";
+			
+			String SQL_UPDATE_LIST_LIMIT="update user_map_package set is_enable=? where user_id= ?";
+			String SQL_UPDATE_DEFAULT_PACKAGE="INSERT INTO public.user_map_package (user_mp_pack_id, user_id, pack_id, create_date, is_active,is_enable)\r\n"
+					+ "VALUES(nextval('user_map_package_seq'), ?, 1, current_timestamp, 1,false);";
+			
+			String SQL_UPDATE_PACK_NAME="update user_map_package set pack_id = ? where user_id = ?";
+			
 		}
 	}
 	
@@ -562,6 +571,7 @@ public class GeneralDAOImpl {
 				userDetails.setlName(rs.getString("lname"));
 				userDetails.setAddress(rs.getString("address"));
 				userDetails.setUserName(rs.getString("user_name"));
+				//userDetails.setListLimit(rs.getInt("list_limit"));
 				
 					
 								
@@ -613,6 +623,8 @@ public class GeneralDAOImpl {
 				userRoleModel.setRoleName(rs.getString("role_name"));
 				userRoleModel.setActive(rs.getString("is_active").equals("1") ? true: false);
 				userRoleModel.setProfileRole(rs.getString("is_profile"));
+				
+				
 				
 				userRoleModelList.add(userRoleModel);					
 			}
@@ -718,12 +730,12 @@ public class GeneralDAOImpl {
     
  // ***************** Save User registation  **************
     
-    public String saveUserRegist(UserDetails userDetails)
+    public String saveUserRegist(UserDetails userDetails,int list_limit)
     {
     	String succVal="";
-    	
+    	int userId=0;
         try {
-        	int userId;
+        	
             Connection con = null;
             PreparedStatement pstmt = null;
             con=ConnectionDAO.getConnection();
@@ -737,6 +749,7 @@ public class GeneralDAOImpl {
             pstmt.setString(4, userDetails.getUserPassword());
             pstmt.setString(5, userDetails.getAddress());
             pstmt.setString(6, userDetails.getPhone());
+            //pstmt.setInt(7,list_limit );
             
            
             	int res=pstmt.executeUpdate();
@@ -766,8 +779,14 @@ public class GeneralDAOImpl {
 							int createdRolesCount=psRole.executeUpdate();
 							System.out.println("*********** Role created count ************ :"+createdRolesCount+"     "+createDefaultRoles(userId));
 						}
-				}    
+				} 
+				
+				if(userId > 0)
+				{
+					updateDefaultPackage(userId);
+				}
 	            
+				
 	            
 	            
 	            
@@ -979,8 +998,160 @@ public class GeneralDAOImpl {
 
     }
     
+    /*
+    public int getListLimit(int userId)
+    {
+    	int listLimit=0;
+    	Connection con = null;
+		PreparedStatement ps = null;
+		
+		UserDetails userDetails=new UserDetails();
+
+		try {
+			con = ConnectionDAO.getConnection();
+			StringBuilder sql_find_list_limit = new StringBuilder(Constants.SQL.SQL_FIND_LIST_LIMIT);
+			ps = con.prepareStatement(sql_find_list_limit.toString());
+			ps.setInt(1, userId);
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				listLimit=rs.getInt("list_limit");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        //return false;
+		}
+		
+		return listLimit;
     	
-   
+    }
+    */
+    public int updatePackage(Boolean isEnable ,int userId)
+    {
+    	
+    	System.out.println("------------------1-Package Eangle------>"+isEnable+"    "+userId);
+    	
+  
+    	
+    	int succVal=0;
+    	
+    	try {
+    	Connection con = null;
+        PreparedStatement pstmt = null;
+        con=ConnectionDAO.getConnection();
+        
+        StringBuilder sql_update_list_limit = new StringBuilder(Constants.SQL.SQL_UPDATE_LIST_LIMIT);
+        pstmt = con.prepareStatement(sql_update_list_limit.toString());
+        pstmt.setBoolean(1, isEnable);
+        pstmt.setInt(2, userId);
+      	int res=pstmt.executeUpdate();
+      	
+      	System.out.println(" **********  Deleted Record: "+res);
+            if(res > 0)
+            {
+            	succVal=1;
+            }
+      } catch (Exception e) {
+     
+        e.printStackTrace();
+        System.err.println(e.getClass().getName()+": "+e.getMessage());
+       //succVal=e.getMessage();
+        //return succVal;
+       
+      }
+  
+
+    return succVal;
+    	
+    }
+    
+    //**************** Map default details to user ***********
+    
+    public void updateDefaultPackage(int userId)
+    {
+    	
+			    	int succVal=0;
+			    	
+			    	try {
+			    	Connection con = null;
+			        PreparedStatement pstmt = null;
+			        con=ConnectionDAO.getConnection();
+			        
+			        StringBuilder sql_update_default_package = new StringBuilder(Constants.SQL.SQL_UPDATE_DEFAULT_PACKAGE);
+			        pstmt = con.prepareStatement(sql_update_default_package.toString());
+			        pstmt.setInt(1, userId);
+			        
+			      	int res=pstmt.executeUpdate();
+			      	
+			      	System.out.println(" **********  Deleted Record: "+res);
+			            if(res > 0)
+			            {
+			            	succVal=1;
+			            }
+			      } catch (Exception e) {
+			     
+			        e.printStackTrace();
+			        System.err.println(e.getClass().getName()+": "+e.getMessage());
+			    
+			       
+			      }
+  
+    	
+    }
+    
+    // ******************** update package Name *************
+    
+    public int updatePackageName(String packName,int userId)
+    {
+    	int packId=0;
+    	System.out.println("----PackName----userId "+packName+"   "+userId);
+    	
+    	if(packName.equals("Basic"))
+    	{
+    		packId=1;
+    	}
+    	if(packName.equals("Advance"))
+    	{
+    		packId=2;
+    	}
+    	if(packName.equals("Super"))
+    	{
+    		packId=3;
+    	}
+    	
+    	int succVal=0;
+    	
+    	try {
+    	Connection con = null;
+        PreparedStatement pstmt = null;
+        con=ConnectionDAO.getConnection();
+        
+        StringBuilder sql_update_pack_name = new StringBuilder(Constants.SQL.SQL_UPDATE_PACK_NAME);
+        pstmt = con.prepareStatement(sql_update_pack_name.toString());
+        pstmt.setInt(1, packId);
+        pstmt.setInt(2, userId);
+      	int res=pstmt.executeUpdate();
+      	
+      	System.out.println(" **********  Deleted Record: "+res);
+            if(res > 0)
+            {
+            	succVal=1;
+            }
+      } catch (Exception e) {
+     
+        e.printStackTrace();
+        System.err.println(e.getClass().getName()+": "+e.getMessage());
+    
+       
+      }
+  
+
+    return succVal;
+    	
+    }
+    
+    
     
     
     

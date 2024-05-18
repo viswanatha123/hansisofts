@@ -28,8 +28,10 @@ public class UserRoleService implements Serializable{
 	private String userName;
 	private String disName;
 	private List<String> userRole; 
+
 	 
 	GeneralDAOImpl gDao;
+	
 	
 	@PostConstruct 
     public void init()
@@ -51,11 +53,8 @@ public class UserRoleService implements Serializable{
     		disName = (String)session.getAttribute("userName");
     		
     		
+    		
     		System.out.println(" ************ logged in user Details : "+userId+"    "+userName+"   "+disName);
-    		
-    		
-    		
-    		
     		userRole=gDao.getUserRole(userId);
     		}
     	}
@@ -74,6 +73,10 @@ public class UserRoleService implements Serializable{
 	public void setUserRole(List<String> userRole) {
 		this.userRole = userRole;
 	}
+
+
+
+
 	
 
 }

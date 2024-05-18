@@ -43,7 +43,7 @@
             
             <p:tab title="Profile">
                		<h:panelGrid columns="3" cellpadding="7" styleClass="mb-3">
-               			<p:dataTable id="product" widgetVar="dtProducts" var="product"   value="#{userProfileService.userDetailsList}" editable="true"  style="margin-bottom:20px;width:50%;" 
+               			<p:dataTable id="product" widgetVar="dtProducts" var="product"   value="#{userProfileService.userDetails}" editable="true"  style="margin-bottom:20px;width:75%;" 
 				reflow="true" styleClass="products-table"  rowKey="#{product.userId}"  paginatorPosition="bottom" >
 						  
 					           			  
@@ -123,8 +123,23 @@
 			                
 			                        <h:outputText value="#{product.create_date}"/>
 			              </p:column>
-			               
-			               
+			              
+			              <p:column headerText="Property Listed">
+			                     <h:outputText value="#{userProfileService.listedCount}"/>
+			              </p:column>
+			              
+			               <p:column headerText="Pack Name">
+			                     <h:outputText value="#{product.packName}"/>
+			              </p:column>
+			              
+			              <p:column headerText="Is Enable Pack">
+			                     <h:outputText value="#{product.isEnable}"/>
+			              </p:column>
+			              
+			              <p:column headerText="List Limit">
+			                     <h:outputText value="#{product.listLimit}"/>
+			              </p:column>
+			         			               
 			              <p:column headerText="Is Active">
 			                <p:cellEditor>
 			                    <f:facet name="output">
@@ -192,7 +207,7 @@
 							 	
 							             						                
 							                
-							          <p:dataTable var="product" value="#{userProfileService.leadModelList}">
+							          <p:dataTable var="product" value="#{userProfileService.leadModelList}" >
 								            <p:column headerText="Lead Name">
 								                <h:outputText value="#{product.leadName}" />
 								            </p:column>
@@ -201,8 +216,12 @@
 								                <h:outputText value="#{product.leadContact}" />
 								            </p:column>
 								            
-								            <p:column headerText="Lead Email">
+								            <p:column headerText="Lead Email" width="40%">
 								                <h:outputText value="#{product.leadEmail}" />
+								            </p:column>
+								            
+								             <p:column headerText="Created Date">
+								                <h:outputText value="#{product.create_date}" />
 								            </p:column>
 								            
 								        </p:dataTable>

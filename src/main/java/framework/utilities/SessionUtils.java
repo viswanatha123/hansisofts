@@ -4,6 +4,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.DIC.model.PackageModel;
 import com.DIC.model.UserDetails;
 
 public class SessionUtils {
@@ -55,7 +56,7 @@ public class SessionUtils {
 	
 	
 	
-	public static void setUserDetails(UserDetails UserDetails) {
+	public static void setUserDetails(UserDetails UserDetails, PackageModel packageModel) {
 		
 		if(UserDetails!=null)
 		{
@@ -69,12 +70,16 @@ public class SessionUtils {
 						session.setAttribute("address", UserDetails.getAddress());
 						session.setAttribute("disName", SessionUtils.displayName(UserDetails.getfName(),UserDetails.getlName()));
 						session.setAttribute("fullName", SessionUtils.displayFullName(UserDetails.getfName(),UserDetails.getlName()));
+						session.setAttribute("listLimit",packageModel.getListLimit());
+						session.setAttribute("isEnable",packageModel.getIsEnable());
+						
+						
 						
 						
 					}
 					
-				}
-	     }
+		}
+	  }
 	
 		public static String displayName(String fName,String lName)
 		{

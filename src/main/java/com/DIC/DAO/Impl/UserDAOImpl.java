@@ -21,6 +21,7 @@ import com.DIC.model.AllPropertyList;
 import com.DIC.model.IndividualSiteModel;
 import com.DIC.model.LayoutMode;
 import com.DIC.model.LeadModel;
+import com.DIC.model.PackageModel;
 import com.DIC.model.UserDetails;
 import com.DIC.model.UserProfileRoleModel;
 
@@ -53,7 +54,7 @@ public class UserDAOImpl {
 		
 			String SQL_LEADS_BY_PROP_ID="select * from leads where pro_id = ? and prop_type= ? and is_active ='1'";
 			
-			
+			/*
 			String SQL_ALL_PROP="SELECT lay.layout_id as \"prop_id\", lay.name as name, 'layout' as \"property_type\",create_date as \"Create Date\",(select count(*) from leads ls where pro_id =lay.layout_id and prop_type='layout') as \"count\" FROM hansi_layout lay where lay.user_id= ?\r\n"
 					+ "	UNION ALL\r\n"
 					+ "	SELECT agri.agri_id as \"prop_id\" ,agri.owner_name as name, 'agri' as \"property_type\" ,create_date as \"Create Date\",(select count(*) from leads ls where pro_id =agri.agri_id and prop_type='agri') as \"count\" FROM hansi_agricultural agri where agri.user_id= ?\r\n"
@@ -61,10 +62,27 @@ public class UserDAOImpl {
 					+ "	SELECT ind.ind_id as \"prop_id\" ,ind.owner_name as name,'indi' as \"property_type\",create_date as \"Create Date\",(select count(*) from leads ls where pro_id =ind.ind_id and prop_type='indi') as \"count\" FROM hansi_individual_site ind where ind.user_id= ?\r\n"
 					+ "	UNION ALL\r\n"
 					+ "	SELECT villa.villa_id as \"prop_id\", villa.owner_name as name,'villa' as \"property_type\" ,create_date as \"Create Date\", (select count(*) from leads ls where pro_id =villa.villa_id and prop_type='villa') as \"count\"FROM villa_plot  villa where villa.user_id=?;\r\n";
+			*/
+			String SQL_ALL_PROP="select prop_id , name,property_type, \"Create Date\" ,count from (SELECT lay.layout_id as \"prop_id\", lay.name as name, 'layout' as \"property_type\",create_date as \"Create Date\",(select count(*) from leads ls where pro_id =lay.layout_id and prop_type='layout') as \"count\" FROM hansi_layout lay where lay.user_id= ?\r\n"
+					+ "					UNION ALL\r\n"
+					+ "					SELECT agri.agri_id as \"prop_id\" ,agri.owner_name as name, 'agri' as \"property_type\" ,create_date as \"Create Date\",(select count(*) from leads ls where pro_id =agri.agri_id and prop_type='agri') as \"count\" FROM hansi_agricultural agri where agri.user_id= ? \r\n"
+					+ "					UNION ALL\r\n"
+					+ "					SELECT ind.ind_id as \"prop_id\" ,ind.owner_name as name,'indi' as \"property_type\",create_date as \"Create Date\",(select count(*) from leads ls where pro_id =ind.ind_id and prop_type='indi') as \"count\" FROM hansi_individual_site ind where ind.user_id= ?\r\n"
+					+ "					UNION ALL\r\n"
+					+ "					SELECT villa.villa_id as \"prop_id\", villa.owner_name as name,'villa' as \"property_type\" ,create_date as \"Create Date\", (select count(*) from leads ls where pro_id =villa.villa_id and prop_type='villa') as \"count\"FROM villa_plot  villa where villa.user_id= ?)\r\n"
+					+ "					as alldata order by alldata.\"Create Date\" desc;";
+		
+			
 			
 			
 			 String SQL_INDISITE_LIST="select * from hansi_individual_site order by create_date desc";
 			 String SQL_DEL_INDISITE="delete from hansi_individual_site where ind_id = ?";
+			 String SQL_PACKAGE_DETAILS="select u.user_id,p.pack_id, p.pack_name,p.pack_type ,p.list_limit,p.pack_cost ,p.pack_duration, up.is_enable from user_deta u,\r\n"
+			 		+ "user_map_package up,\r\n"
+			 		+ "package p\r\n"
+			 		+ "where u.user_id=up.user_id\r\n"
+			 		+ "and up.pack_id=p.pack_id\r\n"
+			 		+ "and u.user_id=?";
 		}
 	}
 	
@@ -214,11 +232,11 @@ public class UserDAOImpl {
     }
     
     
-    public List<UserDetails> getUser(int userId) {
+    public UserDetails getUser(int userId) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
-		List<UserDetails> userDetailsList=new ArrayList();
+		UserDetails userDetails=new UserDetails();
 		
 
 		try {
@@ -233,7 +251,7 @@ public class UserDAOImpl {
 			
 			while ( rs.next() ) {
 				
-				UserDetails userDetails=new UserDetails();
+				
 				userDetails.setUserId(rs.getInt("user_id"));
 				userDetails.setfName(rs.getString("fname"));
 				userDetails.setlName(rs.getString("lname"));
@@ -243,8 +261,9 @@ public class UserDAOImpl {
 				userDetails.setPhone(rs.getString("phone"));
 				userDetails.setCreate_date(rs.getDate("create_date"));
 				userDetails.setIs_active(rs.getInt("is_active"));
+				//userDetails.setListLimit(rs.getInt("list_limit"));
 				
-				userDetailsList.add(userDetails);
+				//userDetailsList.add(userDetails);
 						
 			}
 		} catch (SQLException e) {
@@ -253,7 +272,7 @@ public class UserDAOImpl {
 	        //return false;
 		}
 		
-		return userDetailsList;
+		return userDetails;
 	}
     
     /*
@@ -604,6 +623,53 @@ public class UserDAOImpl {
   	        return succVal;
 
   	    }
+  	    
+  	    //************************ getPackage details ****************
+  	    
+  	 public PackageModel getPackageDetails(int userId)
+  	{
+              
+  		
+  		PackageModel packageModel=new PackageModel();
+     
+  		try {
+  			
+  		
+  			Connection con = null;
+  			PreparedStatement pstmt = null;
+  		
+  			
+  			con=ConnectionDAO.getConnection();
+  			StringBuilder sql_package_details = new StringBuilder(Constants.SQL.SQL_PACKAGE_DETAILS);
+  			
+  							pstmt = con.prepareStatement(sql_package_details.toString());
+  							pstmt.setInt(1,userId);
+  							ResultSet rs = pstmt.executeQuery();
+  	         while ( rs.next() ) {
+  	        	 
+  	        	System.out.println("------------------------package name --------------->"+rs.getString("pack_name"));
+  	        	
+  	        	packageModel.setPackId(rs.getInt("pack_id"));
+  	        	packageModel.setPackName(rs.getString("pack_name"));
+  	        	packageModel.setPackType(rs.getInt("pack_type"));
+  	        	packageModel.setListLimit(rs.getInt("list_limit"));
+  	        	packageModel.setPackCost(rs.getInt("pack_cost"));
+  	        	packageModel.setPackDuration(rs.getInt("pack_duration"));
+  	           	packageModel.setIsEnable(rs.getBoolean("is_enable"));
+  	        	
+  	        	  	        	
+  	            }
+  	         	
+  	         pstmt.close();
+  	         rs.close();
+  	         con.close();
+  	      } catch (Exception e) {
+  	        e.printStackTrace();
+  	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+  	       }
+  	return packageModel;		
+  	}
+      
   	
 	
 	
