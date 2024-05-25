@@ -628,17 +628,11 @@ public class UserDAOImpl {
   	    
   	 public PackageModel getPackageDetails(int userId)
   	{
-              
-  		
-  		PackageModel packageModel=new PackageModel();
+    	PackageModel packageModel=new PackageModel();
      
   		try {
-  			
-  		
   			Connection con = null;
   			PreparedStatement pstmt = null;
-  		
-  			
   			con=ConnectionDAO.getConnection();
   			StringBuilder sql_package_details = new StringBuilder(Constants.SQL.SQL_PACKAGE_DETAILS);
   			

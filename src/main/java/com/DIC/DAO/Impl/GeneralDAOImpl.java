@@ -26,6 +26,8 @@ import com.DIC.model.ConnectorMode;
 import com.DIC.model.HomeLoanDataEntryModel;
 import com.DIC.model.IndividualSiteModel;
 import com.DIC.model.LayoutMode;
+import com.DIC.model.PackPriceModel;
+import com.DIC.model.PackageModel;
 import com.DIC.model.PlotsDataEntryModel;
 import com.DIC.model.UserDetails;
 import com.DIC.model.UserRoleModel;
@@ -86,6 +88,9 @@ public class GeneralDAOImpl {
 			
 			String SQL_UPDATE_PACK_NAME="update user_map_package set pack_id = ? where user_id = ?";
 			
+		   String SQL_PACKAGE_PRICE="select * from package order by pack_id";
+		   String SQL_PACKAGE_BY_ID="select * from package where pack_id = ? order by pack_id";
+		   String SQL_EDIT_PACKAGE_BY_ID="update package set pack_name= ? ,pack_type= ? , list_limit = ?, pack_cost = ?, pack_duration = ? where pack_id = ?";
 		}
 	}
 	
@@ -564,16 +569,13 @@ public class GeneralDAOImpl {
 
 			if (rs.next()) {
 				
-				
-				
 				userDetails.setUserId(rs.getInt("user_id"));
 				userDetails.setfName(rs.getString("fname"));
 				userDetails.setlName(rs.getString("lname"));
 				userDetails.setAddress(rs.getString("address"));
 				userDetails.setUserName(rs.getString("user_name"));
-				//userDetails.setListLimit(rs.getInt("list_limit"));
+				userDetails.setCreate_date(rs.getDate("create_date"));
 				
-					
 								
 			}
 		} catch (SQLException e) {
@@ -1151,6 +1153,130 @@ public class GeneralDAOImpl {
     	
     }
     
+    
+    // ********************************** Package price details *********************
+    public List<PackPriceModel> getPackagePriceDetails()
+  	{
+              
+  		
+    	List<PackPriceModel> packPriceModelList=new ArrayList<>();
+     
+  		try {
+  			
+  		
+  			Connection con = null;
+  			PreparedStatement pstmt = null;
+  		
+  			
+  			con=ConnectionDAO.getConnection();
+  			StringBuilder sql_package_price = new StringBuilder(Constants.SQL.SQL_PACKAGE_PRICE);
+  			
+  							pstmt = con.prepareStatement(sql_package_price.toString());
+  							ResultSet rs = pstmt.executeQuery();
+  	         while ( rs.next() ) {
+  	        	 
+  	        	PackPriceModel packPriceModel=new PackPriceModel();
+  	        	
+  	        	packPriceModel.setPackId(rs.getInt("pack_id"));
+  	        	packPriceModel.setPackName(rs.getString("pack_name"));
+  	        	packPriceModel.setPackType(rs.getInt("pack_type"));
+  	        	packPriceModel.setListLimit(rs.getInt("list_limit"));
+  	        	packPriceModel.setCost(rs.getInt("pack_cost"));
+  	        	packPriceModel.setDuration(rs.getInt("pack_duration"));
+  	       	        	
+  	        	packPriceModelList.add(packPriceModel); 	        	
+  	            }
+  	         	
+  	         pstmt.close();
+  	         rs.close();
+  	         con.close();
+  	      } catch (Exception e) {
+  	        e.printStackTrace();
+  	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+  	       }
+  	return packPriceModelList;		
+  	}
+      
+    public PackPriceModel getPackageById(int packId)
+  	{
+              
+    	PackPriceModel packPriceModel=new PackPriceModel();
+     
+  		try {
+  			
+  		
+  			Connection con = null;
+  			PreparedStatement pstmt = null;
+  		
+  			
+  			con=ConnectionDAO.getConnection();
+  			StringBuilder sql_package_by_id = new StringBuilder(Constants.SQL.SQL_PACKAGE_BY_ID);
+  			
+  							pstmt = con.prepareStatement(sql_package_by_id.toString());
+  							pstmt.setInt(1, packId);
+  							ResultSet rs = pstmt.executeQuery();
+  	         while ( rs.next() ) {
+  	        	 
+  	         	packPriceModel.setPackId(rs.getInt("pack_id"));
+  	        	packPriceModel.setPackName(rs.getString("pack_name"));
+  	        	packPriceModel.setPackType(rs.getInt("pack_type"));
+  	        	packPriceModel.setListLimit(rs.getInt("list_limit"));
+  	        	packPriceModel.setCost(rs.getInt("pack_cost"));
+  	        	packPriceModel.setDuration(rs.getInt("pack_duration"));
+  	       	        	
+  	        		        	
+  	            }
+  	         	
+  	         pstmt.close();
+  	         rs.close();
+  	         con.close();
+  	      } catch (Exception e) {
+  	        e.printStackTrace();
+  	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+  	       }
+  	return packPriceModel;		
+  	}
+    
+    // ****************************** Edit package details ***************
+    
+    public int editPackageDetais(int packageId, String packName,int packType,int listLimit,int cost,int duration)
+    {
+    	int succVal=0;
+    	
+    	try {
+    	Connection con = null;
+        PreparedStatement pstmt = null;
+        con=ConnectionDAO.getConnection();
+        
+        StringBuilder sql_edit_package_by_id = new StringBuilder(Constants.SQL.SQL_EDIT_PACKAGE_BY_ID);
+        pstmt = con.prepareStatement(sql_edit_package_by_id.toString());
+        pstmt.setString(1, packName);
+        pstmt.setInt(2, packType);
+        pstmt.setInt(3, listLimit);
+        pstmt.setInt(4, cost);
+        pstmt.setInt(5, duration);
+        pstmt.setInt(6, packageId);
+      	int res=pstmt.executeUpdate();
+      	
+      	System.out.println(" **********  Deleted Record: "+res);
+            if(res > 0)
+            {
+            	succVal=1;
+            }
+      } catch (Exception e) {
+     
+        e.printStackTrace();
+        System.err.println(e.getClass().getName()+": "+e.getMessage());
+       //succVal=e.getMessage();
+        //return succVal;
+       
+      }
+  
+
+    return succVal;
+    	
+    }
+      
     
     
     
