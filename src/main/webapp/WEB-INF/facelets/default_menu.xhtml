@@ -85,15 +85,20 @@ and open the template in the editor.
 			            	 </p:submenu>
 			                
 			              <p:submenu label="Sell" style="text-align: center;width: 110px;" icon="pi pi-fw pi-book">
-			              <p:column>
-					        <p:submenu label="Property Types">
-					                <p:menuitem value="Layout" rendered="#{userRoleService.userRole.contains('Layout Entry')? true : false }" icon="pi pi-fw pi-credit-card" outcome="plotsDataEntry"/>
-					                <p:menuitem value="Agricultural Land" rendered="#{userRoleService.userRole.contains('Agri Entry')? true : false }" icon="pi pi-fw pi-discord" outcome="agriDataEntry"/>
-					                <p:menuitem value="Individual Site" rendered="#{userRoleService.userRole.contains('Indiv Entry')? true : false }" icon="pi pi-fw pi-tablet" outcome="indiSiteDataEntry"/>
-					                <p:menuitem value="Villa/Flat Site" rendered="#{userRoleService.userRole.contains('Villa Entry')? true : false }" icon="pi pi-fw pi-tablet" outcome="villaPlotDataentry"/>
-					                <p:menuitem value="Rent" rendered="#{userRoleService.userRole.contains('Rent Entry')? true : false }" icon="pi pi-fw pi-tablet" outcome="rentalDataEntry"/>
-			                </p:submenu>
-			               </p:column>
+				              <p:column>
+							        <p:submenu label="Property Types">
+							                <p:menuitem value="Layout" rendered="#{userRoleService.userRole.contains('Layout Entry')? true : false }" icon="pi pi-fw pi-credit-card" outcome="plotsDataEntry"/>
+							                <p:menuitem value="Agricultural Land" rendered="#{userRoleService.userRole.contains('Agri Entry')? true : false }" icon="pi pi-fw pi-discord" outcome="agriDataEntry"/>
+							                <p:menuitem value="Individual Site" rendered="#{userRoleService.userRole.contains('Indiv Entry')? true : false }" icon="pi pi-fw pi-tablet" outcome="indiSiteDataEntry"/>
+							                <p:menuitem value="Villa/Flat Site" rendered="#{userRoleService.userRole.contains('Villa Entry')? true : false }" icon="pi pi-fw pi-tablet" outcome="villaPlotDataentry"/>
+							                <p:menuitem value="Rent" rendered="#{userRoleService.userRole.contains('Rent Entry')? true : false }" icon="pi pi-fw pi-tablet" outcome="rentalDataEntry"/>
+					                </p:submenu>
+					          </p:column>
+					          <p:column>
+				                <p:submenu label="Agent and Builder">
+						                <p:menuitem value="Ad Packages"  icon="pi pi-fw pi-credit-card" outcome="packageDetails"/>
+						        </p:submenu>
+			                  </p:column>
 			              </p:submenu>
 			              
 			              <p:submenu label="Rent" style="text-align: center;width: 110px;" icon="pi pi-fw pi-book">

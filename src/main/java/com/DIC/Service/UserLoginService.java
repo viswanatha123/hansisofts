@@ -18,6 +18,8 @@ import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.PackageModel;
 import com.DIC.model.UserDetails;
 
+import framework.EventHandler;
+import framework.utilities.DurationValidation;
 import framework.utilities.SessionUtils;
 
 
@@ -168,17 +170,28 @@ public class UserLoginService implements Serializable{
 				HttpSession session = SessionUtils.getSession();
 				
 				UserDetails userDetails=gDao.getUserDeta(userName, password);
-				System.out.println("User Details"+userDetails.getUserId()+"    "+userDetails.getDisName()+"    "+userDetails.getUserName());
+				System.out.println("User Details"+userDetails.getUserId()+"    "+userDetails.getUserName()+"    "+userDetails.getCreate_date());
 				
 				PackageModel packageModel=uDao.getPackageDetails(userDetails.getUserId());
 				
-				SessionUtils.setUserDetails(userDetails,packageModel);
+				boolean duraValida=DurationValidation.durationValidation(userDetails,packageModel);
+				System.out.println(" Duration Validation : "+duraValida);
 				
+				if(duraValida==false)
+				{
+					
+					HttpSession sessionlogout = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+					sessionlogout.invalidate();
+			        EventHandler.alertUserInfo("Session terminated by user.", "Bye!");
+			        
+			        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Sorry..., Your account has been expired", "Please renewal your account ,Contact our support team 9632152255");
+			        PrimeFaces.current().dialog().showMessageDynamic(message);         
+				}
+				
+				
+				SessionUtils.setUserDetails(userDetails,packageModel);
 				disName=SessionUtils.getUserDisName();
 				fullName=SessionUtils.getUserFullName();
-				
-				
-				
 				userId=SessionUtils.getUserId();
 				this.message="Welcome to HansiSoft Solutions";
 				System.out.println("******** Successful logged in  **********");

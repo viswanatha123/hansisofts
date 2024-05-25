@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+  <h:body>
+
+        
+  <ui:composition template="/WEB-INF/facelets/template.xhtml">
+  <ui:param name="page" value="" />
+  <ui:define name="title" ><p style="font-weight: bold; color:blue; font-size:15px"> Package Details</p>
+  <p>All Package Details</p>
+  <div class="card">
+	<h:form id="form">
+	 <p:growl id="msgs" showDetail="true"/>
+     <br></br>
+  
+			<center>
+			  <font size="4" color="blue" style="text-align: center;">All Package Details  </font>
+			</center>	
+					<br></br>
+
+
+
+			 <p:dataTable var="product" value="#{packPriceService.packPriceModelList}" style="width:40%;">
+				        <f:facet name="header">
+				            List of Packages
+				        </f:facet>
+				
+				        <p:column headerText="Pack Id" >
+				            <h:outputText value="#{product.packId}" />
+				        </p:column>
+				
+				        <p:column headerText="Package Name">
+				            <h:outputText value="#{product.packName}" />
+				        </p:column>
+				
+				        <p:column headerText="List Limit">
+				            <h:outputText value="#{product.listLimit}" />
+				        </p:column>
+				
+				        <p:column headerText="Cost">
+				            <h:outputText value="#{product.cost}" />
+				        </p:column>
+				        
+				        <p:column headerText="Duration">
+				            <h:outputText value="#{product.duration}" />
+				        </p:column>
+				
+				        <f:facet name="footer">
+				            <span class="font-bold">Total Packages are available</span>
+				        </f:facet>
+			    </p:dataTable>
+     		
+     				
+ </h:form>
+ </div>
+ </ui:define>
+ </ui:composition>
+ </h:body>
+</html>
