@@ -63,7 +63,7 @@
                </p:panelGrid>                   
              </p:panel>
              
-           <c:if test="#{not empty packSettingService}"> 
+           <c:if test="#{packSettingService.packName != null}"> 
              <p:panel style="background-image: url('back1.jpg'); ">   
                 <p:panelGrid columns="2" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
                 
@@ -72,22 +72,22 @@
                     </p:inputText>
                     
                     <p:outputLabel style="font-weight: bold" value="Package Type : " />
-                    <p:inputText id="packtype" value="#{packSettingService.packType}" >
-                    </p:inputText>
+                    <p:inputNumber id="packtype" value="#{packSettingService.packType}" >
+                    </p:inputNumber>
                     
                     <p:outputLabel style="font-weight: bold" value="List Limit : " />
-                    <p:inputText id="listlimit" value="#{packSettingService.listLimit}" >
-                    </p:inputText>
+                    <p:inputNumber id="listlimit" value="#{packSettingService.listLimit}" >
+                    </p:inputNumber>
                     
                     <p:outputLabel style="font-weight: bold" value="Cost : " />
-                    <p:inputText id="cost" value="#{packSettingService.cost}" >
-                    </p:inputText>
+                   <p:inputNumber id="cost" value="#{packSettingService.cost}" >
+                    </p:inputNumber>
                     
                     <p:outputLabel style="font-weight: bold" value="Duration : " />
-                    <p:inputText id="duration" value="#{packSettingService.duration}" >
-                    </p:inputText>
+                    <p:inputNumber id="duration" value="#{packSettingService.duration}" >
+                   </p:inputNumber>
                     
-                    <h:commandButton value="Save"  type="submit"  actionListener="#{packSettingService.savePackage}"  process="@this" upupdate="@form">
+                    <h:commandButton value="Update"  type="submit"  actionListener="#{packSettingService.savePackage}"  process="@this" upupdate="@form">
                                       <p:resetInput target="form"/>
                    	</h:commandButton>
                    	
