@@ -38,33 +38,54 @@ public class PackSettingService {
 	
 	public void getPackDetails() 
 	{  
+		this.packageDetails=null;
 		this.updateResult="";
 		packageDetails=gDao.getPackageById(packageId);
-		packName=packageDetails.getPackName();
-		packType=packageDetails.getPackType();
-		listLimit=packageDetails.getListLimit();
-		cost=packageDetails.getCost();
-		duration=packageDetails.getDuration();
 		
-		System.out.println(" Package Name : "+packageDetails.getPackName());
-	}
-	
-	public void savePackage() 
-	{
-		this.updateResult="";
-		int updateCount=gDao.editPackageDetais(packageId, packName,packType,listLimit,cost,duration);
-		if(updateCount>0)
+		if(packageDetails.getPackName() != null)
 		{
-			updateResult="Successup updated package details..";
-			this.packName="";;
+		
+					packName=packageDetails.getPackName();
+					packType=packageDetails.getPackType();
+					listLimit=packageDetails.getListLimit();
+					cost=packageDetails.getCost();
+					duration=packageDetails.getDuration();
+					
+					System.out.println(" Package Name : "+packageDetails.getPackName());
+		}
+		else
+		{
+			updateResult="Package id dose not exist.";
+			System.out.println("*****************Package details null ******************");
+			this.packName=null;
 			this.packType=0;
 			this.listLimit=0;
 			this.cost=0;
 			this.duration=0;
+			
+			
 		}
-		else
+	}
+	
+	public void savePackage() 
+	{
+		if(packName!=null && packType!=0 && listLimit!=0 && cost!=0 && duration!=0)
 		{
-			updateResult="There is an error occured, Please contact Support team.";
+		
+				this.updateResult="";
+				int updateCount=gDao.editPackageDetais(packageId, packName,packType,listLimit,cost,duration);
+				if(updateCount>0)
+				{
+					updateResult="Successup updated package details..";
+					
+				}
+				else
+				{
+					updateResult="There is an error occured, Please contact Support team.";
+				}
+		}else
+		{
+			this.updateResult="Please provide details";
 		}
 	}
 	
