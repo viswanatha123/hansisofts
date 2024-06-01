@@ -1196,6 +1196,8 @@ public class GeneralDAOImpl {
   	       }
   	return packPriceModelList;		
   	}
+    
+    //*************************************************** get package details ***************
       
     public PackPriceModel getPackageById(int packId)
   	{

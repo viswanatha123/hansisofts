@@ -23,26 +23,26 @@
   <ui:composition template="/WEB-INF/facelets/template.xhtml">
   <ui:param name="page" value="Admin" />
   <ui:define name="title">
-  <p:outputLabel id="display1" style="color: blue">Package Setting</p:outputLabel>
-  <p>Package Setting</p>
+  <p:outputLabel id="display1" style="color: blue">Agent Account setting</p:outputLabel>
+  <p>Agent Account setting</p>
   
   <div class="card">
   <h:form id="form" enctype="multipart/form-data">
   <p:messages id="msgs"/>
    <br></br>
+   
    			<center>
-			  <font size="4" color="blue" style="text-align: center;">Package Setting</font>
+			  <font size="4" color="blue" style="text-align: center;">Agent Account Setting  </font>
 			</center>
    			<br></br>
-     		     
-             <h:outputText style="font-weight: bold;color: green ; font-size: 17px" value="#{packSettingService.updateResult}" />
+   		<h:outputText style="font-weight: bold;color: green ; font-size: 17px" value="#{agentAccountSettingService.updateResult}" />
              
              <p:panel style="background-image: url('back1.jpg'); ">   
                 <p:panelGrid columns="4" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
                                        
                             
-                    <p:outputLabel style="font-weight: bold" for="agentName"  value="Package Id :" />
-                    <p:inputText id="agentName"  value="#{packSettingService.packageId}" >
+                    <p:outputLabel style="font-weight: bold" for="agentid"  value="Agent Id :" />
+                    <p:inputText id="agentid"  value="#{agentAccountSettingService.userId}" >
                     </p:inputText>
                                     
                     
@@ -50,7 +50,7 @@
                    <h:commandButton value="Submit"   type="submit" 
                                     process="@this"
                                     update="@form"
-                                    actionListener="#{packSettingService.getPackDetails}" >
+                                    actionListener="#{agentAccountSettingService.getAgentAccount}" >
                                     <p:resetInput target="form"/>
                    </h:commandButton>
                    
@@ -58,7 +58,7 @@
 	                                   process="@this"
 	                                   value="Clear"
                                            update="@form"
-	                                   actionListener="#{packSettingService.clear}" >
+	                                   actionListener="#{agentAccountSettingService.clear}" >
 	                                   
 	                  <p:resetInput target="form"/>
 	          	 </h:commandButton>
@@ -66,33 +66,54 @@
                </p:panelGrid>                   
              </p:panel>
              
-           <c:if test="#{packSettingService.packName != null}"> 
+             
+             
+             <c:if test="#{agentAccountSettingService.userName != null}"> 
              <p:panel style="background-image: url('back1.jpg'); ">   
                 <p:panelGrid columns="2" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
                 
-                	<p:outputLabel style="font-weight: bold" value="Package Name : " />
-                    <p:inputText id="packname" value="#{packSettingService.packName}" >
+                	<p:outputLabel style="font-weight: bold" value="First Name : " />
+                    <p:inputText id="fName" value="#{agentAccountSettingService.fName}" >
                     </p:inputText>
                     
-                    <p:outputLabel style="font-weight: bold" value="Package Type : " />
-                    <p:inputNumber id="packtype" value="#{packSettingService.packType}" >
-                    </p:inputNumber>
+                    <p:outputLabel style="font-weight: bold" value="Last Name : " />
+                    <p:inputText id="lName" value="#{agentAccountSettingService.lName}" >
+                    </p:inputText>
                     
-                    <p:outputLabel style="font-weight: bold" value="List Limit : " />
-                    <p:inputNumber id="listlimit" value="#{packSettingService.listLimit}" >
-                    </p:inputNumber>
+                    <p:outputLabel style="font-weight: bold" value="User Name : " />
+                    <p:inputText id="userName" value="#{agentAccountSettingService.userName}" >
+                    </p:inputText>
                     
-                    <p:outputLabel style="font-weight: bold" value="Cost : " />
-                   <p:inputNumber id="cost" value="#{packSettingService.cost}" >
-                    </p:inputNumber>
+                   <p:outputLabel style="font-weight: bold" value="Password : " />
+                   <p:inputText id="userPassword" value="#{agentAccountSettingService.userPassword}" >
+                   </p:inputText>
                     
-                    <p:outputLabel style="font-weight: bold" value="Duration : " />
-                    <p:inputNumber id="duration" value="#{packSettingService.duration}" >
+                   <p:outputLabel style="font-weight: bold" value="Address : " />
+                   <p:inputText id="address" value="#{agentAccountSettingService.address}" >
+                   </p:inputText>
+                   
+                   <p:outputLabel style="font-weight: bold" value="Phone : " />
+                   <p:inputText id="phone" value="#{agentAccountSettingService.phone}" >
+                   </p:inputText>
+                   
+                   <p:outputLabel for="create_date" value="Created Date : " />
+        		   <p:datePicker id="create_date"  pattern="yyyy-MM-dd" value="#{agentAccountSettingService.create_date}" showIcon="true" >
+        		   </p:datePicker>
+                   
+                   <p:outputLabel style="font-weight: bold" value="Is Active : " />
+                   <p:inputNumber id="is_active" value="#{agentAccountSettingService.is_active}" >
                    </p:inputNumber>
                     
-                    <h:commandButton value="Update"  type="submit"  actionListener="#{packSettingService.savePackage}"  process="@this" upupdate="@form">
+                    <h:commandButton value="Update"  type="submit"  actionListener="#{agentAccountSettingService.updateUser}"  process="@this" update="@form">
                                       <p:resetInput target="form"/>
                    	</h:commandButton>
+                   	
+                   	
+                   	
+                   	<p:commandButton type="submit" value="Account Renewal" actionListener="#{agentAccountSettingService.accountRenewel}" icon="ui-icon-calculator" style="background:#40E0D0;font-weight: bold;color: black;font-size: 15px"
+                   	 process="@this"  update="@form">           
+			                  <p:resetInput target="form"/>          
+				   </p:commandButton>
                    	
             
             
@@ -100,9 +121,9 @@
              </p:panel>
   			</c:if>
   
-  
-  
-  </h:form>
+   
+   
+   </h:form>
 </div>
 </ui:define>
 </ui:composition>

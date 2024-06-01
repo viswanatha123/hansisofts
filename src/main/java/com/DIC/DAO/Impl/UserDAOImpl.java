@@ -5,7 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -83,6 +85,10 @@ public class UserDAOImpl {
 			 		+ "where u.user_id=up.user_id\r\n"
 			 		+ "and up.pack_id=p.pack_id\r\n"
 			 		+ "and u.user_id=?";
+			 
+			 String SQL_UPDATE_USER="update user_deta set fname = ?, lname = ?, user_name = ?, user_pass = ?, address = ?, phone = ?, create_date = ? ,is_active = ? where user_id = ?";
+			 String SQL_ACCOUNT_RENEWEL="update user_deta set create_date = now() where user_id= ?";
+		
 		}
 	}
 	
@@ -664,7 +670,90 @@ public class UserDAOImpl {
   	return packageModel;		
   	}
       
+  	 
+  	// ***************************** Update User details **************
+  	 
+  	public String updateUser(String fName, String lName, String userName,String userPassword, String address, String phone,Date create_date, int is_active, int userId)
+    {
+    	String saveMessage="";
+    	
+        try {
+        	
+            Connection con = null;
+            PreparedStatement pstmt = null;
+            con=ConnectionDAO.getConnection();
+            
+            StringBuilder sql_update_user = new StringBuilder(Constants.SQL.SQL_UPDATE_USER);
+            pstmt = con.prepareStatement(sql_update_user.toString());
+            
+            pstmt.setString(1,fName );
+            pstmt.setString(2, lName);
+            pstmt.setString(3, userName);
+            pstmt.setString(4, userPassword);
+            pstmt.setString(5, address);
+            pstmt.setString(6, phone);
+            pstmt.setDate(7,new java.sql.Date(create_date.getTime()));
+            pstmt.setInt(8, is_active);
+            pstmt.setInt(9, userId);
+           
+            	int res=pstmt.executeUpdate();
+	            if(res > 0)
+	            {
+	            	saveMessage="Successful Updated user details.";
+	            }
+	            log.log(Level.INFO,"***** Succful saved lead values *******");
+	            
+          } catch (Exception e) {
+         
+	        e.printStackTrace();
+	        System.err.println("Leads save Error :"+e.getClass().getName()+": "+e.getMessage());
+	        log.log(Level.WARNING, "Leads save Error :"+e.getClass().getName()+": "+e.getMessage());
+	        saveMessage=e.getMessage();
+	        return saveMessage;
+	       
+          }
+      
+
+        return saveMessage;
+    }
   	
+  	
+ // ***************************** User Account Renewel **************
+ 	 
+   	public int accountRenewel(int userId)
+     {
+     	String saveMessage="";
+     	
+         try {
+         	
+             Connection con = null;
+             PreparedStatement pstmt = null;
+             con=ConnectionDAO.getConnection();
+             
+             StringBuilder sql_account_renewel = new StringBuilder(Constants.SQL.SQL_ACCOUNT_RENEWEL);
+             pstmt = con.prepareStatement(sql_account_renewel.toString());
+             pstmt.setInt(1, userId);
+            
+             	int res=pstmt.executeUpdate();
+ 	            if(res > 0)
+ 	            {
+ 	            	return 1;
+ 	            }
+ 	            log.log(Level.INFO,"***** Succful saved lead values *******");
+ 	            
+           } catch (Exception e) {
+          
+ 	        e.printStackTrace();
+ 	        System.err.println("Leads save Error :"+e.getClass().getName()+": "+e.getMessage());
+ 	        log.log(Level.WARNING, "Leads save Error :"+e.getClass().getName()+": "+e.getMessage());
+ 	        saveMessage=e.getMessage();
+ 	        return 0;
+ 	       
+           }
+       
+
+         return 1;
+     }
 	
 	
 
