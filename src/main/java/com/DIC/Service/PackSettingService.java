@@ -76,7 +76,7 @@ public class PackSettingService {
 				int updateCount=gDao.editPackageDetais(packageId, packName,packType,listLimit,cost,duration);
 				if(updateCount>0)
 				{
-					updateResult="Successup updated package details..";
+					updateResult="Successful updated package details..";
 					
 				}
 				else
