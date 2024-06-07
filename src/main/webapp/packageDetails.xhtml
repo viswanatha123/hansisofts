@@ -138,18 +138,18 @@
 					        
 					        
 					        			    <p:outputLabel required="true" style="font-weight: bold" for="name" indicateRequired="true" value="Name : " />
-						                    <p:inputText id="name" value="#{layoutDetailService.custName}" required="true" requiredMessage="Required  Name">
+						                    <p:inputText id="name" value="#{packPriceService.custName}" required="true" requiredMessage="Required  Name">
 						                    </p:inputText>
 						                    <p:message for="name" display="icon"/>
 						                    
 						                    
 						                    <p:outputLabel style="font-weight: bold" for="ContactNumber" indicateRequired="true" value="Contact Number : " />
-							                <p:inputMask id="ContactNumber"  mask="9999999999" required="true"  maxlength="10" value="#{layoutDetailService.contactNumber}" >
+							                <p:inputMask id="ContactNumber"  mask="9999999999" required="true"  maxlength="10" value="#{packPriceService.contactNumber}" >
 							                </p:inputMask>
 							                <p:message for="ContactNumber" display="icon"/>
 							      							        
 									        <h:outputText style="font-weight: bold; font-size: 14px;color:black; text-align:left;" value="Email : " />
-						                    <h:inputText id="email"  size="30" value="#{layoutDetailService.email}"  validatorMessage="Invalid email format">
+						                    <h:inputText id="email"  size="30" value="#{packPriceService.email}"  validatorMessage="Invalid email format">
 						                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 						                    </h:inputText> 
 						                    <p:message for="email" display="icon"/>
@@ -161,7 +161,7 @@
 		        			
 		        
 		        <br></br>
-		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form1" actionListener="#{layoutDetailService.submit}" >
+		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form1" actionListener="#{packPriceService.submit}" >
 		                    <p:resetInput target="form"/>                
 		                  </h:commandButton>
 		                  <p:commandButton value="Reset" update="panelDialog" process="@this"
