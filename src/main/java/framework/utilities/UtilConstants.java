@@ -6,5 +6,8 @@ public interface UtilConstants {
 	//Basic package list limit value , default is 5
 	
 	int BASIC_PACKAGE_LIST_LIMIT=5;
+	
+	// package price enquiry;
+	int PACKAGE_ENQUIRY_TYPE=1;
 
 }

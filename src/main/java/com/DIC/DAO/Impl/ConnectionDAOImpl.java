@@ -88,6 +88,7 @@ public class ConnectionDAOImpl {
 			String SQL_SECONDRY_LOCATION="select seco_name from hansi_seco_location where prim_code=? order by seco_name desc";
 			String SQL_RENTAL_DATA_INSERT="INSERT INTO rental_plot (rental_id,own_name,address,own_con_no,pro_type,tot_bed_rooms,tot_floors,tot_bath_rooms,furniture,rent_pref,sec_depo,mon_rent,kitc_room,facing,tot_area_sqft,prim_location,seco_location,image,create_date, is_active,avail_date) VALUES (nextval('rental_plot_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,1,?)";
 			String SQL_RENTAL_DETAILS="select * from rental_plot where prim_location = ? and seco_location = ?";
+			String SQL_PACKAGE_ENQUIRY="INSERT INTO hansi_enquiry (enqi_id, name, email, phone, create_date, is_active,enq_type) VALUES(nextval('hansi_enquiry_seq'),?, ?, ?, current_timestamp, 1,?)";
 		}
                 
 	}
@@ -1209,6 +1210,45 @@ public class ConnectionDAOImpl {
 	}
    
     
+ // ***************** Save package enquiry **************
+    public int savePackageEnquiry(String custName, String contactNumber, String email, int packageEnquiry)
+    {
+        try {
+            Connection con = null;
+            PreparedStatement pstmt = null;
+            con=ConnectionDAO.getConnection();
+            
+            StringBuilder sql_package_enquiry = new StringBuilder(Constants.SQL.SQL_PACKAGE_ENQUIRY);
+            
+            pstmt = con.prepareStatement(sql_package_enquiry.toString());
+            
+            pstmt.setString(1,custName);
+            pstmt.setString(2, contactNumber);
+            pstmt.setString(3, email);
+            pstmt.setInt(4, packageEnquiry);
+            
+         int res=pstmt.executeUpdate();
+            if(res > 0)
+            {
+               return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        
+   
+        
+        } catch (Exception e) {
+                
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	      //System.exit(0);
+	}
+      
+        
+        return 1;
+    }
     
     
     
