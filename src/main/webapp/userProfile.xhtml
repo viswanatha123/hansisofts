@@ -38,10 +38,10 @@
 
   <div class="card">
         <h5>Events and Validation</h5>
-        <p:tabView dynamic="true" cache="true">
+        <p:tabView dynamic="true" cache="false">
   
             
-            <p:tab title="Profile">
+            <p:tab title="Profile" >
                		<h:panelGrid columns="3" cellpadding="7" styleClass="mb-3">
                			<p:dataTable id="product" widgetVar="dtProducts" var="product"   value="#{userProfileService.userDetails}" editable="true"  style="margin-bottom:20px;width:75%;" 
 				reflow="true" styleClass="products-table"  rowKey="#{product.userId}"  paginatorPosition="bottom" >

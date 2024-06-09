@@ -14,14 +14,14 @@
   <p>Property List</p>
   <br></br>
   <div class="card">
-  <h:form id="form">
-  
+  <h:form  id="form">
+  <p:growl id="msgs" showDetail="true"/>
   
   			<p:dataTable id="pro" widgetVar="dtProducts" var="product"   value="#{propertyListService.allPropertyListVal}" editable="true"  style="margin-bottom:20px" 
 				reflow="true" styleClass="products-table" selection="#{crudView.selectedProperty}"
                  rowKey="#{product.propId}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom" >
 						  
-						 						  
+												  
 			            
 			              <p:column headerText="Property Name">
 			                <p:cellEditor>
@@ -65,7 +65,7 @@
 				 <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
 		            message="Delete the product?" header="Confirm" severity="warn">
 		            <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{propertyListService.deleteProperty}"
-		                process="@this" 
+		                 process="@this" update="@form"
 		                oncomplete="PF('deleteProductDialog').hide()" />
 		            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
 		                onclick="PF('deleteProductDialog').hide()" />
