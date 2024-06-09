@@ -32,27 +32,7 @@ public class PropertyListService {
 		uDao=new UserDAOImpl();
 		
 		
-		/*
-		HttpSession session = SessionUtils.getSession();
-		      	
-		    	if (session != null)
-		    	{
-		    		if(session.getAttribute("userId")!=null)
-		    		{
-		    		    int userId= Integer.parseInt(session.getAttribute("userId").toString());
-		    		    if(userId > 0)
-		    		    {    	
-		          
-		    		    		
-		    		    	allPropertyListVal=uDao.getAllPropByUserId(userId);
-		    	
-		    		    		
-		    		    }
-		    		}
-		    	}
-		 */
-		
-			
+				
 			if(SessionUtils.getUserId() > 0)
 		    {    	
 				allPropertyListVal=uDao.getAllPropByUserId(SessionUtils.getUserId());
@@ -67,12 +47,11 @@ public class PropertyListService {
 	public void deleteProperty() {
 	    
         System.out.println("deleted id and Property Type : "+this.selectedProperty.getPropId()+"      "+this.selectedProperty.getPropType());
-        String delMessage=uDao.deleteProperty(this.selectedProperty.getPropId(),this.selectedProperty.getPropType());
-        System.out.println("Property "+delMessage);
+        
         if(SessionUtils.getUserId() > 0)
 	    {    	
         	
-        	
+        	String delMessage=uDao.deleteProperty(this.selectedProperty.getPropId(),this.selectedProperty.getPropType());
 			allPropertyListVal=uDao.getAllPropByUserId(SessionUtils.getUserId());
 			System.out.println("************ ------------>"+SessionUtils.getUserId()+"  "+allPropertyListVal.size());
     		
