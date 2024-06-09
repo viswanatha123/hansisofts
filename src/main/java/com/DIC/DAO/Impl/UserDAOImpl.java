@@ -754,6 +754,60 @@ public class UserDAOImpl {
 
          return 1;
      }
+   	
+   	//***************************  deletet property ****************
+   	
+   	public String deleteProperty(int propertyId, String propertyType)
+    {
+    	
+   		String query="";;	
+    	String succVal="";
+    	
+        try {
+            Connection con = null;
+            PreparedStatement pstmt = null;
+            con=ConnectionDAO.getConnection();
+            
+            		if(propertyType.equals("layout"))
+            		{
+            		 query="delete from hansi_layout where layout_id = ?";
+            		}	
+            		if(propertyType.equals("agri"))
+            		{
+            		 query="delete from hansi_agricultural where agri_id = ?";
+            		}
+            		if(propertyType.equals("indi"))
+            		{
+            		 query="delete from hansi_individual_site where ind_id = ?";
+            		}
+            		if(propertyType.equals("villa"))
+            		{
+            		 query="delete from villa_plot where villa_id = ?";
+            		}
+            
+            pstmt = con.prepareStatement(query.toString());
+            pstmt.setInt(1, propertyId);
+          	int res=pstmt.executeUpdate();
+          	
+          	System.out.println(" **********  Deleted Record: "+res);
+	            if(res > 0)
+	            {
+	            	succVal="Successful Deleted Property";
+	            }
+          } catch (Exception e) {
+         
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	       succVal=e.getMessage();
+	        return succVal;
+	       
+          }
+      
+
+        return succVal;
+
+    }
+    
 	
 	
 
