@@ -16,7 +16,7 @@
   <br></br>
 		
 		  				<div class="card">
-					    <h:form>
+					   
 					        <h5> Profile Menu </h5>
 					     
 					        <p:megaMenu orientation="Profile Menu" autoDisplay="false">
@@ -32,13 +32,13 @@
 					            </p:submenu>
 					        </p:megaMenu>
 							
-					   </h:form>
+					  
 					  </div>
  
 
   <div class="card">
         <h5>Events and Validation</h5>
-        <p:tabView>
+        <p:tabView dynamic="true" cache="true">
   
             
             <p:tab title="Profile">
@@ -155,82 +155,15 @@
 			  </h:panelGrid>
             </p:tab>
     
-	          <p:tab title="List Prop" >
-	          	<h:form>
-	          				 <p:dataTable id="product1" widgetVar="dtProducts" var="product1"   value="#{userProfileService.allPropertyList}" editable="true"  style="margin-bottom:20px" 
-				reflow="true" styleClass="products-table" selection="#{crudView.selectedProducts}"
-                 rowKey="#{product1.layoutId}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom" >
-						  
-						 						  
-			            
-			              <p:column headerText="Property Name">
-			                <p:cellEditor>
-			                    <f:facet name="output">
-			                        <h:outputText value="#{product1.propName}"/>
-			                    </f:facet>
-			                    <f:facet name="input">
-			                        <p:inputText id="name" value="#{product1.propName}" style="width:100%"/>
-			                    </f:facet>
-			                </p:cellEditor>
-			               </p:column>
-			               
-			                <p:column headerText="Property Type">
-			                <p:cellEditor>
-			                    <f:facet name="output">
-			                        <h:outputText value="#{product1.propType}"/>
-			                    </f:facet>
-			                    <f:facet name="input">
-			                        <p:inputText id="proptype" value="#{product1.propType}" style="width:100%"/>
-			                    </f:facet>
-			                </p:cellEditor>
-			               </p:column>
-			               
-			               
-			               <p:column headerText="Created Date">
-			                
-			                        <h:outputText value="#{product1.createdOnDate}"/>
-			              </p:column>
-			               
-			               <p:column headerText="Leads">
-			               <p:commandButton value="---#{product1.count}-->" icon="ui-icon-calculator" style="background:#00FF00;font-weight: bold;color: black;font-size: 15px" 
-			                                 process="@this" update="@form"
-			                                 oncomplete="PF('leadsDialog').show()" action="#{userProfileService.propVal}">
-			                    <f:setPropertyActionListener value="#{product1}" target="#{userProfileService.selectedProperty}" />
-			                </p:commandButton>
-			              </p:column> 
-				 </p:dataTable>
-				 
-				 
-				 
-						<p:messages id="msgs"/>
-						   <p:dialog header="Leads" id="leadid" widgetVar="leadsDialog" minHeight="700" width="800" showEffect="fade">
-							 	
-							             						                
-							                
-							          <p:dataTable var="product" value="#{userProfileService.leadModelList}" >
-								            <p:column headerText="Lead Name">
-								                <h:outputText value="#{product.leadName}" />
-								            </p:column>
-								
-								            <p:column headerText="Lead Contact">
-								                <h:outputText value="#{product.leadContact}" />
-								            </p:column>
-								            
-								            <p:column headerText="Lead Email" width="40%">
-								                <h:outputText value="#{product.leadEmail}" />
-								            </p:column>
-								            
-								             <p:column headerText="Created Date">
-								                <h:outputText value="#{product.create_date}" />
-								            </p:column>
-								            
-								        </p:dataTable>
-	          				            
-						               
-						   
-						   </p:dialog>
-				 </h:form>
-		          </p:tab>
+	          
+		           <p:tab title="Leads" >
+		           		<ui:include src="leads.xhtml"/>
+		           
+		           </p:tab>
+		           <p:tab title="Property List" >
+		           		<ui:include src="propertyList.xhtml"/>
+		           
+		           </p:tab>
            
         </p:tabView>
     </div>

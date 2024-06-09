@@ -44,17 +44,8 @@ public class UserProfileService {
 	 private String firstname;
 	 private String lastname;
 	 
-	 
-	 private List<LayoutMode> layoutdetails;
-     private AllPropertyList selectedProperty;
-     
-     private List<LeadModel> leadModelList;
-     
-     
-     private List<AllPropertyList> allPropertyList;
-	 
-	
-	 private int disLeadFlag=0;
+      
+  	 private int disLeadFlag=0;
 	 
 	 @PostConstruct 
 	    public void init()
@@ -80,20 +71,9 @@ public class UserProfileService {
 		    		    		userDetails.setListLimit(packageModel.getListLimit());
 		    		    		userDetails.setPackName(packageModel.getPackName());
 		    		    		userDetails.setIsEnable(packageModel.getIsEnable());
-		    		    		
-		    		    		
-		    		    		userProfileRoleModel=uDao.getUserProfileRoles(userId);
-		    		    		layoutdetails=uDao.getLayoutListByUserId(userId);
-		    		    		
-		    		    		allPropertyList=uDao.getAllPropByUserId(userId);
-		    		    		listedCount=uDao.getAllPropByUserId(Integer.parseInt(session.getAttribute("userId").toString())).size();
-		    		    		
-		    		    		
-		    		    		for(LayoutMode lm:layoutdetails )
-		    					{
-		    		    			log.log(Level.INFO,"---------------- lead count ------->"+lm.getLeadCount());
-		    					}
-		    		    		
+		     		    		userProfileRoleModel=uDao.getUserProfileRoles(userId);
+			    		    	listedCount=uDao.getAllPropByUserId(Integer.parseInt(session.getAttribute("userId").toString())).size();
+			    		    		
 		    		    }
 		    		}
 		    	}
@@ -103,21 +83,7 @@ public class UserProfileService {
 	    }
 	 
 	 	 
-	 public void propVal()
-		{
-		 log.log(Level.INFO,"---->Leads parameter : "+selectedProperty.getPropId()+"   "+selectedProperty.getPropType());		
-			
-			leadModelList=uDao.getLeads(selectedProperty.getPropId(),selectedProperty.getPropType());
-			
-    		
-    		for(LeadModel lm:leadModelList )
-			{
-				log.log(Level.INFO,"---->Leads "+lm.getLeads_id()+"  "+lm.getLeadName()+"  "+lm.getLeadContact()+"  "+lm.getLeadEmail()+"  "+lm.getProId()+"  "+lm.getUserId());
-			}
-			
-    		disLeadFlag=1;
-    		
-		}
+	
 
 
 
@@ -134,14 +100,14 @@ public class UserProfileService {
 
 	
 	
-    
+    /*
     public void save() {
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage("Welcome " + firstname + " " + lastname));
         
         log.log(Level.INFO,"***** Save ******"+ firstname + " " + lastname);
     }
-    
+    */
     
     
 
@@ -162,28 +128,6 @@ public class UserProfileService {
     }
 
 
-	public List<LayoutMode> getLayoutdetails() {
-		return layoutdetails;
-	}
-
-
-
-	public void setLayoutdetails(List<LayoutMode> layoutdetails) {
-		this.layoutdetails = layoutdetails;
-	}
-
-
-
-
-	
-	public List<LeadModel> getLeadModelList() {
-		return leadModelList;
-	}
-
-	public void setLeadModelList(List<LeadModel> leadModelList) {
-		this.leadModelList = leadModelList;
-	}
-
 
 	public int getDisLeadFlag() {
 		return disLeadFlag;
@@ -195,25 +139,8 @@ public class UserProfileService {
 	}
 
 
-	public List<AllPropertyList> getAllPropertyList() {
-		return allPropertyList;
-	}
 
 
-
-	public void setAllPropertyList(List<AllPropertyList> allPropertyList) {
-		this.allPropertyList = allPropertyList;
-	}
-
-
-	public AllPropertyList getSelectedProperty() {
-		return selectedProperty;
-	}
-
-
-	public void setSelectedProperty(AllPropertyList selectedProperty) {
-		this.selectedProperty = selectedProperty;
-	}
 
 
 	public int getListedCount() {
