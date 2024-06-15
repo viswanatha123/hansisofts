@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+    <body>
+        <ui:composition>
+        
+        
+        <div class="card">
+			    <p:dataTable var="product" value="#{packPriceService.packPriceModelList}" style="width:40%;">
+				        <f:facet name="header">
+				            List of Packages
+				        </f:facet>
+				
+				        <p:column headerText="Pack Id" >
+				            <h:outputText value="#{product.packId}" />
+				        </p:column>
+				
+				        <p:column headerText="Package Name">
+				            <h:outputText value="#{product.packName}" />
+				        </p:column>
+				
+				        <p:column headerText="List Limit">
+				            <h:outputText value="#{product.listLimit}" />
+				        </p:column>
+				
+				        <p:column headerText="Cost">
+				            <h:outputText value="#{product.cost}" />
+				        </p:column>
+				        
+				        <p:column headerText="Duration">
+				            <h:outputText value="#{product.duration}" />
+				        </p:column>
+				
+				        <f:facet name="footer">
+				            <span class="font-bold">Total Packages are available</span>
+				        </f:facet>
+			    </p:dataTable>
+      </div>
+        
+
+            
+        </ui:composition>
+    </body>
+</html>

@@ -31,6 +31,10 @@
 	       <p:panel  style="background: #FFFF00;width: 100%; height:50px;font-size: 15px ; text-align:center" >
 	  			<p:outputLabel  style="font-weight: bold; color:red;" value="Please subscribe package to listing propertys, Contact support team +91 9632152255 ." />
 	  		</p:panel>
+	  		<br></br><br></br><br></br>
+	  		<ui:insert name="package">
+                <ui:include src="packPrice.xhtml"/>
+            </ui:insert>
 	   </div>
 
       <div class="Error" jsf:rendered="#{indiSiteDataEntryService.listedCount ge indiSiteDataEntryService.listLimit and indiSiteDataEntryService.isEnable eq true}">

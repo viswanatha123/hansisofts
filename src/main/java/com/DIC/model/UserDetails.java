@@ -3,6 +3,7 @@ package com.DIC.model;
 import java.io.Serializable;
 import java.util.Date;
 
+
 public class UserDetails implements Serializable {
 	
 	private int userId;
@@ -22,9 +23,6 @@ public class UserDetails implements Serializable {
 	private String disName;
 	
 
-	
-	
-		
 	public String getUserPassword() {
 		return userPassword;
 	}
@@ -35,9 +33,7 @@ public class UserDetails implements Serializable {
 	}
 
 
-	public Date getCreate_date() {
-		return create_date;
-	}
+
 
 
 	public int getIs_active() {
@@ -55,9 +51,7 @@ public class UserDetails implements Serializable {
 	}
 
 
-	public void setCreate_date(Date create_date) {
-		this.create_date = create_date;
-	}
+
 
 
 	public void setIs_active(int is_active) {
@@ -149,6 +143,16 @@ public class UserDetails implements Serializable {
 
 	public void setIsEnable(Boolean isEnable) {
 		this.isEnable = isEnable;
+	}
+
+
+	public Date getCreate_date() {
+		return create_date;
+	}
+
+
+	public void setCreate_date(Date create_date) {
+		this.create_date = create_date;
 	}
 
 
