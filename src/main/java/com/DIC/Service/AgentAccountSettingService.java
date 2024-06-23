@@ -128,6 +128,12 @@ public class AgentAccountSettingService {
 			}
 		}
 		
+		 public void reset() {
+		        this.userId=0;
+		        this.userName=null;
+		        this.updateResult="";
+		    }
+		
 		
 
 		public String getUpdateResult() {

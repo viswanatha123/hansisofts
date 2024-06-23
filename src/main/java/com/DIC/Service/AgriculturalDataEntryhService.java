@@ -59,6 +59,7 @@ public class AgriculturalDataEntryhService implements Serializable {
  	private int listedCount=-1;
  	private Boolean isEnable;
 	private int userId;
+	private String surveyNum;
 	
 	
 	
@@ -152,6 +153,7 @@ public class AgriculturalDataEntryhService implements Serializable {
  	          agriculturalDataModel.setInputStream(file.getInputStream());
  	          agriculturalDataModel.setFile(file);
  	          agriculturalDataModel.setPower(power);
+ 	          
  	        
  	        HttpSession session = SessionUtils.getSession();
 	       	if (session != null)
@@ -448,6 +450,11 @@ public class AgriculturalDataEntryhService implements Serializable {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
+
+
+
+
+
 
 
 }

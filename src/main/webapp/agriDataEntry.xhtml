@@ -98,8 +98,8 @@
 			                    </p:inputMask>
 			                    <p:message for="contactno" display="icon"/>
 			                    
-			                    <p:outputLabel style="font-weight: bold" value="Survey No : " />
-			                    <p:inputText id="surveyNo"  value="#{agriculturalDataEntryhService.surveyNo}" >
+			                    <p:outputLabel style="font-weight: bold" indicateRequired="true" value="Survey No : " />
+			                    <p:inputText id="surveyNo"  value="#{agriculturalDataEntryhService.surveyNo}" required="true" requiredMessage="Required Survey Number.">
 			                    </p:inputText>
 			                    <p:message for="surveyNo" display="icon"/>
 			                    
