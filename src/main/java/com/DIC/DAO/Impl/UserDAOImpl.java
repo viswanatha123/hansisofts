@@ -56,25 +56,49 @@ public class UserDAOImpl {
 		
 			String SQL_LEADS_BY_PROP_ID="select * from leads where pro_id = ? and prop_type= ? and is_active ='1'";
 			
-			/*
-			String SQL_ALL_PROP="SELECT lay.layout_id as \"prop_id\", lay.name as name, 'layout' as \"property_type\",create_date as \"Create Date\",(select count(*) from leads ls where pro_id =lay.layout_id and prop_type='layout') as \"count\" FROM hansi_layout lay where lay.user_id= ?\r\n"
-					+ "	UNION ALL\r\n"
-					+ "	SELECT agri.agri_id as \"prop_id\" ,agri.owner_name as name, 'agri' as \"property_type\" ,create_date as \"Create Date\",(select count(*) from leads ls where pro_id =agri.agri_id and prop_type='agri') as \"count\" FROM hansi_agricultural agri where agri.user_id= ?\r\n"
-					+ "	UNION ALL\r\n"
-					+ "	SELECT ind.ind_id as \"prop_id\" ,ind.owner_name as name,'indi' as \"property_type\",create_date as \"Create Date\",(select count(*) from leads ls where pro_id =ind.ind_id and prop_type='indi') as \"count\" FROM hansi_individual_site ind where ind.user_id= ?\r\n"
-					+ "	UNION ALL\r\n"
-					+ "	SELECT villa.villa_id as \"prop_id\", villa.owner_name as name,'villa' as \"property_type\" ,create_date as \"Create Date\", (select count(*) from leads ls where pro_id =villa.villa_id and prop_type='villa') as \"count\"FROM villa_plot  villa where villa.user_id=?;\r\n";
-			*/
-			String SQL_ALL_PROP="select prop_id , name,property_type, \"Create Date\" ,count from (SELECT lay.layout_id as \"prop_id\", lay.name as name, 'layout' as \"property_type\",create_date as \"Create Date\",(select count(*) from leads ls where pro_id =lay.layout_id and prop_type='layout') as \"count\" FROM hansi_layout lay where lay.user_id= ?\r\n"
-					+ "					UNION ALL\r\n"
-					+ "					SELECT agri.agri_id as \"prop_id\" ,agri.owner_name as name, 'agri' as \"property_type\" ,create_date as \"Create Date\",(select count(*) from leads ls where pro_id =agri.agri_id and prop_type='agri') as \"count\" FROM hansi_agricultural agri where agri.user_id= ? \r\n"
-					+ "					UNION ALL\r\n"
-					+ "					SELECT ind.ind_id as \"prop_id\" ,ind.owner_name as name,'indi' as \"property_type\",create_date as \"Create Date\",(select count(*) from leads ls where pro_id =ind.ind_id and prop_type='indi') as \"count\" FROM hansi_individual_site ind where ind.user_id= ?\r\n"
-					+ "					UNION ALL\r\n"
-					+ "					SELECT villa.villa_id as \"prop_id\", villa.owner_name as name,'villa' as \"property_type\" ,create_date as \"Create Date\", (select count(*) from leads ls where pro_id =villa.villa_id and prop_type='villa') as \"count\"FROM villa_plot  villa where villa.user_id= ?)\r\n"
-					+ "					as alldata order by alldata.\"Create Date\" desc;";
-		
 			
+			/*
+			 * 		Direct sql query
+			 * 
+			select prop_id , name,property_type, "Create Date",lead_update ,count,"Cost","Location" from
+					(SELECT lay.layout_id as "prop_id", lay.name as name, 'layout' as "property_type",create_date as "Create Date",lead_update,(select count(*) from leads ls where pro_id =lay.layout_id and prop_type='layout') as "count",cost as "Cost", prim_location as "Location" FROM hansi_layout lay where lay.user_id= 118
+					UNION ALL
+					SELECT agri.agri_id as "prop_id" ,agri.owner_name as name, 'agri' as "property_type" ,create_date as "Create Date",lead_update,(select count(*) from leads ls where pro_id =agri.agri_id and prop_type='agri') as "count" ,cost as "Cost", prim_location as "Location" FROM hansi_agricultural agri where agri.user_id= 118
+					UNION ALL
+					SELECT ind.ind_id as "prop_id" ,ind.owner_name as name,'indi' as "property_type",create_date as "Create Date",lead_update,(select count(*) from leads ls where pro_id =ind.ind_id and prop_type='indi') as "count" , cost as "Cost", prim_location as "Location" FROM hansi_individual_site ind where ind.user_id= 118
+					UNION ALL
+					SELECT villa.villa_id as "prop_id", villa.owner_name as name,'villa' as "property_type" ,create_date as "Create Date", lead_update,(select count(*) from leads ls where pro_id =villa.villa_id and prop_type='villa') as "count"  , cost as "Cost", prim_location as "Location" FROM villa_plot  villa where villa.user_id= 118)
+					as alldata order by CASE 
+        				WHEN alldata.lead_update IS NULL THEN 1 
+        				ELSE 0 
+    				END,
+					alldata.lead_update desc;
+			*/
+			
+			/*
+			String SQL_ALL_PROP="select prop_id , name,property_type, \"Create Date\" ,count,\"Cost\",\"Location\" from \r\n"
+					+ "					(SELECT lay.layout_id as \"prop_id\", lay.name as name, 'layout' as \"property_type\",create_date as \"Create Date\",(select count(*) from leads ls where pro_id =lay.layout_id and prop_type='layout') as \"count\", cost as \"Cost\", prim_location as \"Location\" FROM hansi_layout lay where lay.user_id= ?\r\n"
+					+ "					UNION ALL\r\n"
+					+ "					SELECT agri.agri_id as \"prop_id\" ,agri.owner_name as name, 'agri' as \"property_type\" ,create_date as \"Create Date\",(select count(*) from leads ls where pro_id =agri.agri_id and prop_type='agri') as \"count\" , cost as \"Cost\", prim_location as \"Location\" FROM hansi_agricultural agri where agri.user_id= ?\r\n"
+					+ "					UNION ALL\r\n"
+					+ "					SELECT ind.ind_id as \"prop_id\" ,ind.owner_name as name,'indi' as \"property_type\",create_date as \"Create Date\",(select count(*) from leads ls where pro_id =ind.ind_id and prop_type='indi') as \"count\" , cost as \"Cost\", prim_location as \"Location\" FROM hansi_individual_site ind where ind.user_id= ?\r\n"
+					+ "					UNION ALL\r\n"
+					+ "					SELECT villa.villa_id as \"prop_id\", villa.owner_name as name,'villa' as \"property_type\" ,create_date as \"Create Date\", (select count(*) from leads ls where pro_id =villa.villa_id and prop_type='villa') as \"count\" , cost as \"Cost\", prim_location as \"Location\" FROM villa_plot  villa where villa.user_id= ?)\r\n"
+					+ "					as alldata order by alldata.\"Create Date\" desc;";
+			*/
+			String SQL_ALL_PROP="select prop_id , name,property_type, \"Create Date\",lead_update ,count,\"Cost\",\"Location\" from\r\n"
+					+ "					(SELECT lay.layout_id as \"prop_id\", lay.name as name, 'layout' as \"property_type\",create_date as \"Create Date\",lead_update,(select count(*) from leads ls where pro_id =lay.layout_id and prop_type='layout') as \"count\",cost as \"Cost\", prim_location as \"Location\" FROM hansi_layout lay where lay.user_id= ?\r\n"
+					+ "					UNION ALL\r\n"
+					+ "					SELECT agri.agri_id as \"prop_id\" ,agri.owner_name as name, 'agri' as \"property_type\" ,create_date as \"Create Date\",lead_update,(select count(*) from leads ls where pro_id =agri.agri_id and prop_type='agri') as \"count\" ,cost as \"Cost\", prim_location as \"Location\" FROM hansi_agricultural agri where agri.user_id= ?\r\n"
+					+ "					UNION ALL\r\n"
+					+ "					SELECT ind.ind_id as \"prop_id\" ,ind.owner_name as name,'indi' as \"property_type\",create_date as \"Create Date\",lead_update,(select count(*) from leads ls where pro_id =ind.ind_id and prop_type='indi') as \"count\" , cost as \"Cost\", prim_location as \"Location\" FROM hansi_individual_site ind where ind.user_id= ?\r\n"
+					+ "					UNION ALL\r\n"
+					+ "					SELECT villa.villa_id as \"prop_id\", villa.owner_name as name,'villa' as \"property_type\" ,create_date as \"Create Date\", lead_update,(select count(*) from leads ls where pro_id =villa.villa_id and prop_type='villa') as \"count\"  , cost as \"Cost\", prim_location as \"Location\" FROM villa_plot  villa where villa.user_id= ?)\r\n"
+					+ "					as alldata order by CASE \r\n"
+					+ "        				WHEN alldata.lead_update IS NULL THEN 1 \r\n"
+					+ "        				ELSE 0 \r\n"
+					+ "    				END,\r\n"
+					+ "					alldata.lead_update desc;";
 			
 			
 			 String SQL_INDISITE_LIST="select * from hansi_individual_site order by create_date desc";
@@ -347,12 +371,47 @@ public class UserDAOImpl {
             pstmt.setInt(4, proId);
             pstmt.setInt(5, userId);
             pstmt.setString(6, propType);
+            
+            
+            
            
             	int res=pstmt.executeUpdate();
 	            if(res > 0)
 	            {
 	            	saveMessage="Successful Registered.";
 	            }
+	            
+	            
+	            if(propType.equals("layout"))
+	            {
+		            PreparedStatement pstmt1=con.prepareStatement("update hansi_layout set lead_update=current_timestamp where layout_id = ?");
+		            pstmt1.setInt(1, proId);
+		            int res1=pstmt1.executeUpdate();
+	            }
+	            if(propType.equals("agri"))
+	            {
+		            PreparedStatement pstmt1=con.prepareStatement("update hansi_agricultural set lead_update=current_timestamp where agri_id = ?");
+		            pstmt1.setInt(1, proId);
+		            int res1=pstmt1.executeUpdate();
+	            }
+	            if(propType.equals("indi"))
+	            {
+		            PreparedStatement pstmt1=con.prepareStatement("update hansi_individual_site set lead_update=current_timestamp where ind_id = ?");
+		            pstmt1.setInt(1, proId);
+		            int res1=pstmt1.executeUpdate();
+	            }
+	            if(propType.equals("villa"))
+	            {
+		            PreparedStatement pstmt1=con.prepareStatement("update villa_plot set lead_update=current_timestamp where villa_id = ?");
+		            pstmt1.setInt(1, proId);
+		            int res1=pstmt1.executeUpdate();
+	            }
+	            
+	            
+	            
+	            
+	            
+	            
 	            log.log(Level.INFO,"***** Succful saved lead values *******");
 	            
           } catch (Exception e) {
@@ -468,6 +527,12 @@ public class UserDAOImpl {
 	        	 allPropertyList.setPropType(rs.getString("property_type"));
 	        	 allPropertyList.setCount(rs.getInt("count"));
 	        	 allPropertyList.setCreatedOnDate(rs.getDate("Create Date"));
+	        	 allPropertyList.setLeadUpdate(rs.getDate("lead_update"));
+	        	 allPropertyList.setCost(rs.getInt("Cost"));
+	        	 allPropertyList.setPrimLocation(rs.getString("Location"));
+	        	 
+	        
+	        	 
 	        	 
 	        	 
                          

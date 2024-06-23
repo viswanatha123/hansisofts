@@ -41,6 +41,7 @@ public class UserLoginService implements Serializable{
 	    private boolean valid;
 	    private String disName;
 	    private String fullName;
+	    private long remainDays;
 	    
 	    
 	    
@@ -175,6 +176,8 @@ public class UserLoginService implements Serializable{
 				PackageModel packageModel=uDao.getPackageDetails(userDetails.getUserId());
 				
 				boolean duraValida=DurationValidation.durationValidation(userDetails,packageModel);
+				
+				remainDays=DurationValidation.getRemainDays(userDetails,packageModel);
 				System.out.println(" Duration Validation : "+duraValida);
 				
 				if(duraValida==false)
@@ -189,7 +192,7 @@ public class UserLoginService implements Serializable{
 				}
 				
 				
-				SessionUtils.setUserDetails(userDetails,packageModel);
+				SessionUtils.setUserDetails(userDetails,packageModel,remainDays);
 				disName=SessionUtils.getUserDisName();
 				fullName=SessionUtils.getUserFullName();
 				userId=SessionUtils.getUserId();
@@ -225,6 +228,14 @@ public class UserLoginService implements Serializable{
 			session.invalidate();
 			System.out.println("******** Successful logout **********");
 			return "userLogin";
+		}
+
+		public long getRemainDays() {
+			return remainDays;
+		}
+
+		public void setRemainDays(long remainDays) {
+			this.remainDays = remainDays;
 		}
 		
 		
