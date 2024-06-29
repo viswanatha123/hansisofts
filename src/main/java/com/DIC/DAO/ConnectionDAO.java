@@ -8,6 +8,7 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 public class ConnectionDAO {
+	//Connection
 	
 	
 	  //Hani Prod Database

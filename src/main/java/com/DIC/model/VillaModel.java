@@ -34,6 +34,7 @@ public class VillaModel implements Serializable{
 	private int is_active;
 	private StreamedContent streamedContent;
 	private int userId;
+	private int floorNum;
 	
 	
 	
@@ -203,6 +204,12 @@ public class VillaModel implements Serializable{
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+	public int getFloorNum() {
+		return floorNum;
+	}
+	public void setFloorNum(int floorNum) {
+		this.floorNum = floorNum;
 	}
 
 	

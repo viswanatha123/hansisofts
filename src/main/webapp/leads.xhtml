@@ -44,10 +44,36 @@
 			                </p:cellEditor>
 			               </p:column>
 			               
+			               <p:column headerText="Property Cost">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.cost}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="cost" value="#{product.cost}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			                <p:column headerText="Location">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.primLocation}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="primLocation" value="#{product.primLocation}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
 			               
 			               <p:column headerText="Created Date">
 			                
 			                        <h:outputText value="#{product.createdOnDate}"/>
+			              </p:column>
+			              <p:column headerText="Lead Update">
+			                
+			                        <h:outputText value="#{product.leadUpdate}"/>
 			              </p:column>
 			               
 			               <p:column headerText="Leads">

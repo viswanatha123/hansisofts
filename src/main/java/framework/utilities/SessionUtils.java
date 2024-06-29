@@ -56,7 +56,7 @@ public class SessionUtils {
 	
 	
 	
-	public static void setUserDetails(UserDetails UserDetails, PackageModel packageModel) {
+	public static void setUserDetails(UserDetails UserDetails, PackageModel packageModel,long remainDays) {
 		
 		if(UserDetails!=null)
 		{
@@ -72,6 +72,7 @@ public class SessionUtils {
 						session.setAttribute("fullName", SessionUtils.displayFullName(UserDetails.getfName(),UserDetails.getlName()));
 						session.setAttribute("listLimit",packageModel.getListLimit());
 						session.setAttribute("isEnable",packageModel.getIsEnable());
+						session.setAttribute("remainDays",remainDays);
 						
 						
 						

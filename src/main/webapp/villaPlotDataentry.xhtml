@@ -153,6 +153,11 @@
                     <p:inputNumber id="persqft"  value="#{villaDataEntryService.persqft}" required="true" requiredMessage="Required Length"  modifyValueOnWheel="false" >
                     </p:inputNumber>
                     <p:message for="persqft" display="icon"/>
+                    
+                    <p:outputLabel style="font-weight: bold" for="floorNumber"  value="Floor Number : " />
+                    <p:inputNumber id="floorNumber"  value="#{villaDataEntryService.floorNum}"    modifyValueOnWheel="false" >
+                    </p:inputNumber>
+                    <p:message for="floorNumber" display="icon"/>
                                        
                     <p:outputLabel for="country" value="Primary Location : " />  
                             <p:selectOneMenu id="country" value="#{villaDataEntryService.country}" style="width:150px" required="true" requiredMessage="Select Primary Location">  

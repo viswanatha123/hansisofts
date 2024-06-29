@@ -28,6 +28,7 @@ public class AgriculturalDataEntryModel implements Serializable {
     private String power;
     
     
+    
    public UploadedFile getFile() {
 		return file;
 	}
@@ -146,6 +147,10 @@ public class AgriculturalDataEntryModel implements Serializable {
 	public void setPower(String power) {
 		this.power = power;
 	}
+
+
+
+
 	
 	
 	
