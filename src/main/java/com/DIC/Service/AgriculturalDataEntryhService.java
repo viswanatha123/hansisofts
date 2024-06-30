@@ -29,6 +29,7 @@ import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.AgriculturalDataEntryModel;
 
+import SMTPService.SMTPService;
 import framework.utilities.SessionUtils;
 
 
@@ -164,6 +165,7 @@ public class AgriculturalDataEntryhService implements Serializable {
 	    		    if(userId > 0)
 	    		    {    	
 	              	updateResult=dao.updateAgriDataEntry(agriculturalDataModel,userId);
+	              	SMTPService.sendAgeriEmail(agriculturalDataModel,userId);
 	    		    		
 	    		    }
 	    		}
@@ -171,6 +173,7 @@ public class AgriculturalDataEntryhService implements Serializable {
     		    {    	
     		    	int defaultUserId=1;
     		    	updateResult=dao.updateAgriDataEntry(agriculturalDataModel,defaultUserId);
+    		    	
     		    		
     		    }
 	    	}

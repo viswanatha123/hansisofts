@@ -291,6 +291,8 @@ public class UserDAOImpl {
 				userDetails.setPhone(rs.getString("phone"));
 				userDetails.setCreate_date(rs.getDate("create_date"));
 				userDetails.setIs_active(rs.getInt("is_active"));
+				userDetails.setEmail(rs.getString("email"));
+				
 				//userDetails.setListLimit(rs.getInt("list_limit"));
 				
 				//userDetailsList.add(userDetails);

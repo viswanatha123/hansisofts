@@ -91,6 +91,12 @@
                     </p:inputMask>
                     <p:message for="contactNo" display="icon"/>
                     
+                    <p:outputLabel indicateRequired="true" style="font-weight: bold; font-size: 14px;color:black; text-align:left;" value="Email : " />
+		            <p:inputText id="email"  size="30" value="#{userRegistService.email}" required="true" validatorMessage="Invalid email format">
+		            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+		            </p:inputText>
+		            <p:message for="email" display="icon"/>
+                    
                                
                          
                     

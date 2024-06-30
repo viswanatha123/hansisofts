@@ -18,6 +18,7 @@ import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.PackageModel;
 import com.DIC.model.UserDetails;
 
+import SMTPService.SMTPService;
 import framework.EventHandler;
 import framework.utilities.DurationValidation;
 import framework.utilities.SessionUtils;
@@ -168,6 +169,9 @@ public class UserLoginService implements Serializable{
 	    	
 	    	
 	    	if (valid) {
+	    		
+	    		//SMTPService.sendRegiEmail();
+	    		
 				HttpSession session = SessionUtils.getSession();
 				
 				UserDetails userDetails=gDao.getUserDeta(userName, password);

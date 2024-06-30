@@ -27,6 +27,7 @@ import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.IndiSiteDataEntryModel;
 
+import SMTPService.SMTPService;
 import framework.utilities.SessionUtils;
 
 
@@ -167,6 +168,7 @@ public class IndiSiteDataEntryService implements Serializable {
 		    		    if(userId > 0)
 		    		    {    	
 			              	updateResult=dao.updateIndiDataEntry(indiSiteDataEntryModel,userId);
+			              	SMTPService.sendIndiEmail(indiSiteDataEntryModel,userId);
 		    		    }
 		    		}
 		    		if(session.getAttribute("userId")==null)
