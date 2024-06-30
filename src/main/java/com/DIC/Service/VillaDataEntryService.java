@@ -27,6 +27,7 @@ import com.DIC.model.PlotsDataEntryModel;
 
 import com.DIC.model.VillaModel;
 
+import SMTPService.SMTPService;
 import framework.utilities.SessionUtils;
 
 
@@ -173,6 +174,7 @@ public class VillaDataEntryService implements Serializable{
 		    		    if(userId > 0)
 		    		    {    	
 			 	              	updateResult=gdao.updateVillaDataEntry(villaModel,userId);
+			 	              	SMTPService.sendVillaEmail(villaModel,userId);
 		    		    }
 		    		}
 		    		if(session.getAttribute("userId")==null)

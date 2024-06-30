@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.logging.Logger;
 import com.DIC.model.UserDetails;
 
+import SMTPService.SMTPService;
+import framework.utilities.Constants;
 import framework.utilities.UtilConstants;
 
 import javax.annotation.PostConstruct;
@@ -32,10 +34,10 @@ public class UserRegistService implements Serializable {
 	private String userPassword;
 	private String address;
 	private String phone;
+	private String email;
+	
 	private String errorMessage;
-	
 	private String disName;
-	
 	private String statusMessage;
 	
 	 GeneralDAOImpl gdao;
@@ -77,8 +79,17 @@ public class UserRegistService implements Serializable {
 					userDetails.setUserPassword(userPassword);
 					userDetails.setAddress(address);
 					userDetails.setPhone(phone);
+					userDetails.setEmail(email);
 					
 					statusMessage=gdao.saveUserRegist(userDetails,UtilConstants.BASIC_PACKAGE_LIST_LIMIT);
+					
+					if(statusMessage!=null)
+					{
+						String body="Hi "+fName+" "+lName+",\n\n Congratulation...\n Your account has been created successfully.\n\n"
+								+ " First Name : "+fName+";\n Last Name : "+lName+";\n Contact Number : "+phone+" ;\n Email : "+email+"; \n Address : "+address+". \n\n\n Thank you\n HansiSoft Solutions..";
+						
+						SMTPService.sendRegiEmail(email,Constants.SMTPServer.SUBJECT,body);
+					}
 					
 					this.fName="";
 					this.lName="";
@@ -86,6 +97,7 @@ public class UserRegistService implements Serializable {
 					this.userPassword="";
 					this.address="";
 					this.phone="";
+					this.email="";
 			}
 	}
 	
@@ -189,6 +201,16 @@ public class UserRegistService implements Serializable {
 
 	public void setStatusMessage(String statusMessage) {
 		this.statusMessage = statusMessage;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	

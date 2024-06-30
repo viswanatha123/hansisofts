@@ -13,6 +13,8 @@ public class UserDetails implements Serializable {
 	private String userPassword;
 	private String address;
 	private String phone;
+	private String email;
+	
 	private Date create_date;
 	private int is_active;
 	private int listLimit;
@@ -153,6 +155,16 @@ public class UserDetails implements Serializable {
 
 	public void setCreate_date(Date create_date) {
 		this.create_date = create_date;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 

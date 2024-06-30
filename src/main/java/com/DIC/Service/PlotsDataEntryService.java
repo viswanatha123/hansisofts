@@ -35,6 +35,7 @@ import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.LayoutMode;
 import com.DIC.model.PlotsDataEntryModel;
 
+import SMTPService.SMTPService;
 import framework.utilities.SessionUtils;
 import framework.utilities.Utilities;
 
@@ -189,6 +190,7 @@ public class PlotsDataEntryService implements Serializable{
 				    		    {    	
 				          
 				    		    	updateResult=dao.updatePlotDataEntry(plotsDataEntryModel, userId);
+				    		    	SMTPService.sendLayoutEmail(plotsDataEntryModel,userId);
 				    		    		
 				    		    }
 				    		    
