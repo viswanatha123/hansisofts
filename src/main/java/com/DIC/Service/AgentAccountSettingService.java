@@ -32,6 +32,7 @@ public class AgentAccountSettingService {
 		private String phone;
 		private Date create_date;
 		private int is_active;
+		private String email;
 		
 		
 		private UserDetails userDetails;
@@ -66,6 +67,7 @@ public class AgentAccountSettingService {
 				phone=userDetails.getPhone();
 				create_date=userDetails.getCreate_date();
 				is_active=userDetails.getIs_active();
+				email=userDetails.getEmail();
 				
 				
 			}
@@ -79,7 +81,7 @@ public class AgentAccountSettingService {
 				this.userPassword=null;
 				this.address=null;
 				this.phone=null;
-				//this.create_date=null;
+				this.email=null;
 				
 				
 				
@@ -93,7 +95,7 @@ public class AgentAccountSettingService {
 			{
 			
 					this.updateResult="";
-				    updateResult=uDao.updateUser(fName, lName, userName, userPassword, address, phone, create_date, is_active,userId);
+				    updateResult=uDao.updateUser(fName, lName, userName, userPassword, address, phone, create_date, is_active,email,userId);
 					
 			}else
 			{
@@ -249,6 +251,16 @@ public class AgentAccountSettingService {
 
 		public void setCreate_date(Date create_date) {
 			this.create_date = create_date;
+		}
+
+
+		public String getEmail() {
+			return email;
+		}
+
+
+		public void setEmail(String email) {
+			this.email = email;
 		}
 
 
