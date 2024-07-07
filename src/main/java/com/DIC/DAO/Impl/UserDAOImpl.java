@@ -110,7 +110,7 @@ public class UserDAOImpl {
 			 		+ "and up.pack_id=p.pack_id\r\n"
 			 		+ "and u.user_id=?";
 			 
-			 String SQL_UPDATE_USER="update user_deta set fname = ?, lname = ?, user_name = ?, user_pass = ?, address = ?, phone = ?, create_date = ? ,is_active = ? where user_id = ?";
+			 String SQL_UPDATE_USER="update user_deta set fname = ?, lname = ?, user_name = ?, user_pass = ?, address = ?, phone = ?, create_date = ? ,is_active = ?,email = ? where user_id = ?";
 			 String SQL_ACCOUNT_RENEWEL="update user_deta set create_date = now() where user_id= ?";
 		
 		}
@@ -740,7 +740,7 @@ public class UserDAOImpl {
   	 
   	// ***************************** Update User details **************
   	 
-  	public String updateUser(String fName, String lName, String userName,String userPassword, String address, String phone,Date create_date, int is_active, int userId)
+  	public String updateUser(String fName, String lName, String userName,String userPassword, String address, String phone,Date create_date, int is_active,  String email, int userId)
     {
     	String saveMessage="";
     	
@@ -761,7 +761,8 @@ public class UserDAOImpl {
             pstmt.setString(6, phone);
             pstmt.setDate(7,new java.sql.Date(create_date.getTime()));
             pstmt.setInt(8, is_active);
-            pstmt.setInt(9, userId);
+            pstmt.setString(9, email);
+            pstmt.setInt(10, userId);
            
             	int res=pstmt.executeUpdate();
 	            if(res > 0)

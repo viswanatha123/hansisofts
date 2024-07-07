@@ -98,6 +98,14 @@
                    <p:outputLabel for="create_date" value="Created Date : " />
         		   <p:datePicker id="create_date"  pattern="yyyy-MM-dd" value="#{agentAccountSettingService.create_date}" showIcon="true" >
         		   </p:datePicker>
+        		   
+        		   
+        		    <p:outputLabel indicateRequired="true" style="font-weight: bold; font-size: 14px;color:black; text-align:left;" value="Email : " />
+		            <p:inputText id="email"  size="30" value="#{agentAccountSettingService.email}" required="true" validatorMessage="Invalid email format">
+		            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+		            </p:inputText>
+		           
+		            
                    
                    <p:outputLabel style="font-weight: bold" value="Is Active : " />
                    <p:inputNumber id="is_active" value="#{agentAccountSettingService.is_active}" >
