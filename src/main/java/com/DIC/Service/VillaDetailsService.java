@@ -30,6 +30,8 @@ import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.LayoutMode;
 import com.DIC.model.VillaModel;
 
+import SMTPService.SMTPService;
+
 
 /*
  * 
@@ -138,6 +140,7 @@ public class VillaDetailsService implements Serializable {
         			if(selectedProperty.getUserId()!=0)
         			{
         				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getVillaId(),selectedProperty.getUserId(),"villa");
+        				SMTPService.sendVillaLeadEmail(custName,contactNumber,email,selectedProperty);
         				log.log(Level.INFO,"***** Successful submitted lead ******");
         			}
         			if(selectedProperty.getUserId()==0)

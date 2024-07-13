@@ -28,6 +28,7 @@ public class  Constants {
 		public static final String AGRI_SUBJECT="HansiSoft Solutions,,. New Agiculture listed..";
 		public static final String INDI_SUBJECT="HansiSoft Solutions,,. New Individual listed..";
 		public static final String VILLA_SUBJECT="HansiSoft Solutions,,. New Villa listed..";
+		public static final String LEAD_SUBJECT="HansiSoft Solutions,,. Lead Generated..";
 	}
 	
 

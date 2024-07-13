@@ -61,15 +61,15 @@ public class UserRegistService implements Serializable {
 		      
 	public void save() {
 		
-		this.statusMessage="";
+		
 		
 		boolean valid = gdao.loginValidate(userName);
 			if(valid)
 			{
-				errorMessage="User name already exists";
+				statusMessage="User name already exists, Please try with different user name.";
 			}else
 			{
-				errorMessage="";
+				
 		
 					UserDetails userDetails=new UserDetails();
 					
@@ -81,23 +81,34 @@ public class UserRegistService implements Serializable {
 					userDetails.setPhone(phone);
 					userDetails.setEmail(email);
 					
-					statusMessage=gdao.saveUserRegist(userDetails,UtilConstants.BASIC_PACKAGE_LIST_LIMIT);
+					int userId=gdao.saveUserRegist(userDetails,UtilConstants.BASIC_PACKAGE_LIST_LIMIT);
 					
-					if(statusMessage!=null)
+					if(userId > 0)
 					{
+						
+						
 						String body="Hi "+fName+" "+lName+",\n\n Congratulation...\n Your account has been created successfully.\n\n"
-								+ " First Name : "+fName+";\n Last Name : "+lName+";\n Contact Number : "+phone+" ;\n Email : "+email+"; \n Address : "+address+". \n\n\n Thank you\n HansiSoft Solutions..";
+								+" Customer ID : "+userId+"\n User Name : "+userName+"\n First Name : "+fName+"\n Last Name : "+lName+"\n Contact Number : "+phone+" \n Email : "+email+" \n Address : "+address+". \n\n\n Thank you\n HansiSoft Solutions..";
 						
 						SMTPService.sendRegiEmail(email,Constants.SMTPServer.SUBJECT,body);
+						
+						statusMessage="Successful Registerd.";
+						
+						this.fName="";
+						this.lName="";
+						this.userName="";
+						this.userPassword="";
+						this.address="";
+						this.phone="";
+						this.email="";
+						
+					}
+					else
+					{
+						statusMessage="Error Occured, Please contact support..";
 					}
 					
-					this.fName="";
-					this.lName="";
-					this.userName="";
-					this.userPassword="";
-					this.address="";
-					this.phone="";
-					this.email="";
+					
 			}
 	}
 	
