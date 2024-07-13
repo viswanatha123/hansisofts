@@ -5,7 +5,10 @@ import javax.mail.internet.*;
 
 import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.AgriculturalDataEntryModel;
+import com.DIC.model.AgriculturalModel;
 import com.DIC.model.IndiSiteDataEntryModel;
+import com.DIC.model.IndividualSiteModel;
+import com.DIC.model.LayoutMode;
 import com.DIC.model.PlotsDataEntryModel;
 import com.DIC.model.UserDetails;
 import com.DIC.model.VillaModel;
@@ -234,6 +237,127 @@ public class SMTPService {
 			             throw new RuntimeException(e);
 			         }
 	}
+	
+	
+	public static void sendLayoutLeadEmail(String custName,String contactNumber,String email,LayoutMode selectedProperty )
+	{
+		try {
+   		 
+   		 UserDetails userDetails=uDao.getUser(selectedProperty.getUserId());
+   		 System.out.println("User email :"+userDetails.getEmail());
+   		 
+   		 
+   		String customerDetails="Customer Details..\n\n Customer Name : "+custName+"\n Contact No : "+contactNumber+",\n Email ID : "+email+"\n\n\n";
+   		String propertySetils="Layoyt Details..\n\n Layout Name : "+selectedProperty.getName()+" \n Primary location : "+selectedProperty.getPrimLocation()+"\n Secondry Location : "+selectedProperty.getSecoLocation();
+   	    String thanks="\n\n Thank you\n HansiSoft Solutions..";
+   		 
+   		 String body=customerDetails+""+propertySetils+""+thanks;
+   		 
+   		 
+   		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
+ 	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
+ 	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+	             message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
+	             message.setText(body);
+	             Transport.send(message);
 
+	             System.out.println("Email sent successfully!");
+   		 
+   	 } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+		
+	}
+	
+	public static void sendAgriLeadEmail(String custName,String contactNumber,String email,AgriculturalModel selectedProperty )
+	{
+		try {
+   		 
+   		 UserDetails userDetails=uDao.getUser(selectedProperty.getUserId());
+   		 System.out.println("User email :"+userDetails.getEmail());
+   		 
+   		 
+   		String customerDetails="Customer Details..\n\n Customer Name : "+custName+"\n Contact No : "+contactNumber+",\n Email ID : "+email+"\n\n\n";
+   		String propertySetils="Agricultural Details..\n\n Owner Name : "+selectedProperty.getOwnerName()+" \n Primary location : "+selectedProperty.getPrimLocation()+"\n Secondry Location : "+selectedProperty.getSecoLocation();
+   	    String thanks="\n\n Thank you\n HansiSoft Solutions..";
+   		 
+   		 String body=customerDetails+""+propertySetils+""+thanks;
+   		 
+   		 
+   		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
+ 	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
+ 	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+	             message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
+	             message.setText(body);
+	             Transport.send(message);
+
+	             System.out.println("Email sent successfully!");
+   		 
+   	 } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+		
+	}
+	
+	public static void sendIndiLeadEmail(String custName,String contactNumber,String email,IndividualSiteModel selectedProperty )
+	{
+		try {
+   		 
+   		 UserDetails userDetails=uDao.getUser(selectedProperty.getUserId());
+   		 System.out.println("User email :"+userDetails.getEmail());
+   		 
+   		 
+   		String customerDetails="Customer Details..\n\n Customer Name : "+custName+"\n Contact No : "+contactNumber+",\n Email ID : "+email+"\n\n\n";
+   		String propertySetils="Individual Site Details..\n\n Owner Name : "+selectedProperty.getOwnerName()+" \n Primary location : "+selectedProperty.getPrimLocation()+"\n Secondry Location : "+selectedProperty.getSecoLocation();
+   	    String thanks="\n\n Thank you\n HansiSoft Solutions..";
+   		 
+   		 String body=customerDetails+""+propertySetils+""+thanks;
+   		 
+   		 
+   		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
+ 	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
+ 	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+	             message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
+	             message.setText(body);
+	             Transport.send(message);
+
+	             System.out.println("Email sent successfully!");
+   		 
+   	 } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+		
+	}
+	
+	public static void sendVillaLeadEmail(String custName,String contactNumber,String email,VillaModel selectedProperty )
+	{
+		try {
+   		 
+   		 UserDetails userDetails=uDao.getUser(selectedProperty.getUserId());
+   		 System.out.println("User email :"+userDetails.getEmail());
+   		 
+   		 
+   		String customerDetails="Customer Details..\n\n Customer Name : "+custName+"\n Contact No : "+contactNumber+",\n Email ID : "+email+"\n\n\n";
+   		String propertySetils="Villa Details..\n\n Owner Name : "+selectedProperty.getOwner_name()+" \n Primary location : "+selectedProperty.getPrim_location()+"\n Secondry Location : "+selectedProperty.getSeco_location();
+   	    String thanks="\n\n Thank you\n HansiSoft Solutions..";
+   		 
+   		 String body=customerDetails+""+propertySetils+""+thanks;
+   		 
+   		 
+   		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
+ 	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
+ 	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+	             message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
+	             message.setText(body);
+	             Transport.send(message);
+
+	             System.out.println("Email sent successfully!");
+   		 
+   	 } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+		
+	}
+ 
 
 }

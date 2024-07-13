@@ -30,6 +30,9 @@ import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
 import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.LayoutMode;
+import com.DIC.model.UserDetails;
+
+import SMTPService.SMTPService;
 
 
 
@@ -147,8 +150,12 @@ public class LayoutDetailService implements Serializable{
 	        		{
 	        			if(selectedProperty.getUserId()!=0)
 	        			{
+	        				
+	        					        				
 	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getLayoutId(),selectedProperty.getUserId(),"layout");
+	        				SMTPService.sendLayoutLeadEmail(custName,contactNumber,email,selectedProperty);
 	        				log.log(Level.INFO,"***** Successful submitted lead ******");
+	        				
 	        			}
 	        			if(selectedProperty.getUserId()==0)
 	        			{

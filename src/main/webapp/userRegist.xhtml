@@ -75,10 +75,11 @@
                     
                     
                     <p:outputLabel style="font-weight: bold" indicateRequired="true" value="Password : " />
-                    <p:password id="userPass" required="true" value="#{userRegistService.userPassword}"  requiredMessage="Password is required">
+                    <p:password id="UserPassword" required="true" value="#{userRegistService.userPassword}"  requiredMessage="Password is required">
+                        <f:validateLength minimum="8" maximum="13"></f:validateLength>
                     	<f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})" />
                     </p:password>
-                    <p:message for="userPass" display="icon"/>
+                    <p:message for="UserPassword" display="icon"/>
                     
                     
                     <p:outputLabel style="font-weight: bold" value="Address : " />

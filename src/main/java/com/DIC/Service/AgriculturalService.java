@@ -23,6 +23,8 @@ import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.AgriculturalModel;
 import com.DIC.model.LayoutMode;
 
+import SMTPService.SMTPService;
+
 @ManagedBean(name="agriculturalService")
 @ViewScoped
 public class AgriculturalService implements Serializable{
@@ -158,6 +160,7 @@ public class AgriculturalService implements Serializable{
 	        			if(selectedProperty.getUserId()!=0)
 	        			{
 	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getAgriId(),selectedProperty.getUserId(),"agri");
+	        				SMTPService.sendAgriLeadEmail(custName,contactNumber,email,selectedProperty);
 	        				log.log(Level.INFO,"***** Successful submitted lead ******");
 	        			}
 	        			if(selectedProperty.getUserId()==0)

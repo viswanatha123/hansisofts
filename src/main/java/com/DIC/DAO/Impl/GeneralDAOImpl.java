@@ -734,10 +734,9 @@ public class GeneralDAOImpl {
     
  // ***************** Save User registation  **************
     
-    public String saveUserRegist(UserDetails userDetails,int list_limit)
+    public int saveUserRegist(UserDetails userDetails,int list_limit)
     {
-    	String succVal=null;
-    	int userId=0;
+       	int userId=0;
         try {
         	
             Connection con = null;
@@ -755,46 +754,38 @@ public class GeneralDAOImpl {
             pstmt.setString(6, userDetails.getPhone());
             pstmt.setString(7, userDetails.getEmail());
             
-            
-            //pstmt.setInt(7,list_limit );
-            
+                  
            
             	int res=pstmt.executeUpdate();
 	            if(res > 0)
 	            {
-	            	succVal="Successful Registered.";
-	            }
+	            	
 	            
-	            StringBuilder sql_find_user_id_by_user_details = new StringBuilder(Constants.SQL.SQL_FIND_USER_ID_BY_USER_DETAILS);
-	            PreparedStatement ps = con.prepareStatement(sql_find_user_id_by_user_details.toString());
-				ps.setString(1, userDetails.getfName());
-				ps.setString(2, userDetails.getlName());
-				ps.setString(3, userDetails.getUserName());
-				ps.setString(4, userDetails.getPhone());
-
-				ResultSet rs = ps.executeQuery();
-
-				if (rs.next()) {
-					userId=rs.getInt("user_id");
+						            StringBuilder sql_find_user_id_by_user_details = new StringBuilder(Constants.SQL.SQL_FIND_USER_ID_BY_USER_DETAILS);
+						            PreparedStatement ps = con.prepareStatement(sql_find_user_id_by_user_details.toString());
+									ps.setString(1, userDetails.getfName());
+									ps.setString(2, userDetails.getlName());
+									ps.setString(3, userDetails.getUserName());
+									ps.setString(4, userDetails.getPhone());
 					
-						System.out.println("*********** User id ************ :"+userId);
-						if(userId > 0)
-						{
-							
-							
-							PreparedStatement psRole = con.prepareStatement(createDefaultRoles(userId));
-							int createdRolesCount=psRole.executeUpdate();
-							System.out.println("*********** Role created count ************ :"+createdRolesCount+"     "+createDefaultRoles(userId));
-						}
-				} 
+									ResultSet rs = ps.executeQuery();
+					
+									if (rs.next()) {
+										userId=rs.getInt("user_id");
+										
+											System.out.println("*********** User id ************ :"+userId);
+											if(userId > 0)
+											{
+												
+												
+												PreparedStatement psRole = con.prepareStatement(createDefaultRoles(userId));
+												int createdRolesCount=psRole.executeUpdate();
+												System.out.println("*********** Role created count ************ :"+createdRolesCount+"     "+createDefaultRoles(userId));
+												updateDefaultPackage(userId);
+											}
+									} 
 				
-				if(userId > 0)
-				{
-					updateDefaultPackage(userId);
-				}
-	            
-				
-	            
+	            }
 	            
 	            
           } catch (Exception e) {
@@ -802,13 +793,10 @@ public class GeneralDAOImpl {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
 	    
-	        succVal=e.getMessage();
-	        return succVal;
-	       
+	      	       
           }
       
-
-        return succVal;
+        return userId;
     }
     
     
