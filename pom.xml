@@ -111,6 +111,7 @@
 		    <artifactId>javax.mail</artifactId>
 		    <version>1.6.2</version>
 		</dependency>
+		
 <!-- Thanks for using https://jar-download.com -->
 
     	
