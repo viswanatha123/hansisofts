@@ -18,6 +18,7 @@ import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.PackageModel;
 import com.DIC.model.UserDetails;
 
+
 import SMTPService.SMTPService;
 import framework.EventHandler;
 import framework.utilities.DurationValidation;
@@ -158,7 +159,7 @@ public class UserLoginService implements Serializable{
 		        PrimeFaces.current().resetInputs("form:panel1");
 		    }
 	    
-	    public String userLoingAction()
+	    public String userLoingAction() throws Exception
 	    {
 	    	log.info("calling navegateToAdminLoginPage()");
 	    	String pageName="adminLoginError";
@@ -171,6 +172,8 @@ public class UserLoginService implements Serializable{
 	    	if (valid) {
 	    		
 	    		//SMTPService.sendRegiEmail();
+	    		
+	    		
 	    		
 				HttpSession session = SessionUtils.getSession();
 				
