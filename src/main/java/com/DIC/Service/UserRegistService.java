@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.logging.Logger;
 import com.DIC.model.UserDetails;
 
+import SMTPService.SMTPService;
+import framework.utilities.Constants;
 import framework.utilities.UtilConstants;
 
 import javax.annotation.PostConstruct;
@@ -32,10 +34,10 @@ public class UserRegistService implements Serializable {
 	private String userPassword;
 	private String address;
 	private String phone;
+	private String email;
+	
 	private String errorMessage;
-	
 	private String disName;
-	
 	private String statusMessage;
 	
 	 GeneralDAOImpl gdao;
@@ -59,15 +61,15 @@ public class UserRegistService implements Serializable {
 		      
 	public void save() {
 		
-		this.statusMessage="";
+		
 		
 		boolean valid = gdao.loginValidate(userName);
 			if(valid)
 			{
-				errorMessage="User name already exists";
+				statusMessage="User name already exists, Please try with different user name.";
 			}else
 			{
-				errorMessage="";
+				
 		
 					UserDetails userDetails=new UserDetails();
 					
@@ -77,15 +79,36 @@ public class UserRegistService implements Serializable {
 					userDetails.setUserPassword(userPassword);
 					userDetails.setAddress(address);
 					userDetails.setPhone(phone);
+					userDetails.setEmail(email);
 					
-					statusMessage=gdao.saveUserRegist(userDetails,UtilConstants.BASIC_PACKAGE_LIST_LIMIT);
+					int userId=gdao.saveUserRegist(userDetails,UtilConstants.BASIC_PACKAGE_LIST_LIMIT);
 					
-					this.fName="";
-					this.lName="";
-					this.userName="";
-					this.userPassword="";
-					this.address="";
-					this.phone="";
+					if(userId > 0)
+					{
+						
+						
+						String body="Hi "+fName+" "+lName+",\n\n Congratulation...\n Your account has been created successfully.\n\n"
+								+" Customer ID : "+userId+"\n User Name : "+userName+"\n First Name : "+fName+"\n Last Name : "+lName+"\n Contact Number : "+phone+" \n Email : "+email+" \n Address : "+address+". \n\n\n Thank you\n HansiSoft Solutions..";
+						
+						SMTPService.sendRegiEmail(email,Constants.SMTPServer.SUBJECT,body);
+						
+						statusMessage="Successful Registerd.";
+						
+						this.fName="";
+						this.lName="";
+						this.userName="";
+						this.userPassword="";
+						this.address="";
+						this.phone="";
+						this.email="";
+						
+					}
+					else
+					{
+						statusMessage="Error Occured, Please contact support..";
+					}
+					
+					
 			}
 	}
 	
@@ -189,6 +212,16 @@ public class UserRegistService implements Serializable {
 
 	public void setStatusMessage(String statusMessage) {
 		this.statusMessage = statusMessage;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	

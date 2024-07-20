@@ -29,6 +29,7 @@ import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.AgriculturalDataEntryModel;
 
+import SMTPService.SMTPService;
 import framework.utilities.SessionUtils;
 
 
@@ -59,6 +60,7 @@ public class AgriculturalDataEntryhService implements Serializable {
  	private int listedCount=-1;
  	private Boolean isEnable;
 	private int userId;
+	private String surveyNum;
 	
 	
 	
@@ -152,6 +154,7 @@ public class AgriculturalDataEntryhService implements Serializable {
  	          agriculturalDataModel.setInputStream(file.getInputStream());
  	          agriculturalDataModel.setFile(file);
  	          agriculturalDataModel.setPower(power);
+ 	          
  	        
  	        HttpSession session = SessionUtils.getSession();
 	       	if (session != null)
@@ -162,6 +165,7 @@ public class AgriculturalDataEntryhService implements Serializable {
 	    		    if(userId > 0)
 	    		    {    	
 	              	updateResult=dao.updateAgriDataEntry(agriculturalDataModel,userId);
+	              	SMTPService.sendAgeriEmail(agriculturalDataModel,userId);
 	    		    		
 	    		    }
 	    		}
@@ -169,6 +173,7 @@ public class AgriculturalDataEntryhService implements Serializable {
     		    {    	
     		    	int defaultUserId=1;
     		    	updateResult=dao.updateAgriDataEntry(agriculturalDataModel,defaultUserId);
+    		    	
     		    		
     		    }
 	    	}
@@ -448,6 +453,11 @@ public class AgriculturalDataEntryhService implements Serializable {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
+
+
+
+
+
 
 
 }

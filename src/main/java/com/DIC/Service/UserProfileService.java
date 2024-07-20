@@ -1,5 +1,6 @@
 package com.DIC.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,6 +44,8 @@ public class UserProfileService {
 	 
 	 private String firstname;
 	 private String lastname;
+	 private String lastWorkDay;
+	 private int packDuration;
 	 
       
   	 private int disLeadFlag=0;
@@ -73,6 +76,13 @@ public class UserProfileService {
 		    		    		userDetails.setIsEnable(packageModel.getIsEnable());
 		     		    		userProfileRoleModel=uDao.getUserProfileRoles(userId);
 			    		    	listedCount=uDao.getAllPropByUserId(Integer.parseInt(session.getAttribute("userId").toString())).size();
+			    		    	int	remainDays=packageModel.getPackDuration()-Integer.parseInt(session.getAttribute("remainDays").toString());
+			    		    			
+			    		    			LocalDate currentDate = LocalDate.now();
+			    		    			LocalDate futureDate = currentDate.plusDays(remainDays);
+			    		    			System.out.println("Future date : "+futureDate);
+			    		    			lastWorkDay=futureDate.toString();
+			    		    	packDuration=packageModel.getPackDuration();
 			    		    		
 		    		    }
 		    		}
@@ -84,10 +94,6 @@ public class UserProfileService {
 	 
 	 	 
 	
-
-
-
-
 
 	public List<UserProfileRoleModel> getUserProfileRoleModel() {
 		return userProfileRoleModel;
@@ -140,9 +146,6 @@ public class UserProfileService {
 
 
 
-
-
-
 	public int getListedCount() {
 		return listedCount;
 	}
@@ -170,7 +173,34 @@ public class UserProfileService {
 
 	public void setUserDetails(UserDetails userDetails) {
 		this.userDetails = userDetails;
-	} 
+	}
+
+
+	public String getLastWorkDay() {
+		return lastWorkDay;
+	}
+
+
+	public void setLastWorkDay(String lastWorkDay) {
+		this.lastWorkDay = lastWorkDay;
+	}
+
+
+
+
+	public int getPackDuration() {
+		return packDuration;
+	}
+
+
+
+
+	public void setPackDuration(int packDuration) {
+		this.packDuration = packDuration;
+	}
+
+
+
 	
 	
 	 

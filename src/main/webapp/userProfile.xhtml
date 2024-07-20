@@ -43,7 +43,7 @@
             
             <p:tab title="Profile" >
                		<h:panelGrid columns="3" cellpadding="7" styleClass="mb-3">
-               			<p:dataTable id="product" widgetVar="dtProducts" var="product"   value="#{userProfileService.userDetails}" editable="true"  style="margin-bottom:20px;width:75%;" 
+               			<p:dataTable id="product" widgetVar="dtProducts" var="product"   value="#{userProfileService.userDetails}" editable="true"  style="margin-bottom:20px;width:100%;" 
 				reflow="true" styleClass="products-table"  rowKey="#{product.userId}"  paginatorPosition="bottom" >
 						  
 					           			  
@@ -132,6 +132,10 @@
 			                     <h:outputText value="#{product.packName}"/>
 			              </p:column>
 			              
+			              <p:column headerText="Pack Duration Days">
+			                     <h:outputText value="#{userProfileService.packDuration}"/>
+			              </p:column>
+			              
 			              <p:column headerText="Is Enable Pack">
 			                     <h:outputText value="#{product.isEnable}"/>
 			              </p:column>
@@ -150,6 +154,10 @@
 			                    </f:facet>
 			                </p:cellEditor>
 			               </p:column>
+			               
+			              <p:column headerText="Last Work Day">
+			                     <h:outputText value="#{userProfileService.lastWorkDay}"/>
+			              </p:column>
 				            
 				</p:dataTable>
 			  </h:panelGrid>

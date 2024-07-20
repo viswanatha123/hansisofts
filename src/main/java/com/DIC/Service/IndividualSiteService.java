@@ -24,6 +24,8 @@ import com.DIC.model.AgriculturalModel;
 import com.DIC.model.IndividualSiteModel;
 import com.DIC.model.LayoutMode;
 
+import SMTPService.SMTPService;
+
 
 @ManagedBean(name="individualSiteService")
 @ViewScoped
@@ -147,6 +149,7 @@ public class IndividualSiteService implements Serializable {
         			if(selectedProperty.getUserId()!=0)
         			{
         				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getInd_id(),selectedProperty.getUserId(),"indi");
+        				SMTPService.sendIndiLeadEmail(custName,contactNumber,email,selectedProperty);
         				log.log(Level.INFO,"***** Successful submitted lead ******");
         			}
         			if(selectedProperty.getUserId()==0)

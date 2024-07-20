@@ -44,8 +44,8 @@ public class GeneralDAOImpl {
 		// SQL
 		interface SQL {
 			
-			String SQL_VILLA_INSERT="insert into villa_plot (villa_id,i_am,owner_name,contact_owner,email,property_type,address,road_width,floors,bed_rooms,bath_rooms,furnished,plot_area,s_build_are,pro_avail,avail_date,persqft,prim_location,seco_location,image,total_feets,cost,create_date,is_active,user_id) \n"+ 
-					"values (nextval('hansi_villa_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,1,?);";
+			String SQL_VILLA_INSERT="insert into villa_plot (villa_id,i_am,owner_name,contact_owner,email,property_type,address,road_width,floors,bed_rooms,bath_rooms,furnished,plot_area,s_build_are,pro_avail,avail_date,persqft,prim_location,seco_location,image,total_feets,cost,create_date,is_active,user_id,floor_num) \n"+ 
+					"values (nextval('hansi_villa_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,1,?,?);";
 			
 			String SQL_VILLA_DETAILS="select * from villa_plot where prim_location = ? and seco_location = ?";
 					//+ " and property_type = ? order by create_date desc";
@@ -71,7 +71,7 @@ public class GeneralDAOImpl {
 			
 			String SQL_ALL_USERS="select * from user_deta order by fname ,lname";
 			
-			String SQL_USER_REGIST="INSERT INTO user_deta (user_id, fname, lname, user_name, user_pass, address, phone, create_date, is_active) VALUES (nextval('user_seq'), ?, ?,?, ?,?,?, current_timestamp, 1);";
+			String SQL_USER_REGIST="INSERT INTO user_deta (user_id, fname, lname, user_name, user_pass, address, phone, create_date, is_active,email) VALUES (nextval('user_seq'), ?, ?,?, ?,?,?, current_timestamp, 1, ?);";
 			
 			String SQL_FIND_USER_ID_BY_USER_DETAILS="select user_id from user_deta where fname=? and lname=? and user_name=? and  phone=?";
 			String NEW_USER_DEFAULT_ROLE="select r.role_id,ur.is_active from user_deta u, role r, user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1' and r.is_active = '1' and u.user_id = 2 order by role_id";
@@ -132,6 +132,7 @@ public class GeneralDAOImpl {
 		    pstmt.setInt(20, (villaModel.getPlot_area() + villaModel.getS_build_are()) );
 		    pstmt.setDouble(21, (villaModel.getPlot_area() + villaModel.getS_build_are()) * villaModel.getPersqft());
 		    pstmt.setDouble(22,userId);
+		    pstmt.setInt(23, villaModel.getFloorNum());
             
            
             	int res=pstmt.executeUpdate();
@@ -214,6 +215,7 @@ public class GeneralDAOImpl {
 	        	 villaModel.setCreate_date(rs.getDate("create_date"));
 	        	 villaModel.setIs_active(rs.getInt("is_active"));
 	        	 villaModel.setUserId(rs.getInt("user_id"));
+	        	 villaModel.setFloorNum(rs.getInt("floor_num"));
 	        	 
 	        	 			// below for Image
 	        	 
@@ -732,10 +734,9 @@ public class GeneralDAOImpl {
     
  // ***************** Save User registation  **************
     
-    public String saveUserRegist(UserDetails userDetails,int list_limit)
+    public int saveUserRegist(UserDetails userDetails,int list_limit)
     {
-    	String succVal="";
-    	int userId=0;
+       	int userId=0;
         try {
         	
             Connection con = null;
@@ -751,45 +752,40 @@ public class GeneralDAOImpl {
             pstmt.setString(4, userDetails.getUserPassword());
             pstmt.setString(5, userDetails.getAddress());
             pstmt.setString(6, userDetails.getPhone());
-            //pstmt.setInt(7,list_limit );
+            pstmt.setString(7, userDetails.getEmail());
             
+                  
            
             	int res=pstmt.executeUpdate();
 	            if(res > 0)
 	            {
-	            	succVal="Successful Registered.";
-	            }
+	            	
 	            
-	            StringBuilder sql_find_user_id_by_user_details = new StringBuilder(Constants.SQL.SQL_FIND_USER_ID_BY_USER_DETAILS);
-	            PreparedStatement ps = con.prepareStatement(sql_find_user_id_by_user_details.toString());
-				ps.setString(1, userDetails.getfName());
-				ps.setString(2, userDetails.getlName());
-				ps.setString(3, userDetails.getUserName());
-				ps.setString(4, userDetails.getPhone());
-
-				ResultSet rs = ps.executeQuery();
-
-				if (rs.next()) {
-					userId=rs.getInt("user_id");
+						            StringBuilder sql_find_user_id_by_user_details = new StringBuilder(Constants.SQL.SQL_FIND_USER_ID_BY_USER_DETAILS);
+						            PreparedStatement ps = con.prepareStatement(sql_find_user_id_by_user_details.toString());
+									ps.setString(1, userDetails.getfName());
+									ps.setString(2, userDetails.getlName());
+									ps.setString(3, userDetails.getUserName());
+									ps.setString(4, userDetails.getPhone());
 					
-						System.out.println("*********** User id ************ :"+userId);
-						if(userId > 0)
-						{
-							
-							
-							PreparedStatement psRole = con.prepareStatement(createDefaultRoles(userId));
-							int createdRolesCount=psRole.executeUpdate();
-							System.out.println("*********** Role created count ************ :"+createdRolesCount+"     "+createDefaultRoles(userId));
-						}
-				} 
+									ResultSet rs = ps.executeQuery();
+					
+									if (rs.next()) {
+										userId=rs.getInt("user_id");
+										
+											System.out.println("*********** User id ************ :"+userId);
+											if(userId > 0)
+											{
+												
+												
+												PreparedStatement psRole = con.prepareStatement(createDefaultRoles(userId));
+												int createdRolesCount=psRole.executeUpdate();
+												System.out.println("*********** Role created count ************ :"+createdRolesCount+"     "+createDefaultRoles(userId));
+												updateDefaultPackage(userId);
+											}
+									} 
 				
-				if(userId > 0)
-				{
-					updateDefaultPackage(userId);
-				}
-	            
-				
-	            
+	            }
 	            
 	            
           } catch (Exception e) {
@@ -797,13 +793,10 @@ public class GeneralDAOImpl {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
 	    
-	        succVal=e.getMessage();
-	        return succVal;
-	       
+	      	       
           }
       
-
-        return succVal;
+        return userId;
     }
     
     

@@ -27,6 +27,7 @@ import com.DIC.model.PlotsDataEntryModel;
 
 import com.DIC.model.VillaModel;
 
+import SMTPService.SMTPService;
 import framework.utilities.SessionUtils;
 
 
@@ -64,6 +65,7 @@ public class VillaDataEntryService implements Serializable{
 	private int listedCount=-1;
 	private Boolean isEnable;
 	private int userId;
+	private int floorNum;
 	
 	
 	
@@ -161,6 +163,7 @@ public class VillaDataEntryService implements Serializable{
              villaModel.setSeco_location(city);
              villaModel.setInputStream(file.getInputStream());
              villaModel.setFile(file);
+             villaModel.setFloorNum(floorNum);
              
             HttpSession session = SessionUtils.getSession();
 		       	if (session != null)
@@ -171,6 +174,7 @@ public class VillaDataEntryService implements Serializable{
 		    		    if(userId > 0)
 		    		    {    	
 			 	              	updateResult=gdao.updateVillaDataEntry(villaModel,userId);
+			 	              	SMTPService.sendVillaEmail(villaModel,userId);
 		    		    }
 		    		}
 		    		if(session.getAttribute("userId")==null)
@@ -180,6 +184,8 @@ public class VillaDataEntryService implements Serializable{
 	    		    		
 	    		    }
 		    	}
+		       	
+		   
 	              
 	        this.i_am="Owner";
 	     	this.owner_name="";
@@ -203,12 +209,9 @@ public class VillaDataEntryService implements Serializable{
 	         //private UploadedFile file;
 	     	this.total_feets=0;;
 	     	this.cost=0;
+	     	this.floorNum=0;
 	     	
-	         
-	        
-	  
-             
-
+	 
          } catch (Exception e) {
              System.out.println("Exception-File Upload." + e.getMessage());
          }
@@ -482,6 +485,14 @@ public class VillaDataEntryService implements Serializable{
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public int getFloorNum() {
+		return floorNum;
+	}
+
+	public void setFloorNum(int floorNum) {
+		this.floorNum = floorNum;
 	}
 
 

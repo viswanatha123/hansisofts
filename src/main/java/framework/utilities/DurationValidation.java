@@ -30,5 +30,17 @@ public class DurationValidation {
 		
 		
 	}
+	
+	public static long getRemainDays(UserDetails userDetails,PackageModel packageModel)
+	{
+		LocalDate accountCreateDate=LocalDate.parse(userDetails.getCreate_date().toString());
+		LocalDate currentDate = LocalDate.now();
+		long remainDays = ChronoUnit.DAYS.between(accountCreateDate, currentDate);
+		
+		System.out.println(" Ramine days : "+remainDays);
+		
+		return remainDays;
+		
+	}
 
 }

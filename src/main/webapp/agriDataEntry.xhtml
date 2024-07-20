@@ -98,8 +98,8 @@
 			                    </p:inputMask>
 			                    <p:message for="contactno" display="icon"/>
 			                    
-			                    <p:outputLabel style="font-weight: bold" value="Survey No : " />
-			                    <p:inputText id="surveyNo"  value="#{agriculturalDataEntryhService.surveyNo}" >
+			                    <p:outputLabel style="font-weight: bold" indicateRequired="true" value="Survey No : " />
+			                    <p:inputText id="surveyNo"  value="#{agriculturalDataEntryhService.surveyNo}" required="true" requiredMessage="Required Survey Number.">
 			                    </p:inputText>
 			                    <p:message for="surveyNo" display="icon"/>
 			                    
@@ -124,9 +124,9 @@
                     
                     
 			                    <p:outputLabel style="font-weight: bold" for="perAcer" indicateRequired="true" value="Per Acer(Cost) : " />
-			                    <p:inputText id="perAcer"  value="#{agriculturalDataEntryhService.perCent}" required="true" requiredMessage="Required Per Cent(Cost)">
-			                    </p:inputText>  
-			                     <p:message for="perAcer" display="icon"/>
+			                    <p:inputNumber id="perAcer"  value="#{agriculturalDataEntryhService.perCent}" required="true" requiredMessage="Required Per Cent(Cost)" >
+                   				</p:inputNumber>
+			                    <p:message for="perAcer" display="icon"/>
 			                    
 			                    
 			                    <p:outputLabel style="font-weight: bold" for="numberCents" indicateRequired="true" value="Number of Acers : " />

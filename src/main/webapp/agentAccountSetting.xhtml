@@ -27,7 +27,7 @@
   <p>Agent Account setting</p>
   
   <div class="card">
-  <h:form id="form" enctype="multipart/form-data">
+  <h:form id="form">
   <p:messages id="msgs"/>
    <br></br>
    
@@ -37,7 +37,7 @@
    			<br></br>
    		<h:outputText style="font-weight: bold;color: green ; font-size: 17px" value="#{agentAccountSettingService.updateResult}" />
              
-             <p:panel style="background-image: url('back1.jpg'); ">   
+             <p:panel id="panel1" style="background-image: url('back1.jpg'); ">   
                 <p:panelGrid columns="4" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
                                        
                             
@@ -54,22 +54,21 @@
                                     <p:resetInput target="form"/>
                    </h:commandButton>
                    
-                   <h:commandButton id="discardChangesButton"
-	                                   process="@this"
-	                                   value="Clear"
-                                           update="@form"
-	                                   actionListener="#{agentAccountSettingService.clear}" >
-	                                   
-	                  <p:resetInput target="form"/>
-	          	 </h:commandButton>
-              
+               				  
+				   <h:commandButton value="Reset" type="submit"
+				   					update="@form" 
+				   					process="@this"
+                                    actionListener="#{agentAccountSettingService.reset}" styleClass="mr-2 ui-button-outlined">
+                                   <p:resetInput target="form"/>
+                  </h:commandButton>
+               
                </p:panelGrid>                   
              </p:panel>
              
              
              
              <c:if test="#{agentAccountSettingService.userName != null}"> 
-             <p:panel style="background-image: url('back1.jpg'); ">   
+             <p:panel id="panel2" style="background-image: url('back1.jpg'); ">   
                 <p:panelGrid columns="2" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
                 
                 	<p:outputLabel style="font-weight: bold" value="First Name : " />
@@ -91,14 +90,22 @@
                    <p:outputLabel style="font-weight: bold" value="Address : " />
                    <p:inputText id="address" value="#{agentAccountSettingService.address}" >
                    </p:inputText>
-                   
-                   <p:outputLabel style="font-weight: bold" value="Phone : " />
-                   <p:inputText id="phone" value="#{agentAccountSettingService.phone}" >
-                   </p:inputText>
+                                     
+                   <p:outputLabel style="font-weight: bold" for="phone" indicateRequired="true" value="Phone : " />
+                   <p:inputMask id="phone"  mask="9999999999" required="true"  maxlength="10" value="#{agentAccountSettingService.phone}" >
+                   </p:inputMask>
                    
                    <p:outputLabel for="create_date" value="Created Date : " />
         		   <p:datePicker id="create_date"  pattern="yyyy-MM-dd" value="#{agentAccountSettingService.create_date}" showIcon="true" >
         		   </p:datePicker>
+        		   
+        		   
+        		    <p:outputLabel indicateRequired="true" style="font-weight: bold; font-size: 14px;color:black; text-align:left;" value="Email : " />
+		            <p:inputText id="email"  size="30" value="#{agentAccountSettingService.email}" required="true" validatorMessage="Invalid email format">
+		            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+		            </p:inputText>
+		           
+		            
                    
                    <p:outputLabel style="font-weight: bold" value="Is Active : " />
                    <p:inputNumber id="is_active" value="#{agentAccountSettingService.is_active}" >

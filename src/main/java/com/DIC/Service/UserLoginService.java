@@ -18,6 +18,8 @@ import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.PackageModel;
 import com.DIC.model.UserDetails;
 
+
+import SMTPService.SMTPService;
 import framework.EventHandler;
 import framework.utilities.DurationValidation;
 import framework.utilities.SessionUtils;
@@ -41,6 +43,7 @@ public class UserLoginService implements Serializable{
 	    private boolean valid;
 	    private String disName;
 	    private String fullName;
+	    private long remainDays;
 	    
 	    
 	    
@@ -156,7 +159,7 @@ public class UserLoginService implements Serializable{
 		        PrimeFaces.current().resetInputs("form:panel1");
 		    }
 	    
-	    public String userLoingAction()
+	    public String userLoingAction() throws Exception
 	    {
 	    	log.info("calling navegateToAdminLoginPage()");
 	    	String pageName="adminLoginError";
@@ -167,6 +170,11 @@ public class UserLoginService implements Serializable{
 	    	
 	    	
 	    	if (valid) {
+	    		
+	    		//SMTPService.sendRegiEmail();
+	    		
+	    		
+	    		
 				HttpSession session = SessionUtils.getSession();
 				
 				UserDetails userDetails=gDao.getUserDeta(userName, password);
@@ -175,6 +183,8 @@ public class UserLoginService implements Serializable{
 				PackageModel packageModel=uDao.getPackageDetails(userDetails.getUserId());
 				
 				boolean duraValida=DurationValidation.durationValidation(userDetails,packageModel);
+				
+				remainDays=DurationValidation.getRemainDays(userDetails,packageModel);
 				System.out.println(" Duration Validation : "+duraValida);
 				
 				if(duraValida==false)
@@ -189,7 +199,7 @@ public class UserLoginService implements Serializable{
 				}
 				
 				
-				SessionUtils.setUserDetails(userDetails,packageModel);
+				SessionUtils.setUserDetails(userDetails,packageModel,remainDays);
 				disName=SessionUtils.getUserDisName();
 				fullName=SessionUtils.getUserFullName();
 				userId=SessionUtils.getUserId();
@@ -225,6 +235,14 @@ public class UserLoginService implements Serializable{
 			session.invalidate();
 			System.out.println("******** Successful logout **********");
 			return "userLogin";
+		}
+
+		public long getRemainDays() {
+			return remainDays;
+		}
+
+		public void setRemainDays(long remainDays) {
+			this.remainDays = remainDays;
 		}
 		
 		
