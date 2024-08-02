@@ -2,13 +2,17 @@ package com.DIC.DAO.Impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -1272,6 +1276,68 @@ public class GeneralDAOImpl {
     	
     }
       
+    
+    public Object executeQuery(String queryString)
+    {
+    	
+    	    	
+    	List<Map<String, Object>> resultList = new ArrayList<>();
+    	
+        try {
+            Connection con = null;
+            PreparedStatement pstmt = null;
+            con=ConnectionDAO.getConnection();
+            
+     		
+  							pstmt = con.prepareStatement(queryString);
+  							ResultSet rs = pstmt.executeQuery();
+  							
+  						
+  							
+  							ResultSetMetaData  metaData = rs.getMetaData();
+  					        int columnCount = metaData.getColumnCount();
+							  	         while ( rs.next() ) {
+							  	        	 
+							  	        	Map<String, Object> row = new HashMap<>();
+							  	        	
+									  	        	for (int i = 1; i <= columnCount; i++) {
+									  	                String columnName = metaData.getColumnName(i);
+									  	                Object value = rs.getObject(i);
+									  	                row.put(columnName, value);
+									  	            }
+							
+							  	            resultList.add(row);
+							  	       	        	
+							  	        		        	
+							  	            }
+            
+  						
+           
+          } catch (Exception e) {
+         
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	             
+
+	       return getStackTraceAsString(e);
+          }
+      
+
+        return resultList;
+
+    }
+    
+    public static String getStackTraceAsString(Throwable throwable) {
+        // Create a StringWriter to hold the stack trace
+        StringWriter sw = new StringWriter();
+        // Create a PrintWriter to write the stack trace to the StringWriter
+        PrintWriter pw = new PrintWriter(sw);
+        // Print the stack trace to the PrintWriter
+        throwable.printStackTrace(pw);
+        // Convert the StringWriter content to a String and return it
+        return sw.toString();
+    }
+    
     
     
     
