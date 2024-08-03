@@ -71,11 +71,11 @@
                 <p:panelGrid columns="2" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
                 
                 	<p:outputLabel style="font-weight: bold" value="Package Name : " />
-                    <p:inputText id="packname" value="#{packSettingService.packName}" >
+                    <p:inputText id="packname" disabled="true" value="#{packSettingService.packName}" >
                     </p:inputText>
                     
                     <p:outputLabel style="font-weight: bold" value="Package Type : " />
-                    <p:inputNumber id="packtype" value="#{packSettingService.packType}" >
+                    <p:inputNumber id="packtype" disabled="true" value="#{packSettingService.packType}" >
                     </p:inputNumber>
                     
                     <p:outputLabel style="font-weight: bold" value="List Limit : " />
@@ -101,7 +101,7 @@
   			</c:if>
   
   
-  
+  <script type="text/javascript" src="resources/js/chatool.js"></script>
   </h:form>
 </div>
 </ui:define>

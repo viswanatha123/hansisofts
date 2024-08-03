@@ -1,6 +1,7 @@
 package com.DIC.Service;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.logging.Logger;
 import com.DIC.model.UserDetails;
@@ -75,8 +76,8 @@ public class UserRegistService implements Serializable {
 					
 					userDetails.setfName(fName);
 					userDetails.setlName(lName);
-					userDetails.setUserName(userName);
-					userDetails.setUserPassword(userPassword);
+					userDetails.setUserName(userName.trim());
+					userDetails.setUserPassword(userPassword.trim());
 					userDetails.setAddress(address);
 					userDetails.setPhone(phone);
 					userDetails.setEmail(email);
@@ -88,7 +89,7 @@ public class UserRegistService implements Serializable {
 						
 						
 						String body="Hi "+fName+" "+lName+",\n\n Congratulation...\n Your account has been created successfully.\n\n"
-								+" Customer ID : "+userId+"\n User Name : "+userName+"\n First Name : "+fName+"\n Last Name : "+lName+"\n Contact Number : "+phone+" \n Email : "+email+" \n Address : "+address+". \n\n\n Thank you\n HansiSoft Solutions..";
+								+" Customer ID : "+userId+"\n User Name : "+userName+"\n First Name : "+fName+"\n Last Name : "+lName+"\n Contact Number : "+phone+" \n Email : "+email+" \n Address : "+address+" \n Date : "+LocalDate.now().toString()+". \n\n\n Thank you\n HansiSoft Solutions..";
 						
 						SMTPService.sendRegiEmail(email,Constants.SMTPServer.SUBJECT,body);
 						
