@@ -73,7 +73,7 @@ public class AgentAccountSettingService {
 			}
 			else
 			{
-				updateResult="User id dose not exist.";
+				updateResult="User id does not exist.";
 				System.out.println("*****************Package details null ******************");
 				this.fName=null;
 				this.lName=null;

@@ -15,6 +15,7 @@ import com.DIC.model.VillaModel;
 
 import framework.utilities.Constants;
 
+import java.time.LocalDate;
 import java.util.Properties;
 
 
@@ -95,9 +96,9 @@ public class SMTPService {
 			    		 
 			    		 
 			    		 String agentDetails="Agent : "+userDetails.getfName()+" "+userDetails.getlName()+",\n\n Congratulations...\n Your Property has been listed successfully.\n\n"
-									+ "Agent Details \n\n First Name : "+userDetails.getfName()+";\n Last Name : "+userDetails.getlName()+";\n Contact Number : "+userDetails.getPhone()+" ;\n Email : "+userDetails.getEmail()+"; \n Address : "+userDetails.getAddress()+".";
+									+ "Agent Details \n\n First Name : "+userDetails.getfName()+";\n Last Name : "+userDetails.getlName()+";\n Contact Number : "+userDetails.getPhone()+" ;\n Email : "+userDetails.getEmail()+"; \n Address : "+userDetails.getAddress()+";\n Date :  "+LocalDate.now().toString()+".";
 							
-			    		 
+			    		
 			    		 int cost=(plotsDataEntryModel.getLength()*plotsDataEntryModel.getWidth())*plotsDataEntryModel.getPersqft();
 			    		 String proDetals="\n\n\nLayout Details.\n\n Layout Name : "+plotsDataEntryModel.getName()+";"
 			    		 		+ "\n Cost : "+cost+";\n Primary location : "+plotsDataEntryModel.getPrimLocation()+"; "
@@ -133,7 +134,7 @@ public class SMTPService {
 			    		 
 			    		 
 			    		 String agentDetails="Agent : "+userDetails.getfName()+" "+userDetails.getlName()+",\n\n Congratulations...\n Your Property has been listed successfully.\n\n"
-									+ "Agent Details \n\n First Name : "+userDetails.getfName()+";\n Last Name : "+userDetails.getlName()+";\n Contact Number : "+userDetails.getPhone()+" ;\n Email : "+userDetails.getEmail()+"; \n Address : "+userDetails.getAddress()+".";
+									+ "Agent Details \n\n First Name : "+userDetails.getfName()+";\n Last Name : "+userDetails.getlName()+";\n Contact Number : "+userDetails.getPhone()+" ;\n Email : "+userDetails.getEmail()+"; \n Address : "+userDetails.getAddress()+";\n Date :  "+LocalDate.now().toString()+".";
 							
 			    		 
 			    		 int cost=agriculturalDataEntryModel.getNumberCents() * agriculturalDataEntryModel.getPerCent();
@@ -171,7 +172,7 @@ public class SMTPService {
 			    		 
 			    		 
 			    		 String agentDetails="Agent : "+userDetails.getfName()+" "+userDetails.getlName()+",\n\n Congratulations...\n Your Property has been listed successfully.\n\n"
-									+ "Agent Details \n\n First Name : "+userDetails.getfName()+";\n Last Name : "+userDetails.getlName()+";\n Contact Number : "+userDetails.getPhone()+" ;\n Email : "+userDetails.getEmail()+"; \n Address : "+userDetails.getAddress()+".";
+									+ "Agent Details \n\n First Name : "+userDetails.getfName()+";\n Last Name : "+userDetails.getlName()+";\n Contact Number : "+userDetails.getPhone()+" ;\n Email : "+userDetails.getEmail()+"; \n Address : "+userDetails.getAddress()+";\n Date :  "+LocalDate.now().toString()+".";
 							
 			    		 
 			    		 int cost=(ndiSiteDataEntryModel.getLength() * ndiSiteDataEntryModel.getWidth()) * ndiSiteDataEntryModel.getPersqft();
@@ -248,7 +249,7 @@ public class SMTPService {
    		 
    		 
    		String customerDetails="Customer Details..\n\n Customer Name : "+custName+"\n Contact No : "+contactNumber+",\n Email ID : "+email+"\n\n\n";
-   		String propertySetils="Layoyt Details..\n\n Layout Name : "+selectedProperty.getName()+" \n Primary location : "+selectedProperty.getPrimLocation()+"\n Secondry Location : "+selectedProperty.getSecoLocation();
+   		String propertySetils="Layoyt Details..\n\n Layout Name : "+selectedProperty.getName()+" \n Primary location : "+selectedProperty.getPrimLocation()+"\n Secondry Location : "+selectedProperty.getSecoLocation()+"\n Date : "+LocalDate.now().toString()+".";
    	    String thanks="\n\n Thank you\n HansiSoft Solutions..";
    		 
    		 String body=customerDetails+""+propertySetils+""+thanks;
@@ -278,7 +279,7 @@ public class SMTPService {
    		 
    		 
    		String customerDetails="Customer Details..\n\n Customer Name : "+custName+"\n Contact No : "+contactNumber+",\n Email ID : "+email+"\n\n\n";
-   		String propertySetils="Agricultural Details..\n\n Owner Name : "+selectedProperty.getOwnerName()+" \n Primary location : "+selectedProperty.getPrimLocation()+"\n Secondry Location : "+selectedProperty.getSecoLocation();
+   		String propertySetils="Agricultural Details..\n\n Owner Name : "+selectedProperty.getOwnerName()+" \n Primary location : "+selectedProperty.getPrimLocation()+"\n Secondry Location : "+selectedProperty.getSecoLocation()+"\n Date : "+LocalDate.now().toString()+".";
    	    String thanks="\n\n Thank you\n HansiSoft Solutions..";
    		 
    		 String body=customerDetails+""+propertySetils+""+thanks;
@@ -308,7 +309,7 @@ public class SMTPService {
    		 
    		 
    		String customerDetails="Customer Details..\n\n Customer Name : "+custName+"\n Contact No : "+contactNumber+",\n Email ID : "+email+"\n\n\n";
-   		String propertySetils="Individual Site Details..\n\n Owner Name : "+selectedProperty.getOwnerName()+" \n Primary location : "+selectedProperty.getPrimLocation()+"\n Secondry Location : "+selectedProperty.getSecoLocation();
+   		String propertySetils="Individual Site Details..\n\n Owner Name : "+selectedProperty.getOwnerName()+" \n Primary location : "+selectedProperty.getPrimLocation()+"\n Secondry Location : "+selectedProperty.getSecoLocation()+"\n Date : "+LocalDate.now().toString()+".";
    	    String thanks="\n\n Thank you\n HansiSoft Solutions..";
    		 
    		 String body=customerDetails+""+propertySetils+""+thanks;
@@ -338,7 +339,7 @@ public class SMTPService {
    		 
    		 
    		String customerDetails="Customer Details..\n\n Customer Name : "+custName+"\n Contact No : "+contactNumber+",\n Email ID : "+email+"\n\n\n";
-   		String propertySetils="Villa Details..\n\n Owner Name : "+selectedProperty.getOwner_name()+" \n Primary location : "+selectedProperty.getPrim_location()+"\n Secondry Location : "+selectedProperty.getSeco_location();
+   		String propertySetils="Villa Details..\n\n Owner Name : "+selectedProperty.getOwner_name()+" \n Primary location : "+selectedProperty.getPrim_location()+"\n Secondry Location : "+selectedProperty.getSeco_location()+"\n Date : "+LocalDate.now().toString()+".";
    	    String thanks="\n\n Thank you\n HansiSoft Solutions..";
    		 
    		 String body=customerDetails+""+propertySetils+""+thanks;
