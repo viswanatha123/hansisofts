@@ -1,8 +1,8 @@
 package com.DIC.Service;
 
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -31,7 +31,7 @@ import framework.utilities.SessionUtils;
 public class UserLoginService implements Serializable{
 	
 	
-	static final Logger log = Logger.getLogger(UserLoginService.class.getName());
+	private static final Logger log = LogManager.getLogger(UserLoginService.class);
 	
 		private int userId;
 	    private String userName;
@@ -56,7 +56,7 @@ public class UserLoginService implements Serializable{
 	    public void init()
 	    {
 			message="";
-			log.log(Level.INFO, "Loading UserLoginService init()");
+			//log.log(Level.INFO, "Loading UserLoginService init()");
 				
 	    	gDao=new GeneralDAOImpl();
 	    	uDao=new UserDAOImpl();
@@ -173,7 +173,9 @@ public class UserLoginService implements Serializable{
 	    		
 	    		//SMTPService.sendRegiEmail();
 	    		
-	    		
+	    		    log.info("This is an info message.");
+		            log.debug("This is a debug message.");
+		            log.error("This is an error message======================");
 	    		
 				HttpSession session = SessionUtils.getSession();
 				

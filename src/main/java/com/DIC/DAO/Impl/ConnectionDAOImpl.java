@@ -16,6 +16,7 @@ import java.text.NumberFormat;
 
 import com.DIC.DAO.ConnectionDAO;
 import com.DIC.Service.AgriculturalService;
+import com.DIC.Service.UserLoginService;
 import com.DIC.model.AgriculturalDataEntryModel;
 import com.DIC.model.AgriculturalModel;
 import com.DIC.model.ConnectorMode;
@@ -44,8 +45,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import org.primefaces.util.SerializableSupplier;
 
@@ -53,7 +54,7 @@ import org.primefaces.util.SerializableSupplier;
 @ApplicationScoped
 public class ConnectionDAOImpl {
 	
-	private static final Logger log = Logger.getLogger(ConnectionDAOImpl.class.getName());
+	private static final Logger log = LogManager.getLogger(ConnectionDAOImpl.class);
 	
 	interface Constants {
 		// SQL
@@ -121,6 +122,7 @@ public class ConnectionDAOImpl {
 				}catch (Exception e) {
 		        e.printStackTrace();
 		        System.err.println("@@@@@@@@@@@@Primary data @@@@@@@@@@@@@@@@@@@@@@@@@@ :"+e.getClass().getName()+": "+e.getMessage());
+		        log.error("An error occurred: {}", e.getMessage());
 		     }
 		return primaryModelList;		
 		}
@@ -132,7 +134,7 @@ public class ConnectionDAOImpl {
 			{		
 				
 				
-				log.log(Level.INFO, "Primary value  in db--------->:"+primCode);
+				//log.log(Level.INFO, "Primary value  in db--------->:"+primCode);
 				List<String> secondryModelList = new ArrayList<>();
 					try {
 					Connection con = null;
@@ -148,7 +150,7 @@ public class ConnectionDAOImpl {
 	                      	while ( rs.next() ) {
 	    	            		secondryModelList.add(rs.getString("seco_name"));
 	    	            		
-	    	            		log.log(Level.INFO, "debug x----->"+rs.getString("seco_name"));
+	    	            		//log.log(Level.INFO, "debug x----->"+rs.getString("seco_name"));
 				          	 }	
 	                
 	                 rs.close();
@@ -158,7 +160,7 @@ public class ConnectionDAOImpl {
 			     } catch (Exception e) {
 			        e.printStackTrace();
 			        System.err.println("@@@@@@@@@@@@Primary data @@@@@@@@@@@@@@@@@@@@@@@@@@ :"+e.getClass().getName()+": "+e.getMessage());
-			        //System.exit(0);
+			        log.error("An error occurred: {}", e.getMessage());
 			     }
 			return secondryModelList;		
 			}
@@ -198,7 +200,7 @@ public class ConnectionDAOImpl {
 	     } catch (Exception e) {
 	        e.printStackTrace();
 	        System.err.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ :"+e.getClass().getName()+": "+e.getMessage());
-	        System.exit(0);
+	        log.error("An error occurred: {}", e.getMessage());
 	     }
 	return count;		
 	}
@@ -247,7 +249,7 @@ public class ConnectionDAOImpl {
 	     } catch (Exception e) {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	        System.exit(0);
+	        log.error("An error occurred: {}", e.getMessage());
 	     }
 	return connectorModelList;		
 	}
@@ -340,7 +342,7 @@ public class ConnectionDAOImpl {
 	    	 //log.info("Connected failed from getRegistEnviDetailS() : d"+e);
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	        //System.exit(0);
+	        log.error("An error occurred: {}", e.getMessage());
 	     }
      
      
@@ -392,7 +394,7 @@ public class ConnectionDAOImpl {
 	    	 //log.info("Connected failed from getRegistEnviDetailS() : d"+e);
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	        //System.exit(0);
+	        log.error("An error occurred: {}", e.getMessage());
 	     }
       return exceptionValueModelList;
     }
@@ -485,7 +487,7 @@ public class ConnectionDAOImpl {
 	     } catch (Exception e) {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	        //System.exit(0);
+	        log.error("An error occurred: {}", e.getMessage());
 	     }
 	return layoutModeList;		
 	}
@@ -618,7 +620,7 @@ public class ConnectionDAOImpl {
     	     } catch (Exception e) {
     	        e.printStackTrace();
     	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-    	        System.exit(0);
+    	        log.error("An error occurred: {}", e.getMessage());
     	     }
     	return agriculturalModelList;		
     	}
@@ -683,6 +685,7 @@ public class ConnectionDAOImpl {
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
 	    
 	        succVal=e.getMessage();
+	        log.error("An error occurred: {}", e.getMessage());
 	        return succVal;
 	       
 	}
@@ -775,7 +778,7 @@ public class ConnectionDAOImpl {
     	     } catch (Exception e) {
     	        e.printStackTrace();
     	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-    	        //System.exit(0);
+    	        log.error("An error occurred: {}", e.getMessage());
     	     }
     	return individualSiteModelList;		
     	}
@@ -830,6 +833,7 @@ public class ConnectionDAOImpl {
 		        e.printStackTrace();
 		        System.err.println(e.getClass().getName()+": "+e.getMessage());
 		        succVal=e.getMessage();
+		        log.error("An error occurred: {}", e.getMessage());
 		        return succVal;
 		   }
       
@@ -888,6 +892,7 @@ public class ConnectionDAOImpl {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
 	        succVal=e.getMessage();
+	        log.error("An error occurred: {}", e.getMessage());
 	        return succVal;
 	        
 	   }
@@ -936,7 +941,7 @@ public class ConnectionDAOImpl {
                 
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	      //System.exit(0);
+	        log.error("An error occurred: {}", e.getMessage());
 	}
       
         
@@ -977,7 +982,7 @@ public class ConnectionDAOImpl {
                 
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	      //System.exit(0);
+	        log.error("An error occurred: {}", e.getMessage());
 	}
       
         
@@ -1037,7 +1042,7 @@ public class ConnectionDAOImpl {
                 
         	e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	    
+	        log.error("An error occurred: {}", e.getMessage());
 	        succVal=e.getMessage();
 	        return succVal;
 	}
@@ -1096,6 +1101,7 @@ public class ConnectionDAOImpl {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
 	        succVal=e.getMessage();
+	        log.error("An error occurred: {}", e.getMessage());
 	        return succVal;
 	   }
       
@@ -1202,6 +1208,7 @@ public class ConnectionDAOImpl {
 	     } catch (Exception e) {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        log.error("An error occurred: {}", e.getMessage());
 	     }
 		
 
@@ -1243,7 +1250,7 @@ public class ConnectionDAOImpl {
                 
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	      //System.exit(0);
+	        log.error("An error occurred: {}", e.getMessage());
 	}
       
         

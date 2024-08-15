@@ -15,8 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -55,7 +55,7 @@ import org.primefaces.util.EscapeUtils;
 @ViewScoped
 public class PlotsDataEntryService implements Serializable{
 	
-	  private static final Logger log = Logger.getLogger(PlotsDataEntryService.class.getName());
+	private static final Logger log = LogManager.getLogger(PlotsDataEntryService.class);
 	  
 	  private String name;
 	  private String location;
@@ -101,14 +101,14 @@ public class PlotsDataEntryService implements Serializable{
 	   @PostConstruct 
 	   public void init()
 	      {
-	          log.log(Level.INFO, "Loading PlotsDataEntryService init()");
+	          log.info("Loading PlotsDataEntryService init()");
               dao=new ConnectionDAOImpl();
 	          primaryModel=dao.getPrimaryLocation();
 	          uDao=new UserDAOImpl();
               primLocation  = new HashMap<>(); 
               for(Map.Entry<String, String> pp:primaryModel.entrySet())
               {
-            	  log.log(Level.INFO, "Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
+            	  log.info("Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
             	  
             	  primLocation.put(pp.getKey(), pp.getValue());
             	  
@@ -131,7 +131,7 @@ public class PlotsDataEntryService implements Serializable{
 			    		    			 
 			    		    			 
 			    		    			 listedCount=uDao.getAllPropByUserId(Integer.parseInt(session.getAttribute("userId").toString())).size();
-			    		    			  log.log(Level.INFO, "listedCount  listLimit :"+listedCount+"  <=  "+listLimit+"     "+isEnable);
+			    		    			  log.info("listedCount  listLimit :"+listedCount+"  <=  "+listLimit+"     "+isEnable);
 			    		    		}
 			    		    		    		    
 			    		}
@@ -142,7 +142,7 @@ public class PlotsDataEntryService implements Serializable{
 			    			listLimit=1;
 			    			listedCount=0;
 			    			
-			    			  log.log(Level.INFO, "listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
+			    			  log.info("listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
 		    		    }
 			    		
 			    	}
@@ -152,7 +152,7 @@ public class PlotsDataEntryService implements Serializable{
 		     if (file != null) {
 	            try {
 	            	
-	                log.log(Level.INFO, "Selected county and city ---------->:"+country+"     "+city);
+	                log.info("Selected county and city ---------->:"+country+"     "+city);
 	  	         
 	  	          PlotsDataEntryModel plotsDataEntryModel=new PlotsDataEntryModel();
 	  	          plotsDataEntryModel.setName(name);

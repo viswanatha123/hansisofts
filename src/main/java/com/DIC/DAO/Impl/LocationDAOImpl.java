@@ -7,8 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -20,7 +20,7 @@ import com.DIC.DAO.Impl.ConnectionDAOImpl.Constants;
 @ApplicationScoped
 public class LocationDAOImpl {
 	
-	private static final Logger log = Logger.getLogger(LocationDAOImpl.class.getName());
+	private static final Logger log = LogManager.getLogger(LocationDAOImpl.class);
 	
 	
 	interface Constants {
@@ -70,6 +70,7 @@ public class LocationDAOImpl {
 			}catch (Exception e) {
 	        e.printStackTrace();
 	        System.err.println("@@@@@@@@@@@@Primary data @@@@@@@@@@@@@@@@@@@@@@@@@@ :"+e.getClass().getName()+": "+e.getMessage());
+	        log.error("An error occurred: {}", e.getMessage());
 	     }
 	return primaryModelList;		
 	}
@@ -83,7 +84,7 @@ public class LocationDAOImpl {
 			{		
 				
 				
-				log.log(Level.INFO, "Primary value  in db--------->:"+primCode);
+				log.info("Primary value  in db--------->:"+primCode);
 				List<String> secondryModelList = new ArrayList<>();
 					try {
 					Connection con = null;
@@ -99,7 +100,7 @@ public class LocationDAOImpl {
 	                      	while ( rs.next() ) {
 	    	            		secondryModelList.add(rs.getString("seco_location"));
 	    	            		
-	    	            		log.log(Level.INFO, "debug x----->"+rs.getString("seco_location"));
+	    	            		log.info("debug x----->"+rs.getString("seco_location"));
 				          	 }	
 	                
 	                 rs.close();
@@ -109,7 +110,7 @@ public class LocationDAOImpl {
 			     } catch (Exception e) {
 			        e.printStackTrace();
 			        System.err.println("@@@@@@@@@@@@Primary data @@@@@@@@@@@@@@@@@@@@@@@@@@ :"+e.getClass().getName()+": "+e.getMessage());
-			        //System.exit(0);
+			        log.error("An error occurred: {}", e.getMessage());
 			     }
 			return secondryModelList;		
 			}
@@ -143,6 +144,7 @@ public class LocationDAOImpl {
 				}catch (Exception e) {
 		        e.printStackTrace();
 		        System.err.println("@@@@@@@@@@@@Primary data @@@@@@@@@@@@@@@@@@@@@@@@@@ :"+e.getClass().getName()+": "+e.getMessage());
+		        log.error("An error occurred: {}", e.getMessage());
 		     }
 		return primaryModelList;		
 		}
@@ -156,7 +158,7 @@ public class LocationDAOImpl {
 				{		
 					
 					
-					log.log(Level.INFO, "Primary value  in db--------->:"+primCode);
+					log.info("Primary value  in db--------->:"+primCode);
 					List<String> secondryModelList = new ArrayList<>();
 						try {
 						Connection con = null;
@@ -172,7 +174,7 @@ public class LocationDAOImpl {
 		                      	while ( rs.next() ) {
 		    	            		secondryModelList.add(rs.getString("seco_location"));
 		    	            		
-		    	            		log.log(Level.INFO, "debug x----->"+rs.getString("seco_location"));
+		    	            		log.info("debug x----->"+rs.getString("seco_location"));
 					          	 }	
 		                
 		                 rs.close();
@@ -182,7 +184,7 @@ public class LocationDAOImpl {
 				     } catch (Exception e) {
 				        e.printStackTrace();
 				        System.err.println("@@@@@@@@@@@@Primary data @@@@@@@@@@@@@@@@@@@@@@@@@@ :"+e.getClass().getName()+": "+e.getMessage());
-				        //System.exit(0);
+				        log.error("An error occurred: {}", e.getMessage());
 				     }
 				return secondryModelList;		
 				}
@@ -217,6 +219,7 @@ public class LocationDAOImpl {
 				}catch (Exception e) {
 				e.printStackTrace();
 				System.err.println("@@@@@@@@@@@@Primary data @@@@@@@@@@@@@@@@@@@@@@@@@@ :"+e.getClass().getName()+": "+e.getMessage());
+				log.error("An error occurred: {}", e.getMessage());
 				}
 				return primaryModelList;		
 				}
@@ -230,7 +233,7 @@ public class LocationDAOImpl {
 				{		
 				
 				
-				log.log(Level.INFO, "Primary value  in db--------->:"+primCode);
+				log.info("Primary value  in db--------->:"+primCode);
 				List<String> secondryModelList = new ArrayList<>();
 				try {
 				Connection con = null;
@@ -246,7 +249,7 @@ public class LocationDAOImpl {
 				  	while ( rs.next() ) {
 						secondryModelList.add(rs.getString("seco_location"));
 						
-						log.log(Level.INFO, "debug x----->"+rs.getString("seco_location"));
+						log.info("debug x----->"+rs.getString("seco_location"));
 				  	 }	
 				
 				rs.close();
@@ -256,7 +259,7 @@ public class LocationDAOImpl {
 				} catch (Exception e) {
 				e.printStackTrace();
 				System.err.println("@@@@@@@@@@@@Primary data @@@@@@@@@@@@@@@@@@@@@@@@@@ :"+e.getClass().getName()+": "+e.getMessage());
-				//System.exit(0);
+				log.error("An error occurred: {}", e.getMessage());
 				}
 				return secondryModelList;		
 				}
@@ -290,6 +293,7 @@ public class LocationDAOImpl {
 					}catch (Exception e) {
 			        e.printStackTrace();
 			        System.err.println("@@@@@@@@@@@@Primary data @@@@@@@@@@@@@@@@@@@@@@@@@@ :"+e.getClass().getName()+": "+e.getMessage());
+			        log.error("An error occurred: {}", e.getMessage());
 			     }
 			return primaryModelList;		
 			}
@@ -300,7 +304,7 @@ public class LocationDAOImpl {
 				{		
 					
 					
-					log.log(Level.INFO, "Primary value  in db--------->:"+primCode);
+					log.info("Primary value  in db--------->:"+primCode);
 					List<String> secondryModelList = new ArrayList<>();
 						try {
 						Connection con = null;
@@ -316,7 +320,7 @@ public class LocationDAOImpl {
 		                      	while ( rs.next() ) {
 		    	            		secondryModelList.add(rs.getString("seco_location"));
 		    	            		
-		    	            		log.log(Level.INFO, "debug x----->"+rs.getString("seco_location"));
+		    	            		log.info("debug x----->"+rs.getString("seco_location"));
 					          	 }	
 		                
 		                 rs.close();
@@ -326,7 +330,7 @@ public class LocationDAOImpl {
 				     } catch (Exception e) {
 				        e.printStackTrace();
 				        System.err.println("@@@@@@@@@@@@Primary data @@@@@@@@@@@@@@@@@@@@@@@@@@ :"+e.getClass().getName()+": "+e.getMessage());
-				        //System.exit(0);
+				        log.error("An error occurred: {}", e.getMessage());
 				     }
 				return secondryModelList;		
 				}
@@ -360,6 +364,7 @@ public class LocationDAOImpl {
 				}catch (Exception e) {
 		        e.printStackTrace();
 		        System.err.println("@@@@@@@@@@@@Primary data @@@@@@@@@@@@@@@@@@@@@@@@@@ :"+e.getClass().getName()+": "+e.getMessage());
+		        log.error("An error occurred: {}", e.getMessage());
 		     }
 		return primaryModelList;		
 		}
@@ -370,7 +375,7 @@ public class LocationDAOImpl {
 			{		
 				
 				
-				log.log(Level.INFO, "Primary value  in db--------->:"+primCode);
+				log.info("Primary value  in db--------->:"+primCode);
 				List<String> secondryModelList = new ArrayList<>();
 					try {
 					Connection con = null;
@@ -386,7 +391,7 @@ public class LocationDAOImpl {
 	                      	while ( rs.next() ) {
 	    	            		secondryModelList.add(rs.getString("seco_location"));
 	    	            		
-	    	            		log.log(Level.INFO, "debug x----->"+rs.getString("seco_location"));
+	    	            		log.info("debug x----->"+rs.getString("seco_location"));
 				          	 }	
 	                
 	                 rs.close();
@@ -397,6 +402,7 @@ public class LocationDAOImpl {
 			        e.printStackTrace();
 			        System.err.println("@@@@@@@@@@@@Primary data @@@@@@@@@@@@@@@@@@@@@@@@@@ :"+e.getClass().getName()+": "+e.getMessage());
 			        //System.exit(0);
+			        log.error("An error occurred: {}", e.getMessage());
 			     }
 			return secondryModelList;		
 			}

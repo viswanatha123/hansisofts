@@ -12,8 +12,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -42,7 +42,7 @@ import SMTPService.SMTPService;
 @ViewScoped
 public class LayoutDetailService implements Serializable{
 	
-	private static final Logger log = Logger.getLogger(LayoutDetailService.class.getName());
+	private static final Logger log = LogManager.getLogger(LayoutDetailService.class);
 	
 	private final Map<String,Map<String,String>> data = new HashMap<>();
 	private String country;   
@@ -68,7 +68,7 @@ public class LayoutDetailService implements Serializable{
 	    @PostConstruct 
 	    public void init()
 	    {
-	    	log.log(Level.INFO, "Loading LayoutDetailService init()");
+	    	log.info("Loading LayoutDetailService init()");
 	          dao=new ConnectionDAOImpl();
 	          locationDao=new LocationDAOImpl();
 	          udo=new UserDAOImpl();
@@ -78,7 +78,7 @@ public class LayoutDetailService implements Serializable{
 	          primLocation  = new HashMap<>(); 
             for(Map.Entry<String, String> pp:primaryModel.entrySet())
             {
-          	  log.log(Level.INFO, "Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
+          	  log.info("Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
           	  
           	  primLocation.put(pp.getKey(), pp.getValue());
           	  
@@ -141,7 +141,7 @@ public class LayoutDetailService implements Serializable{
 	       
 	        public void submit() {
 	        	
-	        	log.log(Level.INFO,"Selected property  : "+selectedProperty.getLayoutId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
+	        	log.info("Selected property  : "+selectedProperty.getLayoutId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
 	        	
 	        	
 	        	if(selectedProperty.getLayoutId()!=0)
@@ -154,14 +154,14 @@ public class LayoutDetailService implements Serializable{
 	        					        				
 	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getLayoutId(),selectedProperty.getUserId(),"layout");
 	        				SMTPService.sendLayoutLeadEmail(custName,contactNumber,email,selectedProperty);
-	        				log.log(Level.INFO,"***** Successful submitted lead ******");
+	        				log.info("***** Successful submitted lead ******");
 	        				
 	        			}
 	        			if(selectedProperty.getUserId()==0)
 	        			{
 	        				int defaultUserId=1;
 	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getLayoutId(),defaultUserId,"layout");
-	        				log.log(Level.INFO,"***** Successful submitted lead ******");
+	        				log.info("***** Successful submitted lead ******");
 	        			}
 	        			
 	        			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "We received your contact details", "Our representative contact you soon, Thank you..");
