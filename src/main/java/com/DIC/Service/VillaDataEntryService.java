@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -35,7 +35,7 @@ import framework.utilities.SessionUtils;
 @ViewScoped
 public class VillaDataEntryService implements Serializable{
 	
-	private static final Logger log = Logger.getLogger(VillaDataEntryService.class.getName());
+	private static final Logger log = LogManager.getLogger(VillaDataEntryService.class);
 	
 	
 	private String i_am="Owner";
@@ -90,7 +90,7 @@ public class VillaDataEntryService implements Serializable{
 	@PostConstruct 
 	   public void init()
 	      {
-	          log.log(Level.INFO, "Loading VillaDataEntryService init()");
+	          log.info("Loading VillaDataEntryService init()");
 	          dao=new ConnectionDAOImpl();
 	          gdao=new GeneralDAOImpl();
 	          primaryModel=dao.getPrimaryLocation();
@@ -98,7 +98,7 @@ public class VillaDataEntryService implements Serializable{
            primLocation  = new HashMap<>(); 
            for(Map.Entry<String, String> pp:primaryModel.entrySet())
            {
-         	  log.log(Level.INFO, "Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
+         	  log.info("Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
          	  primLocation.put(pp.getKey(), pp.getValue());
          	  
            }
@@ -116,7 +116,7 @@ public class VillaDataEntryService implements Serializable{
 	    		    			 listLimit = Integer.parseInt(session.getAttribute("listLimit").toString());
 	    		    			 listedCount=uDao.getAllPropByUserId(Integer.parseInt(session.getAttribute("userId").toString())).size();
 	    		    			 isEnable = Boolean.valueOf(session.getAttribute("isEnable").toString());
-	    		    			  log.log(Level.INFO, "listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
+	    		    			  log.info("listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
 	    		    		}
 	    		    		    		    
 	    		}
@@ -126,7 +126,7 @@ public class VillaDataEntryService implements Serializable{
 	    			listLimit=1;
 	    			listedCount=0;
 	    			
-	    			  log.log(Level.INFO, "listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
+	    			  log.info("listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
    		       }
 	    		
 	    }
@@ -138,7 +138,7 @@ public class VillaDataEntryService implements Serializable{
          try {
         	 this.updateResult="";
              
-             log.log(Level.INFO, "Selected county and city ---------->:"+country+"     "+city);
+             log.info("Selected county and city ---------->:"+country+"     "+city);
 	         
              VillaModel villaModel=new VillaModel();
              

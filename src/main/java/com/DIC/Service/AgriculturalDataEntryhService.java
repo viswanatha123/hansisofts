@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -37,7 +37,7 @@ import framework.utilities.SessionUtils;
 @ViewScoped
 public class AgriculturalDataEntryhService implements Serializable {
 	
-	private static final Logger log = Logger.getLogger(AgriculturalDataEntryhService.class.getName());
+	private static final Logger log = LogManager.getLogger(AgriculturalDataEntryhService.class);
 	
 	
 	private String ownerName;
@@ -81,7 +81,7 @@ public class AgriculturalDataEntryhService implements Serializable {
 	  @PostConstruct 
       public void init()
       {
-          log.log(Level.INFO, "AgriculturalDataEntryhService init()");
+          log.info("AgriculturalDataEntryhService init()");
        
           dao=new ConnectionDAOImpl();
           primaryModel=dao.getPrimaryLocation();
@@ -89,7 +89,7 @@ public class AgriculturalDataEntryhService implements Serializable {
           primLocation  = new HashMap<>();
           for(Map.Entry<String, String> pp:primaryModel.entrySet())
           {
-        	  log.log(Level.INFO, "Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
+        	  log.info("Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
         	  
         	  primLocation.put(pp.getKey(), pp.getValue());
         	  
@@ -106,7 +106,7 @@ public class AgriculturalDataEntryhService implements Serializable {
 	    		    		{
 	    		    			 listLimit = Integer.parseInt(session.getAttribute("listLimit").toString());
 	    		    			 listedCount=uDao.getAllPropByUserId(Integer.parseInt(session.getAttribute("userId").toString())).size();
-	    		    			  log.log(Level.INFO, "listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
+	    		    			  log.info("listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
 	    		    			  
 	    		    		   		    			  
 	    		    			  isEnable = Boolean.valueOf(session.getAttribute("isEnable").toString());
@@ -121,7 +121,7 @@ public class AgriculturalDataEntryhService implements Serializable {
 	    			listLimit=1;
 	    			listedCount=0;
 	    			
-	    			  log.log(Level.INFO, "listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
+	    			  log.info("listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
 	    		}
 	    		
 	    	}
@@ -134,7 +134,7 @@ public class AgriculturalDataEntryhService implements Serializable {
           if (file != null) {
            try {
                              
-               log.log(Level.INFO, "Selected county and city ---------->:"+country+"     "+city);
+               log.info("Selected county and city ---------->:"+country+"     "+city);
  	          AgriculturalDataEntryModel agriculturalDataModel=new AgriculturalDataEntryModel();
  	          agriculturalDataModel.setOwnerName(ownerName);
  	          agriculturalDataModel.setContactNo(contactNo);
@@ -213,7 +213,7 @@ public class AgriculturalDataEntryhService implements Serializable {
 	  
 	  public void onCountryChange() {  
 		  
-		  log.log(Level.INFO, "Primary value ---------->:"+country);
+		  log.info("Primary value ---------->:"+country);
 			  if(country !=null && !country.equals("")) 
 		       {
 					  secondryLocation=dao.getSecondryLocation(country);

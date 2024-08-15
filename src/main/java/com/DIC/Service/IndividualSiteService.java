@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -32,7 +32,7 @@ import SMTPService.SMTPService;
 public class IndividualSiteService implements Serializable {
 
 	
-	private static final Logger log = Logger.getLogger(IndividualSiteService.class.getName());
+	private static final Logger log = LogManager.getLogger(IndividualSiteService.class);
 	
 	private final Map<String,Map<String,String>> data = new HashMap<>();
 	private String country;   
@@ -62,7 +62,7 @@ public class IndividualSiteService implements Serializable {
     public void init()
     {
 
-		log.log(Level.INFO, "Loading IndividualSiteService init()");
+		log.info("Loading IndividualSiteService init()");
         dao=new ConnectionDAOImpl();
         locationDao=new LocationDAOImpl();
         udo=new UserDAOImpl();
@@ -72,7 +72,7 @@ public class IndividualSiteService implements Serializable {
         primLocation  = new HashMap<>(); 
 	      for(Map.Entry<String, String> pp:primaryModel.entrySet())
 	      {
-	    	  log.log(Level.INFO, "Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
+	    	  log.info("Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
 	    	  
 	    	  primLocation.put(pp.getKey(), pp.getValue());
 	    	  
@@ -139,7 +139,7 @@ public class IndividualSiteService implements Serializable {
         
         public void submit() {
         	
-        	log.log(Level.INFO,"Selected property  : "+selectedProperty.getInd_id()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
+        	log.info("Selected property  : "+selectedProperty.getInd_id()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
         	
         	
         	if(selectedProperty.getInd_id()!=0)
@@ -150,13 +150,13 @@ public class IndividualSiteService implements Serializable {
         			{
         				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getInd_id(),selectedProperty.getUserId(),"indi");
         				SMTPService.sendIndiLeadEmail(custName,contactNumber,email,selectedProperty);
-        				log.log(Level.INFO,"***** Successful submitted lead ******");
+        				log.info("***** Successful submitted lead ******");
         			}
         			if(selectedProperty.getUserId()==0)
         			{
         				int defaultUserId=1;
         				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getInd_id(),defaultUserId,"indi");
-        				log.log(Level.INFO,"***** Successful submitted lead ******");
+        				log.info("***** Successful submitted lead ******");
         			}
         			
         			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "We received your contact details", "Our representative contact you soon, Thank you..");

@@ -15,7 +15,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -41,7 +42,7 @@ import com.DIC.model.VillaModel;
 @ApplicationScoped
 public class GeneralDAOImpl {
 	
-	private static final Logger log = Logger.getLogger(GeneralDAOImpl.class.getName());
+	private static final Logger log = LogManager.getLogger(GeneralDAOImpl.class);
 	
 	
 	interface Constants {
@@ -148,7 +149,7 @@ public class GeneralDAOImpl {
          
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	    
+	        log.error("An error occurred: {}", e.getMessage());
 	        succVal=e.getMessage();
 	        return succVal;
 	       
@@ -261,6 +262,7 @@ public class GeneralDAOImpl {
 	     } catch (Exception e) {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        log.error("An error occurred: {}", e.getMessage());
 	     }
 	return VillaModelList;		
 	}
@@ -303,7 +305,7 @@ public class GeneralDAOImpl {
          
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	    
+	        log.error("An error occurred: {}", e.getMessage());
 	        succVal=e.getMessage();
 	        return succVal;
 	       
@@ -413,7 +415,7 @@ public class GeneralDAOImpl {
 	     } catch (Exception e) {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	        
+	        log.error("An error occurred: {}", e.getMessage());
 	     }
 	return BudgetModelList;		
 	}
@@ -478,7 +480,7 @@ public class GeneralDAOImpl {
 	     } catch (Exception e) {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	        //System.exit(0);
+	        log.error("An error occurred: {}", e.getMessage());
 	     }
 	return userRoles;		
 	}
@@ -510,6 +512,7 @@ public class GeneralDAOImpl {
 		} catch (SQLException e) {
 			e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        log.error("An error occurred: {}", e.getMessage());
 	        return false;
 		}
 		
@@ -545,6 +548,7 @@ public class GeneralDAOImpl {
 		} catch (SQLException e) {
 			e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        log.error("An error occurred: {}", e.getMessage());
 	        return false;
 		}
 		
@@ -587,7 +591,7 @@ public class GeneralDAOImpl {
 		} catch (SQLException e) {
 			e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	        //return false;
+	        log.error("An error occurred: {}", e.getMessage());
 		}
 		
 		return userDetails;
@@ -639,7 +643,7 @@ public class GeneralDAOImpl {
 		} catch (SQLException e) {
 			e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	        //return false;
+	        log.error("An error occurred: {}", e.getMessage());
 		}
 		
 		return userRoleModelList;
@@ -678,6 +682,7 @@ public class GeneralDAOImpl {
 				}catch (Exception e) {
 		        e.printStackTrace();
 		        System.err.println("@@@@@@@@@@@@Primary data @@@@@@@@@@@@@@@@@@@@@@@@@@ :"+e.getClass().getName()+": "+e.getMessage());
+		        log.error("An error occurred: {}", e.getMessage());
 		     }
 		return count;	
 		}
@@ -723,7 +728,7 @@ public class GeneralDAOImpl {
 		} catch (SQLException e) {
 			e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	        //return false;
+	        log.error("An error occurred: {}", e.getMessage());
 		}
 		
 		return userDetailsList;
@@ -797,7 +802,7 @@ public class GeneralDAOImpl {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
 	    
-	      	       
+	        log.error("An error occurred: {}", e.getMessage());      
           }
       
         return userId;
@@ -830,7 +835,7 @@ public class GeneralDAOImpl {
 		} catch (SQLException e) {
 			e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	        //return false;
+	        log.error("An error occurred: {}", e.getMessage());
 		}
 		
 		
@@ -873,6 +878,7 @@ public class GeneralDAOImpl {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
 	       succVal=e.getMessage();
+	       log.error("An error occurred: {}", e.getMessage());
 	        return succVal;
 	       
           }
@@ -914,7 +920,7 @@ public class GeneralDAOImpl {
 		} catch (SQLException e) {
 			e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	        //return false;
+	        log.error("An error occurred: {}", e.getMessage());
 		}
 		
 		return userDetails;
@@ -951,6 +957,7 @@ public class GeneralDAOImpl {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
 	       succVal=e.getMessage();
+	       log.error("An error occurred: {}", e.getMessage());
 	        return succVal;
 	       
           }
@@ -988,6 +995,7 @@ public class GeneralDAOImpl {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
 	       succVal=e.getMessage();
+	       log.error("An error occurred: {}", e.getMessage());
 	        return succVal;
 	       
           }
@@ -1057,7 +1065,7 @@ public class GeneralDAOImpl {
         System.err.println(e.getClass().getName()+": "+e.getMessage());
        //succVal=e.getMessage();
         //return succVal;
-       
+        log.error("An error occurred: {}", e.getMessage());
       }
   
 
@@ -1093,7 +1101,7 @@ public class GeneralDAOImpl {
 			        e.printStackTrace();
 			        System.err.println(e.getClass().getName()+": "+e.getMessage());
 			    
-			       
+			        log.error("An error occurred: {}", e.getMessage());
 			      }
   
     	
@@ -1142,7 +1150,7 @@ public class GeneralDAOImpl {
         e.printStackTrace();
         System.err.println(e.getClass().getName()+": "+e.getMessage());
     
-       
+        log.error("An error occurred: {}", e.getMessage());
       }
   
 
@@ -1190,6 +1198,7 @@ public class GeneralDAOImpl {
   	      } catch (Exception e) {
   	        e.printStackTrace();
   	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+  	      log.error("An error occurred: {}", e.getMessage());
   	       }
   	return packPriceModelList;		
   	}
@@ -1232,6 +1241,7 @@ public class GeneralDAOImpl {
   	      } catch (Exception e) {
   	        e.printStackTrace();
   	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+  	      log.error("An error occurred: {}", e.getMessage());
   	       }
   	return packPriceModel;		
   	}
@@ -1267,7 +1277,7 @@ public class GeneralDAOImpl {
         e.printStackTrace();
         System.err.println(e.getClass().getName()+": "+e.getMessage());
        //succVal=e.getMessage();
-        //return succVal;
+        log.error("An error occurred: {}", e.getMessage());
        
       }
   
@@ -1318,7 +1328,7 @@ public class GeneralDAOImpl {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
 	             
-
+	        log.error("An error occurred: {}", e.getMessage());
 	       return getStackTraceAsString(e);
           }
       

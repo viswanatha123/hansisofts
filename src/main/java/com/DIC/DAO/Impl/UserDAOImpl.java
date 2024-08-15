@@ -9,8 +9,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -32,7 +32,7 @@ import com.DIC.model.UserProfileRoleModel;
 public class UserDAOImpl {
 	
 	
-	private static final Logger log = Logger.getLogger(UserDAOImpl.class.getName());
+	private static final Logger log = LogManager.getLogger(UserDAOImpl.class);
 	
 	interface Constants {
 		// SQL
@@ -174,7 +174,7 @@ public class UserDAOImpl {
 	     } catch (Exception e) {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	        //System.exit(0);
+	        log.error("An error occurred: {}", e.getMessage());
 	     }
 	return layoutModeList;		
 	}
@@ -252,6 +252,7 @@ public class UserDAOImpl {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
 	       succVal=e.getMessage();
+	       log.error("An error occurred: {}", e.getMessage());
 	        return succVal;
 	       
           }
@@ -301,7 +302,7 @@ public class UserDAOImpl {
 		} catch (SQLException e) {
 			e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	        //return false;
+	        log.error("An error occurred: {}", e.getMessage());
 		}
 		
 		return userDetails;
@@ -344,7 +345,7 @@ public class UserDAOImpl {
 		} catch (SQLException e) {
 			e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	        //return false;
+	        log.error("An error occurred: {}", e.getMessage());
 		}
 		
 		return userProfileRoleModelList;
@@ -414,14 +415,15 @@ public class UserDAOImpl {
 	            
 	            
 	            
-	            log.log(Level.INFO,"***** Succful saved lead values *******");
+	            log.info("***** Succful saved lead values *******");
 	            
           } catch (Exception e) {
          
 	        e.printStackTrace();
 	        System.err.println("Leads save Error :"+e.getClass().getName()+": "+e.getMessage());
-	        log.log(Level.WARNING, "Leads save Error :"+e.getClass().getName()+": "+e.getMessage());
+	        log.info("Leads save Error :"+e.getClass().getName()+": "+e.getMessage());
 	        saveMessage=e.getMessage();
+	        log.error("An error occurred: {}", e.getMessage());
 	        return saveMessage;
 	       
           }
@@ -494,7 +496,7 @@ public class UserDAOImpl {
 	     } catch (Exception e) {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	        //System.exit(0);
+	        log.error("An error occurred: {}", e.getMessage());
 	     }
 	return layoutModeList;		
 	}
@@ -549,7 +551,7 @@ public class UserDAOImpl {
 	     } catch (Exception e) {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	        //System.exit(0);
+	        log.error("An error occurred: {}", e.getMessage());
 	     }
 	return allPropertyListList;		
 	}
@@ -597,7 +599,8 @@ public class UserDAOImpl {
 	        } catch (Exception e) {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	        log.log(Level.WARNING, "Error : "+e.getClass().getName()+": "+e.getMessage());
+	        log.info("Error : "+e.getClass().getName()+": "+e.getMessage());
+	        log.error("An error occurred: {}", e.getMessage());
 	     }
 	return leadModelList;		
 	}
@@ -654,7 +657,7 @@ public class UserDAOImpl {
       	     } catch (Exception e) {
       	        e.printStackTrace();
       	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-      	        //System.exit(0);
+      	      log.error("An error occurred: {}", e.getMessage());
       	     }
       	return individualSiteModelList;
   		}
@@ -688,6 +691,7 @@ public class UserDAOImpl {
   		        e.printStackTrace();
   		        System.err.println(e.getClass().getName()+": "+e.getMessage());
   		       succVal=e.getMessage();
+  		     log.error("An error occurred: {}", e.getMessage());
   		        return succVal;
   		       
   	          }
@@ -733,6 +737,7 @@ public class UserDAOImpl {
   	      } catch (Exception e) {
   	        e.printStackTrace();
   	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+  	      log.error("An error occurred: {}", e.getMessage());
   	       }
   	return packageModel;		
   	}
@@ -769,14 +774,15 @@ public class UserDAOImpl {
 	            {
 	            	saveMessage="Successful Updated user details.";
 	            }
-	            log.log(Level.INFO,"***** Succful saved lead values *******");
+	            log.info("***** Succful saved lead values *******");
 	            
           } catch (Exception e) {
          
 	        e.printStackTrace();
 	        System.err.println("Leads save Error :"+e.getClass().getName()+": "+e.getMessage());
-	        log.log(Level.WARNING, "Leads save Error :"+e.getClass().getName()+": "+e.getMessage());
+	        log.info("Leads save Error :"+e.getClass().getName()+": "+e.getMessage());
 	        saveMessage=e.getMessage();
+	        log.error("An error occurred: {}", e.getMessage());
 	        return saveMessage;
 	       
           }
@@ -807,14 +813,15 @@ public class UserDAOImpl {
  	            {
  	            	return 1;
  	            }
- 	            log.log(Level.INFO,"***** Succful saved lead values *******");
+ 	            log.info("***** Succful saved lead values *******");
  	            
            } catch (Exception e) {
           
  	        e.printStackTrace();
  	        System.err.println("Leads save Error :"+e.getClass().getName()+": "+e.getMessage());
- 	        log.log(Level.WARNING, "Leads save Error :"+e.getClass().getName()+": "+e.getMessage());
+ 	        log.info("Leads save Error :"+e.getClass().getName()+": "+e.getMessage());
  	        saveMessage=e.getMessage();
+ 	       log.error("An error occurred: {}", e.getMessage());
  	        return 0;
  	       
            }
@@ -867,7 +874,9 @@ public class UserDAOImpl {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
 	       succVal=e.getMessage();
+	       log.error("An error occurred: {}", e.getMessage());
 	        return succVal;
+	        
 	       
           }
       
