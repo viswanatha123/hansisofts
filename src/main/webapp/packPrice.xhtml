@@ -10,44 +10,163 @@
       xmlns:jsf="http://xmlns.jcp.org/jsf">
 
     <body>
-        <ui:composition>
-        
-        
-        <div class="card">
-			    <p:dataTable var="product" value="#{packPriceService.packPriceModelList}" style="width:40%;">
-				        <f:facet name="header">
-				            List of Packages
-				        </f:facet>
-				
-				        <p:column headerText="Pack Id" >
-				            <h:outputText value="#{product.packId}" />
-				        </p:column>
-				
-				        <p:column headerText="Package Name">
-				            <h:outputText value="#{product.packName}" />
-				        </p:column>
-				
-				        <p:column headerText="List Limit">
-				            <h:outputText value="#{product.listLimit}" />
-				        </p:column>
-				
-				        <p:column headerText="Cost">
-				            <h:outputText value="#{product.cost}" />
-				        </p:column>
-				        
-				        <p:column headerText="Duration">
-				            <h:outputText value="#{product.duration}" />
-				        </p:column>
-				
-				        <f:facet name="footer">
-				            <span class="font-bold">Total Packages are available</span>
-				        </f:facet>
-			    </p:dataTable>
-      </div>
-        
+        <h:form id="form1">
+	 <p:growl id="msgs" showDetail="true"/>
+     <br></br>
+  
+			<center>
+			  <font size="4" color="blue" style="text-align: center;">All Package Details  </font>
+			</center>	
+					<br></br><br></br>
 
-            
-        </ui:composition>
-        <script type="text/javascript" src="resources/js/chatool.js"></script>
+		    <table width="100%" height="300px" >
+						<tr>
+						<td>								
+							    <p:panelGrid columns="2" style="background:#0AFFFF">
+							        <f:facet name="header">
+							            <p:graphicImage name="images/builders/basic.jpg" width="300px"  height="120px"/>
+							        </f:facet>
+							        
+							        <h:outputText value=" List Limit "/>
+							        <h:outputText value=" 5 "/>
+						
+							        <h:outputText value=" Cost "/>
+							        <h:outputText value="1000/-"/>
+							
+							        <h:outputText value=" Duration "/>
+							        <h:outputText value=" 90 Days"/>
+							
+							        <h:outputText value=" Ads "/>
+							        <h:outputText value=" Basic "/>
+							        
+							        <p:commandButton type="submit" value=" Contact Us " icon="ui-icon-calculator" style="background:#40E0D0;font-weight: bold;color: black;font-size: 15px; width: 150px;" 
+											 process="@this" 
+			                                 onclick="PF('leadDialog').show()">           
+			                          
+					                </p:commandButton>
+					                
+					                	<p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#DFFF00;font-weight: bold;color: black;font-size: 15px; width: 150px;" 
+											process="@this" 
+											onclick="PF('leadDialog').show()">           
+										 
+						   			</p:commandButton>
+					                
+							    </p:panelGrid>
+						</td>	
+						
+						
+						<td>								
+							    <p:panelGrid columns="2">
+							        <f:facet name="header">
+							            <p:graphicImage name="images/builders/advance.jpg" width="300px"  height="120px"/>
+							        </f:facet>
+							
+							        <h:outputText value=" List Limit "/>
+							        <h:outputText value=" 100 "/>
+							
+							        <h:outputText value=" Cost "/>
+							        <h:outputText value=" 5000/-"/>
+							
+							        <h:outputText value=" Duration "/>
+							        <h:outputText value=" 90 Days"/>
+							
+							        <h:outputText value=" Ads "/>
+							        <h:outputText value=" Advance "/>
+							        
+							        <p:commandButton type="submit" value=" Contact Us " icon="ui-icon-calculator" style="background:#40E0D0;font-weight: bold;color: black;font-size: 15px; width: 150px;" 
+											 process="@this" 
+			                                 onclick="PF('leadDialog').show()">           
+			                          
+					                </p:commandButton>
+					                
+					                	<p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#DFFF00;font-weight: bold;color: black;font-size: 15px; width: 150px;" 
+											process="@this" 
+											onclick="PF('leadDialog').show()">           
+										 
+						   			</p:commandButton>
+							    </p:panelGrid>
+						</td>
+						
+						<td>								
+							    <p:panelGrid columns="2">
+							        <f:facet name="header">
+							            <p:graphicImage name="images/builders/super.jpg" width="300px"  height="120px"/>
+							        </f:facet>
+							
+							        <h:outputText value=" List Limit "/>
+							        <h:outputText value=" 1000"/>
+							
+							        <h:outputText value=" Cost "/>
+							        <h:outputText value=" 50,000/- "/>
+							
+							        <h:outputText value=" Duration "/>
+							        <h:outputText value=" 90 Days"/>
+							
+							        <h:outputText value=" Ads "/>
+							        <h:outputText value=" Super "/>
+							        
+							        <p:commandButton type="submit" value=" Contact Us " icon="ui-icon-calculator" style="background:#40E0D0;font-weight: bold;color: black;font-size: 15px; width: 150px;" 
+											 process="@this" 
+			                                 onclick="PF('leadDialog').show()">           
+			                          
+					                </p:commandButton>
+					                
+					                	<p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#DFFF00;font-weight: bold;color: black;font-size: 15px; width: 150px;" 
+											process="@this" 
+											onclick="PF('leadDialog').show()">           
+										 
+						   			</p:commandButton>
+							    </p:panelGrid>
+						</td>												
+						</tr>
+						
+		   </table>
+		   
+		   
+		 
+		
+		 	<p:dialog header="Call back details" widgetVar="leadDialog" minHeight="600" width="700" showEffect="fade">
+		        
+		        	<p:panel id="panelDialog" style="background-image: url('back1.jpg'); ">   
+					    <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
+					        <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+					        
+					        
+					        			    <p:outputLabel required="true" style="font-weight: bold" for="name" indicateRequired="true" value="Name : " />
+						                    <p:inputText id="name" value="#{packPriceService.custName}" required="true" requiredMessage="Required  Name">
+						                    </p:inputText>
+						                    <p:message for="name" display="icon"/>
+						                    
+						                    
+						                    <p:outputLabel style="font-weight: bold" for="ContactNumber" indicateRequired="true" value="Contact Number : " />
+							                <p:inputMask id="ContactNumber"  mask="9999999999" required="true"  maxlength="10" value="#{packPriceService.contactNumber}" >
+							                </p:inputMask>
+							                <p:message for="ContactNumber" display="icon"/>
+							      							        
+									        <h:outputText style="font-weight: bold; font-size: 14px;color:black; text-align:left;" value="Email : " />
+						                    <h:inputText id="email"  size="30" value="#{packPriceService.email}"  validatorMessage="Invalid email format">
+						                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						                    </h:inputText> 
+						                    <p:message for="email" display="icon"/>
+							                
+					   
+							</p:panelGrid>
+					   </p:panelGrid>      
+					</p:panel>		
+		        			
+		        
+		        <br></br>
+		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form1" actionListener="#{packPriceService.submit}" >
+		                    <p:resetInput target="form1"/>                
+		                  </h:commandButton>
+		                  <p:commandButton value="Reset" update="panelDialog" process="@this"
+                                 action="#{layoutDetailService.reset}"
+                                 styleClass="mr-2 ui-button-outlined"/>
+				  
+		   </p:dialog>
+
+     		
+ <script type="text/javascript" src="resources/js/chatool.js"></script>    				
+ </h:form>
     </body>
 </html>
