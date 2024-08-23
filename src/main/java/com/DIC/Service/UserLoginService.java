@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.primefaces.PrimeFaces;
 
 import com.DIC.DAO.Impl.GeneralDAOImpl;
+import com.DIC.DAO.Impl.LocationDAOImpl;
 import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.PackageModel;
 import com.DIC.model.UserDetails;
@@ -161,8 +162,10 @@ public class UserLoginService implements Serializable{
 	    
 	    public String userLoingAction() throws Exception
 	    {
-	    	log.info("calling navegateToAdminLoginPage()");
-	    	String pageName="adminLoginError";
+	    	
+	    	String pageName;
+	    	//log.info("calling navegateToAdminLoginPage()");
+	    	//String "=============================Debug============================="="adminLoginError";
 	    	
 	    	
 	    	
@@ -173,9 +176,10 @@ public class UserLoginService implements Serializable{
 	    		
 	    		//SMTPService.sendRegiEmail();
 	    		
-	    		    log.info("This is an info message.");
-		            log.debug("This is a debug message.");
-		            log.error("This is an error message======================");
+	    		log.warn("=============================Warning=============================");
+	    		log.debug("=============================Debug=============================");
+	    		log.error("=============================Error=============================");
+	    		log.info("=============================info=============================");
 	    		
 				HttpSession session = SessionUtils.getSession();
 				
@@ -222,7 +226,7 @@ public class UserLoginService implements Serializable{
 	    	
 	    	
 	    	
-	            log.info("User Name :"+userName+", Password :"+password+", Page Name :"+pageName);
+	            //log.info("User Name :"+userName+", Password :"+password+", Page Name :"+pageName);
 	  
 	    return pageName;
 	    }
