@@ -53,7 +53,8 @@
   
   			<br></br>
 			 <p:panel style="background-image: url('back1.jpg'); "> 
-               <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
+			 <p:panelGrid columns="2"  styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
+               <p:panelGrid columns="1" width="50%" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
 		  			                         
 			                          <h:link  value = "Layout Data entry" outcome = "plotsDataEntry.xhtml" style="font-size: 14px;color:black;">
 			                          </h:link>
@@ -93,6 +94,14 @@
 			                
 			                        
                       </p:panelGrid> 
+                      <p:panelGrid columns="1" width="50%" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
+                      				
+						          <h:link value = "App Log" outcome = "appLog.xhtml" style="font-size: 14px;color:black;">		
+						          </h:link>
+						            
+						            
+                      </p:panelGrid>
+                  </p:panelGrid>
             </p:panel> 
   <script type="text/javascript" src="resources/js/chatool.js"></script>  
   </h:form>
