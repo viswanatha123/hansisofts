@@ -53,6 +53,7 @@ public class GeneralDAOImpl {
 					"values (nextval('hansi_villa_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,1,?,?);";
 			
 			String SQL_VILLA_DETAILS="select * from villa_plot where prim_location = ? and seco_location = ?";
+			String SQL_VILLA_READY_TO_MOVE="select * from villa_plot where pro_avail='Ready To Move'";
 					//+ " and property_type = ? order by create_date desc";
 			String SQL_HOME_LOAN_INSERT="insert into home_loan (home_id,agent_name,cont_num,age,gender,email,loan_amt,monthly_inc,emp_type,create_date,is_active) \n"+ 
 					"values (nextval('home_loan_seq'),?,?,?,?,?,?,?,?,current_timestamp,1);";
@@ -266,7 +267,99 @@ public class GeneralDAOImpl {
 	     }
 	return VillaModelList;		
 	}
+  //*************************************************************
     
+    public List<VillaModel> getVillaDetails()
+	{
+            
+       System.out.println("------------------Ready to move ----------------------");
+	
+		List<VillaModel> VillaModelList = new ArrayList<>();
+		try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			
+			StringBuilder sql_villa_ready_to_move = new StringBuilder(Constants.SQL.SQL_VILLA_READY_TO_MOVE);
+		
+			
+			con=ConnectionDAO.getConnection();
+			
+			System.out.println("Villa Query : "+sql_villa_ready_to_move.toString());
+							pstmt = con.prepareStatement(sql_villa_ready_to_move.toString());
+                            ResultSet rs = pstmt.executeQuery();
+	         while ( rs.next() ) {
+	        	 VillaModel villaModel=new VillaModel();
+	        	 
+	        	 
+	        	 villaModel.setVillaId(rs.getInt("villa_id"));
+	        	 villaModel.setI_am(rs.getString("i_am"));
+	        	 villaModel.setOwner_name(rs.getString("owner_name"));
+	        	 villaModel.setContact_owner(rs.getString("contact_owner"));
+	        	 villaModel.setEmail(rs.getString("email"));
+	        	 villaModel.setProperty_type(rs.getString("property_type"));
+	        	 villaModel.setAddress(rs.getString("address"));
+	        	 villaModel.setRoad_width(rs.getInt("road_width"));
+	        	 villaModel.setFloors(rs.getInt("floors"));
+	        	 villaModel.setBed_rooms(rs.getInt("bed_rooms"));
+	        	 villaModel.setBath_rooms(rs.getInt("bath_rooms"));
+	        	 villaModel.setFurnished(rs.getString("furnished"));
+	        	 villaModel.setPlot_area(rs.getInt("plot_area"));
+	        	 villaModel.setS_build_are(rs.getInt("s_build_are"));
+	        	 villaModel.setPro_avail(rs.getString("pro_avail"));
+	        	 villaModel.setPersqft(rs.getInt("persqft"));
+	        	 villaModel.setPrim_location(rs.getString("prim_location"));
+	        	 villaModel.setSeco_location(rs.getString("seco_location"));
+	        	 villaModel.setTotal_feets(rs.getInt("total_feets"));
+	        	 villaModel.setCost(rs.getInt("cost"));
+	        	 villaModel.setCreate_date(rs.getDate("create_date"));
+	        	 villaModel.setIs_active(rs.getInt("is_active"));
+	        	 villaModel.setUserId(rs.getInt("user_id"));
+	        	 villaModel.setFloorNum(rs.getInt("floor_num"));
+	        	 
+	        	 			// below for Image
+	        	 
+	        	 System.out.println(" Villa image : "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
+	        	 
+					        	 if(rs.getBytes("image").length!=0)
+				                 {
+				                 byte[] bb=rs.getBytes("image");
+				                 
+				                 villaModel.setStreamedContent(DefaultStreamedContent.builder()
+				                         .name("US_Piechart.jpg")
+				                         .contentType("image/jpg")
+				                         .stream(() -> new ByteArrayInputStream(bb)).build());
+				                 }
+				                 else
+				                 {
+				                	// Defalut Image
+				                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+				                	 ResultSet rsDef = pstmtDefault.executeQuery();
+				                	 while ( rsDef.next())
+				                			 {
+				                		      byte[] def=rsDef.getBytes("image");
+				                		      villaModel.setStreamedContent(DefaultStreamedContent.builder()
+				                             .name("US_Piechart.jpg")
+				                             .contentType("image/jpg")
+				                             .stream(() -> new ByteArrayInputStream(def)).build());
+				                			 }
+				                	 
+				                  }
+	        	  
+	                        
+             VillaModelList.add(villaModel);
+	         }
+	         	
+	         pstmt.close();
+	         rs.close();
+	         con.close();
+	         //log.info("### : *** Connection Closed from getActiveModelList()");
+	     } catch (Exception e) {
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        log.error("An error occurred: {}", e.getMessage());
+	     }
+	return VillaModelList;		
+	}
     
  // ***************** update home loan data entry **************
     /*
