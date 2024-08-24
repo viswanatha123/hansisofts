@@ -18,7 +18,8 @@
             <DefaultRolloverStrategy max="30"/>
         </RollingFile>
 
-        <!-- Additional appenders can be added here -->
+            
+        
     </Appenders>
 
     <!-- Define loggers -->
@@ -27,6 +28,8 @@
         <Root level="DEBUG">
             <AppenderRef ref="ConsoleAppender"/>
             <AppenderRef ref="RollingFileAppender"/>
+            <AppenderRef ref="mailAppender"/>
+           
         </Root>
 
         <!-- Example of a specific logger -->
