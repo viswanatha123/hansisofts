@@ -20,6 +20,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.PrimeFaces;
 
@@ -54,6 +55,8 @@ public class VillaDetailsService implements Serializable {
 	private String locationMessage;
 	private String proType;
 	private String errorMessage;
+	
+	private String menuId;
 	
 	
 
@@ -91,7 +94,39 @@ public class VillaDetailsService implements Serializable {
             }
             primLocationSort=new TreeMap<>(primLocation);
             
-            this.readyToMoveDetails();
+            
+            
+            FacesContext context = FacesContext.getCurrentInstance();
+            menuId = context.getExternalContext().getRequestParameterMap().get("id");
+            
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@22 : Menu id"+menuId);
+            
+            
+            if(menuId != null )
+            {
+           
+            	/*
+		            if(menuId.equals("ReadytoMove"))
+		            {
+			            System.out.println("===========================Id ==========================="+menuId);
+			            this.getVillaDetailsReadytoMove(menuId);
+		            	
+		            }
+		            if(menuId.equals("UnderConstruction"))
+		            {
+		            	System.out.println("===========================Id ==========================="+menuId);
+		            	this.getVillaDetailsReadytoMove(menuId);
+		            }
+		       */
+            	
+            	
+            	 villaModel=gDao.getVillaDetails(menuId);
+            	
+            	//this.getVillaDetailsReadytoMove(menuId);
+            }
+	        
+           
+            
                    
 	    }
 
@@ -106,12 +141,44 @@ public class VillaDetailsService implements Serializable {
         }
 	    
 	    
-	    
-	    public void getVillaDetails() {  
+	    /*
+	    public void getVillaDetailsReadytoMove(String menuId) {  
 	    	
 	    	System.out.println(" **** submited button ******");
       	        
 	        locationMessage=country+" ,   "+city;
+	        
+	        
+	        	 villaModel=gDao.getVillaDetails(menuId);
+           
+	        
+	        
+	    }
+	   */ 
+	        public void getVillaDetails() {  
+		    	
+		    	System.out.println(" **** submited button ******");
+	      	        
+		        locationMessage=country+" ,   "+city;
+		        villaModel=gDao.getVillaDetails(country,city, proType);
+		                 
+		                for(VillaModel x:villaModel)
+		                {
+		                    System.out.println("@@@@@@@@@@@@@@@@@@@@ :"+x.getI_am());
+		                }
+		                if(villaModel.size() == 0)
+		        		{
+		        			errorMessage="There are no records on "+proType;
+		        		}
+		                else {
+		                	errorMessage="";
+		                }
+			             
+		     }  
+	        
+	        
+	        
+	        /*
 	        villaModel=gDao.getVillaDetails(country,city, proType);
 	                 
 	                for(VillaModel x:villaModel)
@@ -125,9 +192,10 @@ public class VillaDetailsService implements Serializable {
 	                else {
 	                	errorMessage="";
 	                }
-		             
-	     }  
+		    */         
+	       
 	    
+	    /*
 	    public void readyToMoveDetails() {  
 	    	
 	    	System.out.println(" **** submited button ******");
@@ -149,6 +217,8 @@ public class VillaDetailsService implements Serializable {
 	                }
 		             
 	     }  
+	   */
+	    
 	    
 	    
 	    
@@ -184,13 +254,28 @@ public class VillaDetailsService implements Serializable {
         	this.contactNumber="";
         	this.email="";
         	
+        	 if(menuId.equals("ReadytoMove"))
+             {
+        		 villaModel=gDao.getVillaDetails(menuId);
+             	this.custName="";
+             	this.contactNumber="";
+             	this.email="";
+             }
+        	 if(menuId.equals("default"))
+        	 {
+        		villaModel=gDao.getVillaDetails(country,city, proType);
+              	this.custName="";
+              	this.contactNumber="";
+              	this.email="";
+        	 }
+        	
         }
         
    public void reset() {
 	       PrimeFaces.current().resetInputs("form1:panelDialog");
   }
    
-   
+   /*
    public void submitReadyToMove() {
    	
    	log.info("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
@@ -224,9 +309,9 @@ public class VillaDetailsService implements Serializable {
    	this.email="";
    	
    }
-   
+   */
 
-        
+   
 	    
 	    
 	    
@@ -368,6 +453,20 @@ public class VillaDetailsService implements Serializable {
 		public void setEmail(String email) {
 			this.email = email;
 		}
+
+
+		public String getMenuId() {
+			return menuId;
+		}
+
+
+		public void setMenuId(String menuId) {
+			this.menuId = menuId;
+		}
+
+
+	
+
 	    
 		
 		
