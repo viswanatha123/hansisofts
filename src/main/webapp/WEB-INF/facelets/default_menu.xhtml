@@ -78,7 +78,12 @@ and open the template in the editor.
 					               
 					                <p:column>
 					               		<p:submenu label="Popular Choices">
-							                <p:menuitem value="Ready to Move" rendered="#{userRoleService.userRole.contains('Ready To Move')? true : false }" icon="pi pi-fw pi-credit-card" outcome="readyToMove"/>
+							                <p:menuitem value="Ready to Move" rendered="#{userRoleService.userRole.contains('Ready To Move')? true : false }" icon="pi pi-fw pi-credit-card"  outcome="readyToMove">
+							                	<f:param name="id" value="ReadytoMove" />
+							                </p:menuitem>
+							                <p:menuitem value="Under Construction" rendered="#{userRoleService.userRole.contains('Ready To Move')? true : false }" icon="pi pi-fw pi-credit-card"  outcome="underConstruction">
+							                	<f:param name="id" value="UnderConstruction" />
+							                </p:menuitem>
 							                <p:menuitem value="Owner Properties" rendered="#{userRoleService.userRole.contains('Owner Prop')? true : false }"/>
 							            </p:submenu>
 					               </p:column>
