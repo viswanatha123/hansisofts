@@ -17,7 +17,8 @@ public class  Constants {
     	public static final String[] ADMIN_GROUP_EMAIL ={"viswanathareddy120@gmail.com"
     			,"sukumar.a@hansisofts.com"
     			,"swathi.sreeram@hansisofts.com"
-    			,"nagalakshmi.m@hansisofts.com"};
+    			,"nagalakshmi.m@hansisofts.com"
+    			,"sivakumar.m@hansisofts.com"};
     	
 		
 	}

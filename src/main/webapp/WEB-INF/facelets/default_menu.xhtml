@@ -84,7 +84,9 @@ and open the template in the editor.
 							                <p:menuitem value="Under Construction" rendered="#{userRoleService.userRole.contains('Ready To Move')? true : false }" icon="pi pi-fw pi-credit-card"  outcome="underConstruction">
 							                	<f:param name="id" value="UnderConstruction" />
 							                </p:menuitem>
-							                <p:menuitem value="Owner Properties" rendered="#{userRoleService.userRole.contains('Owner Prop')? true : false }"/>
+							                <p:menuitem value="Owner Properties" rendered="#{userRoleService.userRole.contains('Owner Prop')? true : false }" icon="pi pi-fw pi-credit-card"  outcome="ownerProperties">
+							                	<f:param name="id" value="OwnerProperties" />
+							                </p:menuitem>
 							            </p:submenu>
 					               </p:column>
 			            	 </p:submenu>
