@@ -4,6 +4,7 @@ import javax.mail.*;
 import javax.mail.internet.*;
 
 import com.DIC.DAO.Impl.UserDAOImpl;
+import com.DIC.Service.AgriculturalService;
 import com.DIC.model.AgriculturalDataEntryModel;
 import com.DIC.model.AgriculturalModel;
 import com.DIC.model.IndiSiteDataEntryModel;
@@ -17,11 +18,13 @@ import framework.utilities.Constants;
 
 import java.time.LocalDate;
 import java.util.Properties;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class SMTPService {
 	
-	
+	private static final Logger log = LogManager.getLogger(SMTPService.class);
 
 	private static Session session;
 	private static Message message;
@@ -41,12 +44,18 @@ public class SMTPService {
 		        props.put("mail.smtp.socketFactory.port", Constants.SMTPServer.PORT);
 		        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		        
+		   
+		        
 		       // Set up the session
 		       session = Session.getInstance(props, new javax.mail.Authenticator() {
 			        protected PasswordAuthentication getPasswordAuthentication() {
 			            return new PasswordAuthentication(Constants.SMTPServer.USER_NAME , Constants.SMTPServer.PASSWORD);
 			        }
 		        });
+		       
+		
+		       
+		       
 		    
 			    try {
 			      message  = new MimeMessage(session);
@@ -55,9 +64,13 @@ public class SMTPService {
   	              for (int i = 0; i < Constants.SMTPServer.ADMIN_GROUP_EMAIL.length; i++) {
   	                recipientAddresses[i] = new InternetAddress(Constants.SMTPServer.ADMIN_GROUP_EMAIL[i]);
   	              }
-			    } catch (MessagingException e) {
-		             throw new RuntimeException(e);
-		        }
+			    } catch (javax.mail.MessagingException e) {
+			        log.error("Failed to send email: {}", e.getMessage(), e);
+			        // Optionally: Notify users or take corrective action
+			    } catch (Exception e) {
+			        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+			        // Optionally: Notify users or take corrective action
+			    }
     
 	} 
 	
@@ -79,9 +92,13 @@ public class SMTPService {
 			             System.out.println("Email sent successfully!");
 			             
 		
-			         } catch (MessagingException e) {
-			             throw new RuntimeException(e);
-			         }
+			    	 } catch (javax.mail.MessagingException e) {
+			 	        log.error("Failed to send email: {}", e.getMessage(), e);
+			 	        // Optionally: Notify users or take corrective action
+			 	    } catch (Exception e) {
+			 	        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+			 	        // Optionally: Notify users or take corrective action
+			 	    }
 	
 	}
 	
@@ -118,9 +135,13 @@ public class SMTPService {
 			
 				             System.out.println("Email sent successfully!");
 			    		 
-			    	 } catch (MessagingException e) {
-			             throw new RuntimeException(e);
-			         }
+			    	 } catch (javax.mail.MessagingException e) {
+			 	        log.error("Failed to send email: {}", e.getMessage(), e);
+			 	        // Optionally: Notify users or take corrective action
+			 	    } catch (Exception e) {
+			 	        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+			 	        // Optionally: Notify users or take corrective action
+			 	    }
 	}
 	
 	
@@ -157,9 +178,13 @@ public class SMTPService {
 			
 				             System.out.println("Email sent successfully!");
 			    		 
-			    	 } catch (MessagingException e) {
-			             throw new RuntimeException(e);
-			         }
+			    	 } catch (javax.mail.MessagingException e) {
+			 	        log.error("Failed to send email: {}", e.getMessage(), e);
+			 	        // Optionally: Notify users or take corrective action
+			 	    } catch (Exception e) {
+			 	        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+			 	        // Optionally: Notify users or take corrective action
+			 	    }
 	}
 	
 	public static void sendIndiEmail(IndiSiteDataEntryModel ndiSiteDataEntryModel,int userId)
@@ -195,9 +220,13 @@ public class SMTPService {
 			
 				             System.out.println("Email sent successfully!");
 			    		 
-			    	 } catch (MessagingException e) {
-			             throw new RuntimeException(e);
-			         }
+			    	 } catch (javax.mail.MessagingException e) {
+			 	        log.error("Failed to send email: {}", e.getMessage(), e);
+			 	        // Optionally: Notify users or take corrective action
+			 	    } catch (Exception e) {
+			 	        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+			 	        // Optionally: Notify users or take corrective action
+			 	    }
 	}
 	
 	
@@ -234,9 +263,13 @@ public class SMTPService {
 			
 				             System.out.println("Email sent successfully!");
 			    		 
-			    	 } catch (MessagingException e) {
-			             throw new RuntimeException(e);
-			         }
+			    	 } catch (javax.mail.MessagingException e) {
+			 	        log.error("Failed to send email: {}", e.getMessage(), e);
+			 	        // Optionally: Notify users or take corrective action
+			 	    } catch (Exception e) {
+			 	        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+			 	        // Optionally: Notify users or take corrective action
+			 	    }
 	}
 	
 	
@@ -264,9 +297,13 @@ public class SMTPService {
 
 	             System.out.println("Email sent successfully!");
    		 
-   	 } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+		} catch (javax.mail.MessagingException e) {
+	        log.error("Failed to send email: {}", e.getMessage(), e);
+	        // Optionally: Notify users or take corrective action
+	    } catch (Exception e) {
+	        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+	        // Optionally: Notify users or take corrective action
+	    }
 		
 	}
 	
@@ -285,18 +322,22 @@ public class SMTPService {
    		 String body=customerDetails+""+propertySetils+""+thanks;
    		 
    		 
-   		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
+   		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
  	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
- 	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+ 	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("viswanathareddy120@gmail.com"));
 	             message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
 	             message.setText(body);
 	             Transport.send(message);
 
 	             System.out.println("Email sent successfully!");
    		 
-   	 } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+		} catch (javax.mail.MessagingException e) {
+	        log.error("Failed to send email: {}", e.getMessage(), e);
+	        // Optionally: Notify users or take corrective action
+	    } catch (Exception e) {
+	        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+	        // Optionally: Notify users or take corrective action
+	    }
 		
 	}
 	
@@ -324,9 +365,13 @@ public class SMTPService {
 
 	             System.out.println("Email sent successfully!");
    		 
-   	 } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+		} catch (javax.mail.MessagingException e) {
+	        log.error("Failed to send email: {}", e.getMessage(), e);
+	        // Optionally: Notify users or take corrective action
+	    } catch (Exception e) {
+	        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+	        // Optionally: Notify users or take corrective action
+	    }
 		
 	}
 	
@@ -354,9 +399,13 @@ public class SMTPService {
 
 	             System.out.println("Email sent successfully!");
    		 
-   	 } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+		} catch (javax.mail.MessagingException e) {
+	        log.error("Failed to send email: {}", e.getMessage(), e);
+	        // Optionally: Notify users or take corrective action
+	    } catch (Exception e) {
+	        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+	        // Optionally: Notify users or take corrective action
+	    }
 		
 	}
  
