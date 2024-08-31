@@ -29,14 +29,31 @@ public class SMTPService {
 	private static Session session;
 	private static Message message;
 	private static InternetAddress[] recipientAddresses = new InternetAddress[Constants.SMTPServer.ADMIN_GROUP_EMAIL.length+1];
-	
+	private static Session sessionCheck;
 	
 	public static UserDAOImpl uDao;
+	
 	
 	static
 	{
 		uDao=new UserDAOImpl();
 		
+		
+		 sessionCheck= godaddyService();
+		if(sessionCheck!=null)
+		{
+			//defaultMailSetting(session);
+			session=godaddyService();
+			log.info("=================GoDaddy SMTP Service Connected Successful ======================");
+		}
+		else
+		{
+			//defaultMailSetting(session);
+			session=gmailService();
+			log.info("=================Gmail SMTP Service Connected Successful ======================");
+		}
+		
+			/*
 				Properties props = new Properties();
 		        props.put("mail.smtp.host", Constants.SMTPServer.SMTPServer); // SMTP server address
 		        props.put("mail.smtp.port", Constants.SMTPServer.PORT); // SSL port
@@ -53,26 +70,112 @@ public class SMTPService {
 			        }
 		        });
 		       
-		
+		       try {
+				      message  = new MimeMessage(session);
+		            message.setFrom(new InternetAddress(Constants.SMTPServer.FROMEMAIL));
+		            //InternetAddress[] recipientAddresses = new InternetAddress[Constants.SMTPServer.ADMIN_GROUP_EMAIL.length+1];
+		              for (int i = 0; i < Constants.SMTPServer.ADMIN_GROUP_EMAIL.length; i++) {
+		                recipientAddresses[i] = new InternetAddress(Constants.SMTPServer.ADMIN_GROUP_EMAIL[i]);
+		              }
+				    } catch (javax.mail.MessagingException e) {
+				        log.error("Failed to send email: {}", e.getMessage(), e);
+				        // Optionally: Notify users or take corrective action
+				    } catch (Exception e) {
+				        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+				        // Optionally: Notify users or take corrective action
+				    }
 		       
-		       
+		    */   
 		    
-			    try {
+			    
+    
+	} 
+	
+	
+	
+	
+	public static Session godaddyService()
+	{
+			 
+	   	 Properties props = new Properties();
+	        props.put("mail.smtp.host", "smtpout.secureserver.net"); // SMTP server address
+	        props.put("mail.smtp.port", "465"); // SSL port
+	        props.put("mail.smtp.auth", "true");
+	        props.put("mail.smtp.socketFactory.port", "465");
+	        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+	        props.put("mail.smtp.connectiontimeout", "10000"); // 10 seconds
+	        props.put("mail.smtp.timeout", "10000"); // 10 seconds
+	        props.put("mail.smtp.starttls.enable", "true");
+	        
+	    // Set up the session
+	    Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+	        protected PasswordAuthentication getPasswordAuthentication() {
+	            return new PasswordAuthentication("hansisoft.hr@hansisofts.com", "HansiSofts@123");
+	        }
+	    });
+	    
+	    try {
+	       
+	        Message message = new MimeMessage(session);
+	        message.setFrom(new InternetAddress("hansisoft.hr@hansisofts.com"));
+	        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("viswanatha.reddy2255@gmail.com"));
+	        message.setSubject("HansiSoft Solutions");
+	        message.setText("Hello, this is a test email sent from a Java program!");
+	        Transport.send(message);
+	        log.info("Email sent successfully!");
+
+	    } catch (javax.mail.MessagingException e) {
+	        System.out.println("Failed to send email: {}"+ e.getMessage());
+	        e.printStackTrace();
+	        log.error("Error Occured godaddyService :",e);
+	        return null;
+	    } catch (Exception e) {
+	    	System.out.println("Failed to send email: {}"+ e.getMessage());
+	        e.printStackTrace();
+	        log.error("Error Occured godaddyService :",e);
+	        return null;
+	    
+	    }
+	    return session;
+	}
+	
+	
+	public static Session gmailService()
+	{
+		Properties props = new Properties();
+	    props.put("mail.smtp.auth", "true");
+	    props.put("mail.smtp.starttls.enable", "true"); // Use TLS
+	    props.put("mail.smtp.host", "smtp.gmail.com");
+	    props.put("mail.smtp.port", "587");
+	    
+	    // Set up the session
+	    Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+	        protected PasswordAuthentication getPasswordAuthentication() {
+	            return new PasswordAuthentication("viswanatha.reddy2255@gmail.com", "ymuk xndr wpgd sxcj");
+	        }
+	    });
+	    
+	    try {
+	    	
 			      message  = new MimeMessage(session);
-	              message.setFrom(new InternetAddress(Constants.SMTPServer.FROMEMAIL));
-	              //InternetAddress[] recipientAddresses = new InternetAddress[Constants.SMTPServer.ADMIN_GROUP_EMAIL.length+1];
-  	              for (int i = 0; i < Constants.SMTPServer.ADMIN_GROUP_EMAIL.length; i++) {
-  	                recipientAddresses[i] = new InternetAddress(Constants.SMTPServer.ADMIN_GROUP_EMAIL[i]);
-  	              }
+	            message.setFrom(new InternetAddress(Constants.SMTPServer.FROMEMAIL));
+	            //InternetAddress[] recipientAddresses = new InternetAddress[Constants.SMTPServer.ADMIN_GROUP_EMAIL.length+1];
+	              for (int i = 0; i < Constants.SMTPServer.ADMIN_GROUP_EMAIL.length; i++) {
+	                recipientAddresses[i] = new InternetAddress(Constants.SMTPServer.ADMIN_GROUP_EMAIL[i]);
+	              }
 			    } catch (javax.mail.MessagingException e) {
 			        log.error("Failed to send email: {}", e.getMessage(), e);
 			        // Optionally: Notify users or take corrective action
+			        log.error("Error Occured GmailService :",e);
+			        return null;
 			    } catch (Exception e) {
 			        log.error("Unexpected error occurred: {}", e.getMessage(), e);
 			        // Optionally: Notify users or take corrective action
+			        log.error("Error Occured GmailService :",e);
+			        return null;
 			    }
-    
-	} 
+	    return session;
+	    }
 	
 	
 
@@ -89,7 +192,7 @@ public class SMTPService {
 			             message.setText(body);
 			             Transport.send(message);
 		
-			             System.out.println("Email sent successfully!");
+			             log.info("Email sent successfully!");
 			             
 		
 			    	 } catch (javax.mail.MessagingException e) {
