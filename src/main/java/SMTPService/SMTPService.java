@@ -38,7 +38,7 @@ public class SMTPService {
 	{
 		uDao=new UserDAOImpl();
 		
-		
+		/*
 		 sessionCheck= godaddyService();
 		if(sessionCheck!=null)
 		{
@@ -52,8 +52,8 @@ public class SMTPService {
 			session=gmailService();
 			log.info("=================Gmail SMTP Service Connected Successful ======================");
 		}
-		
-			/*
+		*/
+			
 				Properties props = new Properties();
 		        props.put("mail.smtp.host", Constants.SMTPServer.SMTPServer); // SMTP server address
 		        props.put("mail.smtp.port", Constants.SMTPServer.PORT); // SSL port
@@ -85,7 +85,7 @@ public class SMTPService {
 				        // Optionally: Notify users or take corrective action
 				    }
 		       
-		    */   
+		      
 		    
 			    
     
