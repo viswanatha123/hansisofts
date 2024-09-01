@@ -9,48 +9,13 @@
        <h:body>
   <ui:composition template="/WEB-INF/facelets/template.xhtml">
   <ui:param name="page" value="" />
-  <ui:define name="title" ><p style="font-weight: bold; color:blue; font-size:15px"> Sales for Villa Flats</p>
-  <p>For search property, Please select Primary Location and Secondary Location than click on Search button.</p>
+  <ui:define name="title" ><p style="font-weight: bold; color:blue; font-size:15px"> Ready to move Villa Flats</p>
+  <p>Ready to move Villa Flats</p>
   <div class="card">
-	<h:form id="form">
+	<h:form id="form2">
   <br></br>
   
-  				<p:panel  style="background: #800000;width: 100%; height:50px;font-size: 15px" >
-		              
-		                        <h:panelGrid columns="7" cellpadding="5" style="width: 100%;">  
-		                            <p:outputLabel for="country" style="font-weight: bold; color:white" value="Primary Location : " /> 
-		                            
-		                            <p:selectOneMenu id="country" value="#{villaDetailsService.country}" style="width:200px">  
-		                            <p:ajax listener="#{villaDetailsService.onCountryChange}" update="city" />  
-		                            <f:selectItem itemLabel="Select Primary Location" itemValue="" noSelectionOption="true" />  
-		                            <f:selectItems value="#{villaDetailsService.primLocationSort}" />  
-		                            </p:selectOneMenu> 
-		                        
-		                            <p:outputLabel for="city" style="font-weight: bold; color:white" value="Secondary Location : " />  
-		                            <p:selectOneMenu id="city" value="#{villaDetailsService.city}" style="width:200px">  
-		                            <f:selectItem itemLabel="Select Secondary Location" itemValue="" noSelectionOption="true" />  
-		                            <f:selectItems value="#{villaDetailsService.secondryLocation}" />  
-		                            </p:selectOneMenu>
-		                            
-		                            
-		                            <p:outputLabel for="ProType" style="font-weight: bold; color:white" value="Property Type : " />  
-		                            <p:selectOneMenu id="ProType" value="#{villaDetailsService.proType}"  style="width:100px">  
-		                            <f:selectItem itemLabel="All" itemValue="All"/>
-		                             <f:selectItem itemLabel="Villa" itemValue="Villa"/>
-		                             <f:selectItem itemLabel="Flat" itemValue="Flat"/>
-		                             <f:selectItem itemLabel="House" itemValue="House"/>
-		                            </p:selectOneMenu>
-		                            
-		                            
-		                            <h:commandButton value="Search"  type="submit"   actionListener="#{villaDetailsService.getVillaDetails}" />
-		                           
-		                         
-		                         
-		                        </h:panelGrid>  
-		         
-		     	</p:panel>
-		     	
-		     <p:panel>   
+  <p:panel>   
                 <p:panelGrid columns="1" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; ">
                     <h:outputText  style="font-weight: bold; font-style:italic; font-size:25px; color: red;" value="#{villaDetailsService.errorMessage}" />
                 </p:panelGrid>
@@ -176,11 +141,11 @@
               </p:dataScroller>
   
 
-</h:form>
 
 
 
-<h:form id="form1">
+
+
 		<p:messages id="msgs"/>
 		 	<p:dialog header="Call back details" widgetVar="leadDialog" minHeight="600" width="700" showEffect="fade">
 		        
@@ -213,15 +178,18 @@
 		        			
 		        
 		        <br></br>
-		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form1" actionListener="#{villaDetailsService.submit}" >
-		                    <p:resetInput target="form1"/>                
+		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form2" actionListener="#{villaDetailsService.submit}" >
+		                    <p:resetInput target="form2"/>                
 		                  </h:commandButton>
 		                  <p:commandButton value="Reset" update="panelDialog" process="@this"
                                  action="#{villaDetailsService.reset}"
                                  styleClass="mr-2 ui-button-outlined"/>
 				  
 		   </p:dialog>
-<script type="text/javascript" src="resources/js/chatool.js"></script>
+  
+  
+  
+  <script type="text/javascript" src="resources/js/chatool.js"></script>
 </h:form>
 
 </div>

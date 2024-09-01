@@ -13,13 +13,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.PrimeFaces;
 
@@ -43,7 +44,7 @@ import SMTPService.SMTPService;
 @ManagedBean(name="villaDetailsService")
 @ViewScoped
 public class VillaDetailsService implements Serializable {
-	private static final Logger log = Logger.getLogger(VillaDetailsService.class.getName());
+	private static final Logger log = LogManager.getLogger(VillaDetailsService.class);
 
 	private String country;   
 	private String city;    
@@ -54,6 +55,8 @@ public class VillaDetailsService implements Serializable {
 	private String locationMessage;
 	private String proType;
 	private String errorMessage;
+	
+	private String menuId;
 	
 	
 
@@ -73,7 +76,7 @@ public class VillaDetailsService implements Serializable {
 	    @PostConstruct 
 	    public void init()
 	    {
-	    	log.log(Level.INFO, "Loading LayoutDetailService init()");
+	    	log.info("Loading LayoutDetailService init()");
 	    	gDao=new GeneralDAOImpl();
 	          locationDao=new LocationDAOImpl();
 	          udo=new UserDAOImpl();
@@ -84,13 +87,28 @@ public class VillaDetailsService implements Serializable {
 	          primLocation  = new HashMap<>(); 
             for(Map.Entry<String, String> pp:primaryModel.entrySet())
             {
-          	  log.log(Level.INFO, "Villa Primar location details ---------->:"+pp.getKey()+"   "+pp.getValue());
+          	  log.info("Villa Primar location details ---------->:"+pp.getKey()+"   "+pp.getValue());
           	  
           	  primLocation.put(pp.getKey(), pp.getValue());
           	  
             }
             primLocationSort=new TreeMap<>(primLocation);
             
+            
+            
+            FacesContext context = FacesContext.getCurrentInstance();
+            menuId = context.getExternalContext().getRequestParameterMap().get("id");
+            
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@22 : Menu id"+menuId);
+            
+            
+            if(menuId != null )
+            {
+             	 villaModel=gDao.getVillaDetails(menuId);
+            
+            }
+	        
+           
             
                    
 	    }
@@ -106,31 +124,32 @@ public class VillaDetailsService implements Serializable {
         }
 	    
 	    
-	    
-	    public void getVillaDetails() {  
-	    	
-	    	System.out.println(" **** submited button ******");
-      	        
-	        locationMessage=country+" ,   "+city;
-	        villaModel=gDao.getVillaDetails(country,city, proType);
-	                 
-	                for(VillaModel x:villaModel)
-	                {
-	                    System.out.println("@@@@@@@@@@@@@@@@@@@@ :"+x.getI_am());
-	                }
-	                if(villaModel.size() == 0)
-	        		{
-	        			errorMessage="There are no records on "+proType;
-	        		}
-	                else {
-	                	errorMessage="";
-	                }
-		             
-	     }  
+
+	        public void getVillaDetails() {  
+		    	
+		    	System.out.println(" **** submited button ******");
+	      	        
+		        locationMessage=country+" ,   "+city;
+		        villaModel=gDao.getVillaDetails(country,city, proType);
+		                 
+		                for(VillaModel x:villaModel)
+		                {
+		                    System.out.println("@@@@@@@@@@@@@@@@@@@@ :"+x.getI_am());
+		                }
+		                if(villaModel.size() == 0)
+		        		{
+		        			errorMessage="There are no records on "+proType;
+		        		}
+		                else {
+		                	errorMessage="";
+		                }
+			             
+		     }  
+	        
 	    
 	    public void submit() {
-        	
-        	log.log(Level.INFO,"Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
+	    	System.out.println("-------------submit ----------------------");
+        	log.info("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
         	
         	
         	if(selectedProperty.getVillaId()!=0)
@@ -141,13 +160,13 @@ public class VillaDetailsService implements Serializable {
         			{
         				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getVillaId(),selectedProperty.getUserId(),"villa");
         				SMTPService.sendVillaLeadEmail(custName,contactNumber,email,selectedProperty);
-        				log.log(Level.INFO,"***** Successful submitted lead ******");
+        				log.info("***** Successful submitted lead ******");
         			}
         			if(selectedProperty.getUserId()==0)
         			{
         				int defaultUserId=1;
         				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getVillaId(),defaultUserId,"villa");
-        				log.log(Level.INFO,"***** Successful submitted lead ******");
+        				log.info("***** Successful submitted lead ******");
         			}
         			
         			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "We received your contact details", "Our representative contact you soon, Thank you..");
@@ -155,18 +174,30 @@ public class VillaDetailsService implements Serializable {
         		}
         	}
         	
+        	
         	villaModel=gDao.getVillaDetails(country,city, proType);
         	this.custName="";
         	this.contactNumber="";
         	this.email="";
+        	
+        	if(menuId != null )
+            {
+	        	 if(menuId.equals("ReadytoMove") || menuId.equals("UnderConstruction") || menuId.equals("OwnerProperties"))
+	             {
+	        		 villaModel=gDao.getVillaDetails(menuId);
+	             	this.custName="";
+	             	this.contactNumber="";
+	             	this.email="";
+	             }
+            }
         	
         }
         
    public void reset() {
 	       PrimeFaces.current().resetInputs("form1:panelDialog");
   }
-        
-	    
+   
+   
 	    
 	    
 
@@ -307,6 +338,20 @@ public class VillaDetailsService implements Serializable {
 		public void setEmail(String email) {
 			this.email = email;
 		}
+
+
+		public String getMenuId() {
+			return menuId;
+		}
+
+
+		public void setMenuId(String menuId) {
+			this.menuId = menuId;
+		}
+
+
+	
+
 	    
 		
 		

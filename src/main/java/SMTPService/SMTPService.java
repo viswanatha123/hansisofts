@@ -4,6 +4,7 @@ import javax.mail.*;
 import javax.mail.internet.*;
 
 import com.DIC.DAO.Impl.UserDAOImpl;
+import com.DIC.Service.AgriculturalService;
 import com.DIC.model.AgriculturalDataEntryModel;
 import com.DIC.model.AgriculturalModel;
 import com.DIC.model.IndiSiteDataEntryModel;
@@ -15,24 +16,44 @@ import com.DIC.model.VillaModel;
 
 import framework.utilities.Constants;
 
+import java.time.LocalDate;
 import java.util.Properties;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class SMTPService {
 	
-	
+	private static final Logger log = LogManager.getLogger(SMTPService.class);
 
 	private static Session session;
 	private static Message message;
 	private static InternetAddress[] recipientAddresses = new InternetAddress[Constants.SMTPServer.ADMIN_GROUP_EMAIL.length+1];
-	
+	private static Session sessionCheck;
 	
 	public static UserDAOImpl uDao;
+	
 	
 	static
 	{
 		uDao=new UserDAOImpl();
 		
+		/*
+		 sessionCheck= godaddyService();
+		if(sessionCheck!=null)
+		{
+			//defaultMailSetting(session);
+			session=godaddyService();
+			log.info("=================GoDaddy SMTP Service Connected Successful ======================");
+		}
+		else
+		{
+			//defaultMailSetting(session);
+			session=gmailService();
+			log.info("=================Gmail SMTP Service Connected Successful ======================");
+		}
+		*/
+			
 				Properties props = new Properties();
 		        props.put("mail.smtp.host", Constants.SMTPServer.SMTPServer); // SMTP server address
 		        props.put("mail.smtp.port", Constants.SMTPServer.PORT); // SSL port
@@ -40,25 +61,121 @@ public class SMTPService {
 		        props.put("mail.smtp.socketFactory.port", Constants.SMTPServer.PORT);
 		        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		        
+		   
+		        
 		       // Set up the session
 		       session = Session.getInstance(props, new javax.mail.Authenticator() {
 			        protected PasswordAuthentication getPasswordAuthentication() {
 			            return new PasswordAuthentication(Constants.SMTPServer.USER_NAME , Constants.SMTPServer.PASSWORD);
 			        }
 		        });
+		       
+		       try {
+				      message  = new MimeMessage(session);
+		            message.setFrom(new InternetAddress(Constants.SMTPServer.FROMEMAIL));
+		            //InternetAddress[] recipientAddresses = new InternetAddress[Constants.SMTPServer.ADMIN_GROUP_EMAIL.length+1];
+		              for (int i = 0; i < Constants.SMTPServer.ADMIN_GROUP_EMAIL.length; i++) {
+		                recipientAddresses[i] = new InternetAddress(Constants.SMTPServer.ADMIN_GROUP_EMAIL[i]);
+		              }
+				    } catch (javax.mail.MessagingException e) {
+				        log.error("Failed to send email: {}", e.getMessage(), e);
+				        // Optionally: Notify users or take corrective action
+				    } catch (Exception e) {
+				        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+				        // Optionally: Notify users or take corrective action
+				    }
+		       
+		      
 		    
-			    try {
-			      message  = new MimeMessage(session);
-	              message.setFrom(new InternetAddress(Constants.SMTPServer.FROMEMAIL));
-	              //InternetAddress[] recipientAddresses = new InternetAddress[Constants.SMTPServer.ADMIN_GROUP_EMAIL.length+1];
-  	              for (int i = 0; i < Constants.SMTPServer.ADMIN_GROUP_EMAIL.length; i++) {
-  	                recipientAddresses[i] = new InternetAddress(Constants.SMTPServer.ADMIN_GROUP_EMAIL[i]);
-  	              }
-			    } catch (MessagingException e) {
-		             throw new RuntimeException(e);
-		        }
+			    
     
 	} 
+	
+	
+	
+	
+	public static Session godaddyService()
+	{
+			 
+	   	 Properties props = new Properties();
+	        props.put("mail.smtp.host", "smtpout.secureserver.net"); // SMTP server address
+	        props.put("mail.smtp.port", "465"); // SSL port
+	        props.put("mail.smtp.auth", "true");
+	        props.put("mail.smtp.socketFactory.port", "465");
+	        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+	        props.put("mail.smtp.connectiontimeout", "10000"); // 10 seconds
+	        props.put("mail.smtp.timeout", "10000"); // 10 seconds
+	        props.put("mail.smtp.starttls.enable", "true");
+	        
+	    // Set up the session
+	    Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+	        protected PasswordAuthentication getPasswordAuthentication() {
+	            return new PasswordAuthentication("hansisoft.hr@hansisofts.com", "HansiSofts@123");
+	        }
+	    });
+	    
+	    try {
+	       
+	        Message message = new MimeMessage(session);
+	        message.setFrom(new InternetAddress("hansisoft.hr@hansisofts.com"));
+	        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("viswanatha.reddy2255@gmail.com"));
+	        message.setSubject("HansiSoft Solutions");
+	        message.setText("Hello, this is a test email sent from a Java program!");
+	        Transport.send(message);
+	        log.info("Email sent successfully!");
+
+	    } catch (javax.mail.MessagingException e) {
+	        System.out.println("Failed to send email: {}"+ e.getMessage());
+	        e.printStackTrace();
+	        log.error("Error Occured godaddyService :",e);
+	        return null;
+	    } catch (Exception e) {
+	    	System.out.println("Failed to send email: {}"+ e.getMessage());
+	        e.printStackTrace();
+	        log.error("Error Occured godaddyService :",e);
+	        return null;
+	    
+	    }
+	    return session;
+	}
+	
+	
+	public static Session gmailService()
+	{
+		Properties props = new Properties();
+	    props.put("mail.smtp.auth", "true");
+	    props.put("mail.smtp.starttls.enable", "true"); // Use TLS
+	    props.put("mail.smtp.host", "smtp.gmail.com");
+	    props.put("mail.smtp.port", "587");
+	    
+	    // Set up the session
+	    Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+	        protected PasswordAuthentication getPasswordAuthentication() {
+	            return new PasswordAuthentication("viswanatha.reddy2255@gmail.com", "ymuk xndr wpgd sxcj");
+	        }
+	    });
+	    
+	    try {
+	    	
+			      message  = new MimeMessage(session);
+	            message.setFrom(new InternetAddress(Constants.SMTPServer.FROMEMAIL));
+	            //InternetAddress[] recipientAddresses = new InternetAddress[Constants.SMTPServer.ADMIN_GROUP_EMAIL.length+1];
+	              for (int i = 0; i < Constants.SMTPServer.ADMIN_GROUP_EMAIL.length; i++) {
+	                recipientAddresses[i] = new InternetAddress(Constants.SMTPServer.ADMIN_GROUP_EMAIL[i]);
+	              }
+			    } catch (javax.mail.MessagingException e) {
+			        log.error("Failed to send email: {}", e.getMessage(), e);
+			        // Optionally: Notify users or take corrective action
+			        log.error("Error Occured GmailService :",e);
+			        return null;
+			    } catch (Exception e) {
+			        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+			        // Optionally: Notify users or take corrective action
+			        log.error("Error Occured GmailService :",e);
+			        return null;
+			    }
+	    return session;
+	    }
 	
 	
 
@@ -75,12 +192,16 @@ public class SMTPService {
 			             message.setText(body);
 			             Transport.send(message);
 		
-			             System.out.println("Email sent successfully!");
+			             log.info("Email sent successfully!");
 			             
 		
-			         } catch (MessagingException e) {
-			             throw new RuntimeException(e);
-			         }
+			    	 } catch (javax.mail.MessagingException e) {
+			 	        log.error("Failed to send email: {}", e.getMessage(), e);
+			 	        // Optionally: Notify users or take corrective action
+			 	    } catch (Exception e) {
+			 	        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+			 	        // Optionally: Notify users or take corrective action
+			 	    }
 	
 	}
 	
@@ -95,9 +216,9 @@ public class SMTPService {
 			    		 
 			    		 
 			    		 String agentDetails="Agent : "+userDetails.getfName()+" "+userDetails.getlName()+",\n\n Congratulations...\n Your Property has been listed successfully.\n\n"
-									+ "Agent Details \n\n First Name : "+userDetails.getfName()+";\n Last Name : "+userDetails.getlName()+";\n Contact Number : "+userDetails.getPhone()+" ;\n Email : "+userDetails.getEmail()+"; \n Address : "+userDetails.getAddress()+".";
+									+ "Agent Details \n\n First Name : "+userDetails.getfName()+";\n Last Name : "+userDetails.getlName()+";\n Contact Number : "+userDetails.getPhone()+" ;\n Email : "+userDetails.getEmail()+"; \n Address : "+userDetails.getAddress()+";\n Date :  "+LocalDate.now().toString()+".";
 							
-			    		 
+			    		
 			    		 int cost=(plotsDataEntryModel.getLength()*plotsDataEntryModel.getWidth())*plotsDataEntryModel.getPersqft();
 			    		 String proDetals="\n\n\nLayout Details.\n\n Layout Name : "+plotsDataEntryModel.getName()+";"
 			    		 		+ "\n Cost : "+cost+";\n Primary location : "+plotsDataEntryModel.getPrimLocation()+"; "
@@ -108,7 +229,7 @@ public class SMTPService {
 			    		 String body=agentDetails+""+proDetals+""+thanks;
 			    		 
 			    		 
-			    		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
+			    		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
 			  	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
 			  	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
 				             message.setSubject(Constants.PropertyConstants.LAYOUT_SUBJECT);
@@ -117,9 +238,13 @@ public class SMTPService {
 			
 				             System.out.println("Email sent successfully!");
 			    		 
-			    	 } catch (MessagingException e) {
-			             throw new RuntimeException(e);
-			         }
+			    	 } catch (javax.mail.MessagingException e) {
+			 	        log.error("Failed to send email: {}", e.getMessage(), e);
+			 	        // Optionally: Notify users or take corrective action
+			 	    } catch (Exception e) {
+			 	        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+			 	        // Optionally: Notify users or take corrective action
+			 	    }
 	}
 	
 	
@@ -133,7 +258,7 @@ public class SMTPService {
 			    		 
 			    		 
 			    		 String agentDetails="Agent : "+userDetails.getfName()+" "+userDetails.getlName()+",\n\n Congratulations...\n Your Property has been listed successfully.\n\n"
-									+ "Agent Details \n\n First Name : "+userDetails.getfName()+";\n Last Name : "+userDetails.getlName()+";\n Contact Number : "+userDetails.getPhone()+" ;\n Email : "+userDetails.getEmail()+"; \n Address : "+userDetails.getAddress()+".";
+									+ "Agent Details \n\n First Name : "+userDetails.getfName()+";\n Last Name : "+userDetails.getlName()+";\n Contact Number : "+userDetails.getPhone()+" ;\n Email : "+userDetails.getEmail()+"; \n Address : "+userDetails.getAddress()+";\n Date :  "+LocalDate.now().toString()+".";
 							
 			    		 
 			    		 int cost=agriculturalDataEntryModel.getNumberCents() * agriculturalDataEntryModel.getPerCent();
@@ -147,7 +272,7 @@ public class SMTPService {
 			    		 String body=agentDetails+""+proDetals+""+thanks;
 			    		 
 			    		 
-			    		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
+			    		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
 			  	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
 			  	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
 				             message.setSubject(Constants.PropertyConstants.AGRI_SUBJECT);
@@ -156,9 +281,13 @@ public class SMTPService {
 			
 				             System.out.println("Email sent successfully!");
 			    		 
-			    	 } catch (MessagingException e) {
-			             throw new RuntimeException(e);
-			         }
+			    	 } catch (javax.mail.MessagingException e) {
+			 	        log.error("Failed to send email: {}", e.getMessage(), e);
+			 	        // Optionally: Notify users or take corrective action
+			 	    } catch (Exception e) {
+			 	        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+			 	        // Optionally: Notify users or take corrective action
+			 	    }
 	}
 	
 	public static void sendIndiEmail(IndiSiteDataEntryModel ndiSiteDataEntryModel,int userId)
@@ -171,7 +300,7 @@ public class SMTPService {
 			    		 
 			    		 
 			    		 String agentDetails="Agent : "+userDetails.getfName()+" "+userDetails.getlName()+",\n\n Congratulations...\n Your Property has been listed successfully.\n\n"
-									+ "Agent Details \n\n First Name : "+userDetails.getfName()+";\n Last Name : "+userDetails.getlName()+";\n Contact Number : "+userDetails.getPhone()+" ;\n Email : "+userDetails.getEmail()+"; \n Address : "+userDetails.getAddress()+".";
+									+ "Agent Details \n\n First Name : "+userDetails.getfName()+";\n Last Name : "+userDetails.getlName()+";\n Contact Number : "+userDetails.getPhone()+" ;\n Email : "+userDetails.getEmail()+"; \n Address : "+userDetails.getAddress()+";\n Date :  "+LocalDate.now().toString()+".";
 							
 			    		 
 			    		 int cost=(ndiSiteDataEntryModel.getLength() * ndiSiteDataEntryModel.getWidth()) * ndiSiteDataEntryModel.getPersqft();
@@ -185,7 +314,7 @@ public class SMTPService {
 			    		 String body=agentDetails+""+proDetals+""+thanks;
 			    		 
 			    		 
-			    		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
+			    		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
 			  	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
 			  	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
 				             message.setSubject(Constants.PropertyConstants.INDI_SUBJECT);
@@ -194,9 +323,13 @@ public class SMTPService {
 			
 				             System.out.println("Email sent successfully!");
 			    		 
-			    	 } catch (MessagingException e) {
-			             throw new RuntimeException(e);
-			         }
+			    	 } catch (javax.mail.MessagingException e) {
+			 	        log.error("Failed to send email: {}", e.getMessage(), e);
+			 	        // Optionally: Notify users or take corrective action
+			 	    } catch (Exception e) {
+			 	        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+			 	        // Optionally: Notify users or take corrective action
+			 	    }
 	}
 	
 	
@@ -224,7 +357,7 @@ public class SMTPService {
 			    		 String body=agentDetails+""+proDetals+""+thanks;
 			    		 
 			    		 
-			    		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
+			    		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
 			  	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
 			  	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
 				             message.setSubject(Constants.PropertyConstants.VILLA_SUBJECT);
@@ -233,9 +366,13 @@ public class SMTPService {
 			
 				             System.out.println("Email sent successfully!");
 			    		 
-			    	 } catch (MessagingException e) {
-			             throw new RuntimeException(e);
-			         }
+			    	 } catch (javax.mail.MessagingException e) {
+			 	        log.error("Failed to send email: {}", e.getMessage(), e);
+			 	        // Optionally: Notify users or take corrective action
+			 	    } catch (Exception e) {
+			 	        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+			 	        // Optionally: Notify users or take corrective action
+			 	    }
 	}
 	
 	
@@ -248,13 +385,13 @@ public class SMTPService {
    		 
    		 
    		String customerDetails="Customer Details..\n\n Customer Name : "+custName+"\n Contact No : "+contactNumber+",\n Email ID : "+email+"\n\n\n";
-   		String propertySetils="Layoyt Details..\n\n Layout Name : "+selectedProperty.getName()+" \n Primary location : "+selectedProperty.getPrimLocation()+"\n Secondry Location : "+selectedProperty.getSecoLocation();
+   		String propertySetils="Layoyt Details..\n\n Layout Name : "+selectedProperty.getName()+" \n Primary location : "+selectedProperty.getPrimLocation()+"\n Secondry Location : "+selectedProperty.getSecoLocation()+"\n Date : "+LocalDate.now().toString()+".";
    	    String thanks="\n\n Thank you\n HansiSoft Solutions..";
    		 
    		 String body=customerDetails+""+propertySetils+""+thanks;
    		 
    		 
-   		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
+   		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
  	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
  	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
 	             message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
@@ -263,9 +400,13 @@ public class SMTPService {
 
 	             System.out.println("Email sent successfully!");
    		 
-   	 } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+		} catch (javax.mail.MessagingException e) {
+	        log.error("Failed to send email: {}", e.getMessage(), e);
+	        // Optionally: Notify users or take corrective action
+	    } catch (Exception e) {
+	        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+	        // Optionally: Notify users or take corrective action
+	    }
 		
 	}
 	
@@ -278,7 +419,7 @@ public class SMTPService {
    		 
    		 
    		String customerDetails="Customer Details..\n\n Customer Name : "+custName+"\n Contact No : "+contactNumber+",\n Email ID : "+email+"\n\n\n";
-   		String propertySetils="Agricultural Details..\n\n Owner Name : "+selectedProperty.getOwnerName()+" \n Primary location : "+selectedProperty.getPrimLocation()+"\n Secondry Location : "+selectedProperty.getSecoLocation();
+   		String propertySetils="Agricultural Details..\n\n Owner Name : "+selectedProperty.getOwnerName()+" \n Primary location : "+selectedProperty.getPrimLocation()+"\n Secondry Location : "+selectedProperty.getSecoLocation()+"\n Date : "+LocalDate.now().toString()+".";
    	    String thanks="\n\n Thank you\n HansiSoft Solutions..";
    		 
    		 String body=customerDetails+""+propertySetils+""+thanks;
@@ -286,16 +427,20 @@ public class SMTPService {
    		 
    		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
  	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
- 	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+ 	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("viswanathareddy120@gmail.com"));
 	             message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
 	             message.setText(body);
 	             Transport.send(message);
 
 	             System.out.println("Email sent successfully!");
    		 
-   	 } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+		} catch (javax.mail.MessagingException e) {
+	        log.error("Failed to send email: {}", e.getMessage(), e);
+	        // Optionally: Notify users or take corrective action
+	    } catch (Exception e) {
+	        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+	        // Optionally: Notify users or take corrective action
+	    }
 		
 	}
 	
@@ -308,13 +453,13 @@ public class SMTPService {
    		 
    		 
    		String customerDetails="Customer Details..\n\n Customer Name : "+custName+"\n Contact No : "+contactNumber+",\n Email ID : "+email+"\n\n\n";
-   		String propertySetils="Individual Site Details..\n\n Owner Name : "+selectedProperty.getOwnerName()+" \n Primary location : "+selectedProperty.getPrimLocation()+"\n Secondry Location : "+selectedProperty.getSecoLocation();
+   		String propertySetils="Individual Site Details..\n\n Owner Name : "+selectedProperty.getOwnerName()+" \n Primary location : "+selectedProperty.getPrimLocation()+"\n Secondry Location : "+selectedProperty.getSecoLocation()+"\n Date : "+LocalDate.now().toString()+".";
    	    String thanks="\n\n Thank you\n HansiSoft Solutions..";
    		 
    		 String body=customerDetails+""+propertySetils+""+thanks;
    		 
    		 
-   		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
+   		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
  	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
  	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
 	             message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
@@ -323,9 +468,13 @@ public class SMTPService {
 
 	             System.out.println("Email sent successfully!");
    		 
-   	 } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+		} catch (javax.mail.MessagingException e) {
+	        log.error("Failed to send email: {}", e.getMessage(), e);
+	        // Optionally: Notify users or take corrective action
+	    } catch (Exception e) {
+	        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+	        // Optionally: Notify users or take corrective action
+	    }
 		
 	}
 	
@@ -338,13 +487,13 @@ public class SMTPService {
    		 
    		 
    		String customerDetails="Customer Details..\n\n Customer Name : "+custName+"\n Contact No : "+contactNumber+",\n Email ID : "+email+"\n\n\n";
-   		String propertySetils="Villa Details..\n\n Owner Name : "+selectedProperty.getOwner_name()+" \n Primary location : "+selectedProperty.getPrim_location()+"\n Secondry Location : "+selectedProperty.getSeco_location();
+   		String propertySetils="Villa Details..\n\n Owner Name : "+selectedProperty.getOwner_name()+" \n Primary location : "+selectedProperty.getPrim_location()+"\n Secondry Location : "+selectedProperty.getSeco_location()+"\n Date : "+LocalDate.now().toString()+".";
    	    String thanks="\n\n Thank you\n HansiSoft Solutions..";
    		 
    		 String body=customerDetails+""+propertySetils+""+thanks;
    		 
    		 
-   		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
+   		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
  	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
  	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
 	             message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
@@ -353,9 +502,13 @@ public class SMTPService {
 
 	             System.out.println("Email sent successfully!");
    		 
-   	 } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+		} catch (javax.mail.MessagingException e) {
+	        log.error("Failed to send email: {}", e.getMessage(), e);
+	        // Optionally: Notify users or take corrective action
+	    } catch (Exception e) {
+	        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+	        // Optionally: Notify users or take corrective action
+	    }
 		
 	}
  

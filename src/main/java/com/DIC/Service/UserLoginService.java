@@ -1,8 +1,8 @@
 package com.DIC.Service;
 
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.primefaces.PrimeFaces;
 
 import com.DIC.DAO.Impl.GeneralDAOImpl;
+import com.DIC.DAO.Impl.LocationDAOImpl;
 import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.PackageModel;
 import com.DIC.model.UserDetails;
@@ -31,7 +32,7 @@ import framework.utilities.SessionUtils;
 public class UserLoginService implements Serializable{
 	
 	
-	static final Logger log = Logger.getLogger(UserLoginService.class.getName());
+	private static final Logger log = LogManager.getLogger(UserLoginService.class);
 	
 		private int userId;
 	    private String userName;
@@ -56,7 +57,7 @@ public class UserLoginService implements Serializable{
 	    public void init()
 	    {
 			message="";
-			log.log(Level.INFO, "Loading UserLoginService init()");
+			//log.log(Level.INFO, "Loading UserLoginService init()");
 				
 	    	gDao=new GeneralDAOImpl();
 	    	uDao=new UserDAOImpl();
@@ -161,8 +162,10 @@ public class UserLoginService implements Serializable{
 	    
 	    public String userLoingAction() throws Exception
 	    {
-	    	log.info("calling navegateToAdminLoginPage()");
-	    	String pageName="adminLoginError";
+	    	
+	    	String pageName;
+	    	//log.info("calling navegateToAdminLoginPage()");
+	    	//String "=============================Debug============================="="adminLoginError";
 	    	
 	    	
 	    	
@@ -173,7 +176,10 @@ public class UserLoginService implements Serializable{
 	    		
 	    		//SMTPService.sendRegiEmail();
 	    		
-	    		
+	    		log.warn("=============================Warning=============================");
+	    		log.debug("=============================Debug=============================");
+	    		log.error("=============================Error=============================");
+	    		log.info("=============================info=============================");
 	    		
 				HttpSession session = SessionUtils.getSession();
 				
@@ -220,7 +226,7 @@ public class UserLoginService implements Serializable{
 	    	
 	    	
 	    	
-	            log.info("User Name :"+userName+", Password :"+password+", Page Name :"+pageName);
+	            //log.info("User Name :"+userName+", Password :"+password+", Page Name :"+pageName);
 	  
 	    return pageName;
 	    }

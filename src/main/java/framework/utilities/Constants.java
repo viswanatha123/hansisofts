@@ -14,10 +14,22 @@ public class  Constants {
     	public static final String PASSWORD="HansiSofts@123";
     	public static final String FROMEMAIL="hansisoft.hr@hansisofts.com";
     	public static final String SUBJECT="HansiSoft Solutions,,. New Account created successfull..";
+    	/*
     	public static final String[] ADMIN_GROUP_EMAIL ={"viswanathareddy120@gmail.com"
     			,"sukumar.a@hansisofts.com"
     			,"swathi.sreeram@hansisofts.com"
-    			,"nagalakshmi.m@hansisofts.com"};
+    			,"nagalakshmi.m@hansisofts.com"
+    			,"sivakumar.m@hansisofts.com"};
+    	*/
+    	public static final String[] ADMIN_GROUP_EMAIL ={"viswanatha.reddy2255@gmail.com"
+    			,"lakshmimoolaj2@gmail.com"
+    			,"swathisreeram99@gmail.com"
+    			,"Sukumararapana@gmail.com"
+    			,"thotlakumari89@gmail.com"
+    			,"jkuruba39@gmail.com"
+    			,"sekhar112003@gmail.com"
+    			,"sivakumarreddy.maile@gmail.com"
+};
     	
 		
 	}
