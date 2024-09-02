@@ -104,6 +104,7 @@ public class VillaDetailsService implements Serializable {
             
             if(menuId != null )
             {
+            	//villaModel.clear();
              	 villaModel=gDao.getVillaDetails(menuId);
             
             }
@@ -130,6 +131,7 @@ public class VillaDetailsService implements Serializable {
 		    	System.out.println(" **** submited button ******");
 	      	        
 		        locationMessage=country+" ,   "+city;
+		        //villaModel.clear();
 		        villaModel=gDao.getVillaDetails(country,city, proType);
 		                 
 		                for(VillaModel x:villaModel)
