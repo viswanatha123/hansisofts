@@ -53,9 +53,9 @@ public class GeneralDAOImpl {
 					"values (nextval('hansi_villa_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,1,?,?);";
 			
 			String SQL_VILLA_DETAILS="select * from villa_plot where prim_location = ? and seco_location = ?";
-			String SQL_VILLA_READY_TO_MOVE="select * from villa_plot where pro_avail='Ready To Move' order by create_date desc limit 100";
-			String SQL_UNDER_CONSTRUCTION="select * from villa_plot where pro_avail='Under Construction' order by create_date desc limit 100";
-			String SQL_ONER_PROPERTIES="select * from villa_plot where i_am ='Owner' order by create_date desc limit 100";
+			String SQL_VILLA_READY_TO_MOVE="select * from villa_plot where pro_avail='Ready To Move' order by create_date desc";
+			String SQL_UNDER_CONSTRUCTION="select * from villa_plot where pro_avail='Under Construction' order by create_date desc";
+			String SQL_ONER_PROPERTIES="select * from villa_plot where i_am ='Owner' order by create_date desc";
 					//+ " and property_type = ? order by create_date desc";
 			String SQL_HOME_LOAN_INSERT="insert into home_loan (home_id,agent_name,cont_num,age,gender,email,loan_amt,monthly_inc,emp_type,create_date,is_active) \n"+ 
 					"values (nextval('home_loan_seq'),?,?,?,?,?,?,?,?,current_timestamp,1);";
