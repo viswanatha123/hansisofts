@@ -26,11 +26,13 @@
 		                            <f:selectItems value="#{villaDetailsService.primLocationSort}" />  
 		                            </p:selectOneMenu> 
 		                        
-		                            <p:outputLabel for="city" style="font-weight: bold; color:white" value="Secondary Location : " />  
+		                            <p:outputLabel for="city" style="font-weight: bold; color:white" value="Secondary Location : " /> 
 		                            <p:selectOneMenu id="city" value="#{villaDetailsService.city}" style="width:200px">  
 		                            <f:selectItem itemLabel="Select Secondary Location" itemValue="" noSelectionOption="true" />  
 		                            <f:selectItems value="#{villaDetailsService.secondryLocation}" />  
 		                            </p:selectOneMenu>
+		                            
+		                             
 		                            
 		                            
 		                            <p:outputLabel for="ProType" style="font-weight: bold; color:white" value="Property Type : " />  
