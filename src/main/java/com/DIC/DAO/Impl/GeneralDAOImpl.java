@@ -373,7 +373,7 @@ public class GeneralDAOImpl {
 	     } catch (Exception e) {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	        log.error("An error occurred: {}", e.getMessage());
+	        log.error("An error occurred getVillaDetails: {}", e.getMessage());
 	     }
 	return VillaModelList;		
 	}
