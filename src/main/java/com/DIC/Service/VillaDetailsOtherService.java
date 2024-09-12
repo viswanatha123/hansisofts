@@ -52,9 +52,9 @@ public class VillaDetailsOtherService {
 
     private VillaModel selectedProperty;   
 	
-	private String custName="";
-	private String contactNumber="9999999999";
-	private String email="";
+	private String custName;
+	private String contactNumber;
+	private String email;
 
 		private List<VillaModel> villaModel;
 	    GeneralDAOImpl gDao;
@@ -140,15 +140,7 @@ public class VillaDetailsOtherService {
 	    */
 	    
 	    
-	    public void processAction() {
-	         
-	    	System.out.println("-------------------------processAction -------------------------");
-	        FacesContext context = FacesContext.getCurrentInstance();
-	    	String villaIdVal=context.getExternalContext().getRequestParameterMap().get("villaId1");
-	    	System.out.println("Villa id :"+Integer.parseInt(villaIdVal));
-	    	
-	    	
-	    }
+	
 	    
 	    
 	    public void submit() {
