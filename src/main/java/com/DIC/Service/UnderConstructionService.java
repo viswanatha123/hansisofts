@@ -1,19 +1,12 @@
 package com.DIC.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,14 +19,13 @@ import com.DIC.model.VillaModel;
 
 import SMTPService.SMTPService;
 
-@ManagedBean(name="readyToMoveService")
+@ManagedBean(name="underConstructionService")
 
 //@RequestScoped
 @ViewScoped
-public class ReadyToMoveService {
+public class UnderConstructionService {
 	
-	private static final Logger log = LogManager.getLogger(ReadyToMoveService.class);
-	
+	private static final Logger log = LogManager.getLogger(UnderConstructionService.class);
 	
 	private String locationMessage;
 	private String errorMessage;
@@ -68,7 +60,7 @@ public class ReadyToMoveService {
 		        
 		 
 		        
-		        villaModel=gDao.getReadyToMove();
+		        villaModel=gDao.getUnderConstruction();
 		        fetchRecords=villaModel.size();
 		        
 		        System.out.println("----Record Size :"+villaModel.size());
@@ -222,8 +214,5 @@ public class ReadyToMoveService {
 		        
         
        
-        
-               
-    
 
 }
