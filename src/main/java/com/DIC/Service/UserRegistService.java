@@ -44,10 +44,30 @@ public class UserRegistService implements Serializable {
 	 GeneralDAOImpl gdao;
 	 
 	 
+	 private Integer spinnerValue=1;
+	 
 	 public UserRegistService()
 	 {
 		 
 	 }
+	 
+	 
+	  public Integer getSpinnerValue() {
+	        return spinnerValue;
+	    }
+
+	    public void setSpinnerValue(Integer spinnerValue) {
+	        this.spinnerValue = spinnerValue;
+	    }
+
+	    public void performAction() {
+	        // Simulate some background processing
+	        try {
+	            Thread.sleep(2000); // Simulates a delay
+	        } catch (InterruptedException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	
 	
 	@PostConstruct 
