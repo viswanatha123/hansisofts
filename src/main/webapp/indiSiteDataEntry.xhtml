@@ -45,6 +45,10 @@
 	  <div class="indiDataEntry" jsf:rendered="#{indiSiteDataEntryService.listedCount lt indiSiteDataEntryService.listLimit and indiSiteDataEntryService.isEnable eq true or indiSiteDataEntryService.listedCount eq 0 and indiSiteDataEntryService.userId eq -1}">
   <div class="card">
   <h:form id="form" enctype="multipart/form-data">
+  
+   		<p:dialog header="Loading...." widgetVar="spinnerDialog"   modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
+            <p:graphicImage name="images/builders/spin.gif" width="70px"  height="70px" />
+        </p:dialog>
   <p:messages id="msgs"/>
    <br></br>
   
@@ -165,7 +169,7 @@
                    <h:commandButton value="Submit"   type="submit" 
                                     process="@this"
                                     update="@form"
-                                    actionListener="#{indiSiteDataEntryService.upload}" >
+                                    actionListener="#{indiSiteDataEntryService.upload}" onclick="PF('spinnerDialog').show()">
                                     <p:resetInput target="form"/>
                    </h:commandButton>
                    

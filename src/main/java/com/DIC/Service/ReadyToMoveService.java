@@ -18,6 +18,8 @@ import javax.inject.Inject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.primefaces.PrimeFaces;
+import org.primefaces.model.StreamedContent;
+
 
 import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
@@ -42,15 +44,16 @@ public class ReadyToMoveService {
 	
 
 
-    private VillaModel selectedProperty;   
+    private VillaModel selectedProperty; 
+   
 	
 	private String custName="";
 	private String contactNumber="";
 	private String email="";
 
-		private List<VillaModel> villaModel;
+	private List<VillaModel> villaModel;
 		
-		
+	 
 	    GeneralDAOImpl gDao;
 		
 	    LocationDAOImpl locationDao;
@@ -75,12 +78,7 @@ public class ReadyToMoveService {
 		         	
 		    }
 			
-			@PreDestroy
-			public void destroy()
-			{
-				
-			}
-
+	
 			public void submit() {
 		    	System.out.println("-------------submit ----------------------");
 	        	log.info("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
@@ -115,6 +113,9 @@ public class ReadyToMoveService {
 	   public void reset() {
 		       PrimeFaces.current().resetInputs("form1:panelDialog");
 	  }
+
+	   
+	   
 
 
 			public List<VillaModel> getVillaModel() {
@@ -219,8 +220,8 @@ public class ReadyToMoveService {
 			public void setFetchRecords(int fetchRecords) {
 				this.fetchRecords = fetchRecords;
 			}
-		        
-        
+
+			
        
         
                
