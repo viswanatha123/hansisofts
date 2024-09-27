@@ -18,6 +18,9 @@
   <p>For search property, Please select Primary Location and Secondary Location than click on Search button.</p>
   <div class="card">
  	<h:form id="form">
+ 	<p:dialog header="Loading please wait....." widgetVar="spinnerDialog"   modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
+            <p:graphicImage name="images/builders/spin.gif" width="70px"  height="70px" />
+     </p:dialog>
   <br></br>
   
 		   <p:panel  style="background: #800000;width: 100%; height:50px;font-size: 15px" >
@@ -48,7 +51,7 @@
 		        
             <p:dataScroller  value="#{layoutDetailService.layoutdetails}" var="product" chunkSize="10"  selection="#{crudView.selectedProperty}"
             rowKey="#{product.layoutId}" rowSelectMode="add">
-                  <p:panel  style="background-image: url('ackGroundGlass.png'); width: 100%; height:340px; box-shadow: 10px 10px 5px grey; " >
+                  <p:panel  style="background-image: url('ackGroundGlass.png'); width: 100%; height:340px; box-shadow: 10px 10px 5px grey; " onclick="PF('leadDialog').show()">
                   
                   			<h:panelGrid   columns="3" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
                   				<h:outputText style="font-weight: bold;color: green;font-size:15px;" value="#{product.name}" />
@@ -60,7 +63,13 @@
                   
             
                      		<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
-                     			<p:graphicImage width="200" height="200" stream="false" cache="false" value="#{product.streamedContent}" />
+                     		
+                     		<p:commandLink actionListener="#{layoutDetailService.fullDetails}"  process="@this" oncomplete="handleResponse(xhr, status, args)">>
+                     			<f:setPropertyActionListener value="#{product}" target="#{layoutDetailService.selectedProperty}" />
+                     		    <p:graphicImage width="200" height="200" stream="false" cache="false" value="#{product.streamedContent}"  onclick="PF('fulldetails').show()"/>
+                     		   
+                     		</p:commandLink>	
+                   		
                      			<h:outputText style="font-weight: bold;color: red;font-size: 15px"  value="Rs #{product.totalPrice}" />
                      			
                      			
@@ -200,6 +209,34 @@
                                  styleClass="mr-2 ui-button-outlined"/>
 				  
 		   </p:dialog>
+		   
+	</h:form>	 
+	
+	<h:form id="form2">
+		<p:messages id="msgs"/>
+		 	<p:dialog header="Call back details" widgetVar="fulldetails" minHeight="600" width="700" showEffect="fade">
+		        
+		        	<p:panel id="panelDialog" style="background-image: url('back1.jpg');width: 50%; height: auto;">   
+					    <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
+					        
+					        
+					   </p:panelGrid>      
+					</p:panel>		
+		        			
+		        
+		        <br></br>
+		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form2" actionListener="#{layoutDetailService.submit}" onclick="PF('spinnerDialog').show()">
+		                    <p:resetInput target="form1"/>                
+		                  </h:commandButton>
+		                  <p:commandButton value="Reset" update="panelDialog" process="@this"
+                                 action="#{layoutDetailService.reset}"
+                                 styleClass="mr-2 ui-button-outlined"/>
+				  
+		   </p:dialog>
+		   
+   
+		   
+		   
 <script type="text/javascript" src="resources/js/chatool.js"></script>
 </h:form>
 </div>
