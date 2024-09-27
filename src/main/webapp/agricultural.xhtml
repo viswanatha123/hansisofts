@@ -15,6 +15,10 @@
   <p>For search property, Please select Primary Location and Secondary Location than click on Search button.</p>
   <div class="card">
    <h:form id="form">
+   <p:dialog header="Loading please wait....." widgetVar="spinnerDialog"   modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
+            <p:graphicImage name="images/builders/spin.gif" width="70px"  height="70px" />
+     </p:dialog>
+   
    <br></br>
   
   		  <p:panel  style="background: #800000;width: 100%; height:50px;font-size: 15px">   
@@ -177,7 +181,7 @@
 		        			
 		        
 		        <br></br>
-		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form1" actionListener="#{agriculturalService.submit}" >
+		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form1" actionListener="#{agriculturalService.submit}"  onclick="PF('spinnerDialog').show()" >
 		                    <p:resetInput target="form1"/>                
 		                  </h:commandButton>
 		                  <p:commandButton value="Reset" update="panelDialog" process="@this"
