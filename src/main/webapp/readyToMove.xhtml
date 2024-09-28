@@ -9,33 +9,34 @@
        <h:body>
   <ui:composition template="/WEB-INF/facelets/template.xhtml">
   <ui:param name="page" value="" />
-  <ui:define name="title" ><p style="font-weight: bold; color:blue; font-size:15px"> Ready to move Villa Flats</p>
-  <p>Ready to move Villa Flats</p>
+  <ui:define name="title" ><p style="font-weight: bold; color:blue; font-size:15px"> Ready to Move Villa Flats</p>
+  <p>Ready to Move Villa Flats</p>
   <div class="card">
-	<h:form id="form2">
+	<h:form id="form">
   <br></br>
   
-  <p:panel>   
-                <p:panelGrid columns="1" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; ">
-                    <h:outputText  style="font-weight: bold; font-style:italic; font-size:25px; color: red;" value="#{villaDetailsService.errorMessage}" />
-                </p:panelGrid>
-             </p:panel>
+  				
 		     	
-		     	<p:dataScroller value="#{villaDetailsService.villaModel}" var="product" chunkSize="10">		   	     	
+		    <p:panel>   
+                <p:panelGrid columns="1" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
+                    <h:outputText  style="font-weight: normal; font-style:italic; font-size:15px; color: block; text-align: left;" value="Selected properties : #{readyToMoveService.fetchRecords}" />
+                </p:panelGrid>
+            </p:panel>
+		     	
+		     	<p:dataScroller value="#{readyToMoveService.villaModel}" var="product" chunkSize="10">		   	     	
                     <p:panel  style="width: 100%; height:340px; box-shadow: 10px 10px 5px grey; " >
                     
                     			<h:panelGrid   columns="4" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
                   				<h:outputText style="font-weight: bold;color: green;font-size:15px;" value="#{product.i_am} : #{product.owner_name}" />
-                   				<h:outputText style="font-weight: bold;color: block; font-size:15px; float:right" value="#{product.bed_rooms} BHK #{product.property_type} for Sale in #{villaDetailsService.locationMessage}" />
-                  				<h:outputText class="pi pi-globe" style="font-weight: bold;color: brown;font-size:15px; float:right" value=" Residential Villa/Flats for Sale in #{villaDetailsService.locationMessage}" />
+                   				<h:outputText style="font-weight: bold;color: block; font-size:15px; float:right" value="#{product.bed_rooms} BHK #{product.property_type} for Sale in #{readyToMoveService.locationMessage}" />
+                  				<h:outputText class="pi pi-globe" style="font-weight: bold;color: brown;font-size:15px; float:right" value=" Residential Villa/Flats for Sale in #{readyToMoveService.locationMessage}" />
               					</h:panelGrid>
               					
               		
               					
               					<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
-                     			<p:graphicImage width="200" height="200" stream="false" cache="false" value="#{product.streamedContent}" />
                      			
-                     			
+                                  				
                      				    <h:panelGrid   columns="2" style="background: #E5E4E2;" width="80%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
                      			 
                      			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" #{product.i_am} : " />
@@ -101,13 +102,14 @@
                      			 				    <p:commandButton type="submit" value="Callback" icon="ui-icon-calculator" style="background:#FFA500;font-weight: bold;color: black;font-size: 15px" 
 															 process="@this" 
 							                                 onclick="PF('leadDialog').show()">           
-							                              <f:setPropertyActionListener value="#{product}" target="#{villaDetailsService.selectedProperty}" />
+							                              <f:setPropertyActionListener value="#{product}" target="#{readyToMoveService.selectedProperty}" />
 									                </p:commandButton>
-                          						
+									                
+									                                      						
                           						   <p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#1E90FF;font-weight: bold;color: black;font-size: 15px; width:170px" 
 															 process="@this" 
 							                                 onclick="PF('leadDialog').show()">           
-							                              <f:setPropertyActionListener value="#{product}" target="#{villaDetailsService.selectedProperty}" />
+							                              <f:setPropertyActionListener value="#{product}" target="#{readyToMoveService.selectedProperty}" />
 									                </p:commandButton>
                           						
                          			</h:panelGrid>
@@ -141,11 +143,11 @@
               </p:dataScroller>
   
 
+</h:form>
 
 
 
-
-
+<h:form id="form1">
 		<p:messages id="msgs"/>
 		 	<p:dialog header="Call back details" widgetVar="leadDialog" minHeight="600" width="700" showEffect="fade">
 		        
@@ -155,18 +157,18 @@
 					        
 					        
 					        			    <p:outputLabel required="true" style="font-weight: bold" for="name" indicateRequired="true" value="Name : " />
-						                    <p:inputText id="name" value="#{villaDetailsService.custName}" required="true" requiredMessage="Required  Name">
+						                    <p:inputText id="name" value="#{readyToMoveService.custName}" required="true" requiredMessage="Required  Name">
 						                    </p:inputText>
 						                    <p:message for="name" display="icon"/>
 						                    
 						                    
 						                    <p:outputLabel style="font-weight: bold" for="ContactNumber" indicateRequired="true" value="Contact Number : " />
-							                <p:inputMask id="ContactNumber"  mask="9999999999" required="true"  maxlength="10" value="#{villaDetailsService.contactNumber}" >
+							                <p:inputMask id="ContactNumber"  mask="9999999999" required="true"  maxlength="10" value="#{readyToMoveService.contactNumber}" >
 							                </p:inputMask>
 							                <p:message for="ContactNumber" display="icon"/>
 							      							        
 									        <h:outputText style="font-weight: bold; font-size: 14px;color:black; text-align:left;" value="Email : " />
-						                    <h:inputText id="email"  size="30" value="#{villaDetailsService.email}"  validatorMessage="Invalid email format">
+						                    <h:inputText id="email"  size="30" value="#{readyToMoveService.email}"  validatorMessage="Invalid email format">
 						                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 						                    </h:inputText> 
 						                    <p:message for="email" display="icon"/>
@@ -178,18 +180,17 @@
 		        			
 		        
 		        <br></br>
-		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form2" actionListener="#{villaDetailsService.submit}" >
-		                    <p:resetInput target="form2"/>                
+		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form" actionListener="#{readyToMoveService.submit}" >
+		                    <p:resetInput target="form"/>                
 		                  </h:commandButton>
 		                  <p:commandButton value="Reset" update="panelDialog" process="@this"
-                                 action="#{villaDetailsService.reset}"
+                                 action="#{readyToMoveService.reset}"
                                  styleClass="mr-2 ui-button-outlined"/>
 				  
 		   </p:dialog>
-  
-  
-  
-  <script type="text/javascript" src="resources/js/chatool.js"></script>
+		   
+		  		   
+<script type="text/javascript" src="resources/js/chatool.js"></script>
 </h:form>
 
 </div>

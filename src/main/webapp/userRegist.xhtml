@@ -31,6 +31,10 @@
   <div class="card">
   			
 <h:form id="form">
+
+ 		<p:dialog header="Loading...." widgetVar="spinnerDialog"   modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
+            <p:graphicImage name="images/builders/spin.gif" width="70px"  height="70px" />
+        </p:dialog>
   <p:messages id="msgs"/>
    <br></br>
    <center>
@@ -102,8 +106,10 @@
                    <h:commandButton value="Submit"   type="submit" 
                                     process="@this"
                                     update="@form"
-                                    actionListener="#{userRegistService.save}" >
+                                    actionListener="#{userRegistService.save}" onclick="PF('spinnerDialog').show()">
                                     <p:resetInput target="form"/>
+                                    
+                                    
                    </h:commandButton>
                    
             	               

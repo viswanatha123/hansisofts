@@ -13,6 +13,9 @@
   <p>For search property, Please select Primary Location and Secondary Location than click on Search button.</p>
   <div class="card">
 	<h:form id="form">
+	<p:dialog header="Loading...." widgetVar="spinnerDialog"   modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
+            		<p:graphicImage name="images/builders/spin.gif" width="70px"  height="70px" />
+    </p:dialog>
   <br></br>
   
   				<p:panel  style="background: #800000;width: 100%; height:50px;font-size: 15px" >
@@ -26,11 +29,13 @@
 		                            <f:selectItems value="#{villaDetailsService.primLocationSort}" />  
 		                            </p:selectOneMenu> 
 		                        
-		                            <p:outputLabel for="city" style="font-weight: bold; color:white" value="Secondary Location : " />  
+		                            <p:outputLabel for="city" style="font-weight: bold; color:white" value="Secondary Location : " /> 
 		                            <p:selectOneMenu id="city" value="#{villaDetailsService.city}" style="width:200px">  
 		                            <f:selectItem itemLabel="Select Secondary Location" itemValue="" noSelectionOption="true" />  
 		                            <f:selectItems value="#{villaDetailsService.secondryLocation}" />  
 		                            </p:selectOneMenu>
+		                            
+		                             
 		                            
 		                            
 		                            <p:outputLabel for="ProType" style="font-weight: bold; color:white" value="Property Type : " />  
@@ -213,7 +218,7 @@
 		        			
 		        
 		        <br></br>
-		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form1" actionListener="#{villaDetailsService.submit}" >
+		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form1" actionListener="#{villaDetailsService.submit}" onclick="PF('spinnerDialog').show()">
 		                    <p:resetInput target="form1"/>                
 		                  </h:commandButton>
 		                  <p:commandButton value="Reset" update="panelDialog" process="@this"

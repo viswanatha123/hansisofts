@@ -19,7 +19,9 @@ import org.apache.logging.log4j.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+//import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.PrimeFaces;
@@ -42,6 +44,8 @@ import SMTPService.SMTPService;
 
 
 @ManagedBean(name="villaDetailsService")
+
+//@RequestScoped
 @ViewScoped
 public class VillaDetailsService implements Serializable {
 	private static final Logger log = LogManager.getLogger(VillaDetailsService.class);
@@ -57,6 +61,7 @@ public class VillaDetailsService implements Serializable {
 	private String errorMessage;
 	
 	private String menuId;
+	private int fetchRecords;
 	
 	
 
@@ -67,7 +72,7 @@ public class VillaDetailsService implements Serializable {
 	private String contactNumber;
 	private String email;
 
-		    private List<VillaModel> villaModel;
+		private List<VillaModel> villaModel;
 	    GeneralDAOImpl gDao;
 	    LocationDAOImpl locationDao;
 	    UserDAOImpl udo;
@@ -104,7 +109,10 @@ public class VillaDetailsService implements Serializable {
             
             if(menuId != null )
             {
+            	 fetchRecords=0;
+            	 villaModel=null;
              	 villaModel=gDao.getVillaDetails(menuId);
+             	fetchRecords=villaModel.size();
             
             }
 	        
@@ -130,6 +138,7 @@ public class VillaDetailsService implements Serializable {
 		    	System.out.println(" **** submited button ******");
 	      	        
 		        locationMessage=country+" ,   "+city;
+		        //villaModel.clear();
 		        villaModel=gDao.getVillaDetails(country,city, proType);
 		                 
 		                for(VillaModel x:villaModel)
@@ -347,6 +356,16 @@ public class VillaDetailsService implements Serializable {
 
 		public void setMenuId(String menuId) {
 			this.menuId = menuId;
+		}
+
+
+		public int getFetchRecords() {
+			return fetchRecords;
+		}
+
+
+		public void setFetchRecords(int fetchRecords) {
+			this.fetchRecords = fetchRecords;
 		}
 
 
