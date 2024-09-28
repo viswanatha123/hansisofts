@@ -426,15 +426,13 @@ public class GeneralDAOImpl {
 	        	 villaModel.setUserId(rs.getInt("user_id"));
 	        	 villaModel.setFloorNum(rs.getInt("floor_num"));
 	        	 
-	        	 log.info(" getReadyToMove() : "+rs.getInt("villa_id")+"   "+rs.getString("i_am"));
+	        	 //log.info(" getReadyToMove() : "+rs.getInt("villa_id")+"   "+rs.getString("i_am"));
 	        	 
 	        	 			// below for Image
-	        	 
-	        	 //System.out.println(" Villa image : "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
-	        	/* 
-					        	 if(rs.getBytes("image").length!=0)
+	        	 /*
+	        	            	 if(rs.getBytes("image").length!=0)
 				                 {
-					        		log.info(" Villa details image available: "+rs.getInt("villa_id")+"   "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
+					        		 log.info(" Villa details image available: "+rs.getInt("villa_id")+"   "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
 				                 byte[] bb=rs.getBytes("image");
 				                 
 				                 villaModel.setStreamedContent(DefaultStreamedContent.builder()
@@ -444,7 +442,6 @@ public class GeneralDAOImpl {
 				                 }
 				                 else
 				                 {
-				                	 log.info(" Villa details image not availablr : "+rs.getInt("villa_id")+"   "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
 				                	// Defalut Image
 				                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
 				                	 ResultSet rsDef = pstmtDefault.executeQuery();
