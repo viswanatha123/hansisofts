@@ -535,6 +535,7 @@ public class UserDAOImpl {
 	        	 allPropertyList.setCost(rs.getInt("Cost"));
 	        	 allPropertyList.setPrimLocation(rs.getString("Location"));
 	        	 
+	        	 
 	        
 	        	 
 	        	 

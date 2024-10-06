@@ -17,7 +17,11 @@
   <h:form id="form">
   <br></br>
   
-  
+  			<p:panel>   
+                <p:panelGrid columns="1" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
+                    <h:outputText  style="font-weight: normal; font-style:italic; font-size:15px; color: blue; text-align: left;" value="Selected properties : #{budgetService3.totalRecords}" />
+                </p:panelGrid>
+            </p:panel>
   
   			<p:dataScroller value="#{budgetService3.budgetModelList}" var="product" chunkSize="10">
                     <p:panel  style="width: 100%; height:340px; box-shadow: 10px 10px 5px grey; " >
@@ -75,6 +79,14 @@
             	  </p:panel>
               <br></br>
            </p:dataScroller>
+           
+           <p:panel>   
+         	<p:panelGrid columns="3" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
+		        <h:commandButton value="Previous" action="#{budgetService3.previousPage}" disabled="#{budgetService3.currentPage == 1}" />
+		        <h:commandButton value="Next" action="#{budgetService3.nextPage}" disabled="#{budgetService3.currentPage * budgetService3.pageSize >= budgetService3.totalRecords}" />
+		        <h:outputText value="Page #{budgetService3.currentPage} of #{budgetService3.totalPages}" />
+		    </p:panelGrid>
+          </p:panel>
            
  <script type="application/javascript">        
  function requestCallback() {

@@ -29,28 +29,61 @@ public class BudgetService1 implements Serializable{
 	private String locationMessage;
 	private List<BudgetModel> budgetModelList;
 	
+	
+	 private int currentPage = 1;
+	 private int pageSize = 10;
+	 private int totalRecords;
+	
 	GeneralDAOImpl gDao;
+	
+	
+		public BudgetService1()
+		{
+			log.info("Loading BudgetService1 Constructor");
+			gDao=new GeneralDAOImpl();
+			
+			loadEntities();
+			countTotalRecords();
+		}
+	
 	
 	 	@PostConstruct 
 	    public void init()
 	    {
 	    	log.info("Loading BudgetService init()");
-	    	gDao=new GeneralDAOImpl();
-	    	  
-	    	  
-	    	getBudget1();  
-	        
          
 	    }
 	 	
-	 	
-	 	public void getBudget1()
-	 	{
+	 	public void loadEntities() {
 	 		
-	 		budgetModelList=gDao.getBudget1Details(1);
-         
-	 	}
+	 		budgetModelList=gDao.getBudget1Details(1,pageSize,currentPage);
+	        
+	    }
 	 	
+	 	public void countTotalRecords() {
+	 	
+	 		totalRecords=gDao.getBudget1DetailsCountTotalRecords(1);
+	        
+	    }
+	 	
+	 	public void nextPage() {
+	        if ((currentPage * pageSize) < totalRecords) {
+	            currentPage++;
+	            loadEntities();
+	        }
+	    }
+
+	    public void previousPage() {
+	        if (currentPage > 1) {
+	            currentPage--;
+	            loadEntities();
+	        }
+	    }
+	 	
+	    public int getTotalPages() {
+	        return (int) Math.ceil((double) totalRecords / pageSize);
+	    }
+	 
 	 	
 	 	public String budgetAction1(){
 	 		
@@ -63,10 +96,8 @@ public class BudgetService1 implements Serializable{
 			
 		}
 	 	
-	 	
-	 	
-	 	
-	 	
+	    
+	   
 
 		public String getLocationMessage() {
 			return locationMessage;
@@ -82,6 +113,36 @@ public class BudgetService1 implements Serializable{
 
 		public void setBudgetModelList(List<BudgetModel> budgetModelList) {
 			this.budgetModelList = budgetModelList;
+		}
+
+
+		public int getCurrentPage() {
+			return currentPage;
+		}
+
+
+		public int getPageSize() {
+			return pageSize;
+		}
+
+
+		public int getTotalRecords() {
+			return totalRecords;
+		}
+
+
+		public void setCurrentPage(int currentPage) {
+			this.currentPage = currentPage;
+		}
+
+
+		public void setPageSize(int pageSize) {
+			this.pageSize = pageSize;
+		}
+
+
+		public void setTotalRecords(int totalRecords) {
+			this.totalRecords = totalRecords;
 		}
 	
 	
