@@ -72,7 +72,7 @@
                     
                     <p:outputLabel style="font-weight: bold" indicateRequired="true" value="User Name : " />
                     <p:inputText id="userName" required="true" value="#{userRegistService.userName}" requiredMessage="User name is required" >
-                    	<f:validateLength minimum="3" maximum="10"></f:validateLength>
+                    	<f:validateLength minimum="3" maximum="15"></f:validateLength>
 		    			<f:validateRegex pattern="^([a-zA-Z]+(.)?[\s]*)$" />
 		            </p:inputText>
                     <p:message for="userName" display="icon"/>
@@ -80,8 +80,8 @@
                     
                     <p:outputLabel style="font-weight: bold" indicateRequired="true" value="Password : " />
                     <p:password id="UserPassword" required="true" value="#{userRegistService.userPassword}"  requiredMessage="Password is required">
-                        <f:validateLength minimum="8" maximum="13"></f:validateLength>
-                    	<f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})" />
+                        <f:validateLength minimum="8" maximum="15"></f:validateLength>
+                    	<f:validateRegex pattern="((?=.*\d)(?=.*[a-z]).{8,15})" />
                     </p:password>
                     <p:message for="UserPassword" display="icon"/>
                     
