@@ -56,6 +56,7 @@ public class GeneralDAOImpl {
 			String SQL_VILLA_READY_TO_MOVE="select * from villa_plot where pro_avail='Ready To Move' order by create_date desc";
 			String SQL_UNDER_CONSTRUCTION="select * from villa_plot where pro_avail='Under Construction' order by create_date desc";
 			String SQL_ONER_PROPERTIES="select * from villa_plot where i_am ='Owner' order by create_date desc";
+			String SQL_AGENT_PROPERTIES="select * from villa_plot where i_am ='Agent' order by create_date desc";
 					//+ " and property_type = ? order by create_date desc";
 			
 			String SQL_READY_TO_MOVE_IMAGE="select * from villa_plot where villa_id = ?";
@@ -1913,6 +1914,102 @@ public class GeneralDAOImpl {
         // Convert the StringWriter content to a String and return it
         return sw.toString();
     }
+    
+    
+  //*******agent properties*******
+    public List<VillaModel> getAgentProperties()
+   	{
+   	
+   		List<VillaModel> VillaModelList = new ArrayList<>();
+   		try {
+   			Connection con = null;
+   			PreparedStatement pstmt = null;
+   			
+   			
+   			StringBuilder sql_under_construction = new StringBuilder(Constants.SQL.SQL_AGENT_PROPERTIES);
+   			
+   			con=ConnectionDAO.getConnection();
+   			log.info("Agent Propety Query : "+sql_under_construction.toString());
+   							pstmt = con.prepareStatement(sql_under_construction.toString());
+                               ResultSet rs = pstmt.executeQuery();
+   	         while ( rs.next() ) {
+   	        	 VillaModel villaModel=new VillaModel();
+   	        	 
+   	        	 
+   	        	 villaModel.setVillaId(rs.getInt("villa_id"));
+   	        	 villaModel.setI_am(rs.getString("i_am"));
+   	        	 villaModel.setOwner_name(rs.getString("owner_name"));
+	        	 villaModel.setContact_owner(rs.getString("contact_owner"));
+   	        	 villaModel.setEmail(rs.getString("email"));
+   	        	 villaModel.setProperty_type(rs.getString("property_type"));
+   	        	 villaModel.setAddress(rs.getString("address"));
+   	        	 villaModel.setRoad_width(rs.getInt("road_width"));
+   	        	 villaModel.setFloors(rs.getInt("floors"));
+   	        	 villaModel.setBed_rooms(rs.getInt("bed_rooms"));
+   	        	 villaModel.setBath_rooms(rs.getInt("bath_rooms"));
+   	        	 villaModel.setFurnished(rs.getString("furnished"));
+   	        	 villaModel.setPlot_area(rs.getInt("plot_area"));
+   	        	 villaModel.setS_build_are(rs.getInt("s_build_are"));
+   	        	 villaModel.setPro_avail(rs.getString("pro_avail"));
+   	        	 villaModel.setPersqft(rs.getInt("persqft"));
+   	        	 villaModel.setPrim_location(rs.getString("prim_location"));
+   	        	 villaModel.setSeco_location(rs.getString("seco_location"));
+   	        	 villaModel.setTotal_feets(rs.getInt("total_feets"));
+   	        	 villaModel.setCost(rs.getInt("cost"));
+   	        	 villaModel.setCreate_date(rs.getDate("create_date"));
+   	        	 villaModel.setIs_active(rs.getInt("is_active"));
+   	        	 villaModel.setUserId(rs.getInt("user_id"));
+   	        	 villaModel.setFloorNum(rs.getInt("floor_num"));
+   	        	 
+   	        	 log.info(" getAgentProperties() : "+rs.getInt("villa_id")+"   "+rs.getString("i_am"));
+   	        	 
+   	        	 			// below for Image
+   	        	 
+   	        	 //System.out.println(" Villa image : "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
+   	        	/* 
+   					        	 if(rs.getBytes("image").length!=0)
+   				                 {
+   					        		log.info(" Villa details image available: "+rs.getInt("villa_id")+"   "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
+   				                 byte[] bb=rs.getBytes("image");
+   				                 
+   				                 villaModel.setStreamedContent(DefaultStreamedContent.builder()
+   				                         .name("US_Piechart.jpg")
+   				                         .contentType("image/jpg")
+   				                         .stream(() -> new ByteArrayInputStream(bb)).build());
+   				                 }
+   				                 else
+   				                 {
+   				                	 log.info(" Villa details image not availablr : "+rs.getInt("villa_id")+"   "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
+   				                	// Defalut Image
+   				                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+   				                	 ResultSet rsDef = pstmtDefault.executeQuery();
+   				                	 while ( rsDef.next())
+   				                			 {
+   				                		      byte[] def=rsDef.getBytes("image");
+   				                		      villaModel.setStreamedContent(DefaultStreamedContent.builder()
+   				                             .name("US_Piechart.jpg")
+   				                             .contentType("image/jpg")
+   				                             .stream(() -> new ByteArrayInputStream(def)).build());
+   				                			 }
+   				                	 
+   				                  }
+   	        	  
+   	              */          
+                VillaModelList.add(villaModel);
+   	         }
+   	         	
+   	         pstmt.close();
+   	         rs.close();
+   	         con.close();
+   	         log.info("### : *** Connection Closed from getOwnerProperties()");
+   	     } catch (Exception e) {
+   	        e.printStackTrace();
+   	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+   	        log.error("An error occurred getOwnerProperties() : {}", e.getMessage());
+   	     }
+   	return VillaModelList;		
+   	}
+    
     
     
     
