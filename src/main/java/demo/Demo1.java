@@ -1,66 +1,58 @@
 package demo;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.InetAddress;
-import java.net.URL;
-import java.net.UnknownHostException;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
-import org.primefaces.shaded.json.JSONObject;
+import java.awt.Desktop;
+import java.net.URI;
 
 public class Demo1 {
 	
 	public static void main(String args[])
 	{
 		
-	      try
-	      {
-	    	  //String ipAddress = "8.8.8.8"; // Change to the desired IP address
-	    	  //String ipAddress = "192.168.0.102";
-	    	  String ipAddress = "10.218.22.198";
-	           
-	            
-	            String urlString = "http://ip-api.com/json/" + ipAddress;
-	            URL url = new URL(urlString);
-	            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	            conn.setRequestMethod("GET");
-	            conn.setRequestProperty("Accept", "application/json");
-	            
-	            
-	            
-	            if (conn.getResponseCode() == 200) {
-	                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-	                StringBuilder response = new StringBuilder();
-	                String line;
+	
+		    	
+		        String ip = "192.168.0.102"; // Replace with the public IP address
+		        String apiKey = "ce3576e8f7e348b5ae2545b9fa0a4db8"; // Replace with your actual API key
+		        String url = "https://api.ipgeolocation.io/ipgeo?apiKey=" + apiKey + "&ip=" + ip;
 
-	                while ((line = reader.readLine()) != null) {
-	                    response.append(line);
-	                }
-	                reader.close();
-	                
-	             // Parse the JSON response
-	                JSONObject jsonResponse = new JSONObject(response.toString());
-	                String city = jsonResponse.getString("city");
-	                String region = jsonResponse.getString("regionName");
-	                String country = jsonResponse.getString("country");
-	                double lat = jsonResponse.getDouble("lat");
-	                double lon = jsonResponse.getDouble("lon");
+		        try (CloseableHttpClient client = HttpClients.createDefault()) {
+		            HttpGet request = new HttpGet(url);
+		            HttpResponse response = client.execute(request);
+		            String jsonResponse = EntityUtils.toString(response.getEntity());
 
-	                System.out.printf("IP: %s, City: %s, Region: %s, Country: %s, Latitude: %.6f, Longitude: %.6f%n", ipAddress, city, region, country, lat, lon);
-	            } else {
-	                System.out.println("Error: Unable to fetch location data.");
-	            }
+		            // Extract latitude and longitude from the JSON response
+		            String latitude = extractValue(jsonResponse, "latitude");
+		            String longitude = extractValue(jsonResponse, "longitude");
 
+		            // Create a Google Maps URL
+		            String googleMapsUrl = "https://www.google.com/maps/@?api=1&map_action=map&center=" + latitude + "," + longitude;
 
-		    	  
-	      }catch(Exception e)
-	      {
-	    	  e.printStackTrace();
-	      }
-        
+		            // Open the URL in the default web browser
+		            if (Desktop.isDesktopSupported()) {
+		                Desktop.getDesktop().browse(new URI(googleMapsUrl));
+		            } else {
+		                System.out.println("Desktop is not supported.");
+		            }
 
-	}
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		    }
 
+		    private static String extractValue(String jsonResponse, String key) {
+		        // A simple method to extract a value from JSON (for demo purposes only)
+		        String prefix = "\"" + key + "\":\"";
+		        int startIndex = jsonResponse.indexOf(prefix) + prefix.length();
+		        int endIndex = jsonResponse.indexOf("\"", startIndex);
+		        return jsonResponse.substring(startIndex, endIndex);
+		    }
+		
+
+	
 	
 }
