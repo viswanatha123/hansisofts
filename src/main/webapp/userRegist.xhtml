@@ -72,7 +72,7 @@
                     
                     <p:outputLabel style="font-weight: bold" indicateRequired="true" value="User Name : " />
                     <p:inputText id="userName" required="true" value="#{userRegistService.userName}" requiredMessage="User name is required" >
-                    	<f:validateLength minimum="3" maximum="10"></f:validateLength>
+                    	<f:validateLength minimum="3" maximum="15"></f:validateLength>
 		    			<f:validateRegex pattern="^([a-zA-Z]+(.)?[\s]*)$" />
 		            </p:inputText>
                     <p:message for="userName" display="icon"/>
@@ -80,8 +80,8 @@
                     
                     <p:outputLabel style="font-weight: bold" indicateRequired="true" value="Password : " />
                     <p:password id="UserPassword" required="true" value="#{userRegistService.userPassword}"  requiredMessage="Password is required">
-                        <f:validateLength minimum="8" maximum="13"></f:validateLength>
-                    	<f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})" />
+                        <f:validateLength minimum="8" maximum="15"></f:validateLength>
+                    	<f:validateRegex pattern="((?=.*\d)(?=.*[a-z]).{8,15})" />
                     </p:password>
                     <p:message for="UserPassword" display="icon"/>
                     
@@ -123,16 +123,14 @@
                 </p:panelGrid>  
                 
                 <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
-                <p:outputLabel style="font-weight: bold; color:Blue; font-size:16px;" value="USER NAME RULES :" />
-               	<p:outputLabel style="font-weight: 100; color:red; font-style:italic;" value="1.User name should be atlest Minimum 3 charcter to Maxium 10 charcter." />
+                <p:outputLabel style="font-weight: bold; color:Blue; font-size:18px;" value="User name Rules :" />
+               	<p:outputLabel style="font-weight: 100; color:red; font-style:italic;" value="1.User name should be at least Minimum 3 character to Maximum 15 character." />
                	<p:outputLabel style="font-weight: 100; color:Red; font-style:italic;"  value="2.User name should not be Allowed the space." />
-               	<p:outputLabel style="font-weight: bold; color:Blue; font-size:16px;"  value="PASS WORD RULES: " />
-               	<p:outputLabel style="font-weight: 100; color:Red; font-style:italic;"  value="1.Password should be at theMinimum 8 charcter to Maxium 13 charcter." />
-               	<p:outputLabel style="font-weight: 100; color:Red; font-style:italic;"  value="2.Password should be atleast one captial letter." />
-               	<p:outputLabel style="font-weight: 100; color:Red; font-style:italic;"  value="3.Password should atleast be one numeric number." />
-               	<p:outputLabel style="font-weight: 100; color:Red; font-style:italic;"  value="4.Password should be atleast one special character." />
-               	<p:outputLabel style="font-weight: 100; color:Red; font-style:italic;"  value="5.Password should not have space" />
-                </p:panelGrid>                   
+               	<p:outputLabel style="font-weight: bold; color:Blue; font-size:18px;"  value="Password rules: " />
+               	<p:outputLabel style="font-weight: 100; color:Red; font-style:italic;"  value="1.Password should be at the Minimum 8 character to Maximum 15 character." />
+               	<p:outputLabel style="font-weight: 100; color:Red; font-style:italic;"  value="2.Password should not allow the space." />
+               	<p:outputLabel style="font-weight: 100; color:Red; font-style:italic;"  value="3.Password should allows the Numbers and Special Characters." />
+              </p:panelGrid>                   
                   
                   <p:graphicImage width="102%"  height="400px" name="images/newRegist.jpg" />
                    

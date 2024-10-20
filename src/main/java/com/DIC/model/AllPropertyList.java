@@ -13,6 +13,7 @@ public class AllPropertyList implements Serializable{
 	private Date leadUpdate;
 	private int cost;
 	private String primLocation;
+	private String secoLocation;
 	
 	
 	
@@ -64,7 +65,14 @@ public class AllPropertyList implements Serializable{
 	public void setLeadUpdate(Date leadUpdate) {
 		this.leadUpdate = leadUpdate;
 	}
-	
+	public String getSecoLocation() {
+		return secoLocation;
+	}
+	public void setSecoLocation(String secoLocation) {
+		this.secoLocation = secoLocation;
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	

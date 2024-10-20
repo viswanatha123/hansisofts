@@ -585,7 +585,7 @@ public class ConnectionDAOImpl {
                              agriculturalModel.setCreatedOnDate(rs.getDate("create_date"));
                              agriculturalModel.setUserId(rs.getInt("user_id"));
                              
-                   
+                             log.info("getAgriculturalDetails () : "+rs.getInt("agri_id")+"  "+rs.getString("owner_name"));
                              if(rs.getBytes("image").length!=0)
                              {
                                byte[] bb=rs.getBytes("image");
@@ -621,7 +621,6 @@ public class ConnectionDAOImpl {
     	         //log.info("### : *** Connection Closed from getActiveModelList()");
     	     } catch (Exception e) {
     	        e.printStackTrace();
-    	        System.err.println(e.getClass().getName()+": "+e.getMessage());
     	        log.error("An error occurred: {}", e.getMessage());
     	     }
     	return agriculturalModelList;		

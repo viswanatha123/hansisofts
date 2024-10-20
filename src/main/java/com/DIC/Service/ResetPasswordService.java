@@ -72,7 +72,7 @@ public class ResetPasswordService {
 			
 			} else {
 				
-				statusMessage="User name dose not exist";
+				statusMessage="User name does not exist";
 				valied=false;
 			}
   	

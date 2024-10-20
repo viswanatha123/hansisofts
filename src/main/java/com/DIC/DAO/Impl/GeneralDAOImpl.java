@@ -56,6 +56,7 @@ public class GeneralDAOImpl {
 			String SQL_VILLA_READY_TO_MOVE="select * from villa_plot where pro_avail='Ready To Move' order by create_date desc";
 			String SQL_UNDER_CONSTRUCTION="select * from villa_plot where pro_avail='Under Construction' order by create_date desc";
 			String SQL_ONER_PROPERTIES="select * from villa_plot where i_am ='Owner' order by create_date desc";
+			String SQL_AGENT_PROPERTIES="select * from villa_plot where i_am ='Agent' order by create_date desc";
 					//+ " and property_type = ? order by create_date desc";
 			
 			String SQL_READY_TO_MOVE_IMAGE="select * from villa_plot where villa_id = ?";
@@ -71,6 +72,17 @@ public class GeneralDAOImpl {
 					+ "UNION all \r\n"
 					+ "select owner_name, cost, contact_owner,'villa as pro_type', create_date,image,prim_location ,seco_location,address  as loca from villa_plot vp\r\n"
 					+ ") dum where ";
+			
+			String SQL_BUDGET_DETAILS_COUNT="select count(*) from (select name,cost,contact_owner,'layout' as pro_type ,create_date, image,prim_location ,seco_location,location as loca  from hansi_layout la \r\n"
+					+ "UNION all \r\n"
+					+ "select owner_name,cost,contact_no, 'agri' as pro_type ,create_date, image,prim_location ,seco_location,location  as loca  from hansi_agricultural ag \r\n"
+					+ "UNION all \r\n"
+					+ "select owner_name, cost,contact_no,'indu' as pro_type , create_date, image,prim_location ,seco_location,location  as loca from hansi_individual_site indu \r\n"
+					+ "UNION all \r\n"
+					+ "select owner_name, cost, contact_owner,'villa as pro_type', create_date,image,prim_location ,seco_location,address  as loca from villa_plot vp\r\n"
+					+ ") dum where ";
+			
+			
 			
 			String SQL_USER_ROLE="select r.role_name from user_deta u, role r,user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1'\r\n"
 					+ "and r.is_active = '1' and ur.is_active = '1' and u.user_id = ?";
@@ -821,7 +833,7 @@ public class GeneralDAOImpl {
      */
     
     
-    public List<BudgetModel> getBudget1Details(int budVal)
+    public List<BudgetModel> getBudget1Details(int budVal,int pageSize, int currentPage)
 	{
             
         
@@ -835,34 +847,31 @@ public class GeneralDAOImpl {
 			StringBuilder sql_budget_details = new StringBuilder(Constants.SQL.SQL_BUDGET_DETAILS);
 					if(budVal==1)
 					{
-						sql_query=sql_budget_details.append("dum.cost < 5000000 order by create_date ;").toString();
+						sql_query=sql_budget_details.append("dum.cost < 5000000 order by create_date desc LIMIT ? OFFSET ?;").toString();
 						log.info("###: Budget Query 1: "+sql_query);
 					}
 					if(budVal==2)
 					{
-						sql_query=sql_budget_details.append("dum.cost > 5000000 and dum.cost < 10000000 order by create_date ;").toString();
+						sql_query=sql_budget_details.append("dum.cost > 5000000 and dum.cost < 10000000 order by create_date desc LIMIT ? OFFSET ?;").toString();
 						log.info("###: Budget Query 2: "+sql_query);
 					}
 					if(budVal==3)
 					{
-						sql_query=sql_budget_details.append("dum.cost > 10000000 and dum.cost < 20000000 order by create_date ;").toString();
-						log.info("###: Budget Query 2: "+sql_query);
+						sql_query=sql_budget_details.append("dum.cost > 10000000 and dum.cost < 20000000 order by create_date desc LIMIT ? OFFSET ?;").toString();
+						log.info("###: Budget Query 3: "+sql_query);
 					}
 					if(budVal==4)
 					{
-						sql_query=sql_budget_details.append("dum.cost > 20000000 order by create_date ;").toString();
-						log.info("###: Budget Query 2: "+sql_query);
+						sql_query=sql_budget_details.append("dum.cost > 20000000 order by create_date desc LIMIT ? OFFSET ?;").toString();
+						log.info("###: Budget Query 4: "+sql_query);
 					}
 			
-			
-			
 		
-					
-			
-			
-			
 			con=ConnectionDAO.getConnection();
 	                    pstmt = con.prepareStatement(sql_budget_details.toString());
+	                    pstmt.setInt(1, pageSize);
+			            pstmt.setInt(2, (currentPage - 1) * pageSize);
+			            
 	                    ResultSet rs = pstmt.executeQuery();
 	         while ( rs.next() ) {
 	        	 BudgetModel budgetModel=new BudgetModel();
@@ -917,6 +926,66 @@ public class GeneralDAOImpl {
 	     }
 	return BudgetModelList;		
 	}
+    
+    
+    //******************** budget count ********************
+    
+    public int getBudget1DetailsCountTotalRecords(int budVal)
+    {
+    	int totalRecords=0;
+    	String sql_query="";
+    	
+    	
+    	StringBuilder sql_budget_details_count = new StringBuilder(Constants.SQL.SQL_BUDGET_DETAILS_COUNT);
+		if(budVal==1)
+		{
+			sql_query=sql_budget_details_count.append("dum.cost < 5000000;").toString();
+			log.info("###: Budget Query 1 Count : "+sql_query);
+		}
+		if(budVal==2)
+		{
+			sql_query=sql_budget_details_count.append("dum.cost > 5000000 and dum.cost < 10000000;").toString();
+			log.info("###: Budget Query 2 Count : "+sql_query);
+		}
+		if(budVal==3)
+		{
+			sql_query=sql_budget_details_count.append("dum.cost > 10000000 and dum.cost < 20000000;").toString();
+			log.info("###: Budget Query 3 Count : "+sql_query);
+		}
+		if(budVal==4)
+		{
+			sql_query=sql_budget_details_count.append("dum.cost > 20000000;").toString();
+			log.info("###: Budget Query 4 Count: "+sql_query);
+		}  
+		
+		
+		
+    	try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			con=ConnectionDAO.getConnection();
+            pstmt = con.prepareStatement(sql_budget_details_count.toString());
+            ResultSet rs = pstmt.executeQuery();
+	                  
+	        	if (rs.next()) {
+	                totalRecords = rs.getInt(1);
+	            }
+            
+            
+            
+			
+			pstmt.close();
+	        rs.close();
+	        con.close();
+	       
+	     } catch (Exception e) {
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        log.error("An error occurred: {}", e.getMessage());
+	     }
+    	
+    	return totalRecords;
+    }
 
     
     public String properyType(String pro)
@@ -1845,6 +1914,102 @@ public class GeneralDAOImpl {
         // Convert the StringWriter content to a String and return it
         return sw.toString();
     }
+    
+    
+  //*******agent properties*******
+    public List<VillaModel> getAgentProperties()
+   	{
+   	
+   		List<VillaModel> VillaModelList = new ArrayList<>();
+   		try {
+   			Connection con = null;
+   			PreparedStatement pstmt = null;
+   			
+   			
+   			StringBuilder sql_under_construction = new StringBuilder(Constants.SQL.SQL_AGENT_PROPERTIES);
+   			
+   			con=ConnectionDAO.getConnection();
+   			log.info("Agent Propety Query : "+sql_under_construction.toString());
+   							pstmt = con.prepareStatement(sql_under_construction.toString());
+                               ResultSet rs = pstmt.executeQuery();
+   	         while ( rs.next() ) {
+   	        	 VillaModel villaModel=new VillaModel();
+   	        	 
+   	        	 
+   	        	 villaModel.setVillaId(rs.getInt("villa_id"));
+   	        	 villaModel.setI_am(rs.getString("i_am"));
+   	        	 villaModel.setOwner_name(rs.getString("owner_name"));
+	        	 villaModel.setContact_owner(rs.getString("contact_owner"));
+   	        	 villaModel.setEmail(rs.getString("email"));
+   	        	 villaModel.setProperty_type(rs.getString("property_type"));
+   	        	 villaModel.setAddress(rs.getString("address"));
+   	        	 villaModel.setRoad_width(rs.getInt("road_width"));
+   	        	 villaModel.setFloors(rs.getInt("floors"));
+   	        	 villaModel.setBed_rooms(rs.getInt("bed_rooms"));
+   	        	 villaModel.setBath_rooms(rs.getInt("bath_rooms"));
+   	        	 villaModel.setFurnished(rs.getString("furnished"));
+   	        	 villaModel.setPlot_area(rs.getInt("plot_area"));
+   	        	 villaModel.setS_build_are(rs.getInt("s_build_are"));
+   	        	 villaModel.setPro_avail(rs.getString("pro_avail"));
+   	        	 villaModel.setPersqft(rs.getInt("persqft"));
+   	        	 villaModel.setPrim_location(rs.getString("prim_location"));
+   	        	 villaModel.setSeco_location(rs.getString("seco_location"));
+   	        	 villaModel.setTotal_feets(rs.getInt("total_feets"));
+   	        	 villaModel.setCost(rs.getInt("cost"));
+   	        	 villaModel.setCreate_date(rs.getDate("create_date"));
+   	        	 villaModel.setIs_active(rs.getInt("is_active"));
+   	        	 villaModel.setUserId(rs.getInt("user_id"));
+   	        	 villaModel.setFloorNum(rs.getInt("floor_num"));
+   	        	 
+   	        	 log.info(" getAgentProperties() : "+rs.getInt("villa_id")+"   "+rs.getString("i_am"));
+   	        	 
+   	        	 			// below for Image
+   	        	 
+   	        	 //System.out.println(" Villa image : "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
+   	        	/* 
+   					        	 if(rs.getBytes("image").length!=0)
+   				                 {
+   					        		log.info(" Villa details image available: "+rs.getInt("villa_id")+"   "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
+   				                 byte[] bb=rs.getBytes("image");
+   				                 
+   				                 villaModel.setStreamedContent(DefaultStreamedContent.builder()
+   				                         .name("US_Piechart.jpg")
+   				                         .contentType("image/jpg")
+   				                         .stream(() -> new ByteArrayInputStream(bb)).build());
+   				                 }
+   				                 else
+   				                 {
+   				                	 log.info(" Villa details image not availablr : "+rs.getInt("villa_id")+"   "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
+   				                	// Defalut Image
+   				                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+   				                	 ResultSet rsDef = pstmtDefault.executeQuery();
+   				                	 while ( rsDef.next())
+   				                			 {
+   				                		      byte[] def=rsDef.getBytes("image");
+   				                		      villaModel.setStreamedContent(DefaultStreamedContent.builder()
+   				                             .name("US_Piechart.jpg")
+   				                             .contentType("image/jpg")
+   				                             .stream(() -> new ByteArrayInputStream(def)).build());
+   				                			 }
+   				                	 
+   				                  }
+   	        	  
+   	              */          
+                VillaModelList.add(villaModel);
+   	         }
+   	         	
+   	         pstmt.close();
+   	         rs.close();
+   	         con.close();
+   	         log.info("### : *** Connection Closed from getOwnerProperties()");
+   	     } catch (Exception e) {
+   	        e.printStackTrace();
+   	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+   	        log.error("An error occurred getOwnerProperties() : {}", e.getMessage());
+   	     }
+   	return VillaModelList;		
+   	}
+    
     
     
     

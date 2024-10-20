@@ -55,13 +55,24 @@
 			                </p:cellEditor>
 			               </p:column>
 			               
-			                <p:column headerText="Location">
+			               <p:column headerText="Primary Location">
 			                <p:cellEditor>
 			                    <f:facet name="output">
 			                        <h:outputText value="#{product.primLocation}"/>
 			                    </f:facet>
 			                    <f:facet name="input">
 			                        <p:inputText id="primLocation" value="#{product.primLocation}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               <p:column headerText="Secondary Location">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.secoLocation}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="secoLocation" value="#{product.secoLocation}" style="width:100%"/>
 			                    </f:facet>
 			                </p:cellEditor>
 			               </p:column>
@@ -75,8 +86,11 @@
 			                
 			                        <h:outputText value="#{product.leadUpdate}"/>
 			              </p:column>
+			              
+			              <p:column headerText="Leads Disabled" rendered="#{userRoleService.userRole.contains('Lead')? false : true }" style="font-weight: bold;color: red;font-size: 15px">
+			              </p:column>
 			               
-			               <p:column headerText="Leads">
+			               <p:column headerText="Leads Enabled" rendered="#{userRoleService.userRole.contains('Lead')? true : false }" style="font-weight: bold;color: block;font-size: 15px">
 			               <p:commandButton value="---#{product.count}-->" icon="ui-icon-calculator" style="background:#00FF00;font-weight: bold;color: black;font-size: 15px" 
 			                                 process="@this" update="@form"
 			                                 oncomplete="PF('leadsDialog').show()" action="#{leadsService.propVal}">

@@ -86,6 +86,8 @@ public class UserDAOImpl {
 					+ "					SELECT villa.villa_id as \"prop_id\", villa.owner_name as name,'villa' as \"property_type\" ,create_date as \"Create Date\", (select count(*) from leads ls where pro_id =villa.villa_id and prop_type='villa') as \"count\" , cost as \"Cost\", prim_location as \"Location\" FROM villa_plot  villa where villa.user_id= ?)\r\n"
 					+ "					as alldata order by alldata.\"Create Date\" desc;";
 			*/
+			
+			/*
 			String SQL_ALL_PROP="select prop_id , name,property_type, \"Create Date\",lead_update ,count,\"Cost\",\"Location\" from\r\n"
 					+ "					(SELECT lay.layout_id as \"prop_id\", lay.name as name, 'layout' as \"property_type\",create_date as \"Create Date\",lead_update,(select count(*) from leads ls where pro_id =lay.layout_id and prop_type='layout') as \"count\",cost as \"Cost\", prim_location as \"Location\" FROM hansi_layout lay where lay.user_id= ?\r\n"
 					+ "					UNION ALL\r\n"
@@ -99,7 +101,22 @@ public class UserDAOImpl {
 					+ "        				ELSE 0 \r\n"
 					+ "    				END,\r\n"
 					+ "					alldata.lead_update desc;";
+			*/
 			
+			
+			String SQL_ALL_PROP="select prop_id , name,property_type, \"Create Date\",lead_update ,count,\"Cost\",\"Primary location\",\"Second location\" from \r\n"
+					+ "					(SELECT lay.layout_id as \"prop_id\", lay.name as name, 'layout' as \"property_type\",create_date as \"Create Date\",lead_update,(select count(*) from leads ls where pro_id =lay.layout_id and prop_type='layout') as \"count\",cost as \"Cost\", prim_location as \"Primary location\", seco_location \"Second location\" FROM hansi_layout lay where lay.user_id= ?\r\n"
+					+ "					UNION ALL\r\n"
+					+ "					SELECT agri.agri_id as \"prop_id\" ,agri.owner_name as name, 'agri' as \"property_type\" ,create_date as \"Create Date\",lead_update,(select count(*) from leads ls where pro_id =agri.agri_id and prop_type='agri') as \"count\" ,cost as \"Cost\", prim_location as \"Primary location\", seco_location \"Second location\" FROM hansi_agricultural agri where agri.user_id= ?\r\n"
+					+ "					UNION ALL\r\n"
+					+ "					SELECT ind.ind_id as \"prop_id\" ,ind.owner_name as name,'indi' as \"property_type\",create_date as \"Create Date\",lead_update,(select count(*) from leads ls where pro_id =ind.ind_id and prop_type='indi') as \"count\" , cost as \"Cost\", prim_location as \"Primary location\", seco_location \"Second location\" FROM hansi_individual_site ind where ind.user_id= ?\r\n"
+					+ "					UNION ALL\r\n"
+					+ "					SELECT villa.villa_id as \"prop_id\", villa.owner_name as name,'villa' as \"property_type\" ,create_date as \"Create Date\", lead_update,(select count(*) from leads ls where pro_id =villa.villa_id and prop_type='villa') as \"count\"  , cost as \"Cost\", prim_location as \"Primary location\", seco_location \"Second location\" FROM villa_plot  villa where villa.user_id= ?)\r\n"
+					+ "					as alldata order by CASE \r\n"
+					+ "						WHEN alldata.lead_update IS NULL THEN 1 \r\n"
+					+ "						ELSE 0 \r\n"
+					+ "					END,\r\n"
+					+ "					alldata.lead_update desc";
 			
 			 String SQL_INDISITE_LIST="select * from hansi_individual_site order by create_date desc";
 			 String SQL_DEL_INDISITE="delete from hansi_individual_site where ind_id = ?";
@@ -533,7 +550,9 @@ public class UserDAOImpl {
 	        	 allPropertyList.setCreatedOnDate(rs.getDate("Create Date"));
 	        	 allPropertyList.setLeadUpdate(rs.getDate("lead_update"));
 	        	 allPropertyList.setCost(rs.getInt("Cost"));
-	        	 allPropertyList.setPrimLocation(rs.getString("Location"));
+	        	 allPropertyList.setPrimLocation(rs.getString("Primary location"));
+	        	 allPropertyList.setSecoLocation(rs.getString("Second location"));
+	        	 
 	        	 
 	        
 	        	 
