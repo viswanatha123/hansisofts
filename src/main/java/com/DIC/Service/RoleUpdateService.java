@@ -76,7 +76,7 @@ public class RoleUpdateService {
      	
 	    	if(recordSize==0)
 	    	{
-	    		statusMessage="User id does not exist please try differnt user id.";
+	    		statusMessage="User id does not exist please try different user id.";
 	    	}
 	    	
 	        for(UserRoleModel urm:userRoleModelList)
