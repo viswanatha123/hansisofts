@@ -201,7 +201,7 @@
 		        			
 		        
 		        <br></br>
-		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form1" actionListener="#{layoutDetailService.submit}" >
+		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form1" actionListener="#{layoutDetailService.submit}" onclick="PF('spinnerDialog').show()">
 		                    <p:resetInput target="form1"/>                
 		                  </h:commandButton>
 		                  <p:commandButton value="Reset" update="panelDialog" process="@this"
@@ -209,34 +209,7 @@
                                  styleClass="mr-2 ui-button-outlined"/>
 				  
 		   </p:dialog>
-		   
-	</h:form>	 
-	
-	<h:form id="form2">
-		<p:messages id="msgs"/>
-		 	<p:dialog header="Call back details" widgetVar="fulldetails" minHeight="600" width="700" showEffect="fade">
-		        
-		        	<p:panel id="panelDialog" style="background-image: url('back1.jpg');width: 50%; height: auto;">   
-					    <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
-					        
-					        
-					   </p:panelGrid>      
-					</p:panel>		
-		        			
-		        
-		        <br></br>
-		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form2" actionListener="#{layoutDetailService.submit}" onclick="PF('spinnerDialog').show()">
-		                    <p:resetInput target="form1"/>                
-		                  </h:commandButton>
-		                  <p:commandButton value="Reset" update="panelDialog" process="@this"
-                                 action="#{layoutDetailService.reset}"
-                                 styleClass="mr-2 ui-button-outlined"/>
-				  
-		   </p:dialog>
-		   
-   
-		   
-		   
+
 <script type="text/javascript" src="resources/js/chatool.js"></script>
 </h:form>
 </div>
