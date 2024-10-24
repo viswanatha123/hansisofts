@@ -837,7 +837,7 @@ public class GeneralDAOImpl {
 	{
             
         
-		log.info("### : get started :: getBudget1Details() ");
+		log.info("### : get started :: getBudgetDetails() ");
 		List<BudgetModel> BudgetModelList = new ArrayList<>();
 		try {
 			Connection con = null;
@@ -868,7 +868,8 @@ public class GeneralDAOImpl {
 			
 		
 			con=ConnectionDAO.getConnection();
-	                    pstmt = con.prepareStatement(sql_budget_details.toString());
+	                    //pstmt = con.prepareStatement(sql_budget_details.toString());
+						pstmt = con.prepareStatement(sql_query.toString());
 	                    pstmt.setInt(1, pageSize);
 			            pstmt.setInt(2, (currentPage - 1) * pageSize);
 			            
