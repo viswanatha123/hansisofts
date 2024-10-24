@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -24,7 +24,7 @@ import com.DIC.model.IndividualSiteModel;
 @ViewScoped
 public class BudgetService1 implements Serializable{
 	
-	private static final Logger log = LogManager.getLogger(BudgetService1.class);
+	private static final Logger log = Logger.getLogger(BudgetService1.class.getName());
 	
 	private String locationMessage;
 	private List<BudgetModel> budgetModelList;
@@ -47,16 +47,12 @@ public class BudgetService1 implements Serializable{
 		}
 	
 	
-	 	@PostConstruct 
-	    public void init()
-	    {
-	    	log.info("Loading BudgetService init()");
-         
-	    }
+	
 	 	
 	 	public void loadEntities() {
 	 		
 	 		budgetModelList=gDao.getBudget1Details(1,pageSize,currentPage);
+	 		//budgetModelList=gDao.getBudget1Details(2,pageSize,currentPage);
 	        
 	    }
 	 	

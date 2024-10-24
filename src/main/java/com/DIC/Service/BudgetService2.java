@@ -47,18 +47,12 @@ public class BudgetService2 implements Serializable{
 		countTotalRecords();
 	}
 	
-	 	@PostConstruct 
-	    public void init()
-	    {
-	    	log.info("Loading BudgetService2 init()");
-	    	 
-	        
-         
-	    }
+
 	 	
 	 	public void loadEntities() {
 	 		
 	 		budgetModelList=gDao.getBudget1Details(2,pageSize,currentPage);
+	 		//budgetModelList=gDao.getBudget1Details(1,pageSize,currentPage);
 	        
 	    }
 	 	
