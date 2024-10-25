@@ -45,7 +45,7 @@ public class UnderConstructionService {
 		
 	    GeneralDAOImpl gDao;
 		
-	    LocationDAOImpl locationDao;
+	    //LocationDAOImpl locationDao;
 	    UserDAOImpl udo;
 	    
 	    
@@ -100,7 +100,9 @@ public class UnderConstructionService {
 	        		}
 	        	}
 	        	
-	        	villaModel=gDao.getReadyToMove();
+	        	
+	        	villaModel=gDao.getUnderConstruction();
+	        	
 	        	
 	        }
 	        
