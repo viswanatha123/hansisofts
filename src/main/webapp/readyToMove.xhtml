@@ -13,13 +13,16 @@
   <p>Ready to Move Villa Flats</p>
   <div class="card">
 	<h:form id="form">
+		<p:dialog header="Loading please wait....." widgetVar="spinnerDialog"   modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
+	            <p:graphicImage name="images/builders/spin.gif" width="70px"  height="70px" />
+	     </p:dialog>
   <br></br>
   
   				
 		     	
-		    <p:panel>   
+		   <p:panel>   
                 <p:panelGrid columns="1" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
-                    <h:outputText  style="font-weight: normal; font-style:italic; font-size:15px; color: block; text-align: left;" value="Selected properties : #{readyToMoveService.fetchRecords}" />
+                    <h:outputText  style="font-weight: normal; font-style:italic; font-size:15px; color: blue; text-align: left;" value="Selected properties : #{readyToMoveService.totalRecords}" />
                 </p:panelGrid>
             </p:panel>
 		     	
@@ -35,7 +38,7 @@
               		
               					
               					<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
-                     			
+                     			   <p:graphicImage width="200" height="200" stream="false" cache="false" value="#{product.streamedContent}" />
                                   				
                      				    <h:panelGrid   columns="2" style="background: #E5E4E2;" width="80%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
                      			 
@@ -141,6 +144,14 @@
                     </p:panel>
               <br></br>
               </p:dataScroller>
+              
+		       <p:panel>   
+		         	<p:panelGrid columns="3" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
+				        <h:commandButton value="Previous" action="#{readyToMoveService.previousPage}" disabled="#{readyToMoveService.currentPage == 1}" />
+				        <h:commandButton value="Next" action="#{readyToMoveService.nextPage}" disabled="#{readyToMoveService.currentPage * readyToMoveService.pageSize >= readyToMoveService.totalRecords}" />
+				        <h:outputText value="Page #{readyToMoveService.currentPage} of #{readyToMoveService.totalPages}" />
+				    </p:panelGrid>
+		       </p:panel>
   
 
 </h:form>
@@ -180,7 +191,7 @@
 		        			
 		        
 		        <br></br>
-		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form" actionListener="#{readyToMoveService.submit}" >
+		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form" actionListener="#{readyToMoveService.submit}" onclick="PF('spinnerDialog').show()" >
 		                    <p:resetInput target="form"/>                
 		                  </h:commandButton>
 		                  <p:commandButton value="Reset" update="panelDialog" process="@this"

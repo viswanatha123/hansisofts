@@ -53,7 +53,9 @@ public class GeneralDAOImpl {
 					"values (nextval('hansi_villa_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,1,?,?);";
 			
 			String SQL_VILLA_DETAILS="select * from villa_plot where prim_location = ? and seco_location = ?";
-			String SQL_VILLA_READY_TO_MOVE="select * from villa_plot where pro_avail='Ready To Move' order by create_date desc";
+			String SQL_VILLA_READY_TO_MOVE="select * from villa_plot where pro_avail='Ready To Move' order by create_date desc LIMIT ? OFFSET ?;";
+			String SQL_VILLA_READY_TO_MOVE_COUNT="select count(*) from villa_plot where pro_avail='Ready To Move'";
+					
 			String SQL_UNDER_CONSTRUCTION="select * from villa_plot where pro_avail='Under Construction' order by create_date desc";
 			String SQL_ONER_PROPERTIES="select * from villa_plot where i_am ='Owner' order by create_date desc";
 			String SQL_AGENT_PROPERTIES="select * from villa_plot where i_am ='Agent' order by create_date desc";
@@ -393,7 +395,7 @@ public class GeneralDAOImpl {
 	}
     
     
-    public List<VillaModel> getReadyToMove()
+    public List<VillaModel> getReadyToMove(int pageSize, int currentPage)
 	{
 	
 		List<VillaModel> VillaModelList = new ArrayList<>();
@@ -408,7 +410,10 @@ public class GeneralDAOImpl {
 			System.out.println("Ready to Move Query : "+sql_ready_to_move.toString());
 			log.info("Ready to Move Query : "+sql_ready_to_move.toString());
 							pstmt = con.prepareStatement(sql_ready_to_move.toString());
+							pstmt.setInt(1, pageSize);
+				            pstmt.setInt(2, (currentPage - 1) * pageSize);
                             ResultSet rs = pstmt.executeQuery();
+                            
 	         while ( rs.next() ) {
 	        	 VillaModel villaModel=new VillaModel();
 	        	 
@@ -441,7 +446,7 @@ public class GeneralDAOImpl {
 	        	 //log.info(" getReadyToMove() : "+rs.getInt("villa_id")+"   "+rs.getString("i_am"));
 	        	 
 	        	 			// below for Image
-	        	 /*
+	        	 
 	        	            	 if(rs.getBytes("image").length!=0)
 				                 {
 					        		 log.info(" Villa details image available: "+rs.getInt("villa_id")+"   "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
@@ -468,7 +473,7 @@ public class GeneralDAOImpl {
 				                	 
 				                  }
 	        	  
-	              */          
+	                       
              VillaModelList.add(villaModel);
 	         }
 	         	
@@ -483,6 +488,38 @@ public class GeneralDAOImpl {
 	     }
 	return VillaModelList;		
 	}
+    
+ 
+    //******************************** count ready to move ******************************
+    
+    public int getReadyToMoveCountTotalRecords()
+    {
+    	int totalRecords=0;
+    
+   	StringBuilder sql_villa_ready_to_move_count = new StringBuilder(Constants.SQL.SQL_VILLA_READY_TO_MOVE_COUNT);
+		
+	 	try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			con=ConnectionDAO.getConnection();
+            pstmt = con.prepareStatement(sql_villa_ready_to_move_count.toString());
+            ResultSet rs = pstmt.executeQuery();
+	                  
+	        	if (rs.next()) {
+	                totalRecords = rs.getInt(1);
+	            }
+   			pstmt.close();
+	        rs.close();
+	        con.close();
+	       
+	     } catch (Exception e) {
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        log.error("An error occurred: {}", e.getMessage());
+	     }
+    	
+    	return totalRecords;
+    }
     
     
     

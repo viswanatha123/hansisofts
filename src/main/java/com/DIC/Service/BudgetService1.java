@@ -52,7 +52,7 @@ public class BudgetService1 implements Serializable{
 	 	public void loadEntities() {
 	 		
 	 		budgetModelList=gDao.getBudget1Details(1,pageSize,currentPage);
-	 		//budgetModelList=gDao.getBudget1Details(2,pageSize,currentPage);
+	 		
 	        
 	    }
 	 	

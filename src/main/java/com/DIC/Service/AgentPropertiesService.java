@@ -45,7 +45,7 @@ private static final Logger log = LogManager.getLogger(AgentPropertiesService.cl
 		
 	    GeneralDAOImpl gDao;
 		
-	    LocationDAOImpl locationDao;
+	    //LocationDAOImpl locationDao;
 	    UserDAOImpl udo;
 	    
 	    
@@ -100,7 +100,8 @@ private static final Logger log = LogManager.getLogger(AgentPropertiesService.cl
 	        		}
 	        	}
 	        	
-	        	villaModel=gDao.getReadyToMove();
+	        	
+	        	villaModel=gDao.getAgentProperties();
 	        	
 	        }
 	        
