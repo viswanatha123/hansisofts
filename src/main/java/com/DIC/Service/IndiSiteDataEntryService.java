@@ -55,6 +55,7 @@ public class IndiSiteDataEntryService implements Serializable {
   	  private int listedCount=-1;
   	  private Boolean isEnable;
  	  private int userId;
+ 	  private String cornerBit;
 	  
 	  
 	  
@@ -158,6 +159,7 @@ public class IndiSiteDataEntryService implements Serializable {
 	  	          indiSiteDataEntryModel.setAgentName(agentName);
 	  	          indiSiteDataEntryModel.setInputStream(file.getInputStream());
 	  	          indiSiteDataEntryModel.setFile(file);
+	  	          indiSiteDataEntryModel.setCornerBit(cornerBit);
 	  	  	        
 	  	      HttpSession session = SessionUtils.getSession();
 		       	if (session != null)
@@ -495,6 +497,18 @@ public class IndiSiteDataEntryService implements Serializable {
 
 		public void setUserId(int userId) {
 			this.userId = userId;
+		}
+
+
+
+		public String getCornerBit() {
+			return cornerBit;
+		}
+
+
+
+		public void setCornerBit(String cornerBit) {
+			this.cornerBit = cornerBit;
 		}
 
 

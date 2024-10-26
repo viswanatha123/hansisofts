@@ -35,6 +35,7 @@ public class PlotsDataEntryModel implements Serializable{
 	private String agentName;
     private InputStream inputStream;
     private UploadedFile file;
+    private String cornerBit;
     
     
    public UploadedFile getFile() {
@@ -235,6 +236,14 @@ public class PlotsDataEntryModel implements Serializable{
 
 		public void setPersqft(int persqft) {
 			this.persqft = persqft;
+		}
+		
+		public String getCornerBit() {
+			return cornerBit;
+		}
+
+		public void setCornerBit(String cornerBit) {
+			this.cornerBit = cornerBit;
 		}
 	    
 

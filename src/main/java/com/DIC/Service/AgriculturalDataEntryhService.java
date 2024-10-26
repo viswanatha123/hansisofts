@@ -61,6 +61,7 @@ public class AgriculturalDataEntryhService implements Serializable {
  	private Boolean isEnable;
 	private int userId;
 	private String surveyNum;
+	private String cornerBit;
 	
 	
 	
@@ -154,6 +155,7 @@ public class AgriculturalDataEntryhService implements Serializable {
  	          agriculturalDataModel.setInputStream(file.getInputStream());
  	          agriculturalDataModel.setFile(file);
  	          agriculturalDataModel.setPower(power);
+ 	         agriculturalDataModel.setCornerBit(cornerBit);
  	          
  	        
  	        HttpSession session = SessionUtils.getSession();
@@ -454,6 +456,13 @@ public class AgriculturalDataEntryhService implements Serializable {
 		this.userId = userId;
 	}
 
+	public String getCornerBit() {
+		return cornerBit;
+	}
+
+	public void setCornerBit(String cornerBit) {
+		this.cornerBit = cornerBit;
+	}
 
 
 

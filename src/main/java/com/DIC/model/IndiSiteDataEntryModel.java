@@ -25,6 +25,7 @@ public class IndiSiteDataEntryModel implements Serializable {
 	private String agentName;
 	private InputStream inputStream;
 	private UploadedFile file;
+	private String cornerBit;
 	    
 	    
 	   public UploadedFile getFile() {
@@ -138,6 +139,14 @@ public class IndiSiteDataEntryModel implements Serializable {
 	}
 	public void setAgentName(String agentName) {
 		this.agentName = agentName;
+	}
+
+	public String getCornerBit() {
+		return cornerBit;
+	}
+
+	public void setCornerBit(String cornerBit) {
+		this.cornerBit = cornerBit;
 	}
 	
 	

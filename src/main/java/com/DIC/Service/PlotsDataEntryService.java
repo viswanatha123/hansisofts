@@ -81,6 +81,7 @@ public class PlotsDataEntryService implements Serializable{
   	  private int listedCount=-1;
   	  private Boolean isEnable;
   	  private int userId;
+  	  private String cornerBit;
 
       
   	  private String country;   
@@ -177,6 +178,7 @@ public class PlotsDataEntryService implements Serializable{
 	  	          plotsDataEntryModel.setAgentName(agentName);
 	  	          plotsDataEntryModel.setInputStream(file.getInputStream());
 	  	          plotsDataEntryModel.setFile(file);
+	  	          plotsDataEntryModel.setCornerBit(cornerBit);
 	  	          
 	  	    
 	  	          
@@ -526,6 +528,14 @@ public class PlotsDataEntryService implements Serializable{
 
 			public void setUserId(int userId) {
 				this.userId = userId;
+			}
+
+			public String getCornerBit() {
+				return cornerBit;
+			}
+
+			public void setCornerBit(String cornerBit) {
+				this.cornerBit = cornerBit;
 			}
 
 			

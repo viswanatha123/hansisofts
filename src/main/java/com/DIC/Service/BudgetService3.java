@@ -62,12 +62,7 @@ public class BudgetService3 implements Serializable{
 		countTotalRecords();
 	}
 	
-	 	@PostConstruct 
-	    public void init()
-	    {
-	    	log.info("Loading BudgetService3 init()");
-	    	         
-	    }
+	 	
 	 	
 	 	
 	 	public void loadEntities() {
