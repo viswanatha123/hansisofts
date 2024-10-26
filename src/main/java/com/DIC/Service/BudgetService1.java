@@ -9,16 +9,23 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
+
+import org.primefaces.PrimeFaces;
 
 //import org.apache.log4j.Logger;
 
 import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
+import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.BudgetModel;
 import com.DIC.model.IndividualSiteModel;
+import com.DIC.model.VillaModel;
+
+import SMTPService.SMTPService;
 
 @ManagedBean(name="budgetService1")
 @ViewScoped
@@ -33,14 +40,23 @@ public class BudgetService1 implements Serializable{
 	 private int currentPage = 1;
 	 private int pageSize = 10;
 	 private int totalRecords;
+	 
+	 private BudgetModel selectedProperty;
+	 
+	 
+	private String custName="";
+	private String contactNumber="";
+	private String email="";
 	
 	GeneralDAOImpl gDao;
+	UserDAOImpl udo;
 	
 	
 		public BudgetService1()
 		{
 			log.info("Loading BudgetService1 Constructor");
 			gDao=new GeneralDAOImpl();
+			udo=new UserDAOImpl();
 			
 			loadEntities();
 			countTotalRecords();
@@ -79,19 +95,44 @@ public class BudgetService1 implements Serializable{
 	    public int getTotalPages() {
 	        return (int) Math.ceil((double) totalRecords / pageSize);
 	    }
+	    
+	    public void submit() {
+	    	System.out.println("-------------submit ----------------------");
+        	log.info("Selected property  : "+selectedProperty.getPro_id()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
+        	
+        	
+        	if(selectedProperty.getPro_id()!=0)
+        	{
+        		if(custName!=null && contactNumber!=null && contactNumber!=null)
+        		{
+        			if(selectedProperty.getUserId()!=0)
+        			{
+        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getPro_id(),selectedProperty.getUserId(),selectedProperty.getPro_type());
+        				SMTPService.sendVillaLeadEmail(custName,contactNumber,email,selectedProperty);
+        				log.info("***** Successful submitted lead ******");
+        			}
+        			if(selectedProperty.getUserId()==0)
+        			{
+        				int defaultUserId=1;
+        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getPro_id(),defaultUserId,selectedProperty.getPro_type());
+        				log.info("***** Successful submitted lead ******");
+        			}
+        			
+        			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "We received your contact details", "Our representative contact you soon, Thank you..");
+        	        PrimeFaces.current().dialog().showMessageDynamic(message);
+        		}
+        	}
+        	
+        	//villaModel=gDao.getReadyToMove();
+        	  loadEntities();
+        }
+        
+		   public void reset() {
+			       PrimeFaces.current().resetInputs("form1:panelDialog");
+		  }
 	 
 	 	
-	 	public String budgetAction1(){
-	 		
-	 		
-	  		System.out.println("******* Budget 1 **********");
-	  		//budgetModelList=gDao.getBudget1Details(50);
-	  		
-	 		//getBudget1();
-	 	return "budget1";
-			
-		}
-	 	
+	 
 	    
 	   
 
@@ -139,6 +180,62 @@ public class BudgetService1 implements Serializable{
 
 		public void setTotalRecords(int totalRecords) {
 			this.totalRecords = totalRecords;
+		}
+
+
+
+
+		public BudgetModel getSelectedProperty() {
+			return selectedProperty;
+		}
+
+
+
+
+		public void setSelectedProperty(BudgetModel selectedProperty) {
+			this.selectedProperty = selectedProperty;
+		}
+
+
+
+
+		public String getCustName() {
+			return custName;
+		}
+
+
+
+
+		public String getContactNumber() {
+			return contactNumber;
+		}
+
+
+
+
+		public String getEmail() {
+			return email;
+		}
+
+
+
+
+		public void setCustName(String custName) {
+			this.custName = custName;
+		}
+
+
+
+
+		public void setContactNumber(String contactNumber) {
+			this.contactNumber = contactNumber;
+		}
+
+
+
+
+		public void setEmail(String email) {
+			this.email = email;
 		}
 	
 	

@@ -59,12 +59,7 @@ public class ReadyToMoveService {
 		
 	 
 	    GeneralDAOImpl gDao;
-		
-	    //LocationDAOImpl locationDao;
 	    UserDAOImpl udo;
-	    
-	    
-	 
 	    
 			public ReadyToMoveService()
 			{

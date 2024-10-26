@@ -65,7 +65,7 @@ public class GeneralDAOImpl {
 			String SQL_HOME_LOAN_INSERT="insert into home_loan (home_id,agent_name,cont_num,age,gender,email,loan_amt,monthly_inc,emp_type,create_date,is_active) \n"+ 
 					"values (nextval('home_loan_seq'),?,?,?,?,?,?,?,?,current_timestamp,1);";
 		
-			
+			/*
 			String SQL_BUDGET_DETAILS="select * from (select name,cost,contact_owner,'layout' as pro_type ,create_date, image,prim_location ,seco_location,location as loca  from hansi_layout la \r\n"
 					+ "UNION all \r\n"
 					+ "select owner_name,cost,contact_no, 'agri' as pro_type ,create_date, image,prim_location ,seco_location,location  as loca  from hansi_agricultural ag \r\n"
@@ -74,17 +74,38 @@ public class GeneralDAOImpl {
 					+ "UNION all \r\n"
 					+ "select owner_name, cost, contact_owner,'villa as pro_type', create_date,image,prim_location ,seco_location,address  as loca from villa_plot vp\r\n"
 					+ ") dum where ";
+			*/
+			String SQL_BUDGET_DETAILS="select * from (select layout_id as pro_id , name as name ,cost,contact_owner,'layout' as pro_type ,create_date, image,prim_location ,seco_location,location as loca, user_id  from hansi_layout la \r\n"
+					+ "					UNION all \r\n"
+					+ "					select agri_id  as pro_id , owner_name  as name,cost,contact_no, 'agri' as pro_type ,create_date, image,prim_location ,seco_location,location  as loca,user_id  from hansi_agricultural ag\r\n"
+					+ "					UNION all \r\n"
+					+ "					select ind_id  as pro_id ,owner_name  as name, cost,contact_no,'indi' as pro_type , create_date, image,prim_location ,seco_location,location  as loca, user_id from hansi_individual_site indu \r\n"
+					+ "					UNION all\r\n"
+					+ "					select villa_id  as pro_id ,owner_name  as name, cost, contact_owner,'villa' as pro_type, create_date,image,prim_location ,seco_location,address  as loca, user_id from villa_plot vp\r\n"
+					+ "					) dum where ";
 			
+			
+			
+			/*
 			String SQL_BUDGET_DETAILS_COUNT="select count(*) from (select name,cost,contact_owner,'layout' as pro_type ,create_date, image,prim_location ,seco_location,location as loca  from hansi_layout la \r\n"
 					+ "UNION all \r\n"
 					+ "select owner_name,cost,contact_no, 'agri' as pro_type ,create_date, image,prim_location ,seco_location,location  as loca  from hansi_agricultural ag \r\n"
 					+ "UNION all \r\n"
 					+ "select owner_name, cost,contact_no,'indu' as pro_type , create_date, image,prim_location ,seco_location,location  as loca from hansi_individual_site indu \r\n"
 					+ "UNION all \r\n"
-					+ "select owner_name, cost, contact_owner,'villa as pro_type', create_date,image,prim_location ,seco_location,address  as loca from villa_plot vp\r\n"
+					+ "select owner_name, cost, contact_owner,'villa' as pro_type', create_date,image,prim_location ,seco_location,address  as loca from villa_plot vp\r\n"
 					+ ") dum where ";
 			
+			*/
 			
+			String SQL_BUDGET_DETAILS_COUNT="select count(*) from (select name,cost from hansi_layout la \r\n"
+					+ "					UNION all \r\n"
+					+ "					select owner_name,cost from hansi_agricultural ag \r\n"
+					+ "					UNION all \r\n"
+					+ "					select owner_name, cost from hansi_individual_site indu \r\n"
+					+ "					UNION all \r\n"
+					+ "					select owner_name, cost from villa_plot vp\r\n"
+					+ "					) dum where ";
 			
 			String SQL_USER_ROLE="select r.role_name from user_deta u, role r,user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1'\r\n"
 					+ "and r.is_active = '1' and ur.is_active = '1' and u.user_id = ?";
@@ -914,14 +935,16 @@ public class GeneralDAOImpl {
 	         while ( rs.next() ) {
 	        	 BudgetModel budgetModel=new BudgetModel();
 	        	 
+	        	 budgetModel.setPro_id(rs.getInt("pro_id"));
 	        	 budgetModel.setName(rs.getString("name"));
 	        	 budgetModel.setCost(rs.getInt("cost"));
 	        	 budgetModel.setContactNo(rs.getString("contact_owner"));
-	        	 budgetModel.setPro_type(properyType(rs.getString("pro_type")));
+	        	 budgetModel.setPro_type(rs.getString("pro_type"));
 	        	 budgetModel.setCreate_date(rs.getDate("create_date"));
 	        	 budgetModel.setPrim_location(rs.getString("prim_location"));
 	        	 budgetModel.setSeco_location(rs.getString("seco_location"));
 	        	 budgetModel.setLocation(rs.getString("loca"));
+	        	 budgetModel.setUserId(rs.getInt("user_id"));
 	  
     	        	 
     	        	 if(rs.getBytes("image").length!=0)
