@@ -7,6 +7,7 @@ import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.Service.AgriculturalService;
 import com.DIC.model.AgriculturalDataEntryModel;
 import com.DIC.model.AgriculturalModel;
+import com.DIC.model.BudgetModel;
 import com.DIC.model.IndiSiteDataEntryModel;
 import com.DIC.model.IndividualSiteModel;
 import com.DIC.model.LayoutMode;
@@ -488,6 +489,41 @@ public class SMTPService {
    		 
    		String customerDetails="Customer Details..\n\n Customer Name : "+custName+"\n Contact No : "+contactNumber+",\n Email ID : "+email+"\n\n\n";
    		String propertySetils="Villa Details..\n\n Owner Name : "+selectedProperty.getOwner_name()+" \n Primary location : "+selectedProperty.getPrim_location()+"\n Secondry Location : "+selectedProperty.getSeco_location()+"\n Date : "+LocalDate.now().toString()+".";
+   	    String thanks="\n\n Thank you\n HansiSoft Solutions..";
+   		 
+   		 String body=customerDetails+""+propertySetils+""+thanks;
+   		 
+   		 
+   		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
+ 	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
+ 	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+	             message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
+	             message.setText(body);
+	             Transport.send(message);
+
+	             System.out.println("Email sent successfully!");
+   		 
+		} catch (javax.mail.MessagingException e) {
+	        log.error("Failed to send email: {}", e.getMessage(), e);
+	        // Optionally: Notify users or take corrective action
+	    } catch (Exception e) {
+	        log.error("Unexpected error occurred: {}", e.getMessage(), e);
+	        // Optionally: Notify users or take corrective action
+	    }
+		
+	}
+	
+	
+	public static void sendVillaLeadEmail(String custName,String contactNumber,String email, BudgetModel selectedProperty )
+	{
+		try {
+   		 
+   		 UserDetails userDetails=uDao.getUser(selectedProperty.getUserId());
+   		 System.out.println("User email :"+userDetails.getEmail());
+   		 
+   		 
+   		String customerDetails="Customer Details..\n\n Customer Name : "+custName+"\n Contact No : "+contactNumber+",\n Email ID : "+email+"\n\n\n";
+   		String propertySetils="Villa Details..\n\n Owner Name : "+selectedProperty.getName()+" \n Primary location : "+selectedProperty.getPrim_location()+"\n Secondry Location : "+selectedProperty.getSeco_location()+"\n Date : "+LocalDate.now().toString()+".";
    	    String thanks="\n\n Thank you\n HansiSoft Solutions..";
    		 
    		 String body=customerDetails+""+propertySetils+""+thanks;

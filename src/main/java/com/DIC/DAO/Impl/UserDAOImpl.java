@@ -414,7 +414,7 @@ public class UserDAOImpl {
 		            pstmt1.setInt(1, proId);
 		            int res1=pstmt1.executeUpdate();
 	            }
-	            if(propType.equals("indi"))
+	            if(propType.equals("indu"))
 	            {
 		            PreparedStatement pstmt1=con.prepareStatement("update hansi_individual_site set lead_update=current_timestamp where ind_id = ?");
 		            pstmt1.setInt(1, proId);

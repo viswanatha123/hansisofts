@@ -7,6 +7,7 @@ import org.primefaces.model.StreamedContent;
 
 public class BudgetModel implements Serializable {
 	
+	private int pro_id;
 	private String name;
 	private int cost;
 	private String contactNo;
@@ -16,6 +17,7 @@ public class BudgetModel implements Serializable {
 	private String prim_location;
 	private String seco_location;
 	private String location;
+	private int userId;
 	
 	public String getName() {
 		return name;
@@ -70,6 +72,18 @@ public class BudgetModel implements Serializable {
 	}
 	public void setLocation(String location) {
 		this.location = location;
+	}
+	public int getPro_id() {
+		return pro_id;
+	}
+	public void setPro_id(int pro_id) {
+		this.pro_id = pro_id;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	
 	
