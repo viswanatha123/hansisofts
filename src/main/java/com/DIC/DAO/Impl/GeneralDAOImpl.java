@@ -75,6 +75,8 @@ public class GeneralDAOImpl {
 					+ "select owner_name, cost, contact_owner,'villa as pro_type', create_date,image,prim_location ,seco_location,address  as loca from villa_plot vp\r\n"
 					+ ") dum where ";
 			*/
+			
+			/*
 			String SQL_BUDGET_DETAILS="select * from (select layout_id as pro_id , name as name ,cost,contact_owner,'layout' as pro_type ,create_date, image,prim_location ,seco_location,location as loca, user_id  from hansi_layout la \r\n"
 					+ "					UNION all \r\n"
 					+ "					select agri_id  as pro_id , owner_name  as name,cost,contact_no, 'agri' as pro_type ,create_date, image,prim_location ,seco_location,location  as loca,user_id  from hansi_agricultural ag\r\n"
@@ -84,7 +86,16 @@ public class GeneralDAOImpl {
 					+ "					select villa_id  as pro_id ,owner_name  as name, cost, contact_owner,'villa' as pro_type, create_date,image,prim_location ,seco_location,address  as loca, user_id from villa_plot vp\r\n"
 					+ "					) dum where ";
 			
+			*/
 			
+			String SQL_BUDGET_DETAILS="select * from (select layout_id as pro_id , name as name ,cost,contact_owner,'layout' as pro_type ,create_date, image,prim_location ,seco_location,location as loca, user_id, corner_bit  from hansi_layout la \r\n"
+					+ "					UNION all \r\n"
+					+ "					select agri_id  as pro_id , owner_name  as name,cost,contact_no, 'agri' as pro_type ,create_date, image,prim_location ,seco_location,location  as loca,user_id, corner_bit  from hansi_agricultural ag\r\n"
+					+ "					UNION all \r\n"
+					+ "					select ind_id  as pro_id ,owner_name  as name, cost,contact_no,'indi' as pro_type , create_date, image,prim_location ,seco_location,location  as loca, user_id, corner_bit from hansi_individual_site indu \r\n"
+					+ "					UNION all\r\n"
+					+ "					select villa_id  as pro_id ,owner_name  as name, cost, contact_owner,'villa' as pro_type, create_date,image,prim_location ,seco_location,address  as loca, user_id, corner_bit from villa_plot vp\r\n"
+					+ "					) dum where ";
 			
 			/*
 			String SQL_BUDGET_DETAILS_COUNT="select count(*) from (select name,cost,contact_owner,'layout' as pro_type ,create_date, image,prim_location ,seco_location,location as loca  from hansi_layout la \r\n"
@@ -98,13 +109,13 @@ public class GeneralDAOImpl {
 			
 			*/
 			
-			String SQL_BUDGET_DETAILS_COUNT="select count(*) from (select name,cost from hansi_layout la \r\n"
+			String SQL_BUDGET_DETAILS_COUNT="select count(*) from (select name,cost,corner_bit from hansi_layout la \r\n"
 					+ "					UNION all \r\n"
-					+ "					select owner_name,cost from hansi_agricultural ag \r\n"
+					+ "					select owner_name,cost,corner_bit from hansi_agricultural ag \r\n"
 					+ "					UNION all \r\n"
-					+ "					select owner_name, cost from hansi_individual_site indu \r\n"
+					+ "					select owner_name, cost,corner_bit from hansi_individual_site indu \r\n"
 					+ "					UNION all \r\n"
-					+ "					select owner_name, cost from villa_plot vp\r\n"
+					+ "					select owner_name, cost,corner_bit from villa_plot vp\r\n"
 					+ "					) dum where ";
 			
 			String SQL_USER_ROLE="select r.role_name from user_deta u, role r,user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1'\r\n"
@@ -892,7 +903,7 @@ public class GeneralDAOImpl {
      */
     
     
-    public List<BudgetModel> getBudget1Details(int budVal,int pageSize, int currentPage)
+    public List<BudgetModel> getBudget1Details(int budVal, int pageSize, int currentPage)
 	{
             
         
@@ -923,6 +934,12 @@ public class GeneralDAOImpl {
 					{
 						sql_query=sql_budget_details.append("dum.cost > 20000000 order by create_date desc LIMIT ? OFFSET ?;").toString();
 						log.info("###: Budget Query 4: "+sql_query);
+					}
+					if(budVal==5)
+					{
+						sql_query=sql_budget_details.append("dum.corner_bit='Yes' order by create_date desc LIMIT ? OFFSET ?;").toString();
+						log.info("###: Budget Query 5: "+sql_query);
+						System.out.println(" Query 5 : "+sql_query);
 					}
 			
 		
@@ -1018,7 +1035,13 @@ public class GeneralDAOImpl {
 		{
 			sql_query=sql_budget_details_count.append("dum.cost > 20000000;").toString();
 			log.info("###: Budget Query 4 Count: "+sql_query);
-		}  
+		} 
+		if(budVal==5)
+		{
+			sql_query=sql_budget_details_count.append("dum.corner_bit='Yes'").toString();
+			log.info("###: Budget Query 5 Count: "+sql_query);
+			System.out.println("Query 5 :"+sql_query);
+		}
 		
 		
 		
@@ -1026,7 +1049,7 @@ public class GeneralDAOImpl {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			con=ConnectionDAO.getConnection();
-            pstmt = con.prepareStatement(sql_budget_details_count.toString());
+            pstmt = con.prepareStatement(sql_query.toString());
             ResultSet rs = pstmt.executeQuery();
 	                  
 	        	if (rs.next()) {
