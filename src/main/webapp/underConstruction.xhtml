@@ -13,13 +13,16 @@
   <p>Under Construction Villa Flats</p>
   <div class="card">
 	<h:form id="form">
+	<p:dialog header="Loading please wait....." widgetVar="spinnerDialog"   modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
+	            <p:graphicImage name="images/builders/spin.gif" width="70px"  height="70px" />
+	</p:dialog>
   <br></br>
   
   				
 		     	
 		    <p:panel>   
                 <p:panelGrid columns="1" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
-                    <h:outputText  style="font-weight: normal; font-style:italic; font-size:15px; color: block; text-align: left;" value="Selected properties : #{underConstructionService.fetchRecords}" />
+                    <h:outputText  style="font-weight: normal; font-style:italic; font-size:15px; color: block; text-align: left;" value="Selected properties : #{underConstructionService.totalRecords}" />
                 </p:panelGrid>
          </p:panel>
 		     	
@@ -32,7 +35,11 @@
                   				<h:outputText class="pi pi-globe" style="font-weight: bold;color: brown;font-size:15px; float:right" value=" Residential Villa/Flats for Sale in #{underConstructionService.locationMessage}" />
               					</h:panelGrid>
               					
-              		
+              					
+              					
+              					<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
+                     			   <p:graphicImage width="200" height="200" stream="false" cache="false" value="#{product.streamedContent}" />
+                     			
               					
               					<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
                      			
@@ -113,6 +120,8 @@
 									                </p:commandButton>
                           						
                          			</h:panelGrid>
+                         			
+                         			</h:panelGrid>
                      			
                      			
               					</h:panelGrid>
@@ -141,6 +150,14 @@
                     </p:panel>
               <br></br>
               </p:dataScroller>
+              
+              <p:panel>   
+		         	<p:panelGrid columns="3" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
+				        <h:commandButton value="Previous" action="#{underConstructionService.previousPage}" disabled="#{underConstructionService.currentPage == 1}" />
+				        <h:commandButton value="Next" action="#{underConstructionService.nextPage}" disabled="#{underConstructionService.currentPage * underConstructionService.pageSize >= underConstructionService.totalRecords}" />
+				        <h:outputText value="Page #{underConstructionService.currentPage} of #{underConstructionService.totalPages}" />
+				    </p:panelGrid>
+		       </p:panel>
   
 
 </h:form>
@@ -180,7 +197,7 @@
 		        			
 		        
 		        <br></br>
-		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form" actionListener="#{underConstructionService.submit}" >
+		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form" actionListener="#{underConstructionService.submit}" onclick="PF('spinnerDialog').show()" >
 		                    <p:resetInput target="form"/>                
 		                  </h:commandButton>
 		                  <p:commandButton value="Reset" update="panelDialog" process="@this"
