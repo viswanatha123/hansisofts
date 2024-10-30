@@ -8,7 +8,6 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
       
       <h:head>
-      
 
 	
       
@@ -64,8 +63,66 @@
 							        <f:facet name="header">
 							            <h:link outcome="readyToMove" >
 							            <div style="position: relative; ">
-											<p:graphicImage width="250px"  height="250px" name="images/headimg.jpg" alt="Ready to move-in" >
-												<h:outputText value="Ready to move-in" style="position: absolute; font-size: 25px; bottom: 90px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+											<p:graphicImage width="280px"  height="180px" name="images/buildingImg/readyToMove4.jpg" alt="Ready to move-in"  styleClass="rounded-image">
+												<h:outputText value="#{readyToMoveService.totalRecords}" style="position: absolute; font-size: 25px; bottom: 100px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+												<h:outputText value="Ready to move-in" style="position: absolute; font-size: 25px; bottom: 70px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+												<h:outputText value="Explore ->" style="position: absolute; font-size: 18px; bottom: 50px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+											</p:graphicImage>
+										</div>
+										</h:link>
+							        </f:facet>
+							    </p:panelGrid>
+						</td>
+						<td>	    
+							    <p:panelGrid columns="2" style="background:#0AFFFF">
+							        <f:facet name="header">
+							            <h:link outcome="ownerProperties" >
+							            <div style="position: relative; ">
+											<p:graphicImage width="280px"  height="180px" name="images/buildingImg/OwnerProperty1.jpg" alt="Ready to move-in" styleClass="rounded-image">
+											    <h:outputText value="#{ownerPropertiesService.fetchRecords}" style="position: absolute; font-size: 25px; bottom: 100px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+												<h:outputText value="Owner Properties" style="position: absolute; font-size: 25px; bottom: 70px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+												<h:outputText value="Explore ->" style="position: absolute; font-size: 18px; bottom: 50px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+											</p:graphicImage>
+										</div>
+										</h:link>
+							        </f:facet>
+							    </p:panelGrid>
+						</td>	
+						<td>	    
+							    <p:panelGrid columns="2" style="background:#0AFFFF">
+							        <f:facet name="header">
+							            <h:link outcome="agentProperties" >
+							            <div style="position: relative; ">
+											<p:graphicImage width="280px"  height="180px" name="images/buildingImg/agentProperty.jpg" alt="Ready to move-in" styleClass="rounded-image">
+												<h:outputText value="Agent Properties" style="position: absolute; font-size: 25px; bottom: 90px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+												<h:outputText value="Explore ->" style="position: absolute; font-size: 18px; bottom: 60px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+											</p:graphicImage>
+										</div>
+										</h:link>
+							        </f:facet>
+							    </p:panelGrid>
+						</td>	
+						<td>	    
+							    <p:panelGrid columns="2" style="background:#0AFFFF">
+							        <f:facet name="header">
+							            <h:link outcome="cornerBit" >
+							            <div style="position: relative; ">
+											<p:graphicImage width="280px"  height="180px" name="images/buildingImg/cornerProperty.jpg" alt="Ready to move-in" styleClass="rounded-image">
+												<h:outputText value="Corner Properties" style="position: absolute; font-size: 25px; bottom: 90px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+												<h:outputText value="Explore ->" style="position: absolute; font-size: 18px; bottom: 60px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+											</p:graphicImage>
+										</div>
+										</h:link>
+							        </f:facet>
+							    </p:panelGrid>
+						</td>	
+						<td>	    
+							    <p:panelGrid columns="2" style="background:#0AFFFF">
+							        <f:facet name="header">
+							            <h:link outcome="underConstruction" >
+							            <div style="position: relative; ">
+											<p:graphicImage width="280px"  height="180px" name="images/buildingImg/underConstruction.jpg" alt="Ready to move-in" styleClass="rounded-image">
+												<h:outputText value="Under Construction" style="position: absolute; font-size: 25px; bottom: 90px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
 												<h:outputText value="Explore ->" style="position: absolute; font-size: 18px; bottom: 60px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
 											</p:graphicImage>
 										</div>
