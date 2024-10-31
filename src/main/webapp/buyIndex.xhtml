@@ -23,14 +23,15 @@
   <br></br>
  					<p style="text-align:center ;color: block; font-size: 21px;font-family:Century Gothic;font-weight: normal;">Welcome Your Search! Let’s find your dream house</p>
        	 <br></br> <br></br>
-       	 	<center>
+         	 	<center>
        	 	
        	 	 <table width="50%">
 							              	<tr>
 							              		<td>
-												    <div class="card">
+									                   
+													    <div class="card">
 													     <p:tabMenu >
-													        <p:menuitem value="Buy" outcome="buyIndex.xhtml" style="font-weight: bold;">
+													        <p:menuitem value="Buy" outcome="contactUs.xhtml" icon="pi pi-fw pi-home">
 													        </p:menuitem>
 													     </p:tabMenu>
 													</div>
@@ -58,6 +59,68 @@
        		</table>
        		</center>
 				<br></br><br></br><br></br>
+				<p style="text-align:left;color: block; font-size: 20px;font-family:Century Gothic;font-weight: normal;">Let’s choose your propertie type</p>
+				<table width="100%" height="300px" >
+						<tr>
+						<td>								
+							    <p:panelGrid columns="2" style="background:#0AFFFF">
+							        <f:facet name="header">
+							            <h:link outcome="layoutDetails" >
+							            <div style="position: relative; ">
+											<p:graphicImage width="280px"  height="180px" name="images/buildingImg/layout.jpg" alt="Ready to move-in"  styleClass="rounded-image">
+												<h:outputText value="Layout" style="position: absolute; font-size: 25px; bottom: 70px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+												<h:outputText value="Explore ->" style="position: absolute; font-size: 18px; bottom: 50px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+											</p:graphicImage>
+										</div>
+										</h:link>
+							        </f:facet>
+							    </p:panelGrid>
+						</td>
+						<td>								
+							    <p:panelGrid columns="2" style="background:#0AFFFF">
+							        <f:facet name="header">
+							            <h:link outcome="agricultural" >
+							            <div style="position: relative; ">
+											<p:graphicImage width="280px"  height="180px" name="images/buildingImg/formLand.jpg" alt="Ready to move-in"  styleClass="rounded-image">
+												<h:outputText value="Form Land" style="position: absolute; font-size: 25px; bottom: 70px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+												<h:outputText value="Explore ->" style="position: absolute; font-size: 18px; bottom: 50px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+											</p:graphicImage>
+										</div>
+										</h:link>
+							        </f:facet>
+							    </p:panelGrid>
+						</td>
+						<td>								
+							    <p:panelGrid columns="2" style="background:#0AFFFF">
+							        <f:facet name="header">
+							            <h:link outcome="individualsite" >
+							            <div style="position: relative; ">
+											<p:graphicImage width="280px"  height="180px" name="images/buildingImg/Individual.jpg" alt="Ready to move-in"  styleClass="rounded-image">
+												<h:outputText value="Individual house" style="position: absolute; font-size: 25px; bottom: 70px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+												<h:outputText value="Explore ->" style="position: absolute; font-size: 18px; bottom: 50px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+											</p:graphicImage>
+										</div>
+										</h:link>
+							        </f:facet>
+							    </p:panelGrid>
+						</td>
+						<td>								
+							    <p:panelGrid columns="2" style="background:#0AFFFF">
+							        <f:facet name="header">
+							            <h:link outcome="villaPlotSearch" >
+							            <div style="position: relative; ">
+											<p:graphicImage width="280px"  height="180px" name="images/buildingImg/villa.jpg" alt="Ready to move-in"  styleClass="rounded-image">
+												<h:outputText value="Villa House" style="position: absolute; font-size: 25px; bottom: 70px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+												<h:outputText value="Explore ->" style="position: absolute; font-size: 18px; bottom: 50px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+											</p:graphicImage>
+										</div>
+										</h:link>
+							        </f:facet>
+							    </p:panelGrid>
+						</td>
+						</tr>
+				</table>
+				
 				<p style="text-align:left;color: block; font-size: 20px;font-family:Century Gothic;font-weight: normal;">We've got properties for everyone</p>
 				
 				<table width="100%" height="300px" >
