@@ -16,6 +16,11 @@ body {
     padding: 0 15px;
 }
 
+.rounded-image {
+    border-radius: 15px; 
+    overflow: hidden; 
+}
+
 @media(min-width:768px) {
     body {
         padding-top: 100px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
