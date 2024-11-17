@@ -10,6 +10,7 @@ import javax.faces.bean.SessionScoped;
 public class ConnectionDAO {
 	//Connection
 	
+	// test xxx
 	
 	  //Hani Prod Database
 		//private final static String url="jdbc:postgresql://localhost:5432/hansi-prod";
