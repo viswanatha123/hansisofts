@@ -68,13 +68,14 @@ and open the template in the editor.
 					               <p:column>
 					               		<p:submenu label="Budget" rendered="#{userRoleService.userRole.contains('Budget')? true : false }">
 					               		
-					               		 	<p:menuitem value="Under 50 Lac" action="#{budgetService1.budgetAction1}"  />
-							                <p:menuitem value="50 Lac - 1 Cr"  action="#{budgetService2.budgetAction2}"/>
-							                <p:menuitem value="1 Cr - 2 Cr" action="#{budgetService3.budgetAction3}" />
-							                <p:menuitem value="Above 2 Cr"  action="#{budgetService4.budgetAction4}"/>
-					               		
-					               		
-							       
+					               		 	<p:menuitem value="Under 50 Lac"    outcome="budget1">
+							                </p:menuitem>
+							                <p:menuitem value="50 Lac - 1 Cr"    outcome="budget2">
+							                </p:menuitem>
+							                <p:menuitem value="1 Cr - 2 Cr"    outcome="budget3">
+							                </p:menuitem>
+							                <p:menuitem value="Above 2 Cr"    outcome="budget4">
+							                </p:menuitem>
 							                
 						                </p:submenu>
 					               </p:column>
@@ -88,6 +89,8 @@ and open the template in the editor.
 							                <p:menuitem value="Owner Properties" rendered="#{userRoleService.userRole.contains('Owner Prop')? true : false }" icon="pi pi-fw pi-credit-card"  outcome="ownerProperties">
 							                </p:menuitem>
 							                <p:menuitem value="Agent Properties" rendered="#{userRoleService.userRole.contains('Owner Prop')? true : false }" icon="pi pi-fw pi-credit-card"  outcome="agentProperties">
+							                </p:menuitem>
+							                <p:menuitem value="Corner Bit" rendered="#{userRoleService.userRole.contains('Owner Prop')? true : false }" icon="pi pi-fw pi-credit-card"  outcome="cornerBit">
 							                </p:menuitem>
 							            </p:submenu>
 					               </p:column>

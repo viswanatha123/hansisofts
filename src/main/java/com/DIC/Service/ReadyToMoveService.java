@@ -39,7 +39,11 @@ public class ReadyToMoveService {
 	
 	private String locationMessage;
 	private String errorMessage;
-	private int fetchRecords;
+	
+	
+	private int currentPage = 1;
+	private int pageSize = 10;
+	private int totalRecords;
 	
 	
 
@@ -55,28 +59,55 @@ public class ReadyToMoveService {
 		
 	 
 	    GeneralDAOImpl gDao;
-		
-	    LocationDAOImpl locationDao;
 	    UserDAOImpl udo;
 	    
-	    
-	  
-	
-			@PostConstruct 
-		    public void init()
-		    {
-		    	log.info("Loading ReadyToMoveService init()");
+			public ReadyToMoveService()
+			{
+				
+				log.info("Loading ReadyToMoveService init()");
 		    	gDao=new GeneralDAOImpl();
-		    	 udo=new UserDAOImpl();
+		    	udo=new UserDAOImpl();
 		        
 		 
 		        
-		        villaModel=gDao.getReadyToMove();
-		        fetchRecords=villaModel.size();
+		        loadEntities();
+				countTotalRecords();
+				
+			}
+			
+			
+			public void loadEntities() {
+		 		
+				villaModel=gDao.getReadyToMove(pageSize,currentPage);
+		 		
 		        
-		        System.out.println("----Record Size :"+villaModel.size());
-		         	
 		    }
+		 	
+		 	public void countTotalRecords() {
+		 	
+		 		totalRecords=gDao.getReadyToMoveCountTotalRecords();
+		        
+		    }
+		 	public void nextPage() {
+		        if ((currentPage * pageSize) < totalRecords) {
+		            currentPage++;
+		            loadEntities();
+		        }
+		    }
+
+		    public void previousPage() {
+		        if (currentPage > 1) {
+		            currentPage--;
+		            loadEntities();
+		        }
+		    }
+		 	
+		    public int getTotalPages() {
+		        return (int) Math.ceil((double) totalRecords / pageSize);
+		    }
+			
+			
+			
 			
 	
 			public void submit() {
@@ -106,8 +137,8 @@ public class ReadyToMoveService {
 	        		}
 	        	}
 	        	
-	        	villaModel=gDao.getReadyToMove();
-	        	
+	        	//villaModel=gDao.getReadyToMove();
+	        	  loadEntities();
 	        }
 	        
 	   public void reset() {
@@ -213,15 +244,38 @@ public class ReadyToMoveService {
 				this.email = email;
 			}
 
-			public int getFetchRecords() {
-				return fetchRecords;
+	
+
+			public int getCurrentPage() {
+				return currentPage;
 			}
 
-			public void setFetchRecords(int fetchRecords) {
-				this.fetchRecords = fetchRecords;
+
+			public int getPageSize() {
+				return pageSize;
 			}
 
-			
+
+			public int getTotalRecords() {
+				return totalRecords;
+			}
+
+
+			public void setCurrentPage(int currentPage) {
+				this.currentPage = currentPage;
+			}
+
+
+			public void setPageSize(int pageSize) {
+				this.pageSize = pageSize;
+			}
+
+
+			public void setTotalRecords(int totalRecords) {
+				this.totalRecords = totalRecords;
+			}
+		
+		
        
         
                

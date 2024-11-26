@@ -35,6 +35,7 @@ public class VillaModel implements Serializable{
 	private StreamedContent streamedContent;
 	private int userId;
 	private int floorNum;
+	private String cornerBit;
 	
 	
 	
@@ -210,6 +211,12 @@ public class VillaModel implements Serializable{
 	}
 	public void setFloorNum(int floorNum) {
 		this.floorNum = floorNum;
+	}
+	public String getCornerBit() {
+		return cornerBit;
+	}
+	public void setCornerBit(String cornerBit) {
+		this.cornerBit = cornerBit;
 	}
 
 	

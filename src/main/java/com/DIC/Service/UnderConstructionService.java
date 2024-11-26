@@ -31,6 +31,9 @@ public class UnderConstructionService {
 	private String errorMessage;
 	private int fetchRecords;
 	
+	private int currentPage = 1;
+	private int pageSize = 10;
+	private int totalRecords;
 	
 
 
@@ -44,34 +47,58 @@ public class UnderConstructionService {
 		
 		
 	    GeneralDAOImpl gDao;
-		
-	    LocationDAOImpl locationDao;
+	
 	    UserDAOImpl udo;
 	    
 	    
 	  
 	
-			@PostConstruct 
-		    public void init()
-		    {
-		    	log.info("Loading ReadyToMoveService init()");
-		    	gDao=new GeneralDAOImpl();
-		    	 udo=new UserDAOImpl();
-		        
-		 
-		        
-		        villaModel=gDao.getUnderConstruction();
-		        fetchRecords=villaModel.size();
-		        
-		        System.out.println("----Record Size :"+villaModel.size());
-		         	
-		    }
+	    public UnderConstructionService()
+		{
 			
-			@PreDestroy
-			public void destroy()
-			{
-				
-			}
+			log.info("Loading UnderConstructionService init()");
+	    	gDao=new GeneralDAOImpl();
+	    	udo=new UserDAOImpl();
+	        
+	 
+	        
+	        loadEntities();
+			countTotalRecords();
+			
+		}
+		
+		
+		public void loadEntities() {
+	 		
+			villaModel=gDao.getUnderConstruction(pageSize,currentPage);
+	 		
+	        
+	    }
+	 	
+	 	public void countTotalRecords() {
+	 	
+	 		totalRecords=gDao.getUnderConstructionCountTotalRecords();
+	        
+	    }
+	 	public void nextPage() {
+	        if ((currentPage * pageSize) < totalRecords) {
+	            currentPage++;
+	            loadEntities();
+	        }
+	    }
+
+	    public void previousPage() {
+	        if (currentPage > 1) {
+	            currentPage--;
+	            loadEntities();
+	        }
+	    }
+	 	
+	    public int getTotalPages() {
+	        return (int) Math.ceil((double) totalRecords / pageSize);
+	    }
+	    
+	    
 
 			public void submit() {
 		    	System.out.println("-------------submit ----------------------");
@@ -99,8 +126,8 @@ public class UnderConstructionService {
 	        	        PrimeFaces.current().dialog().showMessageDynamic(message);
 	        		}
 	        	}
-	        	
-	        	villaModel=gDao.getReadyToMove();
+	         	
+	        	loadEntities();
 	        	
 	        }
 	        
@@ -202,6 +229,35 @@ public class UnderConstructionService {
 
 			public void setEmail(String email) {
 				this.email = email;
+			}
+			
+			public int getCurrentPage() {
+				return currentPage;
+			}
+
+
+			public int getPageSize() {
+				return pageSize;
+			}
+
+
+			public int getTotalRecords() {
+				return totalRecords;
+			}
+
+
+			public void setCurrentPage(int currentPage) {
+				this.currentPage = currentPage;
+			}
+
+
+			public void setPageSize(int pageSize) {
+				this.pageSize = pageSize;
+			}
+
+
+			public void setTotalRecords(int totalRecords) {
+				this.totalRecords = totalRecords;
 			}
 
 			public int getFetchRecords() {

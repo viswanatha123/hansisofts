@@ -8,55 +8,137 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
       
       <h:head>
-      
 
-	
-      
+			<h:outputStylesheet name="resources/css/custom.css" />
       </h:head>
-      
+       
        <h:body>
-   
+   	
+        
   <ui:composition template="/WEB-INF/facelets/template.xhtml">
   <ui:param name="page" value="Layout Details" />
   <ui:define name="title">
   <div class="card">
   <h:form id="form">
- 
-       
-       
-       		<!-- 
-            <ui:define name="title"><h2 style="font-weight: bold; color: red">Hansi SoftSolutions</h2></ui:define>
-
-            <ui:define name="page_icon"><i class="fa fa-fw fa-flag"/></ui:define>
-
-            <ui:define name="sidebar">
-                <div id="sidebar" class="col-lg-2">
-                    <h:form>
-                        <ul class="nav nav-pills nav-stacked">
-                            
-
-                            
-                        </ul>                        
-                    </h:form>
-                </div>
-            </ui:define>
-
-
-            <ui:define name="content">
-                <p>Property Verification</p>
-            </ui:define>
-
-			-->
-
-					<p:galleria value="#{imagesViewService.siteMapImage}" var="image" panelWidth="1736" panelHeight="450" numVisible="5" responsiveOptions="#{imagesViewService.images}" circular="true" autoPlay="true" transitionInterval="2000" style="height:700px; width:1600px;">
-						
-						<p:graphicImage name="images/siteMapImage/#{image}" width="100%" />
-							
-					</p:galleria>
+  <br></br>
+ 					<p style="text-align:center ;color: block; font-size: 21px;font-family:Century Gothic;font-weight: normal;">Welcome Your Search! Let’s find your dream house</p>
+       	 <br></br> <br></br>
+       	 	<center>
+       	 	
+       	 	 <table width="50%">
+							              	<tr>
+							              		<td>
+												    <div class="card">
+													     <p:tabMenu >
+													        <p:menuitem value="Buy" outcome="buyIndex.xhtml" style="font-weight: bold;">
+													        </p:menuitem>
+													        <p:menuitem value="Sell" outcome="userLogin.xhtml" style="font-weight: bold;">
+													        </p:menuitem>
+													     </p:tabMenu>
+													</div>
+									            </td>
+									           
+									        </tr>
+       	 
+       	 	</table>
+       	 	<table>
+       	 			<tr>
+       	 				<td >
+		       				<p:tag style="text-align: right; width: 900px; height: 60px; background-color: white; border: 2px solid black; border-color: block;" rounded="true" >
+		       				</p:tag>
+		       			</td>
+		       			<td >
+		       				<p:button value="Search" rounded="true" style="text-align: center; width: 200px; height: 40px; background-color: 151B54;" />
+		       			
+       					</td>
+       					
+       				</tr>
+       			
+       		</table>
+       		</center>
+				<br></br><br></br><br></br>
+				<p style="text-align:left;color: block; font-size: 20px;font-family:Century Gothic;font-weight: normal;">We've got properties for everyone</p>
+				
+				<table width="100%" height="300px" >
+						<tr>
+						<td>								
+							    <p:panelGrid columns="2" style="background:#0AFFFF">
+							        <f:facet name="header">
+							            <h:link outcome="readyToMove" >
+							            <div style="position: relative; ">
+											<p:graphicImage width="280px"  height="180px" name="images/buildingImg/readyToMove4.jpg" alt="Ready to move-in"  styleClass="rounded-image">
+												<h:outputText value="#{readyToMoveService.totalRecords}" style="position: absolute; font-size: 25px; bottom: 100px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+												<h:outputText value="Ready to move-in" style="position: absolute; font-size: 25px; bottom: 70px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+												<h:outputText value="Explore ->" style="position: absolute; font-size: 18px; bottom: 50px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+											</p:graphicImage>
+										</div>
+										</h:link>
+							        </f:facet>
+							    </p:panelGrid>
+						</td>
+						<td>	    
+							    <p:panelGrid columns="2" style="background:#0AFFFF">
+							        <f:facet name="header">
+							            <h:link outcome="ownerProperties" >
+							            <div style="position: relative; ">
+											<p:graphicImage width="280px"  height="180px" name="images/buildingImg/OwnerProperty1.jpg" alt="Ready to move-in" styleClass="rounded-image">
+											    <h:outputText value="#{ownerPropertiesService.totalRecords}" style="position: absolute; font-size: 25px; bottom: 100px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+												<h:outputText value="Owner Properties" style="position: absolute; font-size: 25px; bottom: 70px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+												<h:outputText value="Explore ->" style="position: absolute; font-size: 18px; bottom: 50px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+											</p:graphicImage>
+										</div>
+										</h:link>
+							        </f:facet>
+							    </p:panelGrid>
+						</td>	
+						<td>	    
+							    <p:panelGrid columns="2" style="background:#0AFFFF">
+							        <f:facet name="header">
+							            <h:link outcome="agentProperties" >
+							            <div style="position: relative; ">
+											<p:graphicImage width="280px"  height="180px" name="images/buildingImg/agentProperty.jpg" alt="Ready to move-in" styleClass="rounded-image">
+												<h:outputText value="#{agentPropertiesService.totalRecords}" style="position: absolute; font-size: 25px; bottom: 100px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+												<h:outputText value="Agent Properties" style="position: absolute; font-size: 25px; bottom: 70px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+												<h:outputText value="Explore ->" style="position: absolute; font-size: 18px; bottom: 50px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+											</p:graphicImage>
+										</div>
+										</h:link>
+							        </f:facet>
+							    </p:panelGrid>
+						</td>	
+						<td>	    
+							    <p:panelGrid columns="2" style="background:#0AFFFF">
+							        <f:facet name="header">
+							            <h:link outcome="cornerBit" >
+							            <div style="position: relative; ">
+											<p:graphicImage width="280px"  height="180px" name="images/buildingImg/cornerProperty.jpg" alt="Ready to move-in" styleClass="rounded-image">
+												<h:outputText value="#{cornerBitService.totalRecords}" style="position: absolute; font-size: 25px; bottom: 100px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+												<h:outputText value="Corner Properties" style="position: absolute; font-size: 25px; bottom: 70px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+												<h:outputText value="Explore ->" style="position: absolute; font-size: 18px; bottom: 50px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+											</p:graphicImage>
+										</div>
+										</h:link>
+							        </f:facet>
+							    </p:panelGrid>
+						</td>	
+						<td>	    
+							    <p:panelGrid columns="2" style="background:#0AFFFF">
+							        <f:facet name="header">
+							            <h:link outcome="underConstruction" >
+							            <div style="position: relative; ">
+											<p:graphicImage width="280px"  height="180px" name="images/buildingImg/underConstruction.jpg" alt="Ready to move-in" styleClass="rounded-image">
+												<h:outputText value="#{underConstructionService.totalRecords}" style="position: absolute; font-size: 25px; bottom: 100px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+												<h:outputText value="Under Construction" style="position: absolute; font-size: 25px; bottom: 70px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+												<h:outputText value="Explore ->" style="position: absolute; font-size: 18px; bottom: 50px; left: 10px; color: white; padding: 5px; border-radius: 5px;" />
+											</p:graphicImage>
+										</div>
+										</h:link>
+							        </f:facet>
+							    </p:panelGrid>
+						</td>	
+						</tr>
+					</table>
 	
-		
-						
-						
 						<table width="100%" height="100px" style="background-image: url('head2.jpg'); ">
 							<tr>
 								<th>

@@ -193,6 +193,13 @@
                             </p:selectOneMenu>
                             <p:message for="facing" display="icon"/>
                             
+                    <p:outputLabel for="cornerbit" value="Corner Bit : " /> 
+                            <p:selectOneMenu id="cornerbit" value="#{plotsDataEntryService.cornerBit}" style="width:150px"> 
+                            <f:selectItem itemLabel="No" itemValue="No"/>
+                            <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                            </p:selectOneMenu> 
+                            <p:message for="cornerbit" display="icon"/>
+                            
                             
                    <p:outputLabel style="font-weight: bold; width:210px;" value="Image Upload (JPG,PNG,JPEG) : "   />
                    <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">

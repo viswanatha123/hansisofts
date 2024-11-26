@@ -157,6 +157,13 @@
                             <f:selectItem itemLabel="South" itemValue="South"/>
                             </p:selectOneMenu>
                      <p:message for="facing" display="icon"/> 
+                     
+                     <p:outputLabel for="cornerbit" value="Corner Bit : " /> 
+                            <p:selectOneMenu id="cornerbit" value="#{indiSiteDataEntryService.cornerBit}" style="width:150px"> 
+                            <f:selectItem itemLabel="No" itemValue="No"/>
+                            <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                            </p:selectOneMenu> 
+                            <p:message for="cornerbit" display="icon"/>
                             
                             
      				 <p:outputLabel style="font-weight: bold; width:210px;" value="Image Upload (JPG,PNG,JPEG): " />

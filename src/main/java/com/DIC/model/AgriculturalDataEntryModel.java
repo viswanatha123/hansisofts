@@ -26,6 +26,7 @@ public class AgriculturalDataEntryModel implements Serializable {
 	private InputStream inputStream;
     private UploadedFile file;
     private String power;
+    private String cornerBit;
     
     
     
@@ -148,7 +149,13 @@ public class AgriculturalDataEntryModel implements Serializable {
 		this.power = power;
 	}
 
+	public String getCornerBit() {
+		return cornerBit;
+	}
 
+	public void setCornerBit(String cornerBit) {
+		this.cornerBit = cornerBit;
+	}
 
 
 	
