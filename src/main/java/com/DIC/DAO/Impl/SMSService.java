@@ -40,38 +40,10 @@ public class SMSService {
 	{
 		
 		udo=new UserDAOImpl();
-		//Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-		//Twilio.init(Constants.SMSServer.ACCOUNT_SID, Constants.SMSServer.AUTH_TOKEN);
+		
 	}
 	
-	/*
-	//Twilio Service
-	public void sendSMSLead(String toNum, String agentName,String custName,String contactNumber)
-	{
 	
-			
-		 List<String> phoneNumbers = new ArrayList<>(Arrays.asList(Constants.SMSServer.ADMIN_GROUP_CONTACT));
-         phoneNumbers.add("+91"+toNum); // customer contact no
-		
-		
-		String messageBody="HansiSoft Solution \n Hi "+agentName+", Congratulation.., Lead generated.\n Customer Details \n Customer Name : "+custName+", \n Customer Num : "+contactNumber;
-		
-		for (String toNumber : phoneNumbers) {
-            try {
-                Message message = Message.creator(
-                        new PhoneNumber(toNumber),  // Destination phone number
-                        new PhoneNumber(Constants.SMSServer.TWILIO_NUMBER), // Your Twilio phone number
-                        messageBody                 // Message body
-                ).create();
-
-                log.info("Message sent to " + toNumber + " with SID: " + message.getSid());
-            } catch (Exception e) {
-                log.error("Error SMS Failed to send message to " + toNumber + ": " + e.getMessage());
-            }
-        }
-			
-	}
-	*/
 	// Fast2sms Service
 	public void sendSMSLeadText2sms(String toNum, String agentName,String custName,String contactNumber)
 	{
