@@ -233,15 +233,15 @@ public class GeneralDAOImpl {
 		
 				if(proType.equals("All"))
 				{
-					sql_villa_details.append(" and property_type in ('Villa','House','Plot','Flat') order by create_date desc");
+					sql_villa_details.append(" and property_type in ('Villa','House','Plot','Flat') order by CASE WHEN rank = 1 THEN 1 WHEN rank = 2 THEN 2 WHEN rank = 3 THEN 3 ELSE 4 END, create_date desc");
 				}
 				else if(proType.equals("Flat"))
 				{
-					 sql_villa_details.append(" and property_type in ('Flat','Plot') order by create_date desc");
+					 sql_villa_details.append(" and property_type in ('Flat','Plot') order by CASE WHEN rank = 1 THEN 1 WHEN rank = 2 THEN 2 WHEN rank = 3 THEN 3 ELSE 4 END, create_date desc");
 				}
 				else
 				{
-					sql_villa_details.append(" and property_type='"+proType+"' order by create_date desc");
+					sql_villa_details.append(" and property_type='"+proType+"' order by CASE WHEN rank = 1 THEN 1 WHEN rank = 2 THEN 2 WHEN rank = 3 THEN 3 ELSE 4 END, create_date desc");
 				}
 			con=ConnectionDAO.getConnection();
 			
