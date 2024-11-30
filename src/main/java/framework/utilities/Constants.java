@@ -56,10 +56,11 @@ public class  Constants {
     			
     	};
 		
+		/*
 		public static final String ACCOUNT_SID = "AC3116f795624b49e44baf5cfc888fe220";
 	    public static final String AUTH_TOKEN = "d0153bb27044871fd3126aecc7b21be7";
 	    public static final String TWILIO_NUMBER = "+14253097706";
-	    
+	    */
 	    
 	  // Belwo original api url 
 	  // Text2SMS Service
