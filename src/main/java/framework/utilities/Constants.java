@@ -41,46 +41,8 @@ public class  Constants {
 		public static final String LEAD_SUBJECT="HansiSoft Solutions,,. Lead Generated..";
 	}
 	
-	public interface SMSServer
-	{
-		/* Twilio Service */
-		
-		public static final String[] ADMIN_GROUP_CONTACT ={
-				"+919632152255"
-    		   ,"+917353747006" // raji
-    		   ,"+918328518573" //sukumar
-    		   ,"+918096444763" //swathi
-    		   ,"+917093637102" //kumari
-    		   ,"+919390796667" // rajashakar
-    		   ,"+919502653507" // jagadesh
-    			
-    	};
-		
-		/*
-		public static final String ACCOUNT_SID = "AC3116f795624b49e44baf5cfc888fe220";
-	    public static final String AUTH_TOKEN = "d0153bb27044871fd3126aecc7b21be7";
-	    public static final String TWILIO_NUMBER = "+14253097706";
-	    */
-	    
-	  // Belwo original api url 
-	  // Text2SMS Service
-	  // String urlString = "https://www.fast2sms.com/dev/bulkV2?authorization=FtyePe5DffirXSPYmYRGldgAQb7x7CuyoO1o2fiqJdlPjXBFyy0JEu8HM5Nd&route=q&message=khkhkhkjhkj&flash=0&numbers=9632152255";
-		
-	    /*
-	    public static String baseUrl="https://www.fast2sms.com/dev/bulkV2?authorization=";
-	    public static final String apiKey = "FtyePe5DffirXSPYmYRGldgAQb7x7CuyoO1o2fiqJdlPjXBFyy0JEu8HM5Nd";
-	    public static final String route = "q";
-	    public static final String flash = "0";
-	    */
-	    public static String baseUrl="https://www.fast2sms.com/dev/bulkV2?authorization=";
-	    public static String apiKey = "FtyePe5DffirXSPYmYRGldgAQb7x7CuyoO1o2fiqJdlPjXBFyy0JEu8HM5Nd";
-	    public static String route = "q";
-	    public static String flash = "1";
-	    
-	    
-	 	
 	
-	}
+	
 	
 
 }
