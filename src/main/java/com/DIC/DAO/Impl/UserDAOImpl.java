@@ -42,6 +42,8 @@ public class UserDAOImpl {
 			String SQL_LAYOUT_LIST="select * from hansi_layout order by create_date desc";
 			String SQL_DEL_LAYOUT="delete from hansi_layout where layout_id = ?";
 			String SQL_USER="select * from user_deta where user_id = ?";
+			String SQL_RANK_BY_USER_ID="select * from user_deta u, user_map_rank r where u.user_id =r.user_id  and u.user_id = ?";
+			
 			
 			
 			String SQL_PROFILE_ROLE="select r.role_name,r.profile_url  \r\n"
@@ -132,7 +134,7 @@ public class UserDAOImpl {
 			 
 			 String SQL_UPDATE_USER="update user_deta set fname = ?, lname = ?, user_name = ?, user_pass = ?, address = ?, phone = ?, create_date = ? ,is_active = ?,email = ? where user_id = ?";
 			 String SQL_ACCOUNT_RENEWEL="update user_deta set create_date = now() where user_id= ?";
-		
+			 String SQL_RANK_UPDATE="update user_map_rank set rank = ? where user_id = ?";
 		}
 	}
 	
@@ -327,6 +329,82 @@ public class UserDAOImpl {
 		
 		return userDetails;
 	}
+    
+    public UserDetails getRankByUserId(int userId) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		UserDetails userDetails=new UserDetails();
+		
+
+		try {
+			con = ConnectionDAO.getConnection();
+			
+			StringBuilder sql_user = new StringBuilder(Constants.SQL.SQL_RANK_BY_USER_ID);
+			log.info("###: Qury User profile by user id : "+sql_user.toString());
+			ps = con.prepareStatement(sql_user.toString());
+			
+			ps.setInt(1, userId);
+			ResultSet rs = ps.executeQuery();
+			
+			while ( rs.next() ) {
+				
+				
+				userDetails.setUserId(rs.getInt("user_id"));
+				userDetails.setfName(rs.getString("fname"));
+				userDetails.setlName(rs.getString("lname"));
+				userDetails.setUserName(rs.getString("user_name"));
+				userDetails.setUserPassword(rs.getString("user_pass"));
+				userDetails.setAddress(rs.getString("address"));
+				userDetails.setPhone(rs.getString("phone"));
+				userDetails.setCreate_date(rs.getDate("create_date"));
+				userDetails.setIs_active(rs.getInt("is_active"));
+				userDetails.setEmail(rs.getString("email"));
+				userDetails.setRank(rs.getInt("rank"));
+				
+				//userDetails.setListLimit(rs.getInt("list_limit"));
+				
+				//userDetailsList.add(userDetails);
+						
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        log.error("An error occurred: {}", e.getMessage());
+		}
+		
+		return userDetails;
+	}
+    
+    
+    
+    public int updateRank(int userId, int rank) {
+    	int updateResult=0;
+		Connection con = null;
+		PreparedStatement ps = null;
+	
+		
+						try {
+							con = ConnectionDAO.getConnection();
+							
+							StringBuilder sql_user = new StringBuilder(Constants.SQL.SQL_RANK_UPDATE);
+							log.info("###: Qury Update rank : "+sql_user.toString());
+							ps = con.prepareStatement(sql_user.toString());
+							ps.setInt(1, rank);
+							ps.setInt(2, userId);
+							updateResult=ps.executeUpdate();
+							
+							log.info("Successfu updated rank");
+						} catch (SQLException e) {
+							e.printStackTrace();
+					        System.err.println(e.getClass().getName()+": "+e.getMessage());
+					        log.error("An error occurred: {}", e.getMessage());
+						}
+							
+	return updateResult;				
+			
+  }
+    
     
     /*
      * 
