@@ -20,6 +20,7 @@ public class UserDetails implements Serializable {
 	private int listLimit;
 	private String packName;
 	private Boolean isEnable;
+	private int rank;
 	
 	
 	private String disName;
@@ -166,7 +167,14 @@ public class UserDetails implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public int getRank() {
+		return rank;
+	}
 
+
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
 
 	
 
