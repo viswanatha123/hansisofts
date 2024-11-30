@@ -38,6 +38,8 @@ import com.DIC.model.UserDetails;
 import com.DIC.model.UserRoleModel;
 import com.DIC.model.VillaModel;
 
+import framework.utilities.UtilConstants;
+
 @ManagedBean
 @ApplicationScoped
 public class GeneralDAOImpl {
@@ -150,6 +152,10 @@ public class GeneralDAOImpl {
 		   String SQL_PACKAGE_PRICE="select * from package order by pack_id";
 		   String SQL_PACKAGE_BY_ID="select * from package where pack_id = ? order by pack_id";
 		   String SQL_EDIT_PACKAGE_BY_ID="update package set pack_name= ? ,pack_type= ? , list_limit = ?, pack_cost = ?, pack_duration = ? where pack_id = ?";
+		   String SQL_NEW_DEFAULT_USER_RANK="select * from user_map_rank where user_id = ? and is_active ='1'";
+		   String SQL_UPDATE_RANK_TO_NEW_USER="insert into user_map_rank (rank_id,user_id,rank,create_date,is_active) values (nextval('rank_seq'),?,?,current_timestamp,1)";
+		
+		
 		}
 	}
 	
@@ -1516,6 +1522,13 @@ public class GeneralDAOImpl {
 												int createdRolesCount=psRole.executeUpdate();
 												System.out.println("*********** Role created count ************ :"+createdRolesCount+"     "+createDefaultRoles(userId));
 												updateDefaultPackage(userId);
+												
+												int newDefaultRank=getDefaultNewUserRank(UtilConstants.NEW_DEFAULT_USER_ID);
+												
+													if(newDefaultRank!=-1)
+													{
+													 String updateStatus=updateRank_to_user_account(userId,newDefaultRank);
+													}
 											}
 									} 
 				
@@ -1533,6 +1546,74 @@ public class GeneralDAOImpl {
         return userId;
     }
     
+    
+  //***************** getDefaultNewUserRank ***************
+    public int getDefaultNewUserRank(int newdefaultuserId)
+    {
+    	
+    	int newDefaultUserRankId=0;
+        try {
+        	
+            Connection con = null;
+            PreparedStatement pstmt = null;
+            con=ConnectionDAO.getConnection();
+            
+            StringBuilder sql_user_regist = new StringBuilder(Constants.SQL.SQL_NEW_DEFAULT_USER_RANK);
+            pstmt = con.prepareStatement(sql_user_regist.toString());
+            pstmt.setInt(1,newdefaultuserId);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+				newDefaultUserRankId=rs.getInt("rank");
+            }
+            
+            
+            
+        } catch (Exception e) {
+            
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	    
+	        log.error("An error occurred: {}", e.getMessage());      
+        }
+        
+    return newDefaultUserRankId;   
+    }
+    
+    
+    
+    //***************** getDefaultNewUserRank ***************
+    public String updateRank_to_user_account(int userId, int newDefaultRank)
+    {
+    	
+    String updateStatus="";
+		        try {
+		        	
+		            Connection con = null;
+		            PreparedStatement pstmt = null;
+		            con=ConnectionDAO.getConnection();
+		            
+		            StringBuilder sql_user_regist = new StringBuilder(Constants.SQL.SQL_UPDATE_RANK_TO_NEW_USER);
+		            pstmt = con.prepareStatement(sql_user_regist.toString());
+		            pstmt.setInt(1,userId);
+		            pstmt.setInt(2,newDefaultRank);
+		            int res=pstmt.executeUpdate();
+		            if(res > 0)
+		            {
+		            	updateStatus="Successful updated Rank";
+		            }
+		            
+		        } catch (Exception e) {
+		            
+			        e.printStackTrace();
+			        System.err.println(e.getClass().getName()+": "+e.getMessage());
+			    
+			        log.error("An error occurred: {}", e.getMessage());      
+		        }
+    	
+    	
+    	return updateStatus;
+    }
     
     
     public String createDefaultRoles(int userId)
