@@ -29,6 +29,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import com.DIC.DAO.ConnectionDAO;
+import com.DIC.DAO.Impl.CommonDAOImpl;
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.DAO.Impl.UserDAOImpl;
 //import com.DIC.DAO.Impl.ConnectionDAOImpl.Constants;
@@ -94,6 +95,9 @@ public class PlotsDataEntryService implements Serializable{
 	  
 	   ConnectionDAOImpl dao;
 	   UserDAOImpl uDao;
+	   UserRoleService ur;
+	   CommonDAOImpl comm;
+	   
 	   
 	   public PlotsDataEntryService()
 	   {
@@ -106,6 +110,9 @@ public class PlotsDataEntryService implements Serializable{
               dao=new ConnectionDAOImpl();
 	          primaryModel=dao.getPrimaryLocation();
 	          uDao=new UserDAOImpl();
+	          ur=new UserRoleService();
+	          comm=new CommonDAOImpl();
+	          
               primLocation  = new HashMap<>(); 
               for(Map.Entry<String, String> pp:primaryModel.entrySet())
               {
@@ -191,8 +198,15 @@ public class PlotsDataEntryService implements Serializable{
 				    		    if(userId > 0)
 				    		    {    	
 				          
-				    		    	updateResult=dao.updatePlotDataEntry(plotsDataEntryModel, userId);
-				    		    	SMTPService.sendLayoutEmail(plotsDataEntryModel,userId);
+				    		   		    	if(ur.getUserRole().contains("Rank"))
+			        						{
+						    		    		updateResult=dao.updatePlotDataEntry(plotsDataEntryModel, userId,comm.getUserRank(userId));
+						    				}
+						    		    	else
+						    		    	{
+						    		    		updateResult=dao.updatePlotDataEntry(plotsDataEntryModel, userId,0);
+						    		    	}
+							    	SMTPService.sendLayoutEmail(plotsDataEntryModel,userId);
 				    		    		
 				    		    }
 				    		    
@@ -200,7 +214,7 @@ public class PlotsDataEntryService implements Serializable{
 				    		if(session.getAttribute("userId")==null)
 			    		    {    	
 			    		    	int defaultUserId=1;
-			    		    	updateResult=dao.updatePlotDataEntry(plotsDataEntryModel, defaultUserId);
+			    		    	updateResult=dao.updatePlotDataEntry(plotsDataEntryModel, defaultUserId,0);
 			    		    		
 			    		    }
 				    	}
