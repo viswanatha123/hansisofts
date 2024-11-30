@@ -33,8 +33,8 @@ public class UserRoleService implements Serializable{
 	GeneralDAOImpl gDao;
 	
 	
-	@PostConstruct 
-    public void init()
+	 
+    public UserRoleService()
     {
 		int default_userid=1;
 		log.log(Level.INFO, "Loading UserRoleService init()");

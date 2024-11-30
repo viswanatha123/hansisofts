@@ -19,9 +19,11 @@ import org.primefaces.PrimeFaces;
 
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
+import com.DIC.DAO.Impl.SMSService;
 import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.AgriculturalModel;
 import com.DIC.model.LayoutMode;
+import com.DIC.model.UserDetails;
 
 import SMTPService.SMTPService;
 
@@ -49,6 +51,8 @@ public class AgriculturalService implements Serializable{
 	ConnectionDAOImpl dao; 
 	LocationDAOImpl locationDao;
 	 UserDAOImpl udo;
+	 SMSService sms;
+	 UserRoleService ur;
 	
 	
 	private AgriculturalModel selectedProperty;   
@@ -65,6 +69,9 @@ public class AgriculturalService implements Serializable{
         dao=new ConnectionDAOImpl();
         locationDao=new LocationDAOImpl();
         udo=new UserDAOImpl();
+        sms=new SMSService();
+        ur=new UserRoleService();
+        
         primaryModel=locationDao.getAgriPrimaryLocation();
         primLocation  = new HashMap<>(); 
 	      for(Map.Entry<String, String> pp:primaryModel.entrySet())
@@ -116,14 +123,7 @@ public class AgriculturalService implements Serializable{
 
         public void displayLocation() {  
        
-        /*
-        FacesMessage msg;  
-        if(city != null && country != null)  
-        msg = new FacesMessage("Selected", city + " of " + country);  
-        else  
-        msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid", "City is not selected.");   
-        FacesContext.getCurrentInstance().addMessage(null, msg);  
-        */
+      
         System.out.println(country+"     "+city);
         
         locationMessage=country+" ,    "+city;
@@ -159,6 +159,28 @@ public class AgriculturalService implements Serializable{
 	        		{
 	        			if(selectedProperty.getUserId()!=0)
 	        			{
+	        				
+	        				
+	        				
+	        				
+	        				if(ur.getUserRole().contains("SMS"))
+    						{
+    							log.info("******** SMS Enabled *****************");
+		        				UserDetails userDetails=udo.getUser(selectedProperty.getUserId());
+		        				
+		        				//Twilio service
+		        				//sms.sendSMSLead(userDetails.getPhone(), userDetails.getfName()+" "+userDetails.getlName(),custName,contactNumber); 
+		        				
+		        				// test2sms service
+		        				sms.sendSMSLeadText2sms(userDetails.getPhone(), userDetails.getfName()+" "+userDetails.getlName(),custName,contactNumber);
+		        				
+		        				
+    						}
+    						else
+    						{
+    							log.info("******** SMS Didabled *****************");
+    						}
+	        				
 	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getAgriId(),selectedProperty.getUserId(),"agri");
 	        				SMTPService.sendAgriLeadEmail(custName,contactNumber,email,selectedProperty);
 	        				log.info("***** Successful submitted lead ******");
