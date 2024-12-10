@@ -67,6 +67,7 @@ public class VillaDataEntryService implements Serializable{
 	private Boolean isEnable;
 	private int userId;
 	private int floorNum;
+	private String facing;
 	private String cornerBit;
 	
 	
@@ -171,6 +172,7 @@ public class VillaDataEntryService implements Serializable{
              villaModel.setInputStream(file.getInputStream());
              villaModel.setFile(file);
              villaModel.setFloorNum(floorNum);
+             villaModel.setFacing(facing);
              villaModel.setCornerBit(cornerBit);
              
             HttpSession session = SessionUtils.getSession();
@@ -263,8 +265,8 @@ public class VillaDataEntryService implements Serializable{
     	this.address="";
     	this.road_width=0;
     	this.floors=0;
-    	this.bed_rooms=0;
-    	this.bath_rooms=0;
+    	this.bed_rooms=1;
+     	this.bath_rooms=1;
     	this.furnished="";
     	this.plot_area=0;
     	this.s_build_are=0;
@@ -520,6 +522,14 @@ public class VillaDataEntryService implements Serializable{
 
 	public void setCornerBit(String cornerBit) {
 		this.cornerBit = cornerBit;
+	}
+	
+	public String getFacing() {
+		return facing;
+	}
+
+	public void setFacing(String facing) {
+		this.facing = facing;
 	}
 
 
