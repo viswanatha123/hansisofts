@@ -1,105 +1,69 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-       <h:body>
-
-        
-  <ui:composition template="/WEB-INF/facelets/template.xhtml">
-  <ui:param name="page" value="Userlogin" />
-  <ui:define name="title">User login
-  <div class="card">
-  <h:form id="form">
-  
-  <br></br>  <br></br>
-  
-  <font size="3" color="black" >User login  </font><br></br>
-  <br></br> <br></br><br></br>
-  
-  		<c:if test="#{userLoginService.valid==false}">
-			  <center>
-			  <font size="4" color="red" style="text-align: center;"><h:outputText value="#{userLoginService.message}" /></font>
-			  </center>
-  		</c:if>
-  		<c:if test="#{userLoginService.valid==true}">
-			  <center>
-			  <font size="4" color="blue" style="text-align: center;">Welcome to HansiSoft Solutions  </font>
-			  </center>
-  		</c:if>
-  		
-   <br></br> <br></br><br></br>
-  
-		
-                
-                
-              <p:panel id="panel1" style="background-image: url('back1.jpg'); ">   
-                <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
-          
-                	<p:panelGrid columns="2" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
-                
-                
-                    <p:outputLabel style="font-weight: bold"  value="User Name : " />
-                    <p:inputText id="name"  value="#{userLoginService.userName}" required="true" requiredMessage="User name is required">
-                    </p:inputText>
-                    
-                    <p:outputLabel style="font-weight: bold" value="Password : " />
-                    <p:password id="password"  value="#{userLoginService.password}"   required="true" requiredMessage="Password is required">
-                    </p:password>  
-                    
-                    
-                       
-	                <h:commandButton value="submit" action="#{userLoginService.userLoingAction}" >
-					</h:commandButton>
-	
-	              
-		          
-		          <p:commandButton value="Reset" update="panel1" process="@this"
-                                 action="#{serLoginService.reset}"
-                                 styleClass="mr-2 ui-button-outlined"/>
-                                 
-                   <h:link  value = " Sign Up " outcome = "userRegist.xhtml" style="font-weight: bold; font-size: 14px;color:blue;float: right; margin-right: 50px;" />
-				   <h:link  value = " Reset Password " outcome = "resetPassword.xhtml" style="font-weight: bold; font-size: 14px;color:blue;float: right; margin-right: 50px;" />
-		
-                   
-                                 
-                                 
-               </p:panelGrid> 
-               
-                <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
-                <p:outputLabel style="font-weight: bold; color:Blue; font-size:18px;" value="User name Rules :" />
-               	<p:outputLabel style="font-weight: 100; color:red; font-style:italic;" value="1.User name should be at least Minimum 3 character to Maximum 15 character." />
-               	<p:outputLabel style="font-weight: 100; color:Red; font-style:italic;"  value="2.User name should not be Allowed the space." />
-               	<p:outputLabel style="font-weight: bold; color:Blue; font-size:18px;"  value="Password rules: " />
-               	<p:outputLabel style="font-weight: 100; color:Red; font-style:italic;"  value="1.Password should be at the Minimum 8 character to Maximum 15 character." />
-               	<p:outputLabel style="font-weight: 100; color:Red; font-style:italic;"  value="2.Password should not allow the space." />
-               	<p:outputLabel style="font-weight: 100; color:Red; font-style:italic;"  value="3.Password should allows the Numbers and Special Characters." />
-          	</p:panelGrid>
-               
-               
-                                   
-                  
-                  <p:graphicImage width="102%"  height="400px" name="images/lock.jpg" />
-                   
-               </p:panelGrid>
-                                 
-               
-		      	 
-	          	   
-       	    
-                    
-                          
-                       
-            </p:panel>
-  
- <script type="text/javascript" src="resources/js/chatool.js"></script> 
-</h:form>
-</div>
-</ui:define>
-</ui:composition>
-</h:body>
+   xmlns:h="http://xmlns.jcp.org/jsf/html"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:p="http://primefaces.org/ui"
+   xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+   <h:body>
+      <ui:composition template="/WEB-INF/facelets/template.xhtml">
+         <ui:define name="title">
+            <div class="card">
+               <h:form id="form">
+                  <br></br>  <br></br>
+                  <font size="3" color="black" > User Login  </font><br></br>
+                  <p:outputLabel style="font-weight:100 ;font-size: 16px;color:black;"  value="Create account free, if you have already account, Please login and post your
+                     property."/>
+                  <br></br>  
+                  <p:outputLabel style="font-weight:100 ;font-size: 16px;color:black;"  value="Ones you post your property , it will be super past tracker for many buyers online." />
+                  <br></br> <br></br><br></br>
+                  <c:if test="#{userLoginService.valid==false}">
+                     <center>
+                        <font size="4" color="red" style="text-align: center;">
+                           <h:outputLabel value="#{userLoginService.message}" />
+                        </font>
+                     </center>
+                  </c:if>
+                  <c:if test="#{userLoginService.valid==true}">
+                     <center>
+                        <font size="4" color="black" style="text-align: center;">Welcome to HansiSoft Solutions  </font>
+                     </center>
+                  </c:if>
+                  <br></br> <br></br><br></br>
+                  <p:panel id="panel1" style="background-image: url('back1.jpg'); ">
+                     <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
+                        <p:panelGrid columns="2" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                           <p:outputLabel style="font-weight: bold"  value="User Name: " />
+                           <p:inputText id="name"  value="#{userLoginService.userName}" required="true" requiredMessage="User name is required">
+                           </p:inputText>
+                           <p:outputLabel style="font-weight: bold" value="Password: " />
+                           <p:password id="password"  value="#{userLoginService.password}"   required="true" requiredMessage="Password is required">
+                           </p:password>
+                           <h:commandButton value="Submit" action="#{userLoginService.userLoingAction}" >
+                           </h:commandButton>
+                           <p:commandButton value="Reset" update="panel1" process="@this"
+                              action="#{serLoginService.reset}"
+                              styleClass="mr-2 ui-button-outlined"/>
+                           <h:link  value = "Sign Up " outcome = "userRegist.xhtml" style="font-weight: bold; font-size: 12px;color:black;float: right; margin-right: 30px;" />
+                           <h:link  value = "Reset Password " outcome = "resetPassword.xhtml" style="font-weight: bold; font-size: 12px;color:black;float: right; margin-right: 50px;" />
+                        </p:panelGrid>
+                        <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                           <p:outputLabel style="font-weight:bold; font-size:14px; color:black;" value="User Name Rules: "/>
+                           <p:outputLabel style="font-weight:normal; font-size:14px; color:black;" value=" 1.User name should be at least Minimum 3 character to Maximum 15 character." />
+                           <p:outputLabel style="font-weight:normal; font-size:14px; color:black;" value=" 2.Space does not allowed to Username." />
+                           <p:outputLabel style="font-weight:bold; font-size:14px; color:black;" value=" Password Rules" />
+                           <p:outputLabel style="font-weight:normal; font-size:14px; color:black;" value=" 1.Password should be at the Minimum 8 character to Maximum 15 character." />
+                           <p:outputLabel style="font-weight:normal; font-size:14px; color:black;" value="2.Password should not allow the space. " />
+                           <p:outputLabel style="font-weight:normal; font-size:14px; color:black;" value=" 3.Password should allows the Numbers and Special Characters." />
+                        </p:panelGrid>
+                        <p:graphicImage width="102%"  height="400px" name="images/lock.jpg" />
+                     </p:panelGrid>
+                  </p:panel>
+                  <script type="text/javascript" src="resources/js/chatool.js"></script> 
+               </h:form>
+            </div>
+         </ui:define>
+      </ui:composition>
+   </h:body>
 </html>
-      
