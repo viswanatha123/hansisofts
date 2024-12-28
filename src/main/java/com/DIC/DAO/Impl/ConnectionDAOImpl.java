@@ -29,6 +29,7 @@ import com.DIC.model.IndividualSiteModel;
 import com.DIC.model.LayoutMode;
 import com.DIC.model.LogViewerDatewiseModel;
 import com.DIC.model.PlotsDataEntryModel;
+import com.DIC.model.PromoImageModel;
 import com.DIC.model.RentalDataEntryModel;
 
 import java.sql.PreparedStatement;
@@ -116,6 +117,8 @@ public class ConnectionDAOImpl {
 			String SQL_RENTAL_DATA_INSERT="INSERT INTO rental_plot (rental_id,own_name,address,own_con_no,pro_type,tot_bed_rooms,tot_floors,tot_bath_rooms,furniture,rent_pref,sec_depo,mon_rent,kitc_room,facing,tot_area_sqft,prim_location,seco_location,image,create_date, is_active,avail_date) VALUES (nextval('rental_plot_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,1,?)";
 			String SQL_RENTAL_DETAILS="select * from rental_plot where prim_location = ? and seco_location = ?";
 			String SQL_PACKAGE_ENQUIRY="INSERT INTO hansi_enquiry (enqi_id, name, email, phone, create_date, is_active,enq_type) VALUES(nextval('hansi_enquiry_seq'),?, ?, ?, current_timestamp, 1,?)";
+			String SQL_PROMO_IMAGE="insert into promo_img (promo_id,image,create_date, is_active,comment,img_name) values (nextval('promo_seq'),?,current_timestamp, 1,?,?)";
+			
 		}
                 
 	}
@@ -1288,6 +1291,57 @@ public class ConnectionDAOImpl {
       
         
         return 1;
+    }
+    
+    
+    public String promoImageUpload(PromoImageModel promoImageModel)
+    {
+    	String succVal="";
+        try {
+        	
+            	 
+        	 
+            Connection con = null;
+            PreparedStatement pstmt = null;
+            con=ConnectionDAO.getConnection();
+            
+            StringBuilder sql_promo_image = new StringBuilder(Constants.SQL.SQL_PROMO_IMAGE);
+            pstmt = con.prepareStatement(sql_promo_image.toString());
+            
+            //pstmt.setInt(1, 102);
+            
+		            InputStream fin2=promoImageModel.getInputStream();
+		            UploadedFile file=promoImageModel.getFile();
+            pstmt.setBinaryStream(1, fin2, file.getSize());
+            pstmt.setString(2, promoImageModel.getComment());
+            pstmt.setString(3, promoImageModel.getImageName());
+            
+            
+          
+        	
+        	int res=pstmt.executeUpdate();
+        	System.out.println("*****Successful updated image*******");
+            if(res > 0)
+            {
+            	succVal="Successful updated Image";
+            }
+            
+           
+       
+       
+    
+        
+        } catch (Exception e) {
+                
+        	e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        log.error("An error occurred: {}", e.getMessage());
+	        succVal=e.getMessage();
+	        return succVal;
+	}
+      
+        
+        return succVal;
     }
     
     
