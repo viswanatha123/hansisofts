@@ -28,11 +28,13 @@ import org.primefaces.PrimeFaces;
 import com.DIC.DAO.ConnectionDAO;
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
+import com.DIC.DAO.Impl.SMSService;
 import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.LayoutMode;
 import com.DIC.model.UserDetails;
 
 import SMTPService.SMTPService;
+//import demo.SendSMS;
 
 
 
@@ -64,6 +66,8 @@ public class LayoutDetailService implements Serializable{
 	    ConnectionDAOImpl dao;
 	    LocationDAOImpl locationDao;
 	    UserDAOImpl udo;
+	    SMSService sms;
+	    UserRoleService ur;
 	    
 	    @PostConstruct 
 	    public void init()
@@ -72,6 +76,8 @@ public class LayoutDetailService implements Serializable{
 	          dao=new ConnectionDAOImpl();
 	          locationDao=new LocationDAOImpl();
 	          udo=new UserDAOImpl();
+	          sms=new SMSService();
+	          ur=new UserRoleService();
 	          
 	          primaryModel=locationDao.getLayoutPrimaryLocation();
 	          
@@ -151,7 +157,25 @@ public class LayoutDetailService implements Serializable{
 	        			if(selectedProperty.getUserId()!=0)
 	        			{
 	        				
-	        					        				
+	        				
+	        						if(ur.getUserRole().contains("SMS"))
+	        						{
+	        							log.info("******** SMS Enabled *****************");
+				        				UserDetails userDetails=udo.getUser(selectedProperty.getUserId());
+				        				
+				        				//Twilio service
+				        				//sms.sendSMSLead(userDetails.getPhone(), userDetails.getfName()+" "+userDetails.getlName(),custName,contactNumber); 
+				        				
+				        				// test2sms service
+				        				sms.sendSMSLeadText2sms(userDetails.getPhone(), userDetails.getfName()+" "+userDetails.getlName(),custName,contactNumber);
+				        				
+				        				
+	        						}
+	        						else
+	        						{
+	        							log.info("******** SMS Didabled *****************");
+	        						}
+	        				
 	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getLayoutId(),selectedProperty.getUserId(),"layout");
 	        				SMTPService.sendLayoutLeadEmail(custName,contactNumber,email,selectedProperty);
 	        				log.info("***** Successful submitted lead ******");

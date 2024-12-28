@@ -23,6 +23,7 @@ import org.primefaces.model.file.UploadedFile;
 import org.primefaces.model.file.UploadedFiles;
 import org.primefaces.util.EscapeUtils;
 
+import com.DIC.DAO.Impl.CommonDAOImpl;
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.IndiSiteDataEntryModel;
@@ -73,6 +74,8 @@ public class IndiSiteDataEntryService implements Serializable {
 
 	   ConnectionDAOImpl dao;
 	   UserDAOImpl uDao;
+	   UserRoleService ur;
+	   CommonDAOImpl comm;
 	  
 	  
 	  
@@ -83,6 +86,10 @@ public class IndiSiteDataEntryService implements Serializable {
           dao=new ConnectionDAOImpl();
           primaryModel=dao.getPrimaryLocation();
           uDao=new UserDAOImpl();
+          ur=new UserRoleService();
+          comm=new CommonDAOImpl();
+          
+          
           primLocation  = new HashMap<>(); 
           for(Map.Entry<String, String> pp:primaryModel.entrySet())
           {
@@ -169,14 +176,25 @@ public class IndiSiteDataEntryService implements Serializable {
 		    		    int userId= Integer.parseInt(session.getAttribute("userId").toString());
 		    		    if(userId > 0)
 		    		    {    	
-			              	updateResult=dao.updateIndiDataEntry(indiSiteDataEntryModel,userId);
+			              	//updateResult=dao.updateIndiDataEntry(indiSiteDataEntryModel,userId);
+			              	
+				              	if(ur.getUserRole().contains("Rank"))
+	    						{
+			    		    		
+			    		    			updateResult=dao.updateIndiDataEntry(indiSiteDataEntryModel,userId,comm.getUserRank(userId));
+		    		    			
+	    						}
+			    		    	else
+			    		    	{
+			    		    		updateResult=dao.updateIndiDataEntry(indiSiteDataEntryModel,userId,0);
+			    		    	}
 			              	SMTPService.sendIndiEmail(indiSiteDataEntryModel,userId);
 		    		    }
 		    		}
 		    		if(session.getAttribute("userId")==null)
 	    		    {    	
 	    		    	int defaultUserId=1;
-	      		    	updateResult=dao.updateIndiDataEntry(indiSiteDataEntryModel, defaultUserId);
+	      		    	updateResult=dao.updateIndiDataEntry(indiSiteDataEntryModel, defaultUserId,0);
 	    		    		
 	    		    }
 		    	}

@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+       <h:body>
+		
+        
+  <ui:composition template="/WEB-INF/facelets/template.xhtml">
+  <ui:param name="page" value="" />
+  <ui:define name="title" ><p style="font-weight: normal; font-size: 13px;color: block;"> SMS Log</p>
+  <p>All User details</p>
+  <div class="card">
+  <h:form id="form">
+	
+  <br></br>
+  
+			<center>
+			  <font size="4"  style="font-weight: normal; font-size: 13px;color: block;">SMS Log  </font>
+			</center>
+			
+			
+				<p:dataTable id="product" widgetVar="dtProducts" var="product"   value="#{sMSLogService.smsModel}" editable="true"  style="margin-bottom:20px" 
+				reflow="true" styleClass="products-table" selection="#{crudView.selectedProducts}"
+            		rowKey="#{product.smsId}" paginator="true" rows="11" rowSelectMode="add" paginatorPosition="bottom" >
+            		
+            		  <p:column headerText="SMS ID" width="100" style="font-weight: normal; font-size: 11px;color: block;">
+			                 <h:outputText value="#{product.smsId}" style="font-weight: normal; font-size: 11px;color: block;" />
+			          </p:column>
+			          <p:column headerText="Status Code" width="100" style="font-weight: normal; font-size: 11px;color: block;">
+			                 <h:outputText value="#{product.statusCode}" style="font-weight: normal; font-size: 11px;color: block;" />
+			          </p:column>
+			          <p:column headerText="Return Status" style="font-weight: normal; font-size: 11px;color: block;">
+			                 <h:outputText value="#{product.returnStatus}" style="font-weight: normal; font-size: 11px;color: block;" />
+			          </p:column>
+			          <p:column headerText="Requst ID" width="250" style="font-weight: normal; font-size: 11px;color: block;">
+			                 <h:outputText value="#{product.requestId}" style="font-weight: normal; font-size: 11px;color: block;" />
+			          </p:column>
+			          <p:column headerText="Status" width="250" style="font-weight: normal; font-size: 11px;color: block;">
+			                 <h:outputText value="#{product.status}" style="font-weight: normal; font-size: 11px;color: block;" />
+			          </p:column>
+			          <p:column headerText="To Number" style="font-weight: normal; font-size: 11px;color: block;">
+			                 <h:outputText value="#{product.toNumber}" style="font-weight: normal; font-size: 11px;color: block;" />
+			          </p:column>
+			          <p:column headerText="Agent Name" style="font-weight: normal; font-size: 11px;color: block;">
+			                 <h:outputText value="#{product.agentName}" style="font-weight: normal; font-size: 11px;color: block;" />
+			          </p:column>
+			          <p:column headerText="Cust Name" style="font-weight: normal; font-size: 11px;color: block;">
+			                 <h:outputText value="#{product.custName}" style="font-weight: normal; font-size: 11px;color: block;" />
+			          </p:column>
+			          <p:column headerText="Cust Number" style="font-weight: normal; font-size: 11px;color: block;">
+			                 <h:outputText value="#{product.custNumber}" style="font-weight: normal; font-size: 11px;color: block;" />
+			          </p:column>
+			           <p:column headerText="Create Date" style="font-weight: normal; font-size: 11px;color: block;">
+			                 <h:outputText value="#{product.createDate}" style="font-weight: normal; font-size: 11px;color: block;" />
+			          </p:column>
+            
+            
+            
+            </p:dataTable>
+			
+</h:form>			
+</div>
+</ui:define>
+</ui:composition>
+</h:body>
+</html>

@@ -62,7 +62,15 @@ public class ConnectionDAOImpl {
 		// SQL
 		interface SQL {
 			
-			String SQL_LAYOUT="select * from hansi_layout where prim_location = ? and seco_location = ? order by create_date desc";
+			//String SQL_LAYOUT="select * from hansi_layout where prim_location = ? and seco_location = ? order by create_date desc";
+			String SQL_LAYOUT="select * from hansi_layout where prim_location = ? and seco_location = ? order by \r\n"
+					+ "CASE \r\n"
+					+ "WHEN rank = 1 THEN 1\r\n"
+					+ "WHEN rank = 2 THEN 2 \r\n"
+					+ "WHEN rank = 3 THEN 3 \r\n"
+					+ "ELSE 4\r\n"
+					+ "END,\r\n"
+					+ "create_date desc ";
 			String SQL_EXCEPTION="select * from connector_model_status where dataset_id = ? and last_updated_on::date >= ? and last_updated_on::date <= ?";
 			String SQL_CONNECTOR = "select * from trn_connector_model where is_active = 1;";
 			String QUERY_STRING="select c.dataset_id,c.server_host,c.server_port, c.model_name,a.data_file, a.created_on, a.created_by, a.job_name,a.job_status,  b.step_information,case when b.step_status=1 then 'In Progess' when b.step_status=2 then 'Success' else 'Failed' end as Status,d.job_exception\n" +
@@ -75,14 +83,30 @@ public class ConnectionDAOImpl {
                     "and b.job_id =d.sch_job_id\n" +
                     "and b.step_information\n" +
                     "not in ('Set model access for LDAP Groups') ";
-			String SQL_AGRICULTURAL="select * from hansi_agricultural where prim_location = ? and seco_location = ? order by create_date desc";
+			//String SQL_AGRICULTURAL="select * from hansi_agricultural where prim_location = ? and seco_location = ? order by create_date desc";
+			String SQL_AGRICULTURAL="select * from hansi_agricultural where prim_location = ? and seco_location = ? order by \r\n"
+					+ "CASE \r\n"
+					+ "WHEN rank = 1 THEN 1\r\n"
+					+ "WHEN rank = 2 THEN 2 \r\n"
+					+ "WHEN rank = 3 THEN 3 \r\n"
+					+ "ELSE 4\r\n"
+					+ "END,\r\n"
+					+ "create_date desc";
+			String SQL_LAYOUT_INSERT="insert into hansi_layout (layout_id,name,location,persqft,contact_owner,owner_name,wonership,is_active,transaction,comment,length,width,prim_location,seco_location,create_date,swimingpool,playground,park,wall,community,facing,agent_name,image,cost,user_id,corner_bit,rank) \n" +
+					"values (nextval('hansi_layout_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?,?,?,?,?,?,?,?);";
+				
+			//String SQL_IndividualSite="select * from hansi_individual_site where prim_location = ? and seco_location = ? order by create_date desc";
+			String SQL_IndividualSite="select * from hansi_individual_site where prim_location = ? and seco_location = ? order by \r\n"
+					+ "CASE \r\n"
+					+ "WHEN rank = 1 THEN 1\r\n"
+					+ "WHEN rank = 2 THEN 2 \r\n"
+					+ "WHEN rank = 3 THEN 3 \r\n"
+					+ "ELSE 4\r\n"
+					+ "END,\r\n"
+					+ "create_date desc";
 			
-			String SQL_LAYOUT_INSERT="insert into hansi_layout (layout_id,name,location,persqft,contact_owner,owner_name,wonership,is_active,transaction,comment,length,width,prim_location,seco_location,create_date,swimingpool,playground,park,wall,community,facing,agent_name,image,cost,user_id,corner_bit) \n" +
-					"values (nextval('hansi_layout_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?,?,?,?,?,?,?);";
-			
-			String SQL_IndividualSite="select * from hansi_individual_site where prim_location = ? and seco_location = ? order by create_date desc";
-			String SQL_INDI_INSERT="INSERT INTO hansi_individual_site (ind_id,owner_name, location, contact_no, site_no, persqft, length, width, wonership, transaction, prim_location, seco_location, create_date, is_active,comment,facing,agent_name,cost,image,user_id,corner_bit) VALUES(nextval('hansi_individual_site_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,current_timestamp, 1, ?,?,?,?,?,?,?)";
-			String SQL_AGRIDATAENTRY_INSERT = "INSERT INTO hansi_agricultural (agri_id,owner_name, contact_no, survey_no, location, wonership, transaction, per_cent, number_cents, water_source, crop, prim_location, seco_location, create_date, is_active, comment,agent_name,cost,image,user_id,corner_bit) VALUES(nextval('hansi_agricultural_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp, 1, ?,?,?,?,?,?)";
+			String SQL_INDI_INSERT="INSERT INTO hansi_individual_site (ind_id,owner_name, location, contact_no, site_no, persqft, length, width, wonership, transaction, prim_location, seco_location, create_date, is_active,comment,facing,agent_name,cost,image,user_id,corner_bit,rank) VALUES(nextval('hansi_individual_site_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,current_timestamp, 1, ?,?,?,?,?,?,?,?)";
+			String SQL_AGRIDATAENTRY_INSERT = "INSERT INTO hansi_agricultural (agri_id,owner_name, contact_no, survey_no, location, wonership, transaction, per_cent, number_cents, water_source, crop, prim_location, seco_location, create_date, is_active, comment,agent_name,cost,image,user_id,corner_bit,rank) VALUES(nextval('hansi_agricultural_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp, 1, ?,?,?,?,?,?,?)";
 			String SQL_ENQU_INSERT="INSERT INTO hansi_enquiry (enqi_id, name, email, phone, create_date, is_active) VALUES(nextval('hansi_enquiry_seq'),?, ?, ?, current_timestamp, 1)";
 			String SQL_HELP_INSERT="INSERT INTO hansi_help (query_id, query, phone, create_date,is_active) VALUES(nextval('hansi_help_seq'),?, ?, current_timestamp,1)";
 			String SQL_IMAGE_UPLOAD="insert into hansi_property_image (prop_img_id,img_name,image) values (nextval('hansi_imageUpload_seq'),?,?)";
@@ -628,9 +652,11 @@ public class ConnectionDAOImpl {
 
     
     
-    // ***************** update plot data entry **************
-    public String updatePlotDataEntry(PlotsDataEntryModel plotsDataEntryModel, int userId)
+ // ***************** update plot data entry **************
+    public String updatePlotDataEntry(PlotsDataEntryModel plotsDataEntryModel, int userId,int rankId)
     {
+    	
+    	log.info(" Executing dao updatePlotDataEntry ");
     	String succVal="";
     	
         try {
@@ -669,23 +695,23 @@ public class ConnectionDAOImpl {
 		    pstmt.setDouble(22, plotsDataEntryModel.getPersqft() * (plotsDataEntryModel.getLength() * plotsDataEntryModel.getWidth()));
 		    pstmt.setInt(23, userId);
 		    pstmt.setString(24, plotsDataEntryModel.getCornerBit());
+		    pstmt.setInt(25, rankId);
 		    
          
             
            
             int res=pstmt.executeUpdate();
+            System.out.println("Result status  - >"+res);
 	            if(res > 0)
 	            {
 	            	succVal="Successful updated record";
 	            }
            
-        
-
-        
         } catch (Exception e) {
          
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        System.out.println("Error message  - >"+e.getMessage());
 	    
 	        succVal=e.getMessage();
 	        log.error("An error occurred: {}", e.getMessage());
@@ -696,6 +722,7 @@ public class ConnectionDAOImpl {
 
         return succVal;
     }
+    
     
     
     
@@ -788,8 +815,8 @@ public class ConnectionDAOImpl {
     
     
     
-    // ***************** update Indi data entry **************
-    public String updateIndiDataEntry(IndiSiteDataEntryModel indiSiteDataEntryModel,int userId)
+ // ***************** update Indi data entry **************
+    public String updateIndiDataEntry(IndiSiteDataEntryModel indiSiteDataEntryModel,int userId, int rankId)
     {
     	String succVal="";
         try {
@@ -821,6 +848,7 @@ public class ConnectionDAOImpl {
 			            pstmt.setBinaryStream(16, fin2, file.getSize());
 			            pstmt.setInt(17,userId);
 			            pstmt.setString(18, indiSiteDataEntryModel.getCornerBit());
+			            pstmt.setInt(19, rankId);
 			    		
 			                 
 			            
@@ -850,7 +878,7 @@ public class ConnectionDAOImpl {
     
     
     // ***************** update Agricultural data entry **************
-    public String updateAgriDataEntry(AgriculturalDataEntryModel agriculturalDataEntryModel,int userId)
+    public String updateAgriDataEntry(AgriculturalDataEntryModel agriculturalDataEntryModel,int userId, int rankId)
     {
     	
     	String succVal="";
@@ -883,6 +911,7 @@ public class ConnectionDAOImpl {
 		    pstmt.setBinaryStream(16, fin2, file.getSize());  
 		    pstmt.setInt(17, userId);
 		    pstmt.setString(18, agriculturalDataEntryModel.getCornerBit());
+		    pstmt.setInt(19, rankId);
 		
 		    int res=pstmt.executeUpdate();
 		        if(res > 0)
@@ -905,7 +934,6 @@ public class ConnectionDAOImpl {
         
     return succVal;
     }
-    
     
     
     

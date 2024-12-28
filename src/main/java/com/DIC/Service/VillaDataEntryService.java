@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 
 import org.primefaces.model.file.UploadedFile;
 
+import com.DIC.DAO.Impl.CommonDAOImpl;
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.DAO.Impl.UserDAOImpl;
@@ -66,6 +67,7 @@ public class VillaDataEntryService implements Serializable{
 	private Boolean isEnable;
 	private int userId;
 	private int floorNum;
+	private String facing;
 	private String cornerBit;
 	
 	
@@ -82,6 +84,8 @@ public class VillaDataEntryService implements Serializable{
 	 ConnectionDAOImpl dao;
 	 GeneralDAOImpl gdao;
 	 UserDAOImpl uDao;
+	 UserRoleService ur;
+	 CommonDAOImpl comm;
 	
 	public VillaDataEntryService()
 	{
@@ -96,6 +100,9 @@ public class VillaDataEntryService implements Serializable{
 	          gdao=new GeneralDAOImpl();
 	          primaryModel=dao.getPrimaryLocation();
 	          uDao=new UserDAOImpl();
+	          ur=new UserRoleService();
+	          comm=new CommonDAOImpl();
+	          
            primLocation  = new HashMap<>(); 
            for(Map.Entry<String, String> pp:primaryModel.entrySet())
            {
@@ -165,6 +172,7 @@ public class VillaDataEntryService implements Serializable{
              villaModel.setInputStream(file.getInputStream());
              villaModel.setFile(file);
              villaModel.setFloorNum(floorNum);
+             villaModel.setFacing(facing);
              villaModel.setCornerBit(cornerBit);
              
             HttpSession session = SessionUtils.getSession();
@@ -175,14 +183,25 @@ public class VillaDataEntryService implements Serializable{
 		    		    int userId= Integer.parseInt(session.getAttribute("userId").toString());
 		    		    if(userId > 0)
 		    		    {    	
-			 	              	updateResult=gdao.updateVillaDataEntry(villaModel,userId);
+			 	              	//updateResult=gdao.updateVillaDataEntry(villaModel,userId);
+			 	              	
+			 	              	if(ur.getUserRole().contains("Rank"))
+	    						{
+			    		    		
+			    		    			updateResult=gdao.updateVillaDataEntry(villaModel,userId,comm.getUserRank(userId));
+		    		    			
+	    						}
+			    		    	else
+			    		    	{
+			    		    		updateResult=gdao.updateVillaDataEntry(villaModel,userId,0);
+			    		    	}
 			 	              	SMTPService.sendVillaEmail(villaModel,userId);
 		    		    }
 		    		}
 		    		if(session.getAttribute("userId")==null)
 	    		    {    	
 	    		    	int defaultUserId=1;
-	      	    		    	updateResult=gdao.updateVillaDataEntry(villaModel,defaultUserId);
+	      	    		    	updateResult=gdao.updateVillaDataEntry(villaModel,defaultUserId,0);
 	    		    		
 	    		    }
 		    	}
@@ -246,8 +265,8 @@ public class VillaDataEntryService implements Serializable{
     	this.address="";
     	this.road_width=0;
     	this.floors=0;
-    	this.bed_rooms=0;
-    	this.bath_rooms=0;
+    	this.bed_rooms=1;
+     	this.bath_rooms=1;
     	this.furnished="";
     	this.plot_area=0;
     	this.s_build_are=0;
@@ -503,6 +522,14 @@ public class VillaDataEntryService implements Serializable{
 
 	public void setCornerBit(String cornerBit) {
 		this.cornerBit = cornerBit;
+	}
+	
+	public String getFacing() {
+		return facing;
+	}
+
+	public void setFacing(String facing) {
+		this.facing = facing;
 	}
 
 

@@ -25,6 +25,7 @@ import org.primefaces.model.file.UploadedFile;
 import org.primefaces.model.file.UploadedFiles;
 import org.primefaces.util.EscapeUtils;
 
+import com.DIC.DAO.Impl.CommonDAOImpl;
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.AgriculturalDataEntryModel;
@@ -78,6 +79,8 @@ public class AgriculturalDataEntryhService implements Serializable {
 	  
 	  ConnectionDAOImpl dao;
 	  UserDAOImpl uDao;
+	  UserRoleService ur;
+	  CommonDAOImpl comm;
 	  
 	  @PostConstruct 
       public void init()
@@ -87,6 +90,9 @@ public class AgriculturalDataEntryhService implements Serializable {
           dao=new ConnectionDAOImpl();
           primaryModel=dao.getPrimaryLocation();
           uDao=new UserDAOImpl();
+          ur=new UserRoleService();
+          comm=new CommonDAOImpl();
+          
           primLocation  = new HashMap<>();
           for(Map.Entry<String, String> pp:primaryModel.entrySet())
           {
@@ -166,7 +172,20 @@ public class AgriculturalDataEntryhService implements Serializable {
 	    		    int userId= Integer.parseInt(session.getAttribute("userId").toString());
 	    		    if(userId > 0)
 	    		    {    	
-	              	updateResult=dao.updateAgriDataEntry(agriculturalDataModel,userId);
+	              	//updateResult=dao.updateAgriDataEntry(agriculturalDataModel,userId);
+			              	if(ur.getUserRole().contains("Rank"))
+							{
+		    		    		
+		    		    				updateResult=dao.updateAgriDataEntry(agriculturalDataModel,userId,comm.getUserRank(userId));
+				    		
+							}
+		    		    	else
+		    		    	{
+		    		    		updateResult=dao.updateAgriDataEntry(agriculturalDataModel,userId,0);
+		    		    	}
+	              	
+	              	
+	              	
 	              	SMTPService.sendAgeriEmail(agriculturalDataModel,userId);
 	    		    		
 	    		    }
@@ -174,7 +193,7 @@ public class AgriculturalDataEntryhService implements Serializable {
 	    		if(session.getAttribute("userId")==null)
     		    {    	
     		    	int defaultUserId=1;
-    		    	updateResult=dao.updateAgriDataEntry(agriculturalDataModel,defaultUserId);
+    		    	updateResult=dao.updateAgriDataEntry(agriculturalDataModel,defaultUserId,0);
     		    	
     		    		
     		    }

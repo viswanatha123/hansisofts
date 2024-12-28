@@ -29,8 +29,10 @@ import org.primefaces.PrimeFaces;
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
+import com.DIC.DAO.Impl.SMSService;
 import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.LayoutMode;
+import com.DIC.model.UserDetails;
 import com.DIC.model.VillaModel;
 
 import SMTPService.SMTPService;
@@ -76,6 +78,8 @@ public class VillaDetailsService implements Serializable {
 	    GeneralDAOImpl gDao;
 	    LocationDAOImpl locationDao;
 	    UserDAOImpl udo;
+	    SMSService sms;
+	    UserRoleService ur;
 	    
 	    
 	    @PostConstruct 
@@ -85,6 +89,9 @@ public class VillaDetailsService implements Serializable {
 	    	gDao=new GeneralDAOImpl();
 	          locationDao=new LocationDAOImpl();
 	          udo=new UserDAOImpl();
+	          sms=new SMSService();
+	          ur=new UserRoleService();
+	          
 	          primaryModel=locationDao.getVillaPrimaryLocation();
 	          
 	          
@@ -167,6 +174,25 @@ public class VillaDetailsService implements Serializable {
         		{
         			if(selectedProperty.getUserId()!=0)
         			{
+        				
+        				if(ur.getUserRole().contains("SMS"))
+						{
+							log.info("******** SMS Enabled *****************");
+	        				UserDetails userDetails=udo.getUser(selectedProperty.getUserId());
+	        				
+	        				//Twilio service
+	        				//sms.sendSMSLead(userDetails.getPhone(), userDetails.getfName()+" "+userDetails.getlName(),custName,contactNumber); 
+	        				
+	        				// test2sms service
+	        				sms.sendSMSLeadText2sms(userDetails.getPhone(), userDetails.getfName()+" "+userDetails.getlName(),custName,contactNumber);
+	        				
+	        				
+						}
+						else
+						{
+							log.info("******** SMS Didabled *****************");
+						}
+        				
         				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getVillaId(),selectedProperty.getUserId(),"villa");
         				SMTPService.sendVillaLeadEmail(custName,contactNumber,email,selectedProperty);
         				log.info("***** Successful submitted lead ******");
