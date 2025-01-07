@@ -167,8 +167,9 @@ public class GeneralDAOImpl {
 			String SQL_PLOT4BHK_COUNT="select count(*) from villa_plot where bed_rooms='4'";
 			String SQL_PROMO_IMAGE="select * from promo_img";
 			String SQL_VILLA_COUNT="select count(*) from villa_plot where prim_location = ? and seco_location = ?";
-			String SQL_PROMO_IMAGE_VILLA="select * from promo_img where is_active ='1'";
+			String SQL_PROMO_IMAGE_VILLA="select * from promo_img where is_active ='1' LIMIT ? OFFSET ?";
 			String SQL_DEL_PROMO_IMAGE="delete from promo_img where promo_id=?";
+			String SQL_PROMO_COUNT="select count(*) from promo_img where is_active ='1'";
 		}
 	}
 	
@@ -2946,7 +2947,7 @@ public class GeneralDAOImpl {
 		}
 		
 		// ********************* Promotion image ************	
-		public List<PromoImageModel> getPromoImageVilla()
+		public List<PromoImageModel> getPromoImageVilla(int pageSize, int currentPage)
 	   	{
 	   	
 	   		List<PromoImageModel> promoImageModelList = new ArrayList<>();
@@ -2961,6 +2962,8 @@ public class GeneralDAOImpl {
 				System.out.println(" Owner Properties Query : "+sql_promo_image .toString());
 				log.info("owner properties : "+sql_promo_image .toString());
 								pstmt = con.prepareStatement(sql_promo_image.toString());
+								pstmt.setInt(1, pageSize);
+					            pstmt.setInt(2, (currentPage - 1) * pageSize);
 							    ResultSet rs = pstmt.executeQuery();
 	   	         while ( rs.next() ) {
 	   	        	PromoImageModel promoImageModel=new PromoImageModel();
@@ -3182,6 +3185,42 @@ public class GeneralDAOImpl {
 			            pstmt.setString(1, priLocation);
 		                pstmt.setString(2, secLocation);
 		                ResultSet rs = pstmt.executeQuery();
+				                  
+				        	if (rs.next()) {
+				                totalRecords = rs.getInt(1);
+				            }
+			   			pstmt.close();
+				        rs.close();
+				        con.close();
+				       
+				     } catch (Exception e) {
+				        e.printStackTrace();
+				        System.err.println(e.getClass().getName()+": "+e.getMessage());
+				        log.error("An error occurred: {}", e.getMessage());
+				     }
+			    	
+			    	return totalRecords;
+			    }
+				
+				
+				// promo count 
+				public int getPromoCountTotalRecords()
+			    {
+			    	int totalRecords=0;
+			    
+
+		   	
+			   	
+			   	StringBuilder sql_promo_count = new StringBuilder(Constants.SQL.SQL_PROMO_COUNT);
+				
+	
+					
+				 	try {
+						Connection con = null;
+						PreparedStatement pstmt = null;
+						con=ConnectionDAO.getConnection();
+			            pstmt = con.prepareStatement(sql_promo_count.toString());
+			            ResultSet rs = pstmt.executeQuery();
 				                  
 				        	if (rs.next()) {
 				                totalRecords = rs.getInt(1);

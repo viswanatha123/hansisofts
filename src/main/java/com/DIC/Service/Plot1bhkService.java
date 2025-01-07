@@ -11,6 +11,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -32,6 +33,8 @@ import SMTPService.SMTPService;
 
 
 @ViewScoped
+//@RequestScoped
+//@SessionScoped
 public class Plot1bhkService {
 	
 private static final Logger log = LogManager.getLogger(Plot1bhkService.class);

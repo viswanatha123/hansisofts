@@ -54,7 +54,7 @@ public class BudgetService2 implements Serializable{
 	
 	public BudgetService2()
 	{
-		log.info("Loading BudgetService1 Constructor");
+		log.info("Loading BudgetService2 Constructor");
 		gDao=new GeneralDAOImpl();
 		udo=new UserDAOImpl();
 		
