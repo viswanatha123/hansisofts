@@ -73,6 +73,12 @@ public class VillaDetailsService implements Serializable {
 	private int pageSize = 10;
 	private int totalRecords;
 	
+	private int promoCurrentPage = 1;
+	private int promoPageSize = 3;
+	private int promoTotalRecords;
+	
+	
+	
 	
 
 
@@ -165,7 +171,7 @@ public class VillaDetailsService implements Serializable {
 		        loadEntities();
 				countTotalRecords();
 		        
-		        promoImageModel=gDao.getPromoImageVilla();
+		        //promoImageModel=gDao.getPromoImageVilla();
 		        
 		                 
 		                
@@ -174,8 +180,11 @@ public class VillaDetailsService implements Serializable {
 	        
 	        public void loadEntities() {
 		 		
-	        	 promoImageModel=gDao.getPromoImageVilla();
+	        	 //promoImageModel=gDao.getPromoImageVilla();
+	        	 promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
 	        	villaModel=gDao.getVillaDetails(country,city, proType,pageSize,currentPage);
+	        	
+	        	
 	        	for(VillaModel x:villaModel)
                 {
                     System.out.println("@@@@@@@@@@@@@@@@@@@@ :"+x.getI_am());
@@ -187,13 +196,14 @@ public class VillaDetailsService implements Serializable {
                 else {
                 	errorMessage="";
                 }
-		 		
+           
 		        
 		    }
 	        public void countTotalRecords() {
 			 	
 	        	System.out.println("================>"+country+"  "+city+"   "+proType);
 		 		totalRecords=gDao.getVillaCountTotalRecords(country,city, proType);
+		 		promoTotalRecords=gDao.getPromoCountTotalRecords();
 		        
 		    }
 	        
@@ -202,11 +212,22 @@ public class VillaDetailsService implements Serializable {
 		            currentPage++;
 		            loadEntities();
 		        }
+		        
+		        if ((promoCurrentPage * promoPageSize) < promoTotalRecords) {
+		        	promoCurrentPage++;
+		            loadEntities();
+		            	
+		        }
 		    }
 
 		    public void previousPage() {
 		        if (currentPage > 1) {
 		            currentPage--;
+		            loadEntities();
+		        }
+		        
+		        if (promoCurrentPage > 1) {
+		        	promoCurrentPage--;
 		            loadEntities();
 		        }
 		    }
@@ -485,6 +506,48 @@ public class VillaDetailsService implements Serializable {
 
 		public void setTotalRecords(int totalRecords) {
 			this.totalRecords = totalRecords;
+		}
+
+
+
+
+		public int getPromoCurrentPage() {
+			return promoCurrentPage;
+		}
+
+
+
+
+		public int getPromoPageSize() {
+			return promoPageSize;
+		}
+
+
+
+
+		public void setPromoCurrentPage(int promoCurrentPage) {
+			this.promoCurrentPage = promoCurrentPage;
+		}
+
+
+
+
+		public void setPromoPageSize(int promoPageSize) {
+			this.promoPageSize = promoPageSize;
+		}
+
+
+
+
+		public int getPromoTotalRecords() {
+			return promoTotalRecords;
+		}
+
+
+
+
+		public void setPromoTotalRecords(int promoTotalRecords) {
+			this.promoTotalRecords = promoTotalRecords;
 		}
 	
 	
