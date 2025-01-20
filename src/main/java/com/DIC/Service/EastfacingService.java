@@ -26,6 +26,7 @@ import org.primefaces.model.StreamedContent;
 import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
 import com.DIC.DAO.Impl.UserDAOImpl;
+import com.DIC.model.PromoImageModel;
 import com.DIC.model.VillaModel;
 
 import SMTPService.SMTPService;
@@ -46,6 +47,11 @@ public class EastfacingService implements Serializable {
 	private int pageSize = 10;
 	private int totalRecords;
 	
+	private int promoCurrentPage = 1;
+	private int promoPageSize = 3;
+	private int promoTotalRecords;
+	private List<PromoImageModel> promoImageModel;
+	
 	
 
 
@@ -56,6 +62,7 @@ public class EastfacingService implements Serializable {
 	private String contactNumber="";
 	private String email="";
 
+	
 	private List<VillaModel> villaModel;
 		
 	 
@@ -81,14 +88,19 @@ public class EastfacingService implements Serializable {
 			
 			public void loadEntities() {
 		 		
+				
 				villaModel=gDao.getEastfacing(pageSize,currentPage);
+				promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
 		 		
+				
 		        
 		    }
 		 	
 		 	public void countTotalRecords() {
-		 	
+		 		
+		 		
 		 		totalRecords=gDao.getEastfacingCountTotalRecords();
+		 		promoTotalRecords=gDao.getPromoCountTotalRecords();
 		        
 		    }
 		 	public void nextPage() {
@@ -96,11 +108,21 @@ public class EastfacingService implements Serializable {
 		            currentPage++;
 		            loadEntities();
 		        }
+		        if ((promoCurrentPage * promoPageSize) < promoTotalRecords) {
+		        	promoCurrentPage++;
+		            loadEntities();
+		            	
+		        }
 		    }
 
 		    public void previousPage() {
 		        if (currentPage > 1) {
 		            currentPage--;
+		            loadEntities();
+		        }
+		        
+		        if (promoCurrentPage > 1) {
+		        	promoCurrentPage--;
 		            loadEntities();
 		        }
 		    }
@@ -278,7 +300,25 @@ public class EastfacingService implements Serializable {
 				this.totalRecords = totalRecords;
 			}
 			
+			public List<PromoImageModel> getPromoImageModel() {
+				return promoImageModel;
+			}
+
+
+			public void setPromoImageModel(List<PromoImageModel> promoImageModel) {
+				this.promoImageModel = promoImageModel;
+			}
 			
+			public void setPromoCurrentPage(int promoCurrentPage) {
+				this.promoCurrentPage = promoCurrentPage;
+			}
+
+
+
+
+			public void setPromoPageSize(int promoPageSize) {
+				this.promoPageSize = promoPageSize;
+			}
 		
 		
        
