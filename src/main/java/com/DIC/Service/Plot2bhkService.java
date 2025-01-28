@@ -15,6 +15,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,14 +26,15 @@ import org.primefaces.model.StreamedContent;
 import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
 import com.DIC.DAO.Impl.UserDAOImpl;
+import com.DIC.model.PromoImageModel;
 import com.DIC.model.VillaModel;
 
 import SMTPService.SMTPService;
 
 @ManagedBean(name="plot2bhkService")
 
-//@RequestScoped
-@ViewScoped
+@RequestScoped
+//@ViewScoped
 //@SessionScoped
 public class Plot2bhkService {
 	
@@ -43,6 +45,11 @@ private static final Logger log = LogManager.getLogger(Plot2bhkService.class);
 	private int currentPage = 1;
 	private int pageSize = 10;
 	private int totalRecords;
+	private int promoCurrentPage = 1;
+	private int promoPageSize = 3;
+	private int promoTotalRecords;
+	private List<PromoImageModel> promoImageModel;
+	
 	
 	
 
@@ -80,6 +87,7 @@ private static final Logger log = LogManager.getLogger(Plot2bhkService.class);
 		public void loadEntities() {
 	 		
 			villaModel=gDao.getPlot2bhkProperties(pageSize,currentPage);
+			promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
 	 		
 	        
 	    }
@@ -87,12 +95,19 @@ private static final Logger log = LogManager.getLogger(Plot2bhkService.class);
 	 	public void countTotalRecords() {
 	 	
 	 		totalRecords=gDao. getplot2bhkCountTotalRecords();
+	 		promoTotalRecords=gDao.getPromoCountTotalRecords();
 	        
 	    }
 	 	public void nextPage() {
 	        if ((currentPage * pageSize) < totalRecords) {
 	            currentPage++;
 	            loadEntities();
+	        }
+	        
+	        if ((promoCurrentPage * promoPageSize) < promoTotalRecords) {
+	        	promoCurrentPage++;
+	            loadEntities();
+	            	
 	        }
 	    }
 
@@ -101,17 +116,37 @@ private static final Logger log = LogManager.getLogger(Plot2bhkService.class);
 	            currentPage--;
 	            loadEntities();
 	        }
+	        
+	        if (promoCurrentPage > 1) {
+	        	promoCurrentPage--;
+	            loadEntities();
+	        }
 	    }
+	    
 	 	
 	    public int getTotalPages() {
 	        return (int) Math.ceil((double) totalRecords / pageSize);
 	    }
 		
-		
+	    public void storeSelectedPropertyInSession() {
+		    
+	        FacesContext facesContext = FacesContext.getCurrentInstance();
+	        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+	        session.setAttribute("selectedPlot2bhk", selectedProperty);
+	    }
 		
 		
 
 		public void submit() {
+			
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+	        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+	      
+	        if (session != null) {
+	         	selectedProperty= (VillaModel) session.getAttribute("selectedPlot2bhk");
+	         	System.out.println("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
+	          }
+	        
 	    	System.out.println("-------------submit ----------------------");
         	log.info("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
         	
@@ -156,6 +191,14 @@ private static final Logger log = LogManager.getLogger(Plot2bhkService.class);
 
 			public void setVillaModel(List<VillaModel> villaModel) {
 				this.villaModel = villaModel;
+			}
+			public List<PromoImageModel> getPromoImageModel() {
+				return promoImageModel;
+			}
+
+
+			public void setPromoImageModel(List<PromoImageModel> promoImageModel) {
+				this.promoImageModel = promoImageModel;
 			}
 
 
@@ -271,6 +314,35 @@ private static final Logger log = LogManager.getLogger(Plot2bhkService.class);
 			public void setTotalRecords(int totalRecords) {
 				this.totalRecords = totalRecords;
 			}
+			public int getPromoCurrentPage() {
+				return promoCurrentPage;
+			}
+
+
+
+
+			public int getPromoPageSize() {
+				return promoPageSize;
+			}
+
+
+
+
+			public void setPromoCurrentPage(int promoCurrentPage) {
+				this.promoCurrentPage = promoCurrentPage;
+			}
+
+
+
+
+			public void setPromoPageSize(int promoPageSize) {
+				this.promoPageSize = promoPageSize;
+			}
+
+
+		
+		        
+
 		
 		        
 }
