@@ -90,7 +90,8 @@ public class VillaDetailsService implements Serializable {
 
 	private List<PromoImageModel> promoImageModel;
 	
-		private List<VillaModel> villaModel;
+	private List<VillaModel> villaModel;
+		
 	    GeneralDAOImpl gDao;
 	    LocationDAOImpl locationDao;
 	    UserDAOImpl udo;

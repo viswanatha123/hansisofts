@@ -1,2 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/RestlessFramework"/>
+
+
+<Context>
+
+    <!-- PostgreSQL Connection Pool Configuration -->
+    <Resource name="qa"
+              auth="Container"
+              type="com.zaxxer.hikari.HikariDataSource"
+              username="postgres"
+              password="admin"
+              driverClassName="org.postgresql.Driver"
+              url="jdbc:postgresql://localhost:5432/hansi-qa"
+              maxTotal="20"
+              maxIdle="10"
+              minIdle="5"
+              maxWaitMillis="10000" />
+
+</Context>

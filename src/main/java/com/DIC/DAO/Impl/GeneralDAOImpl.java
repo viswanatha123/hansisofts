@@ -1,6 +1,8 @@
 package com.DIC.DAO.Impl;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -15,6 +17,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -2305,29 +2309,58 @@ public class GeneralDAOImpl {
     
     public int getEastfacingCountTotalRecords()
     {
+    	
+    	ConnectionDAO condao;
+		BasicDataSource bds=null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
     	int totalRecords=0;
     
    	StringBuilder sql_east_facing_count = new StringBuilder(Constants.SQL.SQL_EAST_FACING_COUNT);
 		
 	 	try {
-			Connection con = null;
-			PreparedStatement pstmt = null;
-			con=ConnectionDAO.getConnection();
+			
+			//con=ConnectionDAO.getConnection();
+			//con=ConnectionDAO.getDataSource().getConnection();
+			
+			
+	 		condao=new ConnectionDAO();
+   			bds=condao.getDataSource();
+   			con=bds.getConnection();
+   			
             pstmt = con.prepareStatement(sql_east_facing_count.toString());
             ResultSet rs = pstmt.executeQuery();
 	                  
 	        	if (rs.next()) {
 	                totalRecords = rs.getInt(1);
 	            }
-   			pstmt.close();
+   			
 	        rs.close();
-	        con.close();
+	        
 	       
 	     } catch (Exception e) {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
 	        log.error("An error occurred: {}", e.getMessage());
 	     }
+	 	finally {
+            // Close the pool (important for proper shutdown)
+            try {
+            	if (bds != null) {
+           		 bds.close(); 
+                }
+                if (con != null) {
+               	 con.close(); 
+                }
+                if (pstmt != null) {
+               	 pstmt.close(); 
+                }
+                
+                
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+}
     	
     	return totalRecords;
     }
@@ -2336,16 +2369,26 @@ public class GeneralDAOImpl {
     
     public List<VillaModel> getEastfacing(int pageSize, int currentPage)
 	{
+    	
+    	ConnectionDAO condao;
+		BasicDataSource bds=null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		//InputStream imageStream = null;
+		//InputStream imageStream = null;
 	
 		List<VillaModel> VillaModelList = new ArrayList<>();
 		try {
-			Connection con = null;
-			PreparedStatement pstmt = null;
-			
-			
+						
 			StringBuilder sql_east_facing = new StringBuilder(Constants.SQL.SQL_EAST_FACING);
 			
-			con=ConnectionDAO.getConnection();
+	
+			//con=ConnectionDAO.getDataSource().getConnection();
+		
+			condao=new ConnectionDAO();
+   			bds=condao.getDataSource();
+   			con=bds.getConnection();
+			
 			System.out.println("East facing Query : "+sql_east_facing.toString());
 			log.info("East facing Query : "+sql_east_facing.toString());
 							pstmt = con.prepareStatement(sql_east_facing.toString());
@@ -2383,10 +2426,63 @@ public class GeneralDAOImpl {
 	        	 villaModel.setUserId(rs.getInt("user_id"));
 	        	 villaModel.setFloorNum(rs.getInt("floor_num"));
 	        	 
+	        	 
+	        	 /*
+	        	 if(rs.getBytes("image").length != 0) {
+	        	        log.info("Villa details image available: " + rs.getInt("villa_id") + " " + rs.getString("owner_name") + " --->" + rs.getBytes("image").length);
+	        	        imageStream = rs.getBinaryStream("image");
+	        	        villaModel.setStreamedContent(DefaultStreamedContent.builder()
+	        	            .name("US_Piechart.jpg")
+	        	            .contentType("image/jpg")
+	        	            .stream(() -> imageStream)
+	        	            .build());
+	        	    }
+	        	 */
+	        	 
+	        	 /*
+	        	 InputStream imageStream = rs.getBinaryStream("image");
+	        	 if (imageStream != null) {
+	        	     
+	        	     villaModel.setStreamedContent(DefaultStreamedContent.builder()
+	        	         .name("US_Piechart.jpg")
+	        	         .contentType("image/jpg")
+	        	         .stream(() -> imageStream) // Stream the content directly
+	        	         .build());
+	        	 }
+	        	 */
+	        	 
+	        	 InputStream imageStream = rs.getBinaryStream("image");
+	        	 if (imageStream != null) {
+	        	     BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
+	        	     
+	        	     villaModel.setStreamedContent(DefaultStreamedContent.builder()
+	        	         .name("US_Piechart.jpg")
+	        	         .contentType("image/jpg")
+	        	         .stream(() -> bufferedStream) // Stream the content directly
+	        	         .build());
+	        	 }
+	        	 else
+                 {
+                	// Defalut Image
+                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+                	 ResultSet rsDef = pstmtDefault.executeQuery();
+                	 while ( rsDef.next())
+                			 {
+                		      byte[] def=rsDef.getBytes("image");
+                		      villaModel.setStreamedContent(DefaultStreamedContent.builder()
+                             .name("US_Piechart.jpg")
+                             .contentType("image/jpg")
+                             .stream(() -> new ByteArrayInputStream(def)).build());
+                			 }
+                	 
+                  }
+	        	 
+	           	 
+	        	 
 	        	 //log.info(" getReadyToMove() : "+rs.getInt("villa_id")+"   "+rs.getString("i_am"));
 	        	 
 	        	 			// below for Image
-	        	 
+	        	 /*
 	        	            	 if(rs.getBytes("image").length!=0)
 				                 {
 					        		 log.info(" Villa details image available: "+rs.getInt("villa_id")+"   "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
@@ -2412,19 +2508,37 @@ public class GeneralDAOImpl {
 				                			 }
 				                	 
 				                  }
-	        	  
+	        	  */
 	                       
              VillaModelList.add(villaModel);
 	         }
 	         	
-	         pstmt.close();
+	        
 	         rs.close();
-	         con.close();
+	         
 	         log.info("### : *** Connection Closed from getReadyToMove()");
 	     } catch (Exception e) {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
 	        log.error("An error occurred getReadyToMove: {}", e.getMessage());
+	     }finally {
+             // Close the pool (important for proper shutdown)
+             try {
+            	 if (bds != null) {
+            		 bds.close(); 
+                 }
+                 if (con != null) {
+                	 con.close(); 
+                 }
+                 if (pstmt != null) {
+                	 pstmt.close(); 
+                 }
+                 
+                 
+                 
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
 	     }
 	return VillaModelList;		
 	}
@@ -2949,16 +3063,25 @@ public class GeneralDAOImpl {
 		// ********************* Promotion image ************	
 		public List<PromoImageModel> getPromoImageVilla(int pageSize, int currentPage)
 	   	{
+			ConnectionDAO condao;
+			BasicDataSource bds=null;
+			Connection con = null;
+   			PreparedStatement pstmt = null;
 	   	
 	   		List<PromoImageModel> promoImageModelList = new ArrayList<>();
 	   		try {
-	   			Connection con = null;
-	   			PreparedStatement pstmt = null;
+	   			
 	   			
 	   			
 	   			StringBuilder sql_promo_image = new StringBuilder(Constants.SQL.SQL_PROMO_IMAGE_VILLA);
 	   			
-	   			con=ConnectionDAO.getConnection();
+	   			//con=ConnectionDAO.getConnection();
+	   			//con=ConnectionDAO.getDataSource().getConnection();
+	   			
+	   			condao=new ConnectionDAO();
+	   			bds=condao.getDataSource();
+	   			con=bds.getConnection();
+	   			
 				System.out.println(" Owner Properties Query : "+sql_promo_image .toString());
 				log.info("owner properties : "+sql_promo_image .toString());
 								pstmt = con.prepareStatement(sql_promo_image.toString());
@@ -3005,15 +3128,35 @@ public class GeneralDAOImpl {
 	   					        	promoImageModelList.add(promoImageModel);
 	   	         }
 	   	         	
-	   	         pstmt.close();
+	   	         
 	   	         rs.close();
-	   	         con.close();
+	   	        
 	   	         log.info("### : *** Connection Closed from getPromoImage()");
 	   	     } catch (Exception e) {
 	   	        e.printStackTrace();
 	   	        System.err.println(e.getClass().getName()+": "+e.getMessage());
 	   	        log.error("An error occurred getPromoImage() : {}", e.getMessage());
+	   	     }finally {
+	             // Close the pool (important for proper shutdown)
+	             try {
+	            	 
+	            	 if (bds != null) {
+	            		 bds.close(); 
+	                 }
+	                 if (con != null) {
+	                	 con.close(); 
+	                 }
+	                 if (pstmt != null) {
+	                	 pstmt.close(); 
+	                 }
+	                 
+	                 
+	             } catch (SQLException e) {
+	                 e.printStackTrace();
+	             }
 	   	     }
+	             
+	   		
 	   	return promoImageModelList;		
 	   	}
 		
@@ -3206,6 +3349,11 @@ public class GeneralDAOImpl {
 				// promo count 
 				public int getPromoCountTotalRecords()
 			    {
+					
+					ConnectionDAO condao;
+					BasicDataSource bds=null;
+					Connection con = null;
+		   			PreparedStatement pstmt = null;
 			    	int totalRecords=0;
 			    
 
@@ -3216,24 +3364,46 @@ public class GeneralDAOImpl {
 	
 					
 				 	try {
-						Connection con = null;
-						PreparedStatement pstmt = null;
-						con=ConnectionDAO.getConnection();
+						
+						//con=ConnectionDAO.getConnection();
+						//con=ConnectionDAO.getDataSource().getConnection();
+						
+				 		condao=new ConnectionDAO();
+			   			bds=condao.getDataSource();
+			   			con=bds.getConnection();
+			   			
 			            pstmt = con.prepareStatement(sql_promo_count.toString());
 			            ResultSet rs = pstmt.executeQuery();
 				                  
 				        	if (rs.next()) {
 				                totalRecords = rs.getInt(1);
 				            }
-			   			pstmt.close();
+			   			
 				        rs.close();
-				        con.close();
+				        
 				       
 				     } catch (Exception e) {
 				        e.printStackTrace();
 				        System.err.println(e.getClass().getName()+": "+e.getMessage());
 				        log.error("An error occurred: {}", e.getMessage());
-				     }
+				     }finally {
+			             // Close the pool (important for proper shutdown)
+			             try {
+			            	 if (bds != null) {
+			            		 bds.close(); 
+			                 }
+			                 if (con != null) {
+			                	 con.close(); 
+			                 }
+			                 if (pstmt != null) {
+			                	 pstmt.close(); 
+			                 }
+			                 
+			                 
+			             } catch (SQLException e) {
+			                 e.printStackTrace();
+			             }
+		}
 			    	
 			    	return totalRecords;
 			    }
