@@ -174,11 +174,10 @@ public class EastfacingService implements Serializable {
 		    }
 		    
 		    public void storeSelectedPropertyInSession() {
-		    	
-		    	System.out.println("********************* session started *****************");
+		    
 		        FacesContext facesContext = FacesContext.getCurrentInstance();
 		        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-		        session.setAttribute("selectedPropertyKey", selectedProperty);
+		        session.setAttribute("selectedEastfacing", selectedProperty);
 		    }
 			
 			   
@@ -190,7 +189,7 @@ public class EastfacingService implements Serializable {
 		        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
 		      
 		        if (session != null) {
-		         	selectedProperty= (VillaModel) session.getAttribute("selectedPropertyKey");
+		         	selectedProperty= (VillaModel) session.getAttribute("selectedEastfacing");
 		         	System.out.println("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
 		          }
 		    	
