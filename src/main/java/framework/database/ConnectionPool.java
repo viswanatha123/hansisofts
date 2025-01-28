@@ -20,7 +20,7 @@ public final class ConnectionPool extends MonitoredComponent {
     private final List<Connection> pool = new LinkedList<>();
     private final List<Connection> taken = new LinkedList<>();
 
-    private ConnectionPool() {
+    public ConnectionPool() {
         super("Connection Pool", true);
         this.status = new Status(State.UNINITIALIZED, null);
     }
@@ -29,7 +29,7 @@ public final class ConnectionPool extends MonitoredComponent {
         return instance;
     }
 
-    private boolean validate(Connection jdbcConnection) {   // Make sure the connection is not killed from the server side
+    public boolean validate(Connection jdbcConnection) {   // Make sure the connection is not killed from the server side
         try {
             PreparedStatement stmt = jdbcConnection.prepareStatement("SELECT 1;");
             stmt.executeQuery();
@@ -103,7 +103,7 @@ public final class ConnectionPool extends MonitoredComponent {
         return pool.size();
     }
 
-    public synchronized Connection getConnection() throws InterruptedException {
+    private synchronized Connection getConnection() throws InterruptedException {
         while (pool.isEmpty() && status.isOperational()) {
             wait();
         }

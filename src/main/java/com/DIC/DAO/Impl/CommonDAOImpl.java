@@ -20,7 +20,7 @@ import com.DIC.model.SMSModel;
 //import com.DIC.model.SMSModel;
 import com.DIC.model.UserDetails;
 
-@ManagedBean
+@ManagedBean(name="commonDAOImpl")
 @ApplicationScoped
 public class CommonDAOImpl {
 	

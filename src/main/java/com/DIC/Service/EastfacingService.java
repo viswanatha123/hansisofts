@@ -1,6 +1,10 @@
 package com.DIC.Service;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -9,14 +13,19 @@ import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 
+import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.primefaces.PrimeFaces;
@@ -25,16 +34,21 @@ import org.primefaces.model.StreamedContent;
 
 import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
+import com.DIC.DAO.Impl.SMSService;
 import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.PromoImageModel;
+import com.DIC.model.UserDetails;
 import com.DIC.model.VillaModel;
 
+
 import SMTPService.SMTPService;
+//import SMTPService.SMTPService;
+//import SMTPService.SMTPService;
+import framework.database.ConnectionPool;
 
 @ManagedBean(name="eastfacingService")
-
-//@RequestScoped
-@ViewScoped
+@RequestScoped
+//@ViewScoped
 public class EastfacingService implements Serializable {
 	
 	private static final Logger log = LogManager.getLogger(EastfacingService.class);
@@ -50,52 +64,75 @@ public class EastfacingService implements Serializable {
 	private int promoCurrentPage = 1;
 	private int promoPageSize = 3;
 	private int promoTotalRecords;
+	
+	private VillaModel selectedProperty;
+	
+
+	private String custName;
+	private String contactNumber;
+	private String email;
+	
 	private List<PromoImageModel> promoImageModel;
-	
-	
-
-
-    private VillaModel selectedProperty; 
-   
-	
-	private String custName="";
-	private String contactNumber="";
-	private String email="";
-
-	
 	private List<VillaModel> villaModel;
-		
-	 
+	
+	  
+		public GeneralDAOImpl getgDao() {
+		return gDao;
+	}
+
+
+	public void setgDao(GeneralDAOImpl gDao) {
+		this.gDao = gDao;
+	}
+
 	    GeneralDAOImpl gDao;
-	    LocationDAOImpl locationDao;
+		
 	    UserDAOImpl udo;
+	    SMSService sms;
+	    UserRoleService ur;
 	    
 			public EastfacingService()
 			{
-				
+							
 				log.info("Loading EastfacingService init()");
-		    	gDao=new GeneralDAOImpl();
-		    	udo=new UserDAOImpl();
+				  gDao=new GeneralDAOImpl();
+		          udo=new UserDAOImpl();
+		          sms=new SMSService();
+		          ur=new UserRoleService();
 		    	
-		        
-		 
-		        
-		        loadEntities();
+		       loadEntities();
 				countTotalRecords();
 				
+				System.out.println("============================================ EastfacingService ======Constructor=====================>");
 			}
 			
 			
+
+			
+				
+			
 			public void loadEntities() {
 		 		
-				
-				villaModel=gDao.getEastfacing(pageSize,currentPage);
-				promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
-		 		
-				
+	        	 //promoImageModel=gDao.getPromoImageVilla();
+	        	 promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
+	        	 villaModel=gDao.getEastfacing(pageSize,currentPage);
+	        	
+	        	
+	        	for(VillaModel x:villaModel)
+               {
+                   System.out.println("@@@@@@@@@@@@@@@@@@@@ :"+x.getI_am());
+               }
+               if(villaModel.size() == 0)
+       		   {
+       			errorMessage="There are no records on ";
+       		   }
+               else {
+               	errorMessage="";
+               }
+          
 		        
 		    }
-		 	
+	 	
 		 	public void countTotalRecords() {
 		 		
 		 		
@@ -103,6 +140,8 @@ public class EastfacingService implements Serializable {
 		 		promoTotalRecords=gDao.getPromoCountTotalRecords();
 		        
 		    }
+		 	
+
 		 	public void nextPage() {
 		        if ((currentPage * pageSize) < totalRecords) {
 		            currentPage++;
@@ -114,7 +153,9 @@ public class EastfacingService implements Serializable {
 		            	
 		        }
 		    }
-
+		 	
+		 	
+		 
 		    public void previousPage() {
 		        if (currentPage > 1) {
 		            currentPage--;
@@ -127,16 +168,32 @@ public class EastfacingService implements Serializable {
 		        }
 		    }
 		 	
+		
 		    public int getTotalPages() {
 		        return (int) Math.ceil((double) totalRecords / pageSize);
 		    }
+		    
+		    public void storeSelectedPropertyInSession() {
+		    	
+		    	System.out.println("********************* session started *****************");
+		        FacesContext facesContext = FacesContext.getCurrentInstance();
+		        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+		        session.setAttribute("selectedPropertyKey", selectedProperty);
+		    }
 			
-			
-			
-			
-	
-			public void submit() {
-		    	System.out.println("-------------submit ----------------------");
+			   
+		    
+		    public void submit() {
+		    	
+		    	
+		    	FacesContext facesContext = FacesContext.getCurrentInstance();
+		        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+		      
+		        if (session != null) {
+		         	selectedProperty= (VillaModel) session.getAttribute("selectedPropertyKey");
+		         	System.out.println("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
+		          }
+		    	
 	        	log.info("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
 	        	
 	        	
@@ -146,6 +203,25 @@ public class EastfacingService implements Serializable {
 	        		{
 	        			if(selectedProperty.getUserId()!=0)
 	        			{
+	        				
+	        				if(ur.getUserRole().contains("SMS"))
+							{
+								log.info("******** SMS Enabled *****************");
+		        				UserDetails userDetails=udo.getUser(selectedProperty.getUserId());
+		        				
+		        				//Twilio service
+		        				//sms.sendSMSLead(userDetails.getPhone(), userDetails.getfName()+" "+userDetails.getlName(),custName,contactNumber); 
+		        				
+		        				// test2sms service
+		        				sms.sendSMSLeadText2sms(userDetails.getPhone(), userDetails.getfName()+" "+userDetails.getlName(),custName,contactNumber);
+		        				
+		        				
+							}
+							else
+							{
+								log.info("******** SMS Didabled *****************");
+							}
+	        				
 	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getVillaId(),selectedProperty.getUserId(),"villa");
 	        				SMTPService.sendVillaLeadEmail(custName,contactNumber,email,selectedProperty);
 	        				log.info("***** Successful submitted lead ******");
@@ -162,9 +238,15 @@ public class EastfacingService implements Serializable {
 	        		}
 	        	}
 	        	
-	        	//villaModel=gDao.getReadyToMove();
-	        	  loadEntities();
-	        }
+	            villaModel=gDao.getEastfacing(pageSize,currentPage);
+	        	this.custName="";
+	        	this.contactNumber="";
+	        	this.email="";
+	        	
+		    }  	
+			
+			
+			
 	        
 	   public void reset() {
 		       PrimeFaces.current().resetInputs("form1:panelDialog");
@@ -319,6 +401,9 @@ public class EastfacingService implements Serializable {
 			public void setPromoPageSize(int promoPageSize) {
 				this.promoPageSize = promoPageSize;
 			}
+
+
+
 		
 		
        

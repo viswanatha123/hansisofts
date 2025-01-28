@@ -8,7 +8,10 @@ public class CacheMain {
 		
 		System.out.println("************* Start Cache Managemnt **********");
 		
-
+		Scanner scanner=new Scanner(System.in);
+		System.out.println("Enter cache size :");
+		int cacheSize=scanner.nextInt();
+		scanner.close();
 		
 		CacheManage cache = new CacheManage(3); // Cache with capacity 3
 		cache.putNode(1, 1);

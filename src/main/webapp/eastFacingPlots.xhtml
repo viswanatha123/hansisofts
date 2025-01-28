@@ -120,12 +120,15 @@
 							                              <f:setPropertyActionListener value="#{product}" target="#{eastfacingService.selectedProperty}" />
 									                </p:commandButton>
 									                
-									                                      						
-                          						   <p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#1E90FF;font-weight: bold;color: black;font-size: 15px; width:100px" 
+									               <p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#1E90FF;font-weight: bold;color: black;font-size: 15px; width:100px" 
 															 process="@this" 
+															 action="#{eastfacingService.storeSelectedPropertyInSession}"
 							                                 onclick="PF('leadDialog').show()">           
-							                              <f:setPropertyActionListener value="#{product}" target="#{eastfacingService.selectedProperty}" />
+							                             <f:setPropertyActionListener value="#{product}" target="#{eastfacingService.selectedProperty}" /> 
 									                </p:commandButton>
+									                
+									            
+									                
                           						
                          			</h:panelGrid>
                      			
@@ -187,9 +190,12 @@
 
 <h:form id="form1">
 		<p:messages id="msgs"/>
-		 	<p:dialog header="Call back details" widgetVar="leadDialog" minHeight="600" width="700" showEffect="fade">
+		 	
+		 <p:dialog header="Call back details" widgetVar="leadDialog" minHeight="600" width="700" showEffect="fade">
 		        
-		        	<p:panel id="panelDialog" style="background-image: url('back1.jpg'); ">   
+		        	<p:panel id="panelDialog" style="background-image: url('back1.jpg'); ">  
+		        	
+		        	 
 					    <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
 					        <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
 					        
