@@ -24,6 +24,7 @@ import org.primefaces.model.StreamedContent;
 import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
 import com.DIC.DAO.Impl.UserDAOImpl;
+import com.DIC.model.PromoImageModel;
 import com.DIC.model.VillaModel;
 
 import SMTPService.SMTPService;
@@ -44,6 +45,11 @@ public class ReadyToMoveService {
 	private int currentPage = 1;
 	private int pageSize = 10;
 	private int totalRecords;
+	private int promoCurrentPage = 1;
+	private int promoPageSize = 3;
+	private int promoTotalRecords;
+	private List<PromoImageModel> promoImageModel;
+	
 	
 	
 
@@ -79,6 +85,7 @@ public class ReadyToMoveService {
 			public void loadEntities() {
 		 		
 				villaModel=gDao.getReadyToMove(pageSize,currentPage);
+				promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
 		 		
 		        
 		    }
@@ -86,6 +93,7 @@ public class ReadyToMoveService {
 		 	public void countTotalRecords() {
 		 	
 		 		totalRecords=gDao.getReadyToMoveCountTotalRecords();
+		 		promoTotalRecords=gDao.getPromoCountTotalRecords();
 		        
 		    }
 		 	public void nextPage() {
@@ -93,11 +101,21 @@ public class ReadyToMoveService {
 		            currentPage++;
 		            loadEntities();
 		        }
+		        if ((promoCurrentPage * promoPageSize) < promoTotalRecords) {
+		        	promoCurrentPage++;
+		            loadEntities();
+		            	
+		        }
 		    }
+		 	    
 
 		    public void previousPage() {
 		        if (currentPage > 1) {
 		            currentPage--;
+		            loadEntities();
+		        }
+		        if (promoCurrentPage > 1) {
+		        	promoCurrentPage--;
 		            loadEntities();
 		        }
 		    }
@@ -159,6 +177,14 @@ public class ReadyToMoveService {
 			public void setVillaModel(List<VillaModel> villaModel) {
 				this.villaModel = villaModel;
 			}
+				public List<PromoImageModel> getPromoImageModel() {
+					return promoImageModel;
+				}
+
+
+				public void setPromoImageModel(List<PromoImageModel> promoImageModel) {
+					this.promoImageModel = promoImageModel;
+				}
 
 
 
@@ -274,6 +300,32 @@ public class ReadyToMoveService {
 			public void setTotalRecords(int totalRecords) {
 				this.totalRecords = totalRecords;
 			}
+			public int getPromoCurrentPage() {
+				return promoCurrentPage;
+			}
+
+
+
+
+			public int getPromoPageSize() {
+				return promoPageSize;
+			}
+
+
+
+
+			public void setPromoCurrentPage(int promoCurrentPage) {
+				this.promoCurrentPage = promoCurrentPage;
+			}
+
+
+
+
+			public void setPromoPageSize(int promoPageSize) {
+				this.promoPageSize = promoPageSize;
+			}
+
+
 		
 		
        
