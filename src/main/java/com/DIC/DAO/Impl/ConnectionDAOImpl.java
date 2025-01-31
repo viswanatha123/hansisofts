@@ -104,7 +104,7 @@ public class ConnectionDAOImpl {
 					+ "WHEN rank = 3 THEN 3 \r\n"
 					+ "ELSE 4\r\n"
 					+ "END,\r\n"
-					+ "create_date desc";
+					+ "create_date desc LIMIT ? OFFSET ?";
 			
 			String SQL_INDI_INSERT="INSERT INTO hansi_individual_site (ind_id,owner_name, location, contact_no, site_no, persqft, length, width, wonership, transaction, prim_location, seco_location, create_date, is_active,comment,facing,agent_name,cost,image,user_id,corner_bit,rank) VALUES(nextval('hansi_individual_site_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,current_timestamp, 1, ?,?,?,?,?,?,?,?)";
 			String SQL_AGRIDATAENTRY_INSERT = "INSERT INTO hansi_agricultural (agri_id,owner_name, contact_no, survey_no, location, wonership, transaction, per_cent, number_cents, water_source, crop, prim_location, seco_location, create_date, is_active, comment,agent_name,cost,image,user_id,corner_bit,rank) VALUES(nextval('hansi_agricultural_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp, 1, ?,?,?,?,?,?,?)";
@@ -118,7 +118,7 @@ public class ConnectionDAOImpl {
 			String SQL_RENTAL_DETAILS="select * from rental_plot where prim_location = ? and seco_location = ?";
 			String SQL_PACKAGE_ENQUIRY="INSERT INTO hansi_enquiry (enqi_id, name, email, phone, create_date, is_active,enq_type) VALUES(nextval('hansi_enquiry_seq'),?, ?, ?, current_timestamp, 1,?)";
 			String SQL_PROMO_IMAGE="insert into promo_img (promo_id,image,create_date, is_active,comment,img_name) values (nextval('promo_seq'),?,current_timestamp, 1,?,?)";
-			
+			String SQL_Individual_COUNT="select count(*) from hansi_individual_site where prim_location = ? and seco_location = ?";
 		}
                 
 	}
@@ -732,7 +732,9 @@ public class ConnectionDAOImpl {
     
     //************************************IndividualSiteDetails******************************************//
 
-    public List<IndividualSiteModel> getIndividualSiteDetails(String priLocation, String secLocation)
+  //************************************IndividualSiteDetails******************************************//
+
+    public List<IndividualSiteModel> getIndividualSiteDetails(String priLocation, String secLocation,int pageSize, int currentPage)
     	{
                 
             
@@ -749,6 +751,8 @@ public class ConnectionDAOImpl {
     	                    pstmt = con.prepareStatement(sql_IndividualSite.toString());
                                 pstmt.setString(1, priLocation);
                                 pstmt.setString(2, secLocation);
+                                pstmt.setInt(3, pageSize);
+    				            pstmt.setInt(4, (currentPage - 1) * pageSize);
                                 ResultSet rs = pstmt.executeQuery();
     	         while ( rs.next() ) {
     	        	 IndividualSiteModel individualSiteModel=new IndividualSiteModel();
@@ -816,7 +820,41 @@ public class ConnectionDAOImpl {
     	return individualSiteModelList;		
     	}
     
+  //***individual count**////
+    public int getIndividualSiteDetailsCountTotalRecords(String priLocation, String secLocation )
+    {
+    	int totalRecords=0;
     
+
+
+   	
+   	StringBuilder sql_agri_details = new StringBuilder(Constants.SQL.SQL_Individual_COUNT);
+	
+		
+	 	try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			con=ConnectionDAO.getConnection();
+            pstmt = con.prepareStatement(sql_agri_details.toString());
+            pstmt.setString(1, priLocation);
+         pstmt.setString(2, secLocation);
+         ResultSet rs = pstmt.executeQuery();
+	                  
+	        	if (rs.next()) {
+	                totalRecords = rs.getInt(1);
+	            }
+   			pstmt.close();
+	        rs.close();
+	        con.close();
+	       
+	     } catch (Exception e) {
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        log.error("An error occurred: {}", e.getMessage());
+	     }
+    	
+    	return totalRecords;
+    }
     
  // ***************** update Indi data entry **************
     public String updateIndiDataEntry(IndiSiteDataEntryModel indiSiteDataEntryModel,int userId, int rankId)

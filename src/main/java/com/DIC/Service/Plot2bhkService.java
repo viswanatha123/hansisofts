@@ -34,8 +34,6 @@ import SMTPService.SMTPService;
 @ManagedBean(name="plot2bhkService")
 
 @RequestScoped
-//@ViewScoped
-//@SessionScoped
 public class Plot2bhkService {
 	
 private static final Logger log = LogManager.getLogger(Plot2bhkService.class);
@@ -85,6 +83,8 @@ private static final Logger log = LogManager.getLogger(Plot2bhkService.class);
 		
 		
 		public void loadEntities() {
+			
+			System.out.println("===========================================>>>pageSize :"+pageSize+",currentPage :"+currentPage);
 	 		
 			villaModel=gDao.getPlot2bhkProperties(pageSize,currentPage);
 			promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
@@ -122,7 +122,6 @@ private static final Logger log = LogManager.getLogger(Plot2bhkService.class);
 	            loadEntities();
 	        }
 	    }
-	    
 	 	
 	    public int getTotalPages() {
 	        return (int) Math.ceil((double) totalRecords / pageSize);
