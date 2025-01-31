@@ -34,8 +34,6 @@ import SMTPService.SMTPService;
 @ManagedBean(name="plot4bhkService")
 
 @RequestScoped
-//@ViewScoped
-//@SessionScoped
 public class Plot4bhkService {
 	
 private static final Logger log = LogManager.getLogger(Plot4bhkService.class);

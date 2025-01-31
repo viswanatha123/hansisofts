@@ -163,7 +163,7 @@ public class GeneralDAOImpl {
 		   String SQL_EAST_FACING_COUNT="select count(*) from villa_plot where facing='East'";
 		   String SQL_PLOT1BHK_PROPERTIES="select *from villa_plot where bed_rooms='1' order by create_date desc LIMIT ? OFFSET ?";
 			String SQL_PLOT1BHK_COUNT="select count(*) from villa_plot where bed_rooms='1'";
-			String SQL_PLOT2BHK_PROPERTIES="select *from villa_plot where bed_rooms='2' order by create_date desc LIMIT ? OFFSET ?";
+			String SQL_PLOT2BHK_PROPERTIES="select * from villa_plot where bed_rooms='2' order by create_date desc LIMIT ? OFFSET ?";
 			String SQL_PLOT2BHK_COUNT="select count(*) from villa_plot where bed_rooms='2'";
 			String SQL_PLOT3BHK_PROPERTIES="select *from villa_plot where bed_rooms='3' order by create_date desc LIMIT ? OFFSET ?";
 			String SQL_PLOT3BHK_COUNT="select count(*) from villa_plot where bed_rooms='3'";
@@ -2374,8 +2374,7 @@ public class GeneralDAOImpl {
 		BasicDataSource bds=null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		//InputStream imageStream = null;
-		//InputStream imageStream = null;
+		
 	
 		List<VillaModel> VillaModelList = new ArrayList<>();
 		try {
@@ -2427,30 +2426,7 @@ public class GeneralDAOImpl {
 	        	 villaModel.setFloorNum(rs.getInt("floor_num"));
 	        	 
 	        	 
-	        	 /*
-	        	 if(rs.getBytes("image").length != 0) {
-	        	        log.info("Villa details image available: " + rs.getInt("villa_id") + " " + rs.getString("owner_name") + " --->" + rs.getBytes("image").length);
-	        	        imageStream = rs.getBinaryStream("image");
-	        	        villaModel.setStreamedContent(DefaultStreamedContent.builder()
-	        	            .name("US_Piechart.jpg")
-	        	            .contentType("image/jpg")
-	        	            .stream(() -> imageStream)
-	        	            .build());
-	        	    }
-	        	 */
-	        	 
-	        	 /*
-	        	 InputStream imageStream = rs.getBinaryStream("image");
-	        	 if (imageStream != null) {
-	        	     
-	        	     villaModel.setStreamedContent(DefaultStreamedContent.builder()
-	        	         .name("US_Piechart.jpg")
-	        	         .contentType("image/jpg")
-	        	         .stream(() -> imageStream) // Stream the content directly
-	        	         .build());
-	        	 }
-	        	 */
-	        	 
+	       
 	        	 InputStream imageStream = rs.getBinaryStream("image");
 	        	 if (imageStream != null) {
 	        	     BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
@@ -2477,38 +2453,7 @@ public class GeneralDAOImpl {
                 	 
                   }
 	        	 
-	           	 
-	        	 
-	        	 //log.info(" getReadyToMove() : "+rs.getInt("villa_id")+"   "+rs.getString("i_am"));
-	        	 
-	        	 			// below for Image
-	        	 /*
-	        	            	 if(rs.getBytes("image").length!=0)
-				                 {
-					        		 log.info(" Villa details image available: "+rs.getInt("villa_id")+"   "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
-				                 byte[] bb=rs.getBytes("image");
-				                 
-				                 villaModel.setStreamedContent(DefaultStreamedContent.builder()
-				                         .name("US_Piechart.jpg")
-				                         .contentType("image/jpg")
-				                         .stream(() -> new ByteArrayInputStream(bb)).build());
-				                 }
-				                 else
-				                 {
-				                	// Defalut Image
-				                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
-				                	 ResultSet rsDef = pstmtDefault.executeQuery();
-				                	 while ( rsDef.next())
-				                			 {
-				                		      byte[] def=rsDef.getBytes("image");
-				                		      villaModel.setStreamedContent(DefaultStreamedContent.builder()
-				                             .name("US_Piechart.jpg")
-				                             .contentType("image/jpg")
-				                             .stream(() -> new ByteArrayInputStream(def)).build());
-				                			 }
-				                	 
-				                  }
-	        	  */
+	          
 	                       
              VillaModelList.add(villaModel);
 	         }
@@ -2547,12 +2492,19 @@ public class GeneralDAOImpl {
   //plot1bhk****//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public List<VillaModel> getPlot1bhkProperties(int pageSize, int currentPage)
    	{
+    	
+    	ConnectionDAO condao;
+    	BasicDataSource bds=null;
+    	Connection con = null;
+    	PreparedStatement pstmt = null;
    	
    		List<VillaModel> VillaModelList = new ArrayList<>();
    		try {
-   			Connection con = null;
-   			PreparedStatement pstmt = null;
    			
+   			
+   			condao=new ConnectionDAO();
+   			bds=condao.getDataSource();
+   			con=bds.getConnection();
    			
    			StringBuilder sql_plots = new StringBuilder(Constants.SQL.SQL_PLOT1BHK_PROPERTIES);
    			
@@ -2593,40 +2545,31 @@ public class GeneralDAOImpl {
    	        	 villaModel.setFloorNum(rs.getInt("floor_num"));
    	        	 villaModel.setCornerBit(rs.getString("corner_bit"));
    	        	 
-   	        	 
-   	        	 log.info(" getPlot1bhkProperties() : "+rs.getInt("villa_id")+"   "+rs.getString("i_am"));
-   	        	 
-   	        	 			// below for Image
-   	        	 
-   	        	 //System.out.println(" Villa image : "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
-   	        	
-   					        	 if(rs.getBytes("image").length!=0)
-   				                 {
-   					        		log.info(" Villa details image available: "+rs.getInt("villa_id")+"   "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
-   				                 byte[] bb=rs.getBytes("image");
-   				                 
-   				                 villaModel.setStreamedContent(DefaultStreamedContent.builder()
-   				                         .name("US_Piechart.jpg")
-   				                         .contentType("image/jpg")
-   				                         .stream(() -> new ByteArrayInputStream(bb)).build());
-   				                 }
-   				                 else
-   				                 {
-   				                	 log.info(" Villa details image not availablr : "+rs.getInt("villa_id")+"   "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
-   				                	// Defalut Image
-   				                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
-   				                	 ResultSet rsDef = pstmtDefault.executeQuery();
-   				                	 while ( rsDef.next())
-   				                			 {
-   				                		      byte[] def=rsDef.getBytes("image");
-   				                		      villaModel.setStreamedContent(DefaultStreamedContent.builder()
-   				                             .name("US_Piechart.jpg")
-   				                             .contentType("image/jpg")
-   				                             .stream(() -> new ByteArrayInputStream(def)).build());
-   				                			 }
-   				                	 
-   				                  }
-   	        	  
+   	        	InputStream imageStream = rs.getBinaryStream("image");
+	        	 if (imageStream != null) {
+	        	     BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
+	        	     
+	        	     villaModel.setStreamedContent(DefaultStreamedContent.builder()
+	        	         .name("US_Piechart.jpg")
+	        	         .contentType("image/jpg")
+	        	         .stream(() -> bufferedStream) // Stream the content directly
+	        	         .build());
+	        	 }
+	        	 else
+                {
+               	// Defalut Image
+               	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+               	 ResultSet rsDef = pstmtDefault.executeQuery();
+               	 while ( rsDef.next())
+               			 {
+               		      byte[] def=rsDef.getBytes("image");
+               		      villaModel.setStreamedContent(DefaultStreamedContent.builder()
+                            .name("US_Piechart.jpg")
+                            .contentType("image/jpg")
+                            .stream(() -> new ByteArrayInputStream(def)).build());
+               			 }
+               	 
+                 }
    	                     
                 VillaModelList.add(villaModel);
    	         }
@@ -2639,7 +2582,25 @@ public class GeneralDAOImpl {
    	        e.printStackTrace();
    	        System.err.println(e.getClass().getName()+": "+e.getMessage());
    	        log.error("An error occurred getPlot1bhkProperties() : {}", e.getMessage());
-   	     }
+   	     }finally {
+             // Close the pool (important for proper shutdown)
+             try {
+            	 if (bds != null) {
+            		 bds.close(); 
+                 }
+                 if (con != null) {
+                	 con.close(); 
+                 }
+                 if (pstmt != null) {
+                	 pstmt.close(); 
+                 }
+                 
+                 
+                 
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+	     }
    	return VillaModelList;		
    	}
     
@@ -2652,13 +2613,18 @@ public class GeneralDAOImpl {
 
 	public int getplot1bhkCountTotalRecords() {
 		int totalRecords=0;
+		
+		ConnectionDAO condao;
+		BasicDataSource bds=null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
 	    
 	   	StringBuilder sql_plot1bhk = new StringBuilder(Constants.SQL.SQL_PLOT1BHK_COUNT);
 			
 		 	try {
-				Connection con = null;
-				PreparedStatement pstmt = null;
-				con=ConnectionDAO.getConnection();
+		 		condao=new ConnectionDAO();
+		 		bds=condao.getDataSource();
+		 		con=bds.getConnection();
 	            pstmt = con.prepareStatement(sql_plot1bhk.toString());
 	            ResultSet rs = pstmt.executeQuery();
 		                  
@@ -2673,6 +2639,24 @@ public class GeneralDAOImpl {
 		        e.printStackTrace();
 		        System.err.println(e.getClass().getName()+": "+e.getMessage());
 		        log.error("An error occurred: {}", e.getMessage());
+		     }finally {
+	             // Close the pool (important for proper shutdown)
+	             try {
+	            	 if (bds != null) {
+	            		 bds.close(); 
+	                 }
+	                 if (con != null) {
+	                	 con.close(); 
+	                 }
+	                 if (pstmt != null) {
+	                	 pstmt.close(); 
+	                 }
+	                 
+	                 
+	                 
+	             } catch (SQLException e) {
+	                 e.printStackTrace();
+	             }
 		     }
 	    	
 	    	return totalRecords;
@@ -2683,11 +2667,17 @@ public class GeneralDAOImpl {
 	///////plot2bhkproperties////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public List<VillaModel> getPlot2bhkProperties(int pageSize, int currentPage)
    	{
+		
+		ConnectionDAO condao;
+		BasicDataSource bds=null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
    	
    		List<VillaModel> VillaModelList = new ArrayList<>();
    		try {
-   			Connection con = null;
-   			PreparedStatement pstmt = null;
+   			condao=new ConnectionDAO();
+   			bds=condao.getDataSource();
+   			con=bds.getConnection();
    			
    			
    			StringBuilder sql_plot2bhk= new StringBuilder(Constants.SQL.SQL_PLOT2BHK_PROPERTIES);
@@ -2730,39 +2720,32 @@ public class GeneralDAOImpl {
    	        	 villaModel.setCornerBit(rs.getString("corner_bit"));
    	        	 
    	        	 
-   	        	 log.info(" getPlot2bhkProperties() : "+rs.getInt("villa_id")+"   "+rs.getString("i_am"));
-   	        	 
-   	        	 			// below for Image
-   	        	 
-   	        	 //System.out.println(" Villa image : "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
-   	        	
-   					        	 if(rs.getBytes("image").length!=0)
-   				                 {
-   					        		log.info(" Villa details image available: "+rs.getInt("villa_id")+"   "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
-   				                 byte[] bb=rs.getBytes("image");
-   				                 
-   				                 villaModel.setStreamedContent(DefaultStreamedContent.builder()
-   				                         .name("US_Piechart.jpg")
-   				                         .contentType("image/jpg")
-   				                         .stream(() -> new ByteArrayInputStream(bb)).build());
-   				                 }
-   				                 else
-   				                 {
-   				                	 log.info(" Villa details image not availablr : "+rs.getInt("villa_id")+"   "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
-   				                	// Defalut Image
-   				                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
-   				                	 ResultSet rsDef = pstmtDefault.executeQuery();
-   				                	 while ( rsDef.next())
-   				                			 {
-   				                		      byte[] def=rsDef.getBytes("image");
-   				                		      villaModel.setStreamedContent(DefaultStreamedContent.builder()
-   				                             .name("US_Piechart.jpg")
-   				                             .contentType("image/jpg")
-   				                             .stream(() -> new ByteArrayInputStream(def)).build());
-   				                			 }
-   				                	 
-   				                  }
-   	        	  
+   	        	InputStream imageStream = rs.getBinaryStream("image");
+	        	 if (imageStream != null) {
+	        	     BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
+	        	     
+	        	     villaModel.setStreamedContent(DefaultStreamedContent.builder()
+	        	         .name("US_Piechart.jpg")
+	        	         .contentType("image/jpg")
+	        	         .stream(() -> bufferedStream) // Stream the content directly
+	        	         .build());
+	        	 }
+	        	 else
+                {
+               	// Defalut Image
+               	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+               	 ResultSet rsDef = pstmtDefault.executeQuery();
+               	 while ( rsDef.next())
+               			 {
+               		      byte[] def=rsDef.getBytes("image");
+               		      villaModel.setStreamedContent(DefaultStreamedContent.builder()
+                            .name("US_Piechart.jpg")
+                            .contentType("image/jpg")
+                            .stream(() -> new ByteArrayInputStream(def)).build());
+               			 }
+               	 
+                 }
+	        	 
    	                     
                 VillaModelList.add(villaModel);
    	         }
@@ -2775,33 +2758,73 @@ public class GeneralDAOImpl {
    	        e.printStackTrace();
    	        System.err.println(e.getClass().getName()+": "+e.getMessage());
    	        log.error("An error occurred getPlot2bhkProperties() : {}", e.getMessage());
-   	     }
+   	     }finally {
+             // Close the pool (important for proper shutdown)
+             try {
+            	 if (bds != null) {
+            		 bds.close(); 
+                 }
+                 if (con != null) {
+                	 con.close(); 
+                 }
+                 if (pstmt != null) {
+                	 pstmt.close(); 
+                 }
+                 
+                 
+                 
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+	     }
    	return VillaModelList;		
    	}
 	//2BHKCOUNT/////////////////////////////////////////////////////////////////////////////////////////////////
 	public int getplot2bhkCountTotalRecords() {
 		int totalRecords=0;
+		
+		ConnectionDAO condao;
+		BasicDataSource bds=null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
 	    
 	   	StringBuilder sql_2bhk= new StringBuilder(Constants.SQL.SQL_PLOT2BHK_COUNT);
 			
 		 	try {
-				Connection con = null;
-				PreparedStatement pstmt = null;
-				con=ConnectionDAO.getConnection();
+		 		condao=new ConnectionDAO();
+		 		bds=condao.getDataSource();
+		 		con=bds.getConnection();
 	            pstmt = con.prepareStatement(sql_2bhk.toString());
 	            ResultSet rs = pstmt.executeQuery();
 		                  
 		        	if (rs.next()) {
 		                totalRecords = rs.getInt(1);
 		            }
-	   			pstmt.close();
+	   			
 		        rs.close();
-		        con.close();
-		       
+		        		       
 		     } catch (Exception e) {
 		        e.printStackTrace();
 		        System.err.println(e.getClass().getName()+": "+e.getMessage());
 		        log.error("An error occurred: {}", e.getMessage());
+		     }finally {
+	             // Close the pool (important for proper shutdown)
+	             try {
+	            	 if (bds != null) {
+	            		 bds.close(); 
+	                 }
+	                 if (con != null) {
+	                	 con.close(); 
+	                 }
+	                 if (pstmt != null) {
+	                	 pstmt.close(); 
+	                 }
+	                 
+	                 
+	                 
+	             } catch (SQLException e) {
+	                 e.printStackTrace();
+	             }
 		     }
 	    	
 	    	return totalRecords;
@@ -2810,10 +2833,15 @@ public class GeneralDAOImpl {
 	public List<VillaModel> getPlot3bhkProperties(int pageSize, int currentPage)
    	{
    	
+		ConnectionDAO condao;
+		BasicDataSource bds=null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
    		List<VillaModel> VillaModelList = new ArrayList<>();
    		try {
-   			Connection con = null;
-   			PreparedStatement pstmt = null;
+   			condao=new ConnectionDAO();
+   			bds=condao.getDataSource();
+   			con=bds.getConnection();
    			
    			
    			StringBuilder sql_plot3bhk= new StringBuilder(Constants.SQL.SQL_PLOT3BHK_PROPERTIES);
@@ -2855,65 +2883,79 @@ public class GeneralDAOImpl {
    	        	 villaModel.setFloorNum(rs.getInt("floor_num"));
    	        	 villaModel.setCornerBit(rs.getString("corner_bit"));
    	        	 
-   	        	 
-   	        	 log.info(" getPlot3bhkProperties() : "+rs.getInt("villa_id")+"   "+rs.getString("i_am"));
-   	        	 
-   	        	 			// below for Image
-   	        	 
-   	        	 //System.out.println(" Villa image : "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
-   	        	
-   					        	 if(rs.getBytes("image").length!=0)
-   				                 {
-   					        		log.info(" Villa details image available: "+rs.getInt("villa_id")+"   "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
-   				                 byte[] bb=rs.getBytes("image");
-   				                 
-   				                 villaModel.setStreamedContent(DefaultStreamedContent.builder()
-   				                         .name("US_Piechart.jpg")
-   				                         .contentType("image/jpg")
-   				                         .stream(() -> new ByteArrayInputStream(bb)).build());
-   				                 }
-   				                 else
-   				                 {
-   				                	 log.info(" Villa details image not availablr : "+rs.getInt("villa_id")+"   "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
-   				                	// Defalut Image
-   				                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
-   				                	 ResultSet rsDef = pstmtDefault.executeQuery();
-   				                	 while ( rsDef.next())
-   				                			 {
-   				                		      byte[] def=rsDef.getBytes("image");
-   				                		      villaModel.setStreamedContent(DefaultStreamedContent.builder()
-   				                             .name("US_Piechart.jpg")
-   				                             .contentType("image/jpg")
-   				                             .stream(() -> new ByteArrayInputStream(def)).build());
-   				                			 }
-   				                	 
-   				                  }
+   	        	InputStream imageStream = rs.getBinaryStream("image");
+	        	 if (imageStream != null) {
+	        	     BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
+	        	     
+	        	     villaModel.setStreamedContent(DefaultStreamedContent.builder()
+	        	         .name("US_Piechart.jpg")
+	        	         .contentType("image/jpg")
+	        	         .stream(() -> bufferedStream) // Stream the content directly
+	        	         .build());
+	        	 }
+	        	 else
+                {
+               	// Defalut Image
+               	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+               	 ResultSet rsDef = pstmtDefault.executeQuery();
+               	 while ( rsDef.next())
+               			 {
+               		      byte[] def=rsDef.getBytes("image");
+               		      villaModel.setStreamedContent(DefaultStreamedContent.builder()
+                            .name("US_Piechart.jpg")
+                            .contentType("image/jpg")
+                            .stream(() -> new ByteArrayInputStream(def)).build());
+               			 }
+               	 
+                 }
    	        	  
    	                     
                 VillaModelList.add(villaModel);
    	         }
    	         	
-   	         pstmt.close();
+   	        
    	         rs.close();
-   	         con.close();
+   	         
    	         log.info("### : *** Connection Closed from getPlot3bhkProperties()");
    	     } catch (Exception e) {
    	        e.printStackTrace();
    	        System.err.println(e.getClass().getName()+": "+e.getMessage());
    	        log.error("An error occurred getPlot3bhkProperties() : {}", e.getMessage());
-   	     }
+   	     }finally {
+             // Close the pool (important for proper shutdown)
+             try {
+            	 if (bds != null) {
+            		 bds.close(); 
+                 }
+                 if (con != null) {
+                	 con.close(); 
+                 }
+                 if (pstmt != null) {
+                	 pstmt.close(); 
+                 }
+                 
+                 
+                 
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+	     }
    	return VillaModelList;		
    	}
 	//plots3bhkcount/////////////////////////////////////////////////////////////////////////////////////////////////
 	public int getplot3bhkCountTotalRecords() {
 		int totalRecords=0;
+		ConnectionDAO condao;
+		BasicDataSource bds=null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
 	    
 	   	StringBuilder sql_2bhk= new StringBuilder(Constants.SQL.SQL_PLOT3BHK_COUNT);
 			
 		 	try {
-				Connection con = null;
-				PreparedStatement pstmt = null;
-				con=ConnectionDAO.getConnection();
+		 		condao=new ConnectionDAO();
+		 		bds=condao.getDataSource();
+		 		con=bds.getConnection();
 	            pstmt = con.prepareStatement(sql_2bhk.toString());
 	            ResultSet rs = pstmt.executeQuery();
 		                  
@@ -2936,16 +2978,21 @@ public class GeneralDAOImpl {
 	//plot4bhk###############////////////////////////////////////////////////////////////////////
 		public List<VillaModel> getPlot4bhkProperties(int pageSize, int currentPage)
 	   	{
+			
+			ConnectionDAO condao;
+			BasicDataSource bds=null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
 	   	
 	   		List<VillaModel> VillaModelList = new ArrayList<>();
 	   		try {
-	   			Connection con = null;
-	   			PreparedStatement pstmt = null;
+	   			condao=new ConnectionDAO();
+	   			bds=condao.getDataSource();
+	   			con=bds.getConnection();
 	   			
 	   			
 	   			StringBuilder sql_plot4bhk= new StringBuilder(Constants.SQL.SQL_PLOT4BHK_PROPERTIES);
-	   			
-	   			con=ConnectionDAO.getConnection();
+	   		
 				System.out.println(" Plot4bhkProperties Query : "+sql_plot4bhk .toString());
 				log.info("plotsproperties : "+sql_plot4bhk .toString());
 								pstmt = con.prepareStatement(sql_plot4bhk.toString());
@@ -3034,27 +3081,49 @@ public class GeneralDAOImpl {
 		//plots4bhkcount///////////////////////////////////////////////////////////////////////
 		public int getplot4bhkCountTotalRecords() {
 			int totalRecords=0;
+			ConnectionDAO condao;
+			BasicDataSource bds=null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
 		    
 		   	StringBuilder sql_4bhk= new StringBuilder(Constants.SQL.SQL_PLOT4BHK_COUNT);
 				
 			 	try {
-					Connection con = null;
-					PreparedStatement pstmt = null;
-					con=ConnectionDAO.getConnection();
+			 		condao=new ConnectionDAO();
+			 		bds=condao.getDataSource();
+			 		con=bds.getConnection();
 		            pstmt = con.prepareStatement(sql_4bhk.toString());
 		            ResultSet rs = pstmt.executeQuery();
 			                  
 			        	if (rs.next()) {
 			                totalRecords = rs.getInt(1);
 			            }
-		   			pstmt.close();
+		   		
 			        rs.close();
-			        con.close();
+			       
 			       
 			     } catch (Exception e) {
 			        e.printStackTrace();
 			        System.err.println(e.getClass().getName()+": "+e.getMessage());
 			        log.error("An error occurred: {}", e.getMessage());
+			     }finally {
+		             // Close the pool (important for proper shutdown)
+		             try {
+		            	 if (bds != null) {
+		            		 bds.close(); 
+		                 }
+		                 if (con != null) {
+		                	 con.close(); 
+		                 }
+		                 if (pstmt != null) {
+		                	 pstmt.close(); 
+		                 }
+		                 
+		                 
+		                 
+		             } catch (SQLException e) {
+		                 e.printStackTrace();
+		             }
 			     }
 		    	
 		    	return totalRecords;
@@ -3070,14 +3139,7 @@ public class GeneralDAOImpl {
 	   	
 	   		List<PromoImageModel> promoImageModelList = new ArrayList<>();
 	   		try {
-	   			
-	   			
-	   			
 	   			StringBuilder sql_promo_image = new StringBuilder(Constants.SQL.SQL_PROMO_IMAGE_VILLA);
-	   			
-	   			//con=ConnectionDAO.getConnection();
-	   			//con=ConnectionDAO.getDataSource().getConnection();
-	   			
 	   			condao=new ConnectionDAO();
 	   			bds=condao.getDataSource();
 	   			con=bds.getConnection();
@@ -3099,33 +3161,34 @@ public class GeneralDAOImpl {
 	   	        	promoImageModel.setImageName(rs.getString("img_name"));
 	   	        	
 	     	        	
-	   					        	 if(rs.getBytes("image").length!=0)
-	   				                 {
-	   					        		                 byte[] bb=rs.getBytes("image");
-	   				                 
-	   				              promoImageModel.setStreamedContent(DefaultStreamedContent.builder()
-	   				                         .name("US_Piechart.jpg")
-	   				                         .contentType("image/jpg")
-	   				                         .stream(() -> new ByteArrayInputStream(bb)).build());
-	   				                 }
-	   				                 else
-	   				                 {
-	   				                		// Defalut Image
-	   				                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
-	   				                	 ResultSet rsDef = pstmtDefault.executeQuery();
-	   				                	 while ( rsDef.next())
-	   				                			 {
-	   				                		      byte[] def=rsDef.getBytes("image");
-	   				                		   promoImageModel.setStreamedContent(DefaultStreamedContent.builder()
-	   				                             .name("US_Piechart.jpg")
-	   				                             .contentType("image/jpg")
-	   				                             .stream(() -> new ByteArrayInputStream(def)).build());
-	   				                			 }
-	   				                	 
-	   				                  }
+	   	        	InputStream imageStream = rs.getBinaryStream("image");
+		        	 if (imageStream != null) {
+		        	     BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
+		        	     
+		        	     promoImageModel.setStreamedContent(DefaultStreamedContent.builder()
+		        	         .name("US_Piechart.jpg")
+		        	         .contentType("image/jpg")
+		        	         .stream(() -> bufferedStream) // Stream the content directly
+		        	         .build());
+		        	 }
+		        	 else
+	                 {
+	                	// Defalut Image
+	                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+	                	 ResultSet rsDef = pstmtDefault.executeQuery();
+	                	 while ( rsDef.next())
+	                			 {
+	                		      byte[] def=rsDef.getBytes("image");
+	                		      promoImageModel.setStreamedContent(DefaultStreamedContent.builder()
+	                             .name("US_Piechart.jpg")
+	                             .contentType("image/jpg")
+	                             .stream(() -> new ByteArrayInputStream(def)).build());
+	                			 }
+	                	 
+	                  }
 	   	        	  
 	   	                     
-	   					        	promoImageModelList.add(promoImageModel);
+	   		     promoImageModelList.add(promoImageModel);
 	   	         }
 	   	         	
 	   	         
@@ -3356,18 +3419,9 @@ public class GeneralDAOImpl {
 		   			PreparedStatement pstmt = null;
 			    	int totalRecords=0;
 			    
-
-		   	
-			   	
-			   	StringBuilder sql_promo_count = new StringBuilder(Constants.SQL.SQL_PROMO_COUNT);
-				
-	
-					
-				 	try {
-						
-						//con=ConnectionDAO.getConnection();
-						//con=ConnectionDAO.getDataSource().getConnection();
-						
+			    	StringBuilder sql_promo_count = new StringBuilder(Constants.SQL.SQL_PROMO_COUNT);
+					 	try {
+									
 				 		condao=new ConnectionDAO();
 			   			bds=condao.getDataSource();
 			   			con=bds.getConnection();
