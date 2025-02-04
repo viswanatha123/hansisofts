@@ -117,7 +117,7 @@
                      			 				    <p:commandButton type="submit" value="Callback" icon="ui-icon-calculator" style="background:#FFA500;font-weight: bold;color: black;font-size: 15px" 
 															 process="@this" 
 															 action="#{plot1bhkService.storeSelectedPropertyInSession}"
-															 onclick="PF('leadDialog').show()">           
+							                                 onclick="PF('leadDialog').show()">           
 							                              <f:setPropertyActionListener value="#{product}" target="#{plot1bhkService.selectedProperty}" />
 									                </p:commandButton>
 									                
@@ -176,8 +176,14 @@
             
 		       <p:panel>   
 		         	<p:panelGrid columns="3" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
-				        <h:commandButton value="Previous" action="#{plot1bhkService.previousPage}" disabled="#{plot1bhkService.currentPage == 1}" />
-				        <h:commandButton value="Next" action="#{plot1bhkService.nextPage}" disabled="#{plot1bhkService.currentPage * plot1bhkService.pageSize >= plot1bhkService.totalRecords}" />
+				        <h:commandButton value="Previous" action="#{plot1bhkService.previousPage}" disabled="#{plot1bhkService.currentPage == 1}" >
+				        	<f:param name="page1" value="#{plot1bhkService.currentPage - 1}"/>
+				        	<f:param name="promopage1" value="#{plot1bhkService.promoCurrentPage - 1}"/>
+				        </h:commandButton> 
+				        <h:commandButton value="Next" action="#{plot1bhkService.nextPage}" disabled="#{plot1bhkService.currentPage * plot1bhkService.pageSize >= plot1bhkService.totalRecords}" >
+				        	<f:param name="page1" value="#{plot1bhkService.currentPage + 1}"/>
+				        	<f:param name="promopage1" value="#{plot1bhkService.promoCurrentPage + 1}"/>
+				        </h:commandButton>
 				        <h:outputText value="Page #{plot1bhkService.currentPage} of #{plot1bhkService.totalPages}" />
 				    </p:panelGrid>
 		       </p:panel>

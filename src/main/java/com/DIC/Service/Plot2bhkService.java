@@ -15,6 +15,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
@@ -40,7 +41,7 @@ private static final Logger log = LogManager.getLogger(Plot2bhkService.class);
 	
 	private String locationMessage;
 	private String errorMessage;
-	private int currentPage = 1;
+	private int currentPage=1;
 	private int pageSize = 10;
 	private int totalRecords;
 	private int promoCurrentPage = 1;
@@ -49,7 +50,7 @@ private static final Logger log = LogManager.getLogger(Plot2bhkService.class);
 	private List<PromoImageModel> promoImageModel;
 	
 	
-	
+	private int temp;
 
 
     private VillaModel selectedProperty;   
@@ -68,24 +69,58 @@ private static final Logger log = LogManager.getLogger(Plot2bhkService.class);
 	  
 	
 	    public Plot2bhkService()
-		{
+	   	{
 			
 			log.info("Loading  Plot2bhkService init()");
 	    	gDao=new GeneralDAOImpl();
 	    	udo=new UserDAOImpl();
 	        
 	 
-	        
-	        loadEntities();
+	       
+	    	loadEntities();
 			countTotalRecords();
+	        
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+	        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+	        
+	        String pageParam = request.getParameter("page2");
+	        String promoParam = request.getParameter("promopage2");
+	     	        
+	        if (pageParam != null && !pageParam.isEmpty()) {
+	            try {
+	            	
+	                currentPage = Integer.parseInt(pageParam);
+	                System.out.println("=========================== try =================="+currentPage);
+             
+	            } catch (NumberFormatException e) {
+	            	
+	            	System.out.println("=========================== Catch page =================="+currentPage);
+	                currentPage = 1; // Default to page 1 if the parameter is invalid
+	            }
+	        } else {
+	        
+	           //Default to page 1 if no page parameter is provided
+	        	currentPage = 1;
+	        	System.out.println("=========================== else x=================="+currentPage);
+	        	
+	        }
+	        
+	        if (promoParam != null && !promoParam.isEmpty()) {
+	            try {
+	            	promoCurrentPage = Integer.parseInt(promoParam);
+	            } catch (NumberFormatException e) {
+	            	promoCurrentPage = 1; // Default to page 1 if the parameter is invalid
+	            }
+	        } else {
+	        	promoCurrentPage = 1; // Default to page 1 if no page parameter is provided
+	        }
 			
 		}
 		
 		
 		public void loadEntities() {
-			
-			System.out.println("===========================================>>>pageSize :"+pageSize+",currentPage :"+currentPage);
-	 		
+			System.out.println("=========================== pageSize ================currentPage=="+pageSize+"   "+currentPage);
 			villaModel=gDao.getPlot2bhkProperties(pageSize,currentPage);
 			promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
 	 		
@@ -100,12 +135,12 @@ private static final Logger log = LogManager.getLogger(Plot2bhkService.class);
 	    }
 	 	public void nextPage() {
 	        if ((currentPage * pageSize) < totalRecords) {
-	            currentPage++;
+	            //currentPage++;
 	            loadEntities();
 	        }
 	        
 	        if ((promoCurrentPage * promoPageSize) < promoTotalRecords) {
-	        	promoCurrentPage++;
+	        	//promoCurrentPage++;
 	            loadEntities();
 	            	
 	        }
@@ -113,42 +148,38 @@ private static final Logger log = LogManager.getLogger(Plot2bhkService.class);
 
 	    public void previousPage() {
 	        if (currentPage > 1) {
-	            currentPage--;
-	            loadEntities();
+	            //currentPage--;
+	           loadEntities();
 	        }
 	        
 	        if (promoCurrentPage > 1) {
-	        	promoCurrentPage--;
+	        	//promoCurrentPage--;
 	            loadEntities();
 	        }
 	    }
+	    
 	 	
 	    public int getTotalPages() {
 	        return (int) Math.ceil((double) totalRecords / pageSize);
 	    }
 		
+		
 	    public void storeSelectedPropertyInSession() {
 		    
 	        FacesContext facesContext = FacesContext.getCurrentInstance();
 	        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-	        session.setAttribute("selectedPlot2bhk", selectedProperty);
+	        session.setAttribute("plot2bhkKey", selectedProperty);
 	    }
-		
 		
 
 		public void submit() {
-			
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 	        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
 	      
 	        if (session != null) {
-	         	selectedProperty= (VillaModel) session.getAttribute("selectedPlot2bhk");
+	         	selectedProperty= (VillaModel) session.getAttribute("plot2bhkKey");
 	         	System.out.println("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
-	          }
-	        
-	    	System.out.println("-------------submit ----------------------");
-        	log.info("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
-        	
+	          }	
         	
         	if(selectedProperty.getVillaId()!=0)
         	{
@@ -340,7 +371,12 @@ private static final Logger log = LogManager.getLogger(Plot2bhkService.class);
 
 
 		
-		        
+			@PreDestroy
+		    public void cleanup() {
+		        if (villaModel != null) {
+		        	villaModel.clear();
+		        }
+		    }   
 
 		
 		        

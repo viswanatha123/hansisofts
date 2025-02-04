@@ -115,8 +115,8 @@
                      			 				<h:outputText style="font-weight: bold;color: red;font-size: 15px"  value="Rs #{product.cost}" />
 
                      			 				    <p:commandButton type="submit" value="Callback" icon="ui-icon-calculator" style="background:#FFA500;font-weight: bold;color: black;font-size: 15px" 
-															 process="@this" 
-															 action="#{plot2bhkService.storeSelectedPropertyInSession}"
+															 process="@this"
+															 action="#{plot2bhkService.storeSelectedPropertyInSession}" 
 							                                 onclick="PF('leadDialog').show()">           
 							                              <f:setPropertyActionListener value="#{product}" target="#{plot2bhkService.selectedProperty}" />
 									                </p:commandButton>
@@ -172,18 +172,24 @@
 			
 						
 		</div>
-              
-   		       
+            
 		       <p:panel>   
 		         	<p:panelGrid columns="3" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
-				        <h:commandButton value="Previous" action="#{plot2bhkService.previousPage}" disabled="#{plot2bhkService.currentPage == 1}" />
-				        <h:commandButton value="Next" action="#{plot2bhkService.nextPage}" disabled="#{plot2bhkService.currentPage * plot2bhkService.pageSize >= plot2bhkService.totalRecords}" />
+				        <h:commandButton value="Previous" action="#{plot2bhkService.previousPage}" disabled="#{plot2bhkService.currentPage == 1}" >
+				        	<f:param name="page2" value="#{plot2bhkService.currentPage - 1}"/>
+				        	<f:param name="promopage2" value="#{plot2bhkService.promoCurrentPage - 1}"/>
+				        </h:commandButton>
+				        
+				        <h:commandButton value="Next" action="#{plot2bhkService.nextPage}" disabled="#{plot2bhkService.currentPage * plot2bhkService.pageSize >= plot2bhkService.totalRecords}" >
+				           	<f:param name="page2" value="#{plot2bhkService.currentPage + 1}"/>
+				        	<f:param name="promopage2" value="#{plot2bhkService.promoCurrentPage + 1}"/>
+				        </h:commandButton>
 				        <h:outputText value="Page #{plot2bhkService.currentPage} of #{plot2bhkService.totalPages}" />
-				    </p:panelGrid>
+				  </p:panelGrid>
 		       </p:panel>
   				
 
-</h:form>
+   </h:form>
 
 
 

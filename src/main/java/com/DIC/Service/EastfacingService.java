@@ -22,6 +22,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
@@ -48,7 +49,6 @@ import framework.database.ConnectionPool;
 
 @ManagedBean(name="eastfacingService")
 @RequestScoped
-//@ViewScoped
 public class EastfacingService implements Serializable {
 	
 	private static final Logger log = LogManager.getLogger(EastfacingService.class);
@@ -101,9 +101,42 @@ public class EastfacingService implements Serializable {
 		          ur=new UserRoleService();
 		    	
 		       loadEntities();
-				countTotalRecords();
+			   countTotalRecords();
+			   
+			   
+			   FacesContext context = FacesContext.getCurrentInstance();
+		        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+		        
+		        String pageParam = request.getParameter("eastfacing");
+		        String promoParam = request.getParameter("eastfacingpromo");
+		     	        
+		        if (pageParam != null && !pageParam.isEmpty()) {
+		            try {
+		            	
+		                currentPage = Integer.parseInt(pageParam);
+		           	             
+		            } catch (NumberFormatException e) {
+		            	
+		                 currentPage = 1; // Default to page 1 if the parameter is invalid
+		            }
+		        } else {
+		        
+		           //Default to page 1 if no page parameter is provided
+		        	currentPage = 1;
+		        			        	
+		        }
+		        
+		        if (promoParam != null && !promoParam.isEmpty()) {
+		            try {
+		            	promoCurrentPage = Integer.parseInt(promoParam);
+		            } catch (NumberFormatException e) {
+		            	promoCurrentPage = 1; // Default to page 1 if the parameter is invalid
+		            }
+		        } else {
+		        	promoCurrentPage = 1; // Default to page 1 if no page parameter is provided
+		        }
 				
-				System.out.println("============================================ EastfacingService ======Constructor=====================>");
+	
 			}
 			
 			
@@ -144,11 +177,11 @@ public class EastfacingService implements Serializable {
 
 		 	public void nextPage() {
 		        if ((currentPage * pageSize) < totalRecords) {
-		            currentPage++;
+		            //currentPage++;
 		            loadEntities();
 		        }
 		        if ((promoCurrentPage * promoPageSize) < promoTotalRecords) {
-		        	promoCurrentPage++;
+		        	//promoCurrentPage++;
 		            loadEntities();
 		            	
 		        }
@@ -158,12 +191,12 @@ public class EastfacingService implements Serializable {
 		 
 		    public void previousPage() {
 		        if (currentPage > 1) {
-		            currentPage--;
+		            //currentPage--;
 		            loadEntities();
 		        }
 		        
 		        if (promoCurrentPage > 1) {
-		        	promoCurrentPage--;
+		        	//promoCurrentPage--;
 		            loadEntities();
 		        }
 		    }
@@ -403,7 +436,34 @@ public class EastfacingService implements Serializable {
 
 
 
-		
+			
+			public int getPromoCurrentPage() {
+				return promoCurrentPage;
+			}
+
+
+			public int getPromoPageSize() {
+				return promoPageSize;
+			}
+
+
+			public int getPromoTotalRecords() {
+				return promoTotalRecords;
+			}
+
+
+			public void setPromoTotalRecords(int promoTotalRecords) {
+				this.promoTotalRecords = promoTotalRecords;
+			}
+
+
+			@PreDestroy
+		    public void cleanup() {
+		        if (villaModel != null) {
+		        	villaModel.clear();
+		        }
+		    }
+       
 		
        
         

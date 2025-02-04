@@ -16,6 +16,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
@@ -32,6 +33,9 @@ import com.DIC.model.VillaModel;
 
 import SMTPService.SMTPService;
 
+
+
+
 @ManagedBean(name="plot1bhkService")
 
 @RequestScoped
@@ -41,7 +45,7 @@ private static final Logger log = LogManager.getLogger(Plot1bhkService.class);
 	
 	private String locationMessage;
 	private String errorMessage;
-	private int currentPage = 1;
+	private int currentPage=1;
 	private int pageSize = 10;
 	private int totalRecords;
 	private int promoCurrentPage = 1;
@@ -74,12 +78,39 @@ private static final Logger log = LogManager.getLogger(Plot1bhkService.class);
 			log.info("Loading  Plot2bhkService init()");
 	    	gDao=new GeneralDAOImpl();
 	    	udo=new UserDAOImpl();
+	    	
+	    	  loadEntities();
+			  countTotalRecords();
 	        
-	 
+	    	FacesContext context = FacesContext.getCurrentInstance();
+	        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 	        
-	        loadEntities();
-			countTotalRecords();
-			
+	        String pageParam = request.getParameter("page1");
+	        String promoParam = request.getParameter("promopage1");	
+	        
+	        if (pageParam != null && !pageParam.isEmpty()) {
+	            try {
+	                currentPage = Integer.parseInt(pageParam);
+	            } catch (NumberFormatException e) {
+	                  currentPage = 1; // Default to page 1 if the parameter is invalid
+	            }
+	        } else {
+	        	    currentPage = 1; // Default to page 1 if no page parameter is provided
+	        }
+	        
+	        
+	        if (promoParam != null && !promoParam.isEmpty()) {
+	            try {
+	            	promoCurrentPage = Integer.parseInt(promoParam);
+	            } catch (NumberFormatException e) {
+	            	promoCurrentPage = 1; // Default to page 1 if the parameter is invalid
+	            }
+	        } else {
+	        	promoCurrentPage = 1; // Default to page 1 if no page parameter is provided
+	        }
+	        
+	        
+	       	
 		}
 		
 		
@@ -98,13 +129,15 @@ private static final Logger log = LogManager.getLogger(Plot1bhkService.class);
 	        
 	    }
 	 	public void nextPage() {
+	 		
+	 		System.out.println("======================currentPage===========pageSize============totalRecords=====:"+currentPage+"  "+pageSize+"  "+totalRecords);
 	        if ((currentPage * pageSize) < totalRecords) {
-	            currentPage++;
+	            //currentPage++;
 	            loadEntities();
 	        }
 	        
 	        if ((promoCurrentPage * promoPageSize) < promoTotalRecords) {
-	        	promoCurrentPage++;
+	        	//promoCurrentPage++;
 	            loadEntities();
 	            	
 	        }
@@ -112,12 +145,12 @@ private static final Logger log = LogManager.getLogger(Plot1bhkService.class);
 
 	    public void previousPage() {
 	        if (currentPage > 1) {
-	            currentPage--;
+	            //currentPage--;
 	            loadEntities();
 	        }
 	        
 	        if (promoCurrentPage > 1) {
-	        	promoCurrentPage--;
+	        	//promoCurrentPage--;
 	            loadEntities();
 	        }
 	    }
@@ -131,25 +164,21 @@ private static final Logger log = LogManager.getLogger(Plot1bhkService.class);
 		    
 	        FacesContext facesContext = FacesContext.getCurrentInstance();
 	        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-	        session.setAttribute("selectedPlot1bhk", selectedProperty);
+	        session.setAttribute("plot1bhkKey", selectedProperty);
 	    }
 		
 		
 
 		public void submit() {
 			
-
-	    	FacesContext facesContext = FacesContext.getCurrentInstance();
+			FacesContext facesContext = FacesContext.getCurrentInstance();
 	        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
 	      
 	        if (session != null) {
-	         	selectedProperty= (VillaModel) session.getAttribute("selectedPlot1bhk");
+	         	selectedProperty= (VillaModel) session.getAttribute("plot1bhkKey");
 	         	System.out.println("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
 	          }
-	        
-	    	System.out.println("-------------submit ----------------------");
-        	log.info("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
-        	
+	    	 	
         	
         	if(selectedProperty.getVillaId()!=0)
         	{
@@ -341,7 +370,12 @@ private static final Logger log = LogManager.getLogger(Plot1bhkService.class);
 
 
 		
-		        
+			@PreDestroy
+		    public void cleanup() {
+		        if (villaModel != null) {
+		        	villaModel.clear();
+		        }
+		    }    
 
 		
 		        
