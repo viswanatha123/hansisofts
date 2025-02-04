@@ -14,6 +14,8 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,8 +33,7 @@ import SMTPService.SMTPService;
 
 @ManagedBean(name="readyToMoveService")
 
-//@RequestScoped
-@ViewScoped
+@RequestScoped
 public class ReadyToMoveService {
 	
 	private static final Logger log = LogManager.getLogger(ReadyToMoveService.class);
@@ -49,8 +50,6 @@ public class ReadyToMoveService {
 	private int promoPageSize = 3;
 	private int promoTotalRecords;
 	private List<PromoImageModel> promoImageModel;
-	
-	
 	
 
 
@@ -69,7 +68,7 @@ public class ReadyToMoveService {
 	    
 			public ReadyToMoveService()
 			{
-				
+							
 				log.info("Loading ReadyToMoveService init()");
 		    	gDao=new GeneralDAOImpl();
 		    	udo=new UserDAOImpl();
@@ -79,6 +78,38 @@ public class ReadyToMoveService {
 		        loadEntities();
 				countTotalRecords();
 				
+				FacesContext context = FacesContext.getCurrentInstance();
+		        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+		        
+		        String pageParam = request.getParameter("immedi");
+		        String promoParam = request.getParameter("promoimmedi");
+		     	        
+		        if (pageParam != null && !pageParam.isEmpty()) {
+		            try {
+		            	
+		                currentPage = Integer.parseInt(pageParam);
+		               	             
+		            } catch (NumberFormatException e) {
+		            	
+		               currentPage = 1; // Default to page 1 if the parameter is invalid
+		            }
+		        } else {
+		        
+		           //Default to page 1 if no page parameter is provided
+		        	currentPage = 1;
+		        			        	
+		        }
+		        
+		        if (promoParam != null && !promoParam.isEmpty()) {
+		            try {
+		            	promoCurrentPage = Integer.parseInt(promoParam);
+		            } catch (NumberFormatException e) {
+		            	promoCurrentPage = 1; // Default to page 1 if the parameter is invalid
+		            }
+		        } else {
+		        	promoCurrentPage = 1; // Default to page 1 if no page parameter is provided
+		        }
+				
 			}
 			
 			
@@ -86,8 +117,8 @@ public class ReadyToMoveService {
 		 		
 				villaModel=gDao.getReadyToMove(pageSize,currentPage);
 				promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
-		 		
-		        
+		 		  
+				 
 		    }
 		 	
 		 	public void countTotalRecords() {
@@ -97,12 +128,15 @@ public class ReadyToMoveService {
 		        
 		    }
 		 	public void nextPage() {
-		        if ((currentPage * pageSize) < totalRecords) {
-		            currentPage++;
-		            loadEntities();
+		
+		      if ((currentPage * pageSize) < totalRecords) {
+		            //currentPage++;
+		           loadEntities();
+		            
 		        }
+		        
 		        if ((promoCurrentPage * promoPageSize) < promoTotalRecords) {
-		        	promoCurrentPage++;
+		        	//promoCurrentPage++;
 		            loadEntities();
 		            	
 		        }
@@ -111,11 +145,11 @@ public class ReadyToMoveService {
 
 		    public void previousPage() {
 		        if (currentPage > 1) {
-		            currentPage--;
+		            //currentPage--;
 		            loadEntities();
 		        }
 		        if (promoCurrentPage > 1) {
-		        	promoCurrentPage--;
+		        	//promoCurrentPage--;
 		            loadEntities();
 		        }
 		    }
@@ -124,14 +158,23 @@ public class ReadyToMoveService {
 		        return (int) Math.ceil((double) totalRecords / pageSize);
 		    }
 			
-			
+		    public void storeSelectedPropertyInSession() {
+			    
+		        FacesContext facesContext = FacesContext.getCurrentInstance();
+		        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+		        session.setAttribute("plot1bhkKey", selectedProperty);
+		    }
 			
 			
 	
 			public void submit() {
-		    	System.out.println("-------------submit ----------------------");
-	        	log.info("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
-	        	
+				FacesContext facesContext = FacesContext.getCurrentInstance();
+		        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+		      
+		        if (session != null) {
+		         	selectedProperty= (VillaModel) session.getAttribute("plot1bhkKey");
+		         	System.out.println("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
+		          }	
 	        	
 	        	if(selectedProperty.getVillaId()!=0)
 	        	{
@@ -326,8 +369,13 @@ public class ReadyToMoveService {
 			}
 
 
-		
-		
+			
+			@PreDestroy
+		    public void cleanup() {
+		        if (villaModel != null) {
+		        	villaModel.clear();
+		        }
+		    }
        
         
                

@@ -15,6 +15,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
@@ -79,6 +80,38 @@ private static final Logger log = LogManager.getLogger(Plot4bhkService.class);
 	        loadEntities();
 			countTotalRecords();
 			
+			FacesContext context = FacesContext.getCurrentInstance();
+	        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+	        
+	        String pageParam = request.getParameter("page4");
+	        String promoParam = request.getParameter("promopage4");
+	     	        
+	        if (pageParam != null && !pageParam.isEmpty()) {
+	            try {
+	            	
+	                currentPage = Integer.parseInt(pageParam);
+	                  
+	            } catch (NumberFormatException e) {
+	      
+	                currentPage = 1; // Default to page 1 if the parameter is invalid
+	            }
+	        } else {
+	        
+	           //Default to page 1 if no page parameter is provided
+	        	currentPage = 1;
+	        		        	
+	        }
+	        
+	        if (promoParam != null && !promoParam.isEmpty()) {
+	            try {
+	            	promoCurrentPage = Integer.parseInt(promoParam);
+	            } catch (NumberFormatException e) {
+	            	promoCurrentPage = 1; // Default to page 1 if the parameter is invalid
+	            }
+	        } else {
+	        	promoCurrentPage = 1; // Default to page 1 if no page parameter is provided
+	        }
+			
 		}
 		
 		
@@ -98,12 +131,12 @@ private static final Logger log = LogManager.getLogger(Plot4bhkService.class);
 	    }
 	 	public void nextPage() {
 	        if ((currentPage * pageSize) < totalRecords) {
-	            currentPage++;
+	            //currentPage++;
 	            loadEntities();
 	        }
 	        
 	        if ((promoCurrentPage * promoPageSize) < promoTotalRecords) {
-	        	promoCurrentPage++;
+	        	//promoCurrentPage++;
 	            loadEntities();
 	            	
 	        }
@@ -111,12 +144,12 @@ private static final Logger log = LogManager.getLogger(Plot4bhkService.class);
 
 	    public void previousPage() {
 	        if (currentPage > 1) {
-	            currentPage--;
+	            //currentPage--;
 	            loadEntities();
 	        }
 	        
 	        if (promoCurrentPage > 1) {
-	        	promoCurrentPage--;
+	        	//promoCurrentPage--;
 	            loadEntities();
 	        }
 	    }
@@ -126,13 +159,13 @@ private static final Logger log = LogManager.getLogger(Plot4bhkService.class);
 	        return (int) Math.ceil((double) totalRecords / pageSize);
 	    }
 		
-		
-        public void storeSelectedPropertyInSession() {
+       public void storeSelectedPropertyInSession() {
 		    
 	        FacesContext facesContext = FacesContext.getCurrentInstance();
 	        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-	        session.setAttribute("selectedPlot4bhk", selectedProperty);
+	        session.setAttribute("plot2bhkKey", selectedProperty);
 	    }
+		
 		
 
 		public void submit() {
@@ -140,12 +173,9 @@ private static final Logger log = LogManager.getLogger(Plot4bhkService.class);
 	        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
 	      
 	        if (session != null) {
-	         	selectedProperty= (VillaModel) session.getAttribute("selectedPlot4bhk");
+	         	selectedProperty= (VillaModel) session.getAttribute("plot2bhkKey");
 	         	System.out.println("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
-	          }
-	    	System.out.println("-------------submit ----------------------");
-        	log.info("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
-        	
+	          }	
         	
         	if(selectedProperty.getVillaId()!=0)
         	{
@@ -336,7 +366,12 @@ private static final Logger log = LogManager.getLogger(Plot4bhkService.class);
 			}
 
 
-		
+			@PreDestroy
+		    public void cleanup() {
+		        if (villaModel != null) {
+		        	villaModel.clear();
+		        }
+		    }
 		        
 
 }

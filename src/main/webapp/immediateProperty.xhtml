@@ -110,6 +110,7 @@
 
                      			 				    <p:commandButton type="submit" value="Callback" icon="ui-icon-calculator" style="background:#FFA500;font-weight: bold;color: black;font-size: 15px" 
 															 process="@this" 
+															 action="#{readyToMoveService.storeSelectedPropertyInSession}"
 							                                 onclick="PF('leadDialog').show()">           
 							                              <f:setPropertyActionListener value="#{product}" target="#{readyToMoveService.selectedProperty}" />
 									                </p:commandButton>
@@ -117,6 +118,7 @@
 									                                      						
                           						   <p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#1E90FF;font-weight: bold;color: black;font-size: 15px; width:170px" 
 															 process="@this" 
+															 action="#{readyToMoveService.storeSelectedPropertyInSession}"
 							                                 onclick="PF('leadDialog').show()">           
 							                              <f:setPropertyActionListener value="#{product}" target="#{readyToMoveService.selectedProperty}" />
 									                </p:commandButton>
@@ -163,20 +165,28 @@
 			
 						
 		</div> 
+		
 
 		<c:if test="#{readyToMoveService.totalRecords > 0}">
               
 		       <p:panel>   
 		         	<p:panelGrid columns="3" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
-				        <h:commandButton value="Previous" action="#{readyToMoveService.previousPage}" disabled="#{readyToMoveService.currentPage == 1}" />
-				        <h:commandButton value="Next" action="#{readyToMoveService.nextPage}" disabled="#{readyToMoveService.currentPage * readyToMoveService.pageSize >= readyToMoveService.totalRecords}" />
-				        <h:outputText value="Page #{readyToMoveService.currentPage} of #{readyToMoveService.totalPages}" />
+				        <h:commandButton value="Previous" action="#{readyToMoveService.previousPage}" disabled="#{readyToMoveService.currentPage == 1}" >
+				        		<f:param name="immedi" value="#{readyToMoveService.currentPage - 1}"/>
+								<f:param name="promoimmedi" value="#{readyToMoveService.promoCurrentPage - 1}"/>
+				        </h:commandButton>
+				        
+				        <h:commandButton value="Next" action="#{readyToMoveService.nextPage}" disabled="#{readyToMoveService.currentPage * readyToMoveService.pageSize >= readyToMoveService.totalRecords}" >
+				        		<f:param name="immedi" value="#{readyToMoveService.currentPage + 1}"/>
+								<f:param name="promoimmedi" value="#{readyToMoveService.promoCurrentPage + 1}"/>
+				        </h:commandButton>
+						<h:outputText value="Page #{readyToMoveService.currentPage} of #{readyToMoveService.totalPages}" />
 				    </p:panelGrid>
 		       </p:panel>
   
       </c:if>
-</h:form>
 
+</h:form>
 
 
 <h:form id="form1">

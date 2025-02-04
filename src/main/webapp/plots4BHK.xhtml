@@ -116,15 +116,15 @@
 
                      			 				    <p:commandButton type="submit" value="Callback" icon="ui-icon-calculator" style="background:#FFA500;font-weight: bold;color: black;font-size: 15px" 
 															 process="@this" 
-															 action="#{plot4bhkService.storeSelectedPropertyInSession}"
+															action="#{plot4bhkService.storeSelectedPropertyInSession}"
 							                                 onclick="PF('leadDialog').show()">           
 							                              <f:setPropertyActionListener value="#{product}" target="#{plot4bhkService.selectedProperty}" />
 									                </p:commandButton>
 									                
 									                                      						
                           						   <p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#1E90FF;font-weight: bold;color: black;font-size: 15px; width:100px" 
-															 process="@this"
-															 action="#{plot4bhkService.storeSelectedPropertyInSession}" 
+															 process="@this" 
+															 action="#{plot4bhkService.storeSelectedPropertyInSession}"
 							                                 onclick="PF('leadDialog').show()">           
 							                              <f:setPropertyActionListener value="#{product}" target="#{plot4bhkService.selectedProperty}" />
 									                </p:commandButton>
@@ -176,8 +176,14 @@
             
 		       <p:panel>   
 		         	<p:panelGrid columns="3" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
-				        <h:commandButton value="Previous" action="#{plot4bhkService.previousPage}" disabled="#{plot4bhkService.currentPage == 1}" />
-				        <h:commandButton value="Next" action="#{plot4bhkService.nextPage}" disabled="#{plot2bhkService.currentPage * plot4bhkService.pageSize >= plot4bhkService.totalRecords}" />
+				        <h:commandButton value="Previous" action="#{plot4bhkService.previousPage}" disabled="#{plot4bhkService.currentPage == 1}" >
+				        	<f:param name="page4" value="#{plot4bhkService.currentPage - 1}"/>
+							<f:param name="promopage4" value="#{plot4bhkService.promoCurrentPage - 1}"/>
+				        </h:commandButton>
+				        <h:commandButton value="Next" action="#{plot4bhkService.nextPage}" disabled="#{plot2bhkService.currentPage * plot4bhkService.pageSize >= plot4bhkService.totalRecords}" >
+				        	<f:param name="page4" value="#{plot4bhkService.currentPage + 1}"/>
+							<f:param name="promopage4" value="#{plot4bhkService.promoCurrentPage + 1}"/>
+				        </h:commandButton>
 				        <h:outputText value="Page #{plot4bhkService.currentPage} of #{plot4bhkService.totalPages}" />
 				    </p:panelGrid>
 		       </p:panel>

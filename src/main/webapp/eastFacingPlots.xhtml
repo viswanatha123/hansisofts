@@ -178,8 +178,14 @@
             
 		       <p:panel>   
 		         	<p:panelGrid columns="3" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
-				        <h:commandButton value="Previous" action="#{eastfacingService.previousPage}" disabled="#{eastfacingService.currentPage == 1}" />
-				        <h:commandButton value="Next" action="#{eastfacingService.nextPage}" disabled="#{eastfacingService.currentPage * eastfacingService.pageSize >= eastfacingService.totalRecords}" />
+				        <h:commandButton value="Previous" action="#{eastfacingService.previousPage}" disabled="#{eastfacingService.currentPage == 1}" >
+				        		<f:param name="eastfacing" value="#{eastfacingService.currentPage - 1}"/>
+								<f:param name="eastfacingpromo" value="#{eastfacingService.promoCurrentPage - 1}"/>
+				        </h:commandButton>
+				        <h:commandButton value="Next" action="#{eastfacingService.nextPage}" disabled="#{eastfacingService.currentPage * eastfacingService.pageSize >= eastfacingService.totalRecords}" >
+				        		<f:param name="eastfacing" value="#{eastfacingService.currentPage + 1}"/>
+								<f:param name="eastfacingpromo" value="#{eastfacingService.promoCurrentPage + 1}"/>
+				        </h:commandButton>
 				        <h:outputText value="Page #{eastfacingService.currentPage} of #{eastfacingService.totalPages}" />
 				    </p:panelGrid>
 		       </p:panel>

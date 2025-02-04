@@ -115,7 +115,7 @@
                      			 				<h:outputText style="font-weight: bold;color: red;font-size: 15px"  value="Rs #{product.cost}" />
 
                      			 				    <p:commandButton type="submit" value="Callback" icon="ui-icon-calculator" style="background:#FFA500;font-weight: bold;color: black;font-size: 15px" 
-															 process="@this" 
+															 process="@this"
 															 action="#{plot3bhkService.storeSelectedPropertyInSession}"
 							                                 onclick="PF('leadDialog').show()">           
 							                              <f:setPropertyActionListener value="#{product}" target="#{plot3bhkService.selectedProperty}" />
@@ -176,8 +176,14 @@
             
 		       <p:panel>   
 		         	<p:panelGrid columns="3" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
-				        <h:commandButton value="Previous" action="#{plot3bhkService.previousPage}" disabled="#{plot3bhkService.currentPage == 1}" />
-				        <h:commandButton value="Next" action="#{plot3bhkService.nextPage}" disabled="#{plot3bhkService.currentPage * plot3bhkService.pageSize >= plot3bhkService.totalRecords}" />
+				        <h:commandButton value="Previous" action="#{plot3bhkService.previousPage}" disabled="#{plot3bhkService.currentPage == 1}" >
+				        		<f:param name="page3" value="#{plot3bhkService.currentPage - 1}"/>
+								<f:param name="promopage3" value="#{plot3bhkService.promoCurrentPage - 1}"/>
+				        </h:commandButton>
+				        <h:commandButton value="Next" action="#{plot3bhkService.nextPage}" disabled="#{plot3bhkService.currentPage * plot3bhkService.pageSize >= plot3bhkService.totalRecords}" >
+				        		<f:param name="page3" value="#{plot3bhkService.currentPage + 1}"/>
+								<f:param name="promopage3" value="#{plot3bhkService.promoCurrentPage + 1}"/>
+				        </h:commandButton>
 				        <h:outputText value="Page #{plot3bhkService.currentPage} of #{plot3bhkService.totalPages}" />
 				    </p:panelGrid>
 		       </p:panel>
