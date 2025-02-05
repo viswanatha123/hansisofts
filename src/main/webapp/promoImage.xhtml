@@ -69,8 +69,12 @@
                      <p:fileUpload id="upload"  value="#{promoImageService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/> 
                                      
                     <h:outputText style="font-weight: bold" value="Comment : " />
-                    <h:inputText id="imagename"  value="#{promoImageService.comment}"  >
+                    <h:inputText id="comment"  value="#{promoImageService.comment}"  >
                     </h:inputText>
+                    
+                    <h:outputText style="font-weight: bold" value="Display Order : " />
+                    <p:inputNumber id="displayorder" value="#{promoImageService.displayOrder}">
+                    </p:inputNumber>
             
 				        		 
         	   </p:panelGrid>
@@ -110,6 +114,12 @@
             		    <p:column headerText="ID">
 			                        <h:outputText style="font-weight:15;" value="#{product.promoId}"/>
 			             </p:column>
+			             
+			             <p:column headerText="Image">
+			                        <p:graphicImage width="30" height="30" stream="false" cache="false" value="#{product.streamedContent}" />
+			             </p:column>
+			             
+			             
 			            <p:column headerText="IMG NAME">
 			                        <h:outputText style="font-weight:15;" value="#{product.imageName}"/>
 			             </p:column>
@@ -118,6 +128,10 @@
 			             </p:column>
 			             <p:column headerText="IS ACTIVE">
 			                        <h:outputText style="font-weight:15;" value="#{product.is_active}"/>
+			             </p:column>
+			             
+			             <p:column headerText="Display order">
+			                        <h:outputText style="font-weight:15;" value="#{product.displayOrder}"/>
 			             </p:column>
 			             
 			              <p:column exportable="false" >
@@ -141,13 +155,7 @@
                 onclick="PF('deleteProductDialog').hide()" />
         </p:confirmDialog>
         
-   
-		<h:commandButton value="  Save  "  type="submit"  actionListener="#{promoImageService.save}" process="@this" update=":form:form">
-                                    
-          <p:resetInput target="@form"/>
-        </h:commandButton>
-                   					
-                   					
+                 					
 		
   
   

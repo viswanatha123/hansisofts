@@ -18,6 +18,7 @@ public class PromoImageModel implements Serializable{
 	 private InputStream inputStream;
 	 private UploadedFile file;
      private String imageName;
+     private int displayOrder;
     
 	
 	
@@ -79,6 +80,14 @@ public class PromoImageModel implements Serializable{
 
 	public void setImageName(String imageName) {
 		this.imageName = imageName;
+	}
+
+	public int getDisplayOrder() {
+		return displayOrder;
+	}
+
+	public void setDisplayOrder(int displayOrder) {
+		this.displayOrder = displayOrder;
 	}
 
 
