@@ -117,7 +117,7 @@ public class ConnectionDAOImpl {
 			String SQL_RENTAL_DATA_INSERT="INSERT INTO rental_plot (rental_id,own_name,address,own_con_no,pro_type,tot_bed_rooms,tot_floors,tot_bath_rooms,furniture,rent_pref,sec_depo,mon_rent,kitc_room,facing,tot_area_sqft,prim_location,seco_location,image,create_date, is_active,avail_date) VALUES (nextval('rental_plot_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,1,?)";
 			String SQL_RENTAL_DETAILS="select * from rental_plot where prim_location = ? and seco_location = ?";
 			String SQL_PACKAGE_ENQUIRY="INSERT INTO hansi_enquiry (enqi_id, name, email, phone, create_date, is_active,enq_type) VALUES(nextval('hansi_enquiry_seq'),?, ?, ?, current_timestamp, 1,?)";
-			String SQL_PROMO_IMAGE="insert into promo_img (promo_id,image,create_date, is_active,comment,img_name) values (nextval('promo_seq'),?,current_timestamp, 1,?,?)";
+			String SQL_PROMO_IMAGE="insert into promo_img (promo_id,image,create_date, is_active,comment,img_name,display_order) values (nextval('promo_seq'),?,current_timestamp, 1,?,?,?)";
 			String SQL_Individual_COUNT="select count(*) from hansi_individual_site where prim_location = ? and seco_location = ?";
 		}
                 
@@ -1353,6 +1353,9 @@ public class ConnectionDAOImpl {
             pstmt.setBinaryStream(1, fin2, file.getSize());
             pstmt.setString(2, promoImageModel.getComment());
             pstmt.setString(3, promoImageModel.getImageName());
+            pstmt.setInt(4, promoImageModel.getDisplayOrder());
+        
+           
             
             
           

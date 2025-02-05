@@ -32,6 +32,7 @@ public class PromoImageService {
 	private UploadedFile file;
 	private String updateResult;
 	private String comment;
+	private int displayOrder;
 	
 	private String statusMessage;
 	
@@ -70,6 +71,7 @@ public class PromoImageService {
   	       promoImageModel.setFile(file);
   	       promoImageModel.setImageName(imageName);
   	       promoImageModel.setComment(comment);
+  	       promoImageModel.setDisplayOrder(displayOrder);
   	        
   	    	          
   	          updateResult=dao.promoImageUpload(promoImageModel);
@@ -123,27 +125,7 @@ public class PromoImageService {
 	
 	
 	
-	public void save()
-	{
-		statusMessage="";
-		
-		 for(PromoImageModel urm:promoImageModelList)
-	        {
-	        	System.out.println("**** Save "+urm.getPromoId()+"   "+urm.getIs_active());
-	        }
-		
-		 int updatedRecord=gDao.savePromoImgIsActive(promoImageModelList);
-		    if(updatedRecord > 0)
-		    {
-		    	updateResult="Successful saved Active";
-		    }else
-		    {
-		    	updateResult="Error Occurred, Please contact support team.";
-		    }
-		 
-		   
-	}
-    
+	
     
     public String getImageName() {
 		return imageName;
@@ -191,6 +173,14 @@ public class PromoImageService {
 
 	public void setSelectedProduct(PromoImageModel selectedProduct) {
 		this.selectedProduct = selectedProduct;
+	}
+
+	public int getDisplayOrder() {
+		return displayOrder;
+	}
+
+	public void setDisplayOrder(int displayOrder) {
+		this.displayOrder = displayOrder;
 	}
 
 	
