@@ -23,6 +23,7 @@ import com.DIC.DAO.Impl.SMSService;
 import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.AgriculturalModel;
 import com.DIC.model.LayoutMode;
+import com.DIC.model.PromoImageModel;
 import com.DIC.model.UserDetails;
 
 import SMTPService.SMTPService;
@@ -60,6 +61,15 @@ public class AgriculturalService implements Serializable{
 	private String custName;
 	private String contactNumber;
 	private String email;
+	
+	private int currentPage = 1;
+	private int pageSize = 10;
+	private int totalRecords;
+	private int promoCurrentPage = 1;
+	private int promoPageSize = 3;
+	private int promoTotalRecords;
+	
+	private List<PromoImageModel> promoImageModel;
     
     
     @PostConstruct 
@@ -73,6 +83,7 @@ public class AgriculturalService implements Serializable{
         ur=new UserRoleService();
         
         primaryModel=locationDao.getAgriPrimaryLocation();
+        
         primLocation  = new HashMap<>(); 
 	      for(Map.Entry<String, String> pp:primaryModel.entrySet())
 	      {
@@ -126,24 +137,71 @@ public class AgriculturalService implements Serializable{
       
         System.out.println(country+"     "+city);
         
+    	
         locationMessage=country+" ,    "+city;
         
-        dao=new ConnectionDAOImpl();
-        agriculturalModelList=dao.getAgriculturalDetails(country,city);
+        loadEntities(); 
+    	countTotalRecords();
+        }
+    
                 
-                for(AgriculturalModel x:agriculturalModelList)
-                {
-                    System.out.println("@@@@@@@@@@@@@@@@@@@@ :"+x.getOwnerName());
+                public void loadEntities() {
+                	agriculturalModelList=dao.getAgriculturalDetails(country,city,pageSize,currentPage);
+                	promoImageModel=dao.getPromoImageLayout(promoPageSize, promoCurrentPage);
+                	for(AgriculturalModel x:agriculturalModelList)
+                    {
+                        System.out.println("@@@@@@@@@@@@@@@@@@@@ :"+x.getOwnerName());
+                    }
                 }
-                
-        
-        }  
-        
+                public void countTotalRecords() {
+    			 	
+    	        	System.out.println("================>"+country+"  "+city+"   ");
+    		 		totalRecords=dao.getAgriculturalCountTotalRecords(country,city);
+    		 		promoTotalRecords=dao.getPromoCountTotalRecords();
+
+    		        
+    		    }
+    	        
+    		 	public void nextPage() {
+    		        if ((currentPage * pageSize) < totalRecords) {
+    		            currentPage++;
+    		            loadEntities();
+    		        }
+    		        if ((promoCurrentPage * promoPageSize) < promoTotalRecords) {
+    		        	promoCurrentPage++;
+    		            loadEntities();
+    		            	
+    		        }
+    		        
+    		     
+    		    }
+
+    		    public void previousPage() {
+    		        if (currentPage > 1) {
+    		            currentPage--;
+    		            loadEntities();
+    		        }
+    		        if (promoCurrentPage > 1) {
+    		        	promoCurrentPage--;
+    		            loadEntities();
+    		        }
+                    
+    		        
+    		        
+    		    }
+    		 	
+    		    public int getTotalPages() {
+    		        return (int) Math.ceil((double) totalRecords / pageSize);
+    		    }
+         
+
         
         
     public String getLocationMessage() {
         return locationMessage;
     }
+    
+    
            
            
            
@@ -198,7 +256,7 @@ public class AgriculturalService implements Serializable{
 	        	}
 	        	
 	        	
-	        	agriculturalModelList=dao.getAgriculturalDetails(country,city);
+	        	agriculturalModelList=dao.getAgriculturalDetails(country,city,pageSize,currentPage);
 	        	this.custName="";
 	        	this.contactNumber="";
 	        	this.email="";
@@ -282,6 +340,67 @@ public class AgriculturalService implements Serializable{
 
 	public void setSelectedProperty(AgriculturalModel selectedProperty) {
 		this.selectedProperty = selectedProperty;
+	}
+	
+	public int getCurrentPage() {
+		return currentPage;
+	}
+
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+
+	public int getTotalRecords() {
+		return totalRecords;
+	}
+
+
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
+
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+
+	public void setTotalRecords(int totalRecords) {
+		this.totalRecords = totalRecords;
+	}
+
+	public int getPromoCurrentPage() {
+		return promoCurrentPage;
+	}
+
+	public int getPromoPageSize() {
+		return promoPageSize;
+	}
+
+	public int getPromoTotalRecords() {
+		return promoTotalRecords;
+	}
+
+	public void setPromoCurrentPage(int promoCurrentPage) {
+		this.promoCurrentPage = promoCurrentPage;
+	}
+
+	public void setPromoPageSize(int promoPageSize) {
+		this.promoPageSize = promoPageSize;
+	}
+
+	public void setPromoTotalRecords(int promoTotalRecords) {
+		this.promoTotalRecords = promoTotalRecords;
+	}
+
+	public List<PromoImageModel> getPromoImageModel() {
+		return promoImageModel;
+	}
+
+	public void setPromoImageModel(List<PromoImageModel> promoImageModel) {
+		this.promoImageModel = promoImageModel;
 	}
 	
 	

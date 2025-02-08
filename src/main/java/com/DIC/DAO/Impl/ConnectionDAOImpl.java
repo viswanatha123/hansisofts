@@ -96,7 +96,7 @@ public class ConnectionDAOImpl {
 					+ "WHEN rank = 3 THEN 3 \r\n"
 					+ "ELSE 4\r\n"
 					+ "END,\r\n"
-					+ "create_date desc";
+					+ "create_date desc LIMIT ? OFFSET ?";
 			String SQL_LAYOUT_INSERT="insert into hansi_layout (layout_id,name,location,persqft,contact_owner,owner_name,wonership,is_active,transaction,comment,length,width,prim_location,seco_location,create_date,swimingpool,playground,park,wall,community,facing,agent_name,image,cost,user_id,corner_bit,rank) \n" +
 					"values (nextval('hansi_layout_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?,?,?,?,?,?,?,?);";
 				
@@ -126,6 +126,7 @@ public class ConnectionDAOImpl {
 			String SQL_PROMO_IMAGE_LAYOUT="select * from promo_img where is_active ='1' LIMIT ? OFFSET ?";
 			String SQL_LAYOUT_COUNT="select count(*) from hansi_layout where prim_location = ? and seco_location = ?";
 			String SQL_PROMO_COUNT="select count(*) from promo_img where is_active ='1'";
+			String SQL_AGRI_COUNT="select count(*)  from hansi_agricultural where prim_location = ? and seco_location = ?";
 		
 		}
                 
@@ -496,7 +497,7 @@ public class ConnectionDAOImpl {
                          InputStream imageStream = rs.getBinaryStream("image");
         	        	 if (rs.getBytes("image").length!=0)  {
         	        		 
-        	        		 System.out.println("*********************************** success *******************************"+rs.getInt("layout_id"));
+        	        		
         	        	     BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
         	        	     
         	        	     layoutMode.setStreamedContent(DefaultStreamedContent.builder()
@@ -508,7 +509,7 @@ public class ConnectionDAOImpl {
         	        	 else
                          {
         	        		 
-        	        		 System.out.println("***********************************Not success *******************************"+rs.getInt("layout_id"));
+        	        		
                         	// Defalut Image
                         	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
                         	 ResultSet rsDef = pstmtDefault.executeQuery();
@@ -606,87 +607,110 @@ public class ConnectionDAOImpl {
     
   //************************************AgriculturalDetails******************************************//
 
-    public List<AgriculturalModel> getAgriculturalDetails(String priLocation, String secLocation)
-    	{
-                
-            
-    		log.info("### : get started :: getAgriculturalDetails() ");
-    		List<AgriculturalModel> agriculturalModelList = new ArrayList<>();
-    		try {
-    			Connection con = null;
-    			PreparedStatement pstmt = null;
-    			
-    			StringBuilder sql_agricultural = new StringBuilder(Constants.SQL.SQL_AGRICULTURAL);
-    			log.info("###: Query : "+sql_agricultural.toString());
-    			
-    			con=ConnectionDAO.getConnection();
-    	                    pstmt = con.prepareStatement(sql_agricultural.toString());
-                                pstmt.setString(1, priLocation);
-                                pstmt.setString(2, secLocation);
-                                ResultSet rs = pstmt.executeQuery();
-    	         while ( rs.next() ) {
-    	        	 AgriculturalModel agriculturalModel=new AgriculturalModel();
-    	        	 
-    	        	 		 agriculturalModel.setAgriId(rs.getInt("agri_id"));
-                             agriculturalModel.setOwnerName(rs.getString("owner_name"));
-                             agriculturalModel.setContactNo(rs.getString("contact_no"));
-                             agriculturalModel.setSurveyNo(rs.getString("survey_no"));
-                             agriculturalModel.setLocation(rs.getString("location"));
-                             agriculturalModel.setWonership(rs.getString("wonership"));
-                             agriculturalModel.setTransaction(rs.getString("transaction"));
-                             agriculturalModel.setPerCent(rs.getInt("per_cent"));
-                             agriculturalModel.setNumberCents(rs.getInt("number_cents"));
-                             agriculturalModel.setWaterSource(rs.getString("water_source"));
-                             agriculturalModel.setCrop(rs.getString("crop"));
-                             agriculturalModel.setPrimLocation(rs.getString("prim_location"));
-                             agriculturalModel.setSecoLocation(rs.getString("seco_location"));
-                             agriculturalModel.setComment(rs.getString("comment"));
-                             agriculturalModel.setAgentName(rs.getString("agent_Name"));
-                             
-                             agriculturalModel.setTotalPrice(indianCurrence(rs.getInt("per_cent")*rs.getInt("number_cents")));
-                             agriculturalModel.setCreatedOnDate(rs.getDate("create_date"));
-                             agriculturalModel.setUserId(rs.getInt("user_id"));
-                             
-                             log.info("getAgriculturalDetails () : "+rs.getInt("agri_id")+"  "+rs.getString("owner_name"));
-                             if(rs.getBytes("image").length!=0)
-                             {
-                               byte[] bb=rs.getBytes("image");
-                             
-                             agriculturalModel.setStreamedContent(DefaultStreamedContent.builder()
-                                     .name("US_Piechart.jpg")
-                                     .contentType("image/jpg")
-                                     .stream(() -> new ByteArrayInputStream(bb)).build());
-                             }
-                             else
-                             {
-				                	// Defalut Image
-				                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
-				                	 ResultSet rsDef = pstmtDefault.executeQuery();
-				                	 while ( rsDef.next())
-				                			 {
-				                		      byte[] def=rsDef.getBytes("image");
-				                		      agriculturalModel.setStreamedContent(DefaultStreamedContent.builder()
-				                             .name("US_Piechart.jpg")
-				                             .contentType("image/jpg")
-				                             .stream(() -> new ByteArrayInputStream(def)).build());
-				                			 }
-				                	 
-				                  }
-    	        agriculturalModelList.add(agriculturalModel);
-    	       
-    	            
-    	         }
-    	         	
-    	         pstmt.close();
-    	         rs.close();
-    	         con.close();
-    	         //log.info("### : *** Connection Closed from getActiveModelList()");
-    	     } catch (Exception e) {
-    	        e.printStackTrace();
-    	        log.error("An error occurred: {}", e.getMessage());
-    	     }
-    	return agriculturalModelList;		
-    	}
+    public List<AgriculturalModel> getAgriculturalDetails(String priLocation, String secLocation,int pageSize, int currentPage)
+	{
+    	ConnectionDAO condao;
+    	BasicDataSource bds=null;
+    	Connection con = null;
+    	PreparedStatement pstmt = null;
+        
+		log.info("### : get started :: getAgriculturalDetails() ");
+		List<AgriculturalModel> agriculturalModelList = new ArrayList<>();
+		try {
+			condao=new ConnectionDAO();
+			bds=condao.getDataSource();
+			con=bds.getConnection();
+			
+			StringBuilder sql_agricultural = new StringBuilder(Constants.SQL.SQL_AGRICULTURAL);
+			log.info("###: Query : "+sql_agricultural.toString());
+			
+	                    pstmt = con.prepareStatement(sql_agricultural.toString());
+                            pstmt.setString(1, priLocation);
+                            pstmt.setString(2, secLocation);
+                            pstmt.setInt(3, pageSize);
+				            pstmt.setInt(4, (currentPage - 1) * pageSize);
+				            
+                            ResultSet rs = pstmt.executeQuery();
+	         while ( rs.next() ) {
+	        	 AgriculturalModel agriculturalModel=new AgriculturalModel();
+	        	 
+	        	 		 agriculturalModel.setAgriId(rs.getInt("agri_id"));
+                         agriculturalModel.setOwnerName(rs.getString("owner_name"));
+                         agriculturalModel.setContactNo(rs.getString("contact_no"));
+                         agriculturalModel.setSurveyNo(rs.getString("survey_no"));
+                         agriculturalModel.setLocation(rs.getString("location"));
+                         agriculturalModel.setWonership(rs.getString("wonership"));
+                         agriculturalModel.setTransaction(rs.getString("transaction"));
+                         agriculturalModel.setPerCent(rs.getInt("per_cent"));
+                         agriculturalModel.setNumberCents(rs.getInt("number_cents"));
+                         agriculturalModel.setWaterSource(rs.getString("water_source"));
+                         agriculturalModel.setCrop(rs.getString("crop"));
+                         agriculturalModel.setPrimLocation(rs.getString("prim_location"));
+                         agriculturalModel.setSecoLocation(rs.getString("seco_location"));
+                         agriculturalModel.setComment(rs.getString("comment"));
+                         agriculturalModel.setAgentName(rs.getString("agent_Name"));
+                         
+                         agriculturalModel.setTotalPrice(indianCurrence(rs.getInt("per_cent")*rs.getInt("number_cents")));
+                         agriculturalModel.setCreatedOnDate(rs.getDate("create_date"));
+                         agriculturalModel.setUserId(rs.getInt("user_id"));
+                         
+                         log.info("getAgriculturalDetails () : "+rs.getInt("agri_id")+"  "+rs.getString("owner_name"));
+                         
+                      	 InputStream imageStream = rs.getBinaryStream("image");
+                         if(rs.getBytes("image").length!=0) {
+        	        	     BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
+        	        	     
+        	        	     agriculturalModel.setStreamedContent(DefaultStreamedContent.builder()
+        	        	         .name("US_Piechart.jpg")
+        	        	         .contentType("image/jpg")
+        	        	         .stream(() -> bufferedStream) // Stream the content directly
+        	        	         .build());
+        	        	 }
+        	        	 
+                         else
+                         {
+			                	// Defalut Image
+			                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+			                	 ResultSet rsDef = pstmtDefault.executeQuery();
+			                	 while ( rsDef.next())
+			                			 {
+			                		      byte[] def=rsDef.getBytes("image");
+			                		      agriculturalModel.setStreamedContent(DefaultStreamedContent.builder()
+			                             .name("US_Piechart.jpg")
+			                             .contentType("image/jpg")
+			                             .stream(() -> new ByteArrayInputStream(def)).build());
+			                			 }
+			                	 
+			                  }
+	        agriculturalModelList.add(agriculturalModel);
+	       
+	            
+	         }
+	         	
+	              rs.close();
+	           //log.info("### : *** Connection Closed from getActiveModelList()");
+	     } catch (Exception e) {
+	        e.printStackTrace();
+	        log.error("An error occurred: {}", e.getMessage());
+	     }finally {
+             // Close the pool (important for proper shutdown)
+             try {
+            	 if (bds != null) {
+            		 bds.close(); 
+                 }
+                 if (con != null) {
+                	 con.close(); 
+                 }
+                 if (pstmt != null) {
+                	 pstmt.close(); 
+                 }
+                    
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+	     }
+	return agriculturalModelList;		
+	}
 
     
     
@@ -1628,7 +1652,61 @@ public class ConnectionDAOImpl {
 		    	return totalRecords;
 		    }
 			
-    
+			// **********************agriculture count **************************************
+ 			public int getAgriculturalCountTotalRecords(String priLocation, String secLocation)
+ 		    {
+ 		    	int totalRecords=0;
+ 		    
+ 		    	ConnectionDAO condao;
+ 		    	BasicDataSource bds=null;
+ 		    	Connection con = null;
+ 		    	PreparedStatement pstmt = null;
+ 	   	
+ 		   	
+ 		   	StringBuilder sql_agri_details = new StringBuilder(Constants.SQL.SQL_AGRI_COUNT);
+ 			
+ 				
+ 			 	try {
+ 			 		condao=new ConnectionDAO();
+ 			 		bds=condao.getDataSource();
+ 			 		con=bds.getConnection();
+ 		            pstmt = con.prepareStatement(sql_agri_details.toString());
+ 		            pstmt.setString(1, priLocation);
+ 	                pstmt.setString(2, secLocation);
+ 	                ResultSet rs = pstmt.executeQuery();
+ 			                  
+ 			        	if (rs.next()) {
+ 			                totalRecords = rs.getInt(1);
+ 			            }
+ 		   			
+ 			        rs.close();
+ 			        
+ 			       
+ 			     } catch (Exception e) {
+ 			        e.printStackTrace();
+ 			        System.err.println(e.getClass().getName()+": "+e.getMessage());
+ 			        log.error("An error occurred: {}", e.getMessage());
+ 			     }finally {
+ 		             // Close the pool (important for proper shutdown)
+ 		             try {
+ 		            	 if (bds != null) {
+ 		            		 bds.close(); 
+ 		                 }
+ 		                 if (con != null) {
+ 		                	 con.close(); 
+ 		                 }
+ 		                 if (pstmt != null) {
+ 		                	 pstmt.close(); 
+ 		                 }
+ 		              } catch (SQLException e) {
+ 		                 e.printStackTrace();
+ 		             }
+ 			     }
+ 		    	
+ 		    	return totalRecords;
+ 		    }
+ 			
+ 			 
     
 
 }
