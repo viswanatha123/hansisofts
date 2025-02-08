@@ -10,6 +10,7 @@ import org.primefaces.util.SerializableSupplier;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.Format;
 import java.text.NumberFormat;
@@ -35,6 +36,7 @@ import com.DIC.model.RentalDataEntryModel;
 import java.sql.PreparedStatement;
 import static java.lang.Math.log;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -46,6 +48,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -70,8 +74,8 @@ public class ConnectionDAOImpl {
 					+ "WHEN rank = 2 THEN 2 \r\n"
 					+ "WHEN rank = 3 THEN 3 \r\n"
 					+ "ELSE 4\r\n"
-					+ "END,\r\n"
-					+ "create_date desc ";
+					+ "END ,\r\n"
+					+ "create_date desc LIMIT ? OFFSET ?";
 			String SQL_EXCEPTION="select * from connector_model_status where dataset_id = ? and last_updated_on::date >= ? and last_updated_on::date <= ?";
 			String SQL_CONNECTOR = "select * from trn_connector_model where is_active = 1;";
 			String QUERY_STRING="select c.dataset_id,c.server_host,c.server_port, c.model_name,a.data_file, a.created_on, a.created_by, a.job_name,a.job_status,  b.step_information,case when b.step_status=1 then 'In Progess' when b.step_status=2 then 'Success' else 'Failed' end as Status,d.job_exception\n" +
@@ -119,6 +123,10 @@ public class ConnectionDAOImpl {
 			String SQL_PACKAGE_ENQUIRY="INSERT INTO hansi_enquiry (enqi_id, name, email, phone, create_date, is_active,enq_type) VALUES(nextval('hansi_enquiry_seq'),?, ?, ?, current_timestamp, 1,?)";
 			String SQL_PROMO_IMAGE="insert into promo_img (promo_id,image,create_date, is_active,comment,img_name,display_order) values (nextval('promo_seq'),?,current_timestamp, 1,?,?,?)";
 			String SQL_Individual_COUNT="select count(*) from hansi_individual_site where prim_location = ? and seco_location = ?";
+			String SQL_PROMO_IMAGE_LAYOUT="select * from promo_img where is_active ='1' LIMIT ? OFFSET ?";
+			String SQL_LAYOUT_COUNT="select count(*) from hansi_layout where prim_location = ? and seco_location = ?";
+			String SQL_PROMO_COUNT="select count(*) from promo_img where is_active ='1'";
+		
 		}
                 
 	}
@@ -430,23 +438,29 @@ public class ConnectionDAOImpl {
     
     
     
-    public List<LayoutMode> getLayoutDetails(String priLocation, String secLocation)
+    public List<LayoutMode> getLayoutDetails(String priLocation, String secLocation,int pageSize, int currentPage)
 	{
-            
+    	ConnectionDAO condao;
+    	BasicDataSource bds=null;
+    	Connection con = null;
+    	PreparedStatement pstmt = null;
+    	
        System.out.println("********* Selected Location : "+priLocation+"   "+secLocation);
 	
 		List<LayoutMode> layoutModeList = new ArrayList<>();
 		try {
-			Connection con = null;
-			PreparedStatement pstmt = null;
-		
 			
-			con=ConnectionDAO.getConnection();
+			condao=new ConnectionDAO();
+			bds=condao.getDataSource();
+			con=bds.getConnection();
+		
 			StringBuilder sq_layout = new StringBuilder(Constants.SQL.SQL_LAYOUT);
 			
 							pstmt = con.prepareStatement(sq_layout.toString());
                             pstmt.setString(1, priLocation);
                             pstmt.setString(2, secLocation);
+                            pstmt.setInt(3, pageSize);
+				            pstmt.setInt(4, (currentPage - 1) * pageSize);
                             ResultSet rs = pstmt.executeQuery();
 	         while ( rs.next() ) {
 	        	 LayoutMode layoutMode=new LayoutMode();
@@ -477,46 +491,67 @@ public class ConnectionDAOImpl {
                          layoutMode.setCreatedOnDate(rs.getDate("create_date"));
                          layoutMode.setUserId(rs.getInt("user_id"));
                          
-                         
+                                     
                         
-                         if(rs.getBytes("image").length!=0)
+                         InputStream imageStream = rs.getBinaryStream("image");
+        	        	 if (rs.getBytes("image").length!=0)  {
+        	        		 
+        	        		 System.out.println("*********************************** success *******************************"+rs.getInt("layout_id"));
+        	        	     BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
+        	        	     
+        	        	     layoutMode.setStreamedContent(DefaultStreamedContent.builder()
+        	        	         .name("US_Piechart.jpg")
+        	        	         .contentType("image/jpg")
+        	        	         .stream(() -> bufferedStream) // Stream the content directly
+        	        	         .build());
+        	        	 }
+        	        	 else
                          {
-                        	 System.out.println("********** not null ********* : "+rs.getBytes("image"));
-                         byte[] bb=rs.getBytes("image");
-                         
-                         layoutMode.setStreamedContent(DefaultStreamedContent.builder()
-                                 .name("US_Piechart.jpg")
-                                 .contentType("image/jpg")
-                                 .stream(() -> new ByteArrayInputStream(bb)).build());
-                         }
-                         else
-                         {
-			                	// Defalut Image
-			                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
-			                	 ResultSet rsDef = pstmtDefault.executeQuery();
-			                	 while ( rsDef.next())
-			                			 {
-			                		      byte[] def=rsDef.getBytes("image");
-			                		      layoutMode.setStreamedContent(DefaultStreamedContent.builder()
-			                             .name("US_Piechart.jpg")
-			                             .contentType("image/jpg")
-			                             .stream(() -> new ByteArrayInputStream(def)).build());
-			                			 }
-			                	 
-			              }
+        	        		 
+        	        		 System.out.println("***********************************Not success *******************************"+rs.getInt("layout_id"));
+                        	// Defalut Image
+                        	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+                        	 ResultSet rsDef = pstmtDefault.executeQuery();
+                        	 while ( rsDef.next())
+                        			 {
+                           		      byte[] def=rsDef.getBytes("image");
+                        		      layoutMode.setStreamedContent(DefaultStreamedContent.builder()
+                                     .name("US_Piechart.jpg")
+                                     .contentType("image/jpg")
+                                     .stream(() -> new ByteArrayInputStream(def)).build());
+                                                     		 
+                        		 
+                        			 }
                         	 
+                          }
                        
 	        	 layoutModeList.add(layoutMode);
 	         }
 	         	
-	         pstmt.close();
+	     
 	         rs.close();
-	         con.close();
-	         //log.info("### : *** Connection Closed from getActiveModelList()");
 	     } catch (Exception e) {
 	        e.printStackTrace();
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
 	        log.error("An error occurred: {}", e.getMessage());
+	     }finally {
+             // Close the pool (important for proper shutdown)
+             try {
+            	 if (bds != null) {
+            		 bds.close(); 
+                 }
+                 if (con != null) {
+                	 con.close(); 
+                 }
+                 if (pstmt != null) {
+                	 pstmt.close(); 
+                 }
+                 
+                 
+                 
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
 	     }
 	return layoutModeList;		
 	}
@@ -1386,6 +1421,213 @@ public class ConnectionDAOImpl {
     }
     
     
+    //************** getPromoImageLayout*********************
+    public List<PromoImageModel> getPromoImageLayout(int pageSize, int currentPage)
+   	{
+    	
+    	ConnectionDAO condao;
+    	BasicDataSource bds=null;
+    	Connection con = null;
+    	PreparedStatement pstmt = null;
+   	
+   		List<PromoImageModel> promoImageModelList = new ArrayList<>();
+   		try {
+   		
+   			
+   			
+   			StringBuilder sql_promo_image = new StringBuilder(Constants.SQL.SQL_PROMO_IMAGE_LAYOUT);
+   			
+   			condao=new ConnectionDAO();
+   			bds=condao.getDataSource();
+   			con=bds.getConnection();
+   			
+			System.out.println(" Owner Properties Query : "+sql_promo_image .toString());
+			log.info("owner properties : "+sql_promo_image .toString());
+							pstmt = con.prepareStatement(sql_promo_image.toString());
+							pstmt.setInt(1, pageSize);
+				            pstmt.setInt(2, (currentPage - 1) * pageSize);
+						    ResultSet rs = pstmt.executeQuery();
+   	         while ( rs.next() ) {
+   	        	PromoImageModel promoImageModel=new PromoImageModel();
+   	        	 
+   	        	 
+   	        	promoImageModel.setPromoId(rs.getInt("promo_id"));
+   	        	promoImageModel.setCreateDate(rs.getDate("create_date"));
+   	        	promoImageModel.setIs_active(rs.getInt("is_active"));
+   	        	promoImageModel.setComment(rs.getString("comment"));
+   	        	promoImageModel.setImageName(rs.getString("img_name"));
+   	        	
+     	 		        		InputStream imageStream = rs.getBinaryStream("image");
+   					        	if(rs.getBytes("image").length!=0) {
+   					        	     BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
+   					        	     
+   					        	  promoImageModel.setStreamedContent(DefaultStreamedContent.builder()
+   					        	         .name("US_Piechart.jpg")
+   					        	         .contentType("image/jpg")
+   					        	         .stream(() -> bufferedStream) // Stream the content directly
+   					        	         .build());
+   					        	 }
+   					        	 else
+   				                 {
+   				                	// Defalut Image
+   				                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+   				                	 ResultSet rsDef = pstmtDefault.executeQuery();
+   				                	 while ( rsDef.next())
+   				                			 {
+   				                		      byte[] def=rsDef.getBytes("image");
+   				                		      promoImageModel.setStreamedContent(DefaultStreamedContent.builder()
+   				                             .name("US_Piechart.jpg")
+   				                             .contentType("image/jpg")
+   				                             .stream(() -> new ByteArrayInputStream(def)).build());
+   				                			 }
+   				                	 
+   				                  }
+   	        	  
+   	                     
+   					        	promoImageModelList.add(promoImageModel);
+   	         }
+   	         	
+   	     
+   	         rs.close();
+   	         log.info("### : *** Connection Closed from getPromoImage()");
+   	     } catch (Exception e) {
+   	        e.printStackTrace();
+   	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+   	        log.error("An error occurred getPromoImage() : {}", e.getMessage());
+   	     }finally {
+             // Close the pool (important for proper shutdown)
+             try {
+            	 if (bds != null) {
+            		 bds.close(); 
+                 }
+                 if (con != null) {
+                	 con.close(); 
+                 }
+                 if (pstmt != null) {
+                	 pstmt.close(); 
+                 }
+                 
+                 
+                 
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+	     }
+   	return promoImageModelList;		
+   	}
+	
+//////layout total count************************************************/////
+  public int getLayoutCountTotalRecords(String priLocation, String secLocation)
+  {
+  	int totalRecords=0;
+  	ConnectionDAO condao;
+  	BasicDataSource bds=null;
+  	Connection con = null;
+  	PreparedStatement pstmt = null;
+
+ 	StringBuilder sql_layout_details = new StringBuilder(Constants.SQL.SQL_LAYOUT_COUNT);
+	
+	
+	 	try {
+			
+	 		condao=new ConnectionDAO();
+	 		bds=condao.getDataSource();
+	 		con=bds.getConnection();
+          pstmt = con.prepareStatement(sql_layout_details.toString());
+          pstmt.setString(1, priLocation);
+          pstmt.setString(2, secLocation);
+          ResultSet rs = pstmt.executeQuery();
+	                  
+	        	if (rs.next()) {
+	                totalRecords = rs.getInt(1);
+	            }
+ 			pstmt.close();
+	        rs.close();
+	        con.close();
+	       
+	     } catch (Exception e) {
+	        e.printStackTrace();
+	        System.err.println(e.getClass().getName()+": "+e.getMessage());
+	        log.error("An error occurred: {}", e.getMessage());
+	     }finally {
+             // Close the pool (important for proper shutdown)
+             try {
+            	 if (bds != null) {
+            		 bds.close(); 
+                 }
+                 if (con != null) {
+                	 con.close(); 
+                 }
+                 if (pstmt != null) {
+                	 pstmt.close(); 
+                 }
+                 
+                 
+                 
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             }
+	     }
+  	
+  	return totalRecords;
+  }
+  
+//promo count 
+			public int getPromoCountTotalRecords()
+		    {
+		    	int totalRecords=0;
+		    
+		    	ConnectionDAO condao;
+		    	BasicDataSource bds=null;
+		    	Connection con = null;
+		    	PreparedStatement pstmt = null;
+	   	
+		   	
+		   	StringBuilder sql_promo_count = new StringBuilder(Constants.SQL.SQL_PROMO_COUNT);
+			
+
+				
+			 	try {
+			 		condao=new ConnectionDAO();
+			 		bds=condao.getDataSource();
+			 		con=bds.getConnection();
+		            pstmt = con.prepareStatement(sql_promo_count.toString());
+		            ResultSet rs = pstmt.executeQuery();
+			                  
+			        	if (rs.next()) {
+			                totalRecords = rs.getInt(1);
+			            }
+		   			
+			        rs.close();
+			      
+			       
+			     } catch (Exception e) {
+			        e.printStackTrace();
+			        System.err.println(e.getClass().getName()+": "+e.getMessage());
+			        log.error("An error occurred: {}", e.getMessage());
+			     }finally {
+		             // Close the pool (important for proper shutdown)
+		             try {
+		            	 if (bds != null) {
+		            		 bds.close(); 
+		                 }
+		                 if (con != null) {
+		                	 con.close(); 
+		                 }
+		                 if (pstmt != null) {
+		                	 pstmt.close(); 
+		                 }
+		                 
+		                 
+		                 
+		             } catch (SQLException e) {
+		                 e.printStackTrace();
+		             }
+			     }
+		    	
+		    	return totalRecords;
+		    }
+			
     
     
 
