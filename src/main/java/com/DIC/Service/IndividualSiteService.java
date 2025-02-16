@@ -25,6 +25,7 @@ import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.AgriculturalModel;
 import com.DIC.model.IndividualSiteModel;
 import com.DIC.model.LayoutMode;
+import com.DIC.model.PromoImageModel;
 import com.DIC.model.UserDetails;
 import com.DIC.model.VillaModel;
 
@@ -48,6 +49,7 @@ public class IndividualSiteService implements Serializable {
 
 	private String locationMessage;
 	private List<IndividualSiteModel> individualSiteList;
+	private List<PromoImageModel> promoImageModel;
 	
 	
 	
@@ -59,6 +61,10 @@ public class IndividualSiteService implements Serializable {
 	private int currentPage = 1;
 	private int pageSize = 10;
 	private int totalRecords;
+	private int promoCurrentPage = 1;
+	private int promoPageSize = 3;
+	private int promoTotalRecords;
+	
 	
 	
 	
@@ -77,6 +83,7 @@ public class IndividualSiteService implements Serializable {
 	          udo=new UserDAOImpl();
 	          sms=new SMSService();
 	          ur=new UserRoleService();
+	          gDao=new GeneralDAOImpl();
         
         primaryModel=locationDao.getIndivPrimaryLocation();
         
@@ -137,6 +144,8 @@ public class IndividualSiteService implements Serializable {
                 
                 public void loadEntities() {
                 	individualSiteList=dao.getIndividualSiteDetails(country,city,pageSize,currentPage);
+                	promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
+                	
                 	for(IndividualSiteModel x:individualSiteList)
                     {
                         System.out.println("@@@@@@@@@@@@@@@@@@@@ :"+x.getOwnerName());
@@ -146,6 +155,7 @@ public class IndividualSiteService implements Serializable {
     			 	
     	        	System.out.println("================>"+country+"  "+city+"   ");
     		 		totalRecords=dao.getIndividualSiteDetailsCountTotalRecords(country,city);
+    		 		promoTotalRecords=dao.getPromoCountTotalRecords();
 
     		        
     		    }
@@ -155,15 +165,26 @@ public class IndividualSiteService implements Serializable {
     		            currentPage++;
     		            loadEntities();
     		        }
+    		        if ((promoCurrentPage * promoPageSize) < promoTotalRecords) {
+    		        	promoCurrentPage++;
+    		            loadEntities();
     		        
     		     
-    		    }
+    		       }
+    		 	}      
+    		        
 
     		    public void previousPage() {
     		        if (currentPage > 1) {
     		            currentPage--;
     		            loadEntities();
     		        }
+    		       
+    		        if (promoCurrentPage > 1) {
+    		        	promoCurrentPage--;
+    		            loadEntities();
+    		        }
+    		    
     		        
     		        
     		    }
@@ -224,6 +245,7 @@ public class IndividualSiteService implements Serializable {
         	
           	
         	individualSiteList=dao.getIndividualSiteDetails(country,city,pageSize,currentPage);
+        	promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
         	this.custName="";
         	this.contactNumber="";
         	this.email="";
@@ -347,6 +369,40 @@ public class IndividualSiteService implements Serializable {
 	public void setIndividualSiteList(List<IndividualSiteModel> individualSiteList) {
 		this.individualSiteList = individualSiteList;
 	}
+	public List<PromoImageModel> getPromoImageModel() {
+		return promoImageModel;
+	}
+
+
+	public void setPromoImageModel(List<PromoImageModel> promoImageModel) {
+		this.promoImageModel = promoImageModel;
+	}
+	public int getPromoCurrentPage() {
+		return promoCurrentPage;
+	}
+
+
+
+
+	public int getPromoPageSize() {
+		return promoPageSize;
+	}
+
+
+
+
+	public void setPromoCurrentPage(int promoCurrentPage) {
+		this.promoCurrentPage = promoCurrentPage;
+	}
+
+
+
+
+	public void setPromoPageSize(int promoPageSize) {
+		this.promoPageSize = promoPageSize;
+	}
+
+
 
 
 
@@ -355,6 +411,15 @@ public class IndividualSiteService implements Serializable {
 
 
 }
+
+
+
+
+
+       
+
+
+
     
 	
 	

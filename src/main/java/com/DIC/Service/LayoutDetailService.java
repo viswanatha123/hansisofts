@@ -220,6 +220,7 @@ public class LayoutDetailService implements Serializable{
         	
         	
         	layoutdetails=dao.getLayoutDetails(country,city,pageSize,currentPage);
+        	promoImageModel=dao.getPromoImageLayout(promoPageSize, promoCurrentPage);
         	this.custName="";
         	this.contactNumber="";
         	this.email="";

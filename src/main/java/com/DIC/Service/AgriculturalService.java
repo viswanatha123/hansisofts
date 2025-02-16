@@ -257,6 +257,7 @@ public class AgriculturalService implements Serializable{
 	        	
 	        	
 	        	agriculturalModelList=dao.getAgriculturalDetails(country,city,pageSize,currentPage);
+	        	promoImageModel=dao.getPromoImageLayout(promoPageSize, promoCurrentPage);
 	        	this.custName="";
 	        	this.contactNumber="";
 	        	this.email="";

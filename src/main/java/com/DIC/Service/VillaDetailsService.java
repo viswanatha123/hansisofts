@@ -287,6 +287,7 @@ public class VillaDetailsService implements Serializable {
         	
         	
         	villaModel=gDao.getVillaDetails(country,city, proType,pageSize,currentPage);
+        	 promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
         	this.custName="";
         	this.contactNumber="";
         	this.email="";
