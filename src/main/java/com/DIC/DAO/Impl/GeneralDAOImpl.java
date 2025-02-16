@@ -513,16 +513,16 @@ public class GeneralDAOImpl {
 	        	 
 	        	 			// below for Image
 	        	 
-	        	            	 if(rs.getBytes("image").length!=0)
-				                 {
-					        		 log.info(" Villa details image available: "+rs.getInt("villa_id")+"   "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
-				                 byte[] bb=rs.getBytes("image");
-				                 
-				                 villaModel.setStreamedContent(DefaultStreamedContent.builder()
-				                         .name("US_Piechart.jpg")
-				                         .contentType("image/jpg")
-				                         .stream(() -> new ByteArrayInputStream(bb)).build());
-				                 }
+				        	 InputStream imageStream = rs.getBinaryStream("image");
+				   	        	if (rs.getBytes("image").length!=0){
+					        	     BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
+					        	     
+					        	     villaModel.setStreamedContent(DefaultStreamedContent.builder()
+					        	         .name("US_Piechart.jpg")
+					        	         .contentType("image/jpg")
+					        	         .stream(() -> bufferedStream) // Stream the content directly
+					        	         .build());
+					        	 }
 				                 else
 				                 {
 				                	// Defalut Image
@@ -2428,7 +2428,9 @@ public class GeneralDAOImpl {
 	        	 
 	       
 	        	 InputStream imageStream = rs.getBinaryStream("image");
-	        	 if (imageStream != null) {
+	        	 if (rs.getBytes("image").length!=0) {
+	        		 
+	        		 System.out.println("*************************** True ************************ :"+rs.getInt("villa_id"));
 	        	     BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
 	        	     
 	        	     villaModel.setStreamedContent(DefaultStreamedContent.builder()
@@ -2438,20 +2440,24 @@ public class GeneralDAOImpl {
 	        	         .build());
 	        	 }
 	        	 else
-                 {
-                	// Defalut Image
-                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
-                	 ResultSet rsDef = pstmtDefault.executeQuery();
-                	 while ( rsDef.next())
-                			 {
-                		      byte[] def=rsDef.getBytes("image");
-                		      villaModel.setStreamedContent(DefaultStreamedContent.builder()
-                             .name("US_Piechart.jpg")
-                             .contentType("image/jpg")
-                             .stream(() -> new ByteArrayInputStream(def)).build());
-                			 }
-                	 
-                  }
+	        	 {
+	        		 System.out.println("*************************** False ************************ :"+rs.getInt("villa_id"));
+ 	        		
+                 	// Defalut Image
+                 	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+                 	 ResultSet rsDef = pstmtDefault.executeQuery();
+                 	 while ( rsDef.next())
+                 			 {
+                    		      byte[] def=rsDef.getBytes("image");
+                    		      villaModel.setStreamedContent(DefaultStreamedContent.builder()
+                              .name("US_Piechart.jpg")
+                              .contentType("image/jpg")
+                              .stream(() -> new ByteArrayInputStream(def)).build());
+                                              		 
+                 		 
+                 			 }
+                 	 
+                   }
 	        	 
 	          
 	                       
@@ -2546,7 +2552,7 @@ public class GeneralDAOImpl {
    	        	 villaModel.setCornerBit(rs.getString("corner_bit"));
    	        	 
    	        	InputStream imageStream = rs.getBinaryStream("image");
-	        	 if (imageStream != null) {
+   	        	if (rs.getBytes("image").length!=0){
 	        	     BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
 	        	     
 	        	     villaModel.setStreamedContent(DefaultStreamedContent.builder()
@@ -2721,7 +2727,7 @@ public class GeneralDAOImpl {
    	        	 
    	        	 
    	        	InputStream imageStream = rs.getBinaryStream("image");
-	        	 if (imageStream != null) {
+   	        	if (rs.getBytes("image").length!=0){
 	        	     BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
 	        	     
 	        	     villaModel.setStreamedContent(DefaultStreamedContent.builder()
@@ -2884,7 +2890,7 @@ public class GeneralDAOImpl {
    	        	 villaModel.setCornerBit(rs.getString("corner_bit"));
    	        	 
    	        	InputStream imageStream = rs.getBinaryStream("image");
-	        	 if (imageStream != null) {
+   	        	if (rs.getBytes("image").length!=0){
 	        	     BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
 	        	     
 	        	     villaModel.setStreamedContent(DefaultStreamedContent.builder()
@@ -3036,16 +3042,17 @@ public class GeneralDAOImpl {
 	   	        	 
 	   	        	 //System.out.println(" Villa image : "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
 	   	        	
-	   					        	 if(rs.getBytes("image").length!=0)
-	   				                 {
-	   					        		log.info(" Villa details image available: "+rs.getInt("villa_id")+"   "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);
-	   				                 byte[] bb=rs.getBytes("image");
-	   				                 
-	   				                 villaModel.setStreamedContent(DefaultStreamedContent.builder()
-	   				                         .name("US_Piechart.jpg")
-	   				                         .contentType("image/jpg")
-	   				                         .stream(() -> new ByteArrayInputStream(bb)).build());
-	   				                 }
+	   					        	
+	   					        	InputStream imageStream = rs.getBinaryStream("image");
+	   				   	        	if (rs.getBytes("image").length!=0){
+	   					        	     BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
+	   					        	     
+	   					        	     villaModel.setStreamedContent(DefaultStreamedContent.builder()
+	   					        	         .name("US_Piechart.jpg")
+	   					        	         .contentType("image/jpg")
+	   					        	         .stream(() -> bufferedStream) // Stream the content directly
+	   					        	         .build());
+	   					        	 }   					        	 
 	   				                 else
 	   				                 {
 	   				                	 log.info(" Villa details image not availablr : "+rs.getInt("villa_id")+"   "+rs.getString("owner_name")+" --->"+rs.getBytes("image").length);

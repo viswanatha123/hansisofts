@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -14,26 +15,20 @@ public class Java8 {
 	public static void main(String[] args) {
 
 		
-		List<Employee> list=new ArrayList<>();
-		list.add(new Employee("aaa",10,1000));
-		list.add(new Employee("bbb",10,1000));
-		list.add(new Employee("bbb",10,1000));
-		list.add(new Employee("ccc",10,1000));
-		list.add(new Employee("ddd",10,1000));
-		
-		Map<String, Long> xx=list.stream().collect(Collectors.groupingBy(Employee::getName,Collectors.counting()));
-		
-		
-		Map<String, Integer> bb=list.stream().collect(Collectors.groupingBy(Employee::getName, Collectors.summingInt(Employee::getAge)));
-		
-		
-		for(Map.Entry<String, Integer> cc: bb.entrySet())
-		{
-			System.out.println(cc.getKey()+"  "+cc.getValue());
-		}
-		
-		
-		
+
+				String name="viswanatha";
+				List<Character> list=name.chars().mapToObj(n->(char)n).collect(Collectors.toList());
+				
+				
+				
+				Map<Character,Long> ee=list.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+				
+						for(Map.Entry<Character,Long> xx:ee.entrySet())
+						{
+							
+								System.out.println(xx.getKey()+"  "+xx.getValue());
+							
+						}
 	}
 	
 	

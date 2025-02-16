@@ -44,7 +44,7 @@
               <c:if test="#{individualSiteService.totalRecords > 0}">
 				<p:panel>   
 						<p:panelGrid columns="1" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
-							<h:outputText  style="font-weight: normal; font-style:italic; font-size:15px; color: blue; text-align: left;" value="Selected properties : #{villaDetailsService.totalRecords}" />
+							<h:outputText  style="font-weight: normal; font-style:italic; font-size:15px; color: blue; text-align: left;" value="Selected properties : #{indivSiteService.totalRecords}" />
 						</p:panelGrid>
 				</p:panel>
 			</c:if>
@@ -52,13 +52,20 @@
            
          <div style="display: flex; justify-content: center; align-items: center; ">
                   
-                <h:panelGrid   columns="2" style="width: auto; text-align: center">
+                  
+                  
+                  
+                  
+               <h:panelGrid   columns="2" style="width: auto; text-align: center">
+                
+                
+                
            
             <p:dataScroller  value="#{individualSiteService.individualSiteList}" var="product" chunkSize="10">
                  
                   
                   			
-                  		<p:panel  style="width: 110%; height:300px; box-shadow: 10px 10px 5px grey; margin: auto; text-align: center;font-style: normal" >
+                  		<p:panel  style="width: 100%; height:300px; box-shadow: 10px 10px 5px grey; margin: auto; text-align: center;font-style: normal" >
                   		
                   		   <h:panelGrid   columns="4" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
                   		   
@@ -73,8 +80,8 @@
               				
               				
               				
-              				<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">              				              				
-              					<p:graphicImage width="160" height="200" stream="false" cache="false" value="#{product.streamedContent}" />
+              				<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
+                     			<p:graphicImage width="200" height="200" stream="false" cache="false" value="#{product.streamedContent}" />
               						
                      				
                      				
@@ -104,22 +111,22 @@
                                     <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;"> 
                      			 
                                 			   <h:outputText  style="font-weight: normal; font-size: 11px" value=" Contact Name : " />
-                                			   <h:outputText  style="font-weight: normal; font-size: 15px" value="#{product.agentName}" />
+                                			   <h:outputText  style="font-weight: normal; font-size: 13px" value="#{product.agentName}" />
                                 			   
                                                <h:outputText  style="font-weight: normal; font-size: 11px" value=" Contact Number : " />
-                                               <h:outputText  style="font-weight: normal; font-size: 15px" value="#{product.contactNo}" />
+                                               <h:outputText  style="font-weight: normal; font-size: 13px" value="#{product.contactNo}" />
                                               
                                                <h:outputText style="font-weight: normal; font-size: 11px" value=" Wonership : " />
-                                               <h:outputText style="font-weight: normal; font-size: 15px" value="#{product.wonership}" />
+                                               <h:outputText style="font-weight: normal; font-size: 13px" value="#{product.wonership}" />
                                                                                            
                                               <h:outputText  style="font-weight: normal; font-size: 11px" value=" Transaction : " /> 
-                                              <h:outputText  style="font-weight: normal; font-size: 15px" value="#{product.transaction}" />
+                                              <h:outputText  style="font-weight: normal; font-size: 13px" value="#{product.transaction}" />
                                   </h:panelGrid>
                   		
                   		
                   		
                      
-                             <h:panelGrid   columns="1" width="100%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
+                             <h:panelGrid   columns="1" width="60%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
                      			 				<h:outputText style="font-weight: bold;color: red;font-size: 15px"  value="Rs #{product.totalPrice}" />
 
                      			 				    <p:commandButton type="submit" value="Callback"  style="background:#FFA500;font-weight: bold;color: black;font-size: 15px; width:100px" 
@@ -134,6 +141,8 @@
 							                              <f:setPropertyActionListener value="#{product}" target="#{individualSiteService.selectedProperty}" />
 									                </p:commandButton>
 							</h:panelGrid>
+							
+							
 					</h:panelGrid>		                
                      			 				    
 									                
@@ -148,9 +157,10 @@
                           			<h:outputText value="Posted : #{product.createdOnDate}" >
 									    <f:convertDateTime type="date" dateStyle="full"/>   
 									</h:outputText>
-									<h:link width="33%"  value = "Find Builders" class="pi pi-user" outcome = "builders.xhtml" style="font-weight: bold; font-size: 14px;color:block; margin-right: 50px; " />
-					           		<h:link width="33%"  value = "Find Agents"  class="pi pi-user" outcome = "agents.xhtml" style="font-weight: bold; font-size: 14px;color:block; margin-right: 50px;" />
-					           		<h:link width="33%"  value = "Enquiry" class="pi pi-user" outcome = "enquiry.xhtml" style="font-weight: bold; font-size: 14px;color:block; margin-right: 50px; " />
+									 <h:link  value = "Find Builders" class="pi pi-user" outcome = "builders.xhtml" style="font-weight: normal; font-weight: bold; font-size: 13px;color:block;float: right; margin-right: 50px;" />
+					           		<h:link  value = "Find Agents"  class="pi pi-user" outcome = "agents.xhtml" style="font-weight: normal; font-weight: bold; font-size: 13px;color:block;float: right; margin-right: 50px;" />
+					           		<h:link  value = "Enquiry" class="pi pi-user" outcome = "enquiry.xhtml" style="font-weight: normal; font-weight: bold; font-size: 13px;color:block;float: right; margin-right: 50px;" />
+					          
 					          </h:panelGrid>
 					          
 					 
@@ -160,13 +170,23 @@
                          </p:panel>
               		     <br></br>
 			      </p:dataScroller>
-
-			
-			
-				
+			      
+			      
+			      
+			   
+			                   	
+						     <h:panelGrid  columns="1" style="vertical-align: top;">
+							           <p:dataScroller value="#{individualSiteService.promoImageModel}" var="product1" chunkSize="10">
+										         <p:graphicImage width="300" height="500" stream="false" cache="false" value="#{product1.streamedContent}" />
+						            	</p:dataScroller>	
+							
+					     	</h:panelGrid>
 						
 							
 		        </h:panelGrid>
+		        
+		        
+		        
 		      </div>
 		      
 		 <c:if test="#{individualSiteService.totalRecords > 0}">     
