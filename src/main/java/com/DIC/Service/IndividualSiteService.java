@@ -18,13 +18,16 @@ import javax.faces.bean.ViewScoped;
 import org.primefaces.PrimeFaces;
 
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
+import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
 import com.DIC.DAO.Impl.SMSService;
 import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.AgriculturalModel;
 import com.DIC.model.IndividualSiteModel;
 import com.DIC.model.LayoutMode;
+import com.DIC.model.PromoImageModel;
 import com.DIC.model.UserDetails;
+import com.DIC.model.VillaModel;
 
 import SMTPService.SMTPService;
 
@@ -45,33 +48,42 @@ public class IndividualSiteService implements Serializable {
 	private List<String> secondryLocation; 
 
 	private String locationMessage;
-	
 	private List<IndividualSiteModel> individualSiteList;
+	private List<PromoImageModel> promoImageModel;
 	
-
-	ConnectionDAOImpl dao; 
-	LocationDAOImpl locationDao;
-	UserDAOImpl udo;
-	SMSService sms;
-	 UserRoleService ur;
 	
-    private IndividualSiteModel selectedProperty;   
+	
+	private IndividualSiteModel selectedProperty; 
 	
 	private String custName;
 	private String contactNumber;
 	private String email;
+	private int currentPage = 1;
+	private int pageSize = 10;
+	private int totalRecords;
+	private int promoCurrentPage = 1;
+	private int promoPageSize = 3;
+	private int promoTotalRecords;
 	
 	
-	@PostConstruct 
-    public void init()
-    {
-
-		log.info("Loading IndividualSiteService init()");
-        dao=new ConnectionDAOImpl();
-        locationDao=new LocationDAOImpl();
-        udo=new UserDAOImpl();
-        sms=new SMSService();
-        ur=new UserRoleService();
+	
+	
+	ConnectionDAOImpl dao; 
+	LocationDAOImpl locationDao;
+	UserDAOImpl udo;
+	GeneralDAOImpl gDao;
+	SMSService sms;
+	UserRoleService ur;
+	
+	
+	 	public IndividualSiteService()
+ 	    {		 
+	 		  dao=new ConnectionDAOImpl();
+	 		  locationDao=new LocationDAOImpl();
+	          udo=new UserDAOImpl();
+	          sms=new SMSService();
+	          ur=new UserRoleService();
+	          gDao=new GeneralDAOImpl();
         
         primaryModel=locationDao.getIndivPrimaryLocation();
         
@@ -104,16 +116,7 @@ public class IndividualSiteService implements Serializable {
         this.city = city;
     }
 
-   
-    
-    public List<IndividualSiteModel> getIndividualSiteList() {
-		return individualSiteList;
-	}
 
-	public void setIndividualSiteList(List<IndividualSiteModel> individualSiteList) {
-		this.individualSiteList = individualSiteList;
-	}
-    
     
     
     public void onCountryChange() {  
@@ -126,22 +129,71 @@ public class IndividualSiteService implements Serializable {
         }  
 
 
-        public void displayLocation() {  
+        public void getindividualsiteDetails() {  
        
        
         System.out.println(country+"     "+city);
         
         locationMessage=country+" ,    "+city;
    
-        individualSiteList=dao.getIndividualSiteDetails(country,city);
+      
+        loadEntities(); 
+    	countTotalRecords();
+        }
+    
                 
-                for(IndividualSiteModel x:individualSiteList)
-                {
-                    System.out.println("@@@@@@@@@@@@@@@@@@@@ :"+x.getOwnerName());
+                public void loadEntities() {
+                	individualSiteList=dao.getIndividualSiteDetails(country,city,pageSize,currentPage);
+                	promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
+                	
+                	for(IndividualSiteModel x:individualSiteList)
+                    {
+                        System.out.println("@@@@@@@@@@@@@@@@@@@@ :"+x.getOwnerName());
+                    }
                 }
-                
-        
-        }  
+                public void countTotalRecords() {
+    			 	
+    	        	System.out.println("================>"+country+"  "+city+"   ");
+    		 		totalRecords=dao.getIndividualSiteDetailsCountTotalRecords(country,city);
+    		 		promoTotalRecords=dao.getPromoCountTotalRecords();
+
+    		        
+    		    }
+    	        
+    		 	public void nextPage() {
+    		        if ((currentPage * pageSize) < totalRecords) {
+    		            currentPage++;
+    		            loadEntities();
+    		        }
+    		        if ((promoCurrentPage * promoPageSize) < promoTotalRecords) {
+    		        	promoCurrentPage++;
+    		            loadEntities();
+    		        
+    		     
+    		       }
+    		 	}      
+    		        
+
+    		    public void previousPage() {
+    		        if (currentPage > 1) {
+    		            currentPage--;
+    		            loadEntities();
+    		        }
+    		       
+    		        if (promoCurrentPage > 1) {
+    		        	promoCurrentPage--;
+    		            loadEntities();
+    		        }
+    		    
+    		        
+    		        
+    		    }
+    		 	
+    		    public int getTotalPages() {
+    		        return (int) Math.ceil((double) totalRecords / pageSize);
+    		    }
+         
+       
         
         
         public void submit() {
@@ -192,7 +244,8 @@ public class IndividualSiteService implements Serializable {
         	
         	
           	
-        	individualSiteList=dao.getIndividualSiteDetails(country,city);
+        	individualSiteList=dao.getIndividualSiteDetails(country,city,pageSize,currentPage);
+        	promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
         	this.custName="";
         	this.contactNumber="";
         	this.email="";
@@ -202,8 +255,8 @@ public class IndividualSiteService implements Serializable {
    public void reset() {
 	       PrimeFaces.current().resetInputs("form1:panelDialog");
   }
-        
-        
+ 
+              
         
         
         
@@ -280,7 +333,94 @@ public class IndividualSiteService implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public int getCurrentPage() {
+		return currentPage;
+	}
+
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+
+	public int getTotalRecords() {
+		return totalRecords;
+	}
+
+
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
+
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+
+	public void setTotalRecords(int totalRecords) {
+		this.totalRecords = totalRecords;
+	}
+
+	public List<IndividualSiteModel> getIndividualSiteList() {
+		return individualSiteList;
+	}
+
+	public void setIndividualSiteList(List<IndividualSiteModel> individualSiteList) {
+		this.individualSiteList = individualSiteList;
+	}
+	public List<PromoImageModel> getPromoImageModel() {
+		return promoImageModel;
+	}
+
+
+	public void setPromoImageModel(List<PromoImageModel> promoImageModel) {
+		this.promoImageModel = promoImageModel;
+	}
+	public int getPromoCurrentPage() {
+		return promoCurrentPage;
+	}
+
+
+
+
+	public int getPromoPageSize() {
+		return promoPageSize;
+	}
+
+
+
+
+	public void setPromoCurrentPage(int promoCurrentPage) {
+		this.promoCurrentPage = promoCurrentPage;
+	}
+
+
+
+
+	public void setPromoPageSize(int promoPageSize) {
+		this.promoPageSize = promoPageSize;
+	}
+
+
+
+
+
+
+       
+
+
+}
+
+
+
+
+
+       
+
+
+
     
 	
 	
-}
+	

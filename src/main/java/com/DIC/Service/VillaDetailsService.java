@@ -32,10 +32,13 @@ import com.DIC.DAO.Impl.LocationDAOImpl;
 import com.DIC.DAO.Impl.SMSService;
 import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.LayoutMode;
+import com.DIC.model.PromoImageModel;
 import com.DIC.model.UserDetails;
 import com.DIC.model.VillaModel;
 
 import SMTPService.SMTPService;
+
+//import SMTPService.SMTPService;
 
 
 /*
@@ -66,6 +69,17 @@ public class VillaDetailsService implements Serializable {
 	private int fetchRecords;
 	
 	
+	private int currentPage = 1;
+	private int pageSize = 10;
+	private int totalRecords;
+	
+	private int promoCurrentPage = 1;
+	private int promoPageSize = 3;
+	private int promoTotalRecords;
+	
+	
+	
+	
 
 
     private VillaModel selectedProperty;   
@@ -74,7 +88,10 @@ public class VillaDetailsService implements Serializable {
 	private String contactNumber;
 	private String email;
 
-		private List<VillaModel> villaModel;
+	private List<PromoImageModel> promoImageModel;
+	
+	private List<VillaModel> villaModel;
+		
 	    GeneralDAOImpl gDao;
 	    LocationDAOImpl locationDao;
 	    UserDAOImpl udo;
@@ -82,8 +99,8 @@ public class VillaDetailsService implements Serializable {
 	    UserRoleService ur;
 	    
 	    
-	    @PostConstruct 
-	    public void init()
+	     
+	    public VillaDetailsService()
 	    {
 	    	log.info("Loading LayoutDetailService init()");
 	    	gDao=new GeneralDAOImpl();
@@ -93,6 +110,8 @@ public class VillaDetailsService implements Serializable {
 	          ur=new UserRoleService();
 	          
 	          primaryModel=locationDao.getVillaPrimaryLocation();
+	          
+	          
 	          
 	          
 	          
@@ -127,6 +146,8 @@ public class VillaDetailsService implements Serializable {
             
                    
 	    }
+	    
+	  
 
 		    
 	    public void onCountryChange() {  
@@ -143,24 +164,79 @@ public class VillaDetailsService implements Serializable {
 	        public void getVillaDetails() {  
 		    	
 		    	System.out.println(" **** submited button ******");
-	      	        
+		    	loadEntities(); 
+		    	countTotalRecords();
 		        locationMessage=country+" ,   "+city;
 		        //villaModel.clear();
-		        villaModel=gDao.getVillaDetails(country,city, proType);
+		        
+		        loadEntities();
+				countTotalRecords();
+		        
+		        //promoImageModel=gDao.getPromoImageVilla();
+		        
 		                 
-		                for(VillaModel x:villaModel)
-		                {
-		                    System.out.println("@@@@@@@@@@@@@@@@@@@@ :"+x.getI_am());
-		                }
-		                if(villaModel.size() == 0)
-		        		{
-		        			errorMessage="There are no records on "+proType;
-		        		}
-		                else {
-		                	errorMessage="";
-		                }
+		                
 			             
 		     }  
+	        
+	        public void loadEntities() {
+		 		
+	        	 //promoImageModel=gDao.getPromoImageVilla();
+	        	 promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
+	        	villaModel=gDao.getVillaDetails(country,city, proType,pageSize,currentPage);
+	        	
+	        	
+	        	for(VillaModel x:villaModel)
+                {
+                    System.out.println("@@@@@@@@@@@@@@@@@@@@ :"+x.getI_am());
+                }
+                if(villaModel.size() == 0)
+        		{
+        			errorMessage="There are no records on "+proType;
+        		}
+                else {
+                	errorMessage="";
+                }
+           
+		        
+		    }
+	        public void countTotalRecords() {
+			 	
+	        	System.out.println("================>"+country+"  "+city+"   "+proType);
+		 		totalRecords=gDao.getVillaCountTotalRecords(country,city, proType);
+		 		promoTotalRecords=gDao.getPromoCountTotalRecords();
+		        
+		    }
+	        
+		 	public void nextPage() {
+		        if ((currentPage * pageSize) < totalRecords) {
+		            currentPage++;
+		            loadEntities();
+		        }
+		        
+		        if ((promoCurrentPage * promoPageSize) < promoTotalRecords) {
+		        	promoCurrentPage++;
+		            loadEntities();
+		            	
+		        }
+		    }
+
+		    public void previousPage() {
+		        if (currentPage > 1) {
+		            currentPage--;
+		            loadEntities();
+		        }
+		        
+		        if (promoCurrentPage > 1) {
+		        	promoCurrentPage--;
+		            loadEntities();
+		        }
+		    }
+		 	
+		    public int getTotalPages() {
+		        return (int) Math.ceil((double) totalRecords / pageSize);
+		    }
+			
 	        
 	    
 	    public void submit() {
@@ -210,7 +286,8 @@ public class VillaDetailsService implements Serializable {
         	}
         	
         	
-        	villaModel=gDao.getVillaDetails(country,city, proType);
+        	villaModel=gDao.getVillaDetails(country,city, proType,pageSize,currentPage);
+        	 promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
         	this.custName="";
         	this.contactNumber="";
         	this.email="";
@@ -395,6 +472,86 @@ public class VillaDetailsService implements Serializable {
 		}
 
 
+		public List<PromoImageModel> getPromoImageModel() {
+			return promoImageModel;
+		}
+
+
+		public void setPromoImageModel(List<PromoImageModel> promoImageModel) {
+			this.promoImageModel = promoImageModel;
+		}
+
+		public int getCurrentPage() {
+			return currentPage;
+		}
+
+
+		public int getPageSize() {
+			return pageSize;
+		}
+
+
+		public int getTotalRecords() {
+			return totalRecords;
+		}
+
+
+		public void setCurrentPage(int currentPage) {
+			this.currentPage = currentPage;
+		}
+
+
+		public void setPageSize(int pageSize) {
+			this.pageSize = pageSize;
+		}
+
+
+		public void setTotalRecords(int totalRecords) {
+			this.totalRecords = totalRecords;
+		}
+
+
+
+
+		public int getPromoCurrentPage() {
+			return promoCurrentPage;
+		}
+
+
+
+
+		public int getPromoPageSize() {
+			return promoPageSize;
+		}
+
+
+
+
+		public void setPromoCurrentPage(int promoCurrentPage) {
+			this.promoCurrentPage = promoCurrentPage;
+		}
+
+
+
+
+		public void setPromoPageSize(int promoPageSize) {
+			this.promoPageSize = promoPageSize;
+		}
+
+
+
+
+		public int getPromoTotalRecords() {
+			return promoTotalRecords;
+		}
+
+
+
+
+		public void setPromoTotalRecords(int promoTotalRecords) {
+			this.promoTotalRecords = promoTotalRecords;
+		}
+	
 	
 
 	    

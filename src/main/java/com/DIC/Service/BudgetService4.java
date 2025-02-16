@@ -52,7 +52,7 @@ public class BudgetService4 implements Serializable{
 	
 	public BudgetService4()
 	{
-		log.info("Loading BudgetService1 Constructor");
+		log.info("Loading BudgetService4 Constructor");
 		gDao=new GeneralDAOImpl();
 		udo=new UserDAOImpl();
 		
@@ -60,13 +60,7 @@ public class BudgetService4 implements Serializable{
 		countTotalRecords();
 	}
 	
-	 	@PostConstruct 
-	    public void init()
-	    {
-	    	log.info("Loading BudgetService4 init()");
-	       
-	    }
-	 	
+	 	 	
 	 	public void loadEntities() {
 	 		
 	 		budgetModelList=gDao.getBudget1Details(4,pageSize,currentPage);

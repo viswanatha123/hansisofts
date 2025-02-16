@@ -25,13 +25,17 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.PrimeFaces;
 
-import com.DIC.DAO.ConnectionDAO;
+
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
+import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
 import com.DIC.DAO.Impl.SMSService;
 import com.DIC.DAO.Impl.UserDAOImpl;
+
 import com.DIC.model.LayoutMode;
+import com.DIC.model.PromoImageModel;
 import com.DIC.model.UserDetails;
+
 
 import SMTPService.SMTPService;
 //import demo.SendSMS;
@@ -54,30 +58,41 @@ public class LayoutDetailService implements Serializable{
 	private TreeMap<String, String> primLocationSort;
 	private List<String> secondryLocation; 
 	private String locationMessage;
-
+	private int currentPage = 1;
+	private int pageSize = 10;
+	private int totalRecords;
+	private int promoCurrentPage = 1;
+	private int promoPageSize = 3;
+	private int promoTotalRecords;
+	
+	
+	
+	
 	private LayoutMode selectedProperty;   
 	
 	private String custName;
 	private String contactNumber;
 	private String email;
 	   
-
+	private List<PromoImageModel> promoImageModel;
 	    private List<LayoutMode> layoutdetails;
 	    ConnectionDAOImpl dao;
 	    LocationDAOImpl locationDao;
 	    UserDAOImpl udo;
 	    SMSService sms;
 	    UserRoleService ur;
+	    GeneralDAOImpl gDao;
 	    
-	    @PostConstruct 
-	    public void init()
-	    {
+	    
+	    public LayoutDetailService(){
+	    
 	    	log.info("Loading LayoutDetailService init()");
 	          dao=new ConnectionDAOImpl();
 	          locationDao=new LocationDAOImpl();
 	          udo=new UserDAOImpl();
 	          sms=new SMSService();
 	          ur=new UserRoleService();
+	          GeneralDAOImpl gDao;
 	          
 	          primaryModel=locationDao.getLayoutPrimaryLocation();
 	          
@@ -90,15 +105,141 @@ public class LayoutDetailService implements Serializable{
           	  
             }
             primLocationSort=new TreeMap<>(primLocation);
+            FacesContext context = FacesContext.getCurrentInstance();
             
             
                    
 	    }
-	    
-	        public Map<String, Map<String, String>> getData() {  
-	           return data;  
-	        } 
+	    public void onCountryChange() {  
+        	if(country !=null && !country.equals("")) 
+	          {
+			     secondryLocation=locationDao.getLayoutSecondryLocation(country);
+				  
+				  Collections.sort(secondryLocation);
+	          }
+        }
+
+        public void getLayoutDetails() {  
+	    	
+	    	System.out.println(" **** submited button ******");
+	    	loadEntities(); 
+	    	countTotalRecords();
+	        locationMessage=country+" ,   "+city;
+	        loadEntities(); 
+	    	countTotalRecords();
+        }
+        public void loadEntities() {
+	 		
+        	layoutdetails=dao.getLayoutDetails(country,city,pageSize,currentPage);
+        	promoImageModel=dao.getPromoImageLayout(promoPageSize, promoCurrentPage);
 	        
+	    }
+        public void countTotalRecords() {
+		 	
+        	System.out.println("================>"+country+"  "+city+"   ");
+	 		totalRecords=dao.getLayoutCountTotalRecords(country,city);
+	 		
+	 		promoTotalRecords=dao.getPromoCountTotalRecords();
+	        
+	    }
+        public void nextPage() {
+            if ((currentPage * pageSize) < totalRecords) {
+                currentPage++;
+                loadEntities();
+            }
+            
+            if ((promoCurrentPage * promoPageSize) < promoTotalRecords) {
+	        	promoCurrentPage++;
+	            loadEntities();
+	            	
+	        }
+        }
+        
+            public void previousPage() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    loadEntities();
+                }
+                if (promoCurrentPage > 1) {
+		        	promoCurrentPage--;
+		            loadEntities();
+		        }
+                
+                
+           }
+                public int getTotalPages() {
+        	        return (int) Math.ceil((double) totalRecords / pageSize);
+        	    }
+        public void submit() {
+        	
+        	log.info("Selected property  : "+selectedProperty.getLayoutId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
+        	
+        	
+        	if(selectedProperty.getLayoutId()!=0)
+        	{
+        		if(custName!=null && contactNumber!=null && contactNumber!=null)
+        		{
+        			if(selectedProperty.getUserId()!=0)
+        			{
+        				
+        				
+        						if(ur.getUserRole().contains("SMS"))
+        						{
+        							log.info("******** SMS Enabled *****************");
+			        				UserDetails userDetails=udo.getUser(selectedProperty.getUserId());
+			        				
+			        				//Twilio service
+			        				//sms.sendSMSLead(userDetails.getPhone(), userDetails.getfName()+" "+userDetails.getlName(),custName,contactNumber); 
+			        				
+			        				// test2sms service
+			        				sms.sendSMSLeadText2sms(userDetails.getPhone(), userDetails.getfName()+" "+userDetails.getlName(),custName,contactNumber);
+			        				
+			        				
+        						}
+        						else
+        						{
+        							log.info("******** SMS Didabled *****************");
+        						}
+        				
+        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getLayoutId(),selectedProperty.getUserId(),"layout");
+        				SMTPService.sendLayoutLeadEmail(custName,contactNumber,email,selectedProperty);
+        				log.info("***** Successful submitted lead ******");
+        				
+        			}
+        			if(selectedProperty.getUserId()==0)
+        			{
+        				int defaultUserId=1;
+        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getLayoutId(),defaultUserId,"layout");
+        				log.info("***** Successful submitted lead ******");
+        			}
+        			
+        			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "We received your contact details", "Our representative contact you soon, Thank you..");
+        	        PrimeFaces.current().dialog().showMessageDynamic(message);
+        		}
+        	}
+        	
+        	
+        	layoutdetails=dao.getLayoutDetails(country,city,pageSize,currentPage);
+        	promoImageModel=dao.getPromoImageLayout(promoPageSize, promoCurrentPage);
+        	this.custName="";
+        	this.contactNumber="";
+        	this.email="";
+        	
+        }
+        
+   public void reset() {
+	       PrimeFaces.current().resetInputs("form1:panelDialog");
+  }
+   
+        public List<LayoutMode> getLayoutdetails() {
+	        return  layoutdetails;
+	    }
+
+	    public void setLayoutdetails(List<LayoutMode> layoutdetails) {
+	        this. layoutdetails = layoutdetails;
+	    }
+	    
+
 	        public String getCountry() {  
 	        return country;  
 	        }  
@@ -116,107 +257,7 @@ public class LayoutDetailService implements Serializable{
 	        }  
 	        
 	        	        
-	        
-	        public void onCountryChange() {  
-	        	if(country !=null && !country.equals("")) 
-		          {
-				     secondryLocation=locationDao.getLayoutSecondryLocation(country);
-					  
-					  Collections.sort(secondryLocation);
-		          }
-	        }  
-
-
-	        public void displayLocation() {  
-	
-	        System.out.println(country+"     "+city);
-	        
-	        locationMessage=country+" ,   "+city;
-	        
-	        //dao=new ConnectionDAOImpl();
-	        layoutdetails=dao.getLayoutDetails(country,city);
-	                
-	                for(LayoutMode x:layoutdetails)
-	                {
-	                    System.out.println("@@@@@@@@@@@@@@@@@@@@ :"+x.getName());
-	                }
-	           
-	        }  
-	        
-	        
 	       
-	        public void submit() {
-	        	
-	        	log.info("Selected property  : "+selectedProperty.getLayoutId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
-	        	
-	        	
-	        	if(selectedProperty.getLayoutId()!=0)
-	        	{
-	        		if(custName!=null && contactNumber!=null && contactNumber!=null)
-	        		{
-	        			if(selectedProperty.getUserId()!=0)
-	        			{
-	        				
-	        				
-	        						if(ur.getUserRole().contains("SMS"))
-	        						{
-	        							log.info("******** SMS Enabled *****************");
-				        				UserDetails userDetails=udo.getUser(selectedProperty.getUserId());
-				        				
-				        				//Twilio service
-				        				//sms.sendSMSLead(userDetails.getPhone(), userDetails.getfName()+" "+userDetails.getlName(),custName,contactNumber); 
-				        				
-				        				// test2sms service
-				        				sms.sendSMSLeadText2sms(userDetails.getPhone(), userDetails.getfName()+" "+userDetails.getlName(),custName,contactNumber);
-				        				
-				        				
-	        						}
-	        						else
-	        						{
-	        							log.info("******** SMS Didabled *****************");
-	        						}
-	        				
-	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getLayoutId(),selectedProperty.getUserId(),"layout");
-	        				SMTPService.sendLayoutLeadEmail(custName,contactNumber,email,selectedProperty);
-	        				log.info("***** Successful submitted lead ******");
-	        				
-	        			}
-	        			if(selectedProperty.getUserId()==0)
-	        			{
-	        				int defaultUserId=1;
-	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getLayoutId(),defaultUserId,"layout");
-	        				log.info("***** Successful submitted lead ******");
-	        			}
-	        			
-	        			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "We received your contact details", "Our representative contact you soon, Thank you..");
-	        	        PrimeFaces.current().dialog().showMessageDynamic(message);
-	        		}
-	        	}
-	        	
-	        	
-	        	layoutdetails=dao.getLayoutDetails(country,city);
-	        	this.custName="";
-	        	this.contactNumber="";
-	        	this.email="";
-	        	
-	        }
-	        
-	   public void reset() {
-		       PrimeFaces.current().resetInputs("form1:panelDialog");
-	  }
-	        
-	        
-	        
-	   public List<LayoutMode> getLayoutdetails() {
-	        return layoutdetails;
-	    }
-
-	    public void setLayoutdetails(List<LayoutMode> layoutdetails) {
-	        this.layoutdetails = layoutdetails;
-	    }
-
-	    
-	    
 	    public String getLocationMessage() {
 	        return locationMessage;
 	    }
@@ -288,6 +329,80 @@ public class LayoutDetailService implements Serializable{
 		public void setEmail(String email) {
 			this.email = email;
 		}
+		public int getCurrentPage() {
+			return currentPage;
+		}
+
+
+		public int getPageSize() {
+			return pageSize;
+		}
+
+
+		public int getTotalRecords() {
+			return totalRecords;
+		}
+
+
+		public void setCurrentPage(int currentPage) {
+			this.currentPage = currentPage;
+		}
+
+
+		public void setPageSize(int pageSize) {
+			this.pageSize = pageSize;
+		}
+
+
+		public void setTotalRecords(int totalRecords) {
+			this.totalRecords = totalRecords;
+		}
+		public List<PromoImageModel> getPromoImageModel() {
+			return promoImageModel;
+		}
+
+
+		public void setPromoImageModel(List<PromoImageModel> promoImageModel) {
+			this.promoImageModel = promoImageModel;
+		}
+		public int getPromoCurrentPage() {
+			return promoCurrentPage;
+		}
+
+
+
+
+		public int getPromoPageSize() {
+			return promoPageSize;
+		}
+
+
+
+
+		public void setPromoCurrentPage(int promoCurrentPage) {
+			this.promoCurrentPage = promoCurrentPage;
+		}
+
+
+
+
+		public void setPromoPageSize(int promoPageSize) {
+			this.promoPageSize = promoPageSize;
+		}
+		public int getPromoTotalRecords() {
+			return promoTotalRecords;
+		}
+
+
+
+
+		public void setPromoTotalRecords(int promoTotalRecords) {
+			this.promoTotalRecords = promoTotalRecords;
+		}
+
+
+
+
 	   
 	                
 	

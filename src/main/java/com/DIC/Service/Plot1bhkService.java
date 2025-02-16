@@ -1,3 +1,4 @@
+
 package com.DIC.Service;
 
 import java.util.HashMap;
@@ -11,9 +12,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,23 +28,31 @@ import org.primefaces.model.StreamedContent;
 import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
 import com.DIC.DAO.Impl.UserDAOImpl;
+import com.DIC.model.PromoImageModel;
 import com.DIC.model.VillaModel;
 
 import SMTPService.SMTPService;
 
+
+
+
 @ManagedBean(name="plot1bhkService")
 
-
-@ViewScoped
+@RequestScoped
 public class Plot1bhkService {
 	
 private static final Logger log = LogManager.getLogger(Plot1bhkService.class);
 	
 	private String locationMessage;
 	private String errorMessage;
-	private int currentPage = 1;
+	private int currentPage=1;
 	private int pageSize = 10;
 	private int totalRecords;
+	private int promoCurrentPage = 1;
+	private int promoPageSize = 3;
+	private int promoTotalRecords;
+	private List<PromoImageModel> promoImageModel;
+	
 	
 	
 
@@ -63,56 +75,110 @@ private static final Logger log = LogManager.getLogger(Plot1bhkService.class);
 	    public Plot1bhkService()
 		{
 			
-			log.info("Loading  Plot1bhkService init()");
+			log.info("Loading  Plot2bhkService init()");
 	    	gDao=new GeneralDAOImpl();
 	    	udo=new UserDAOImpl();
+	    	
+	    	  loadEntities();
+			  countTotalRecords();
 	        
-	 
+	    	FacesContext context = FacesContext.getCurrentInstance();
+	        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 	        
-	        loadEntities();
-			countTotalRecords();
-			
+	        String pageParam = request.getParameter("page1");
+	        String promoParam = request.getParameter("promopage1");	
+	        
+	        if (pageParam != null && !pageParam.isEmpty()) {
+	            try {
+	                currentPage = Integer.parseInt(pageParam);
+	            } catch (NumberFormatException e) {
+	                  currentPage = 1; // Default to page 1 if the parameter is invalid
+	            }
+	        } else {
+	        	    currentPage = 1; // Default to page 1 if no page parameter is provided
+	        }
+	        
+	        
+	        if (promoParam != null && !promoParam.isEmpty()) {
+	            try {
+	            	promoCurrentPage = Integer.parseInt(promoParam);
+	            } catch (NumberFormatException e) {
+	            	promoCurrentPage = 1; // Default to page 1 if the parameter is invalid
+	            }
+	        } else {
+	        	promoCurrentPage = 1; // Default to page 1 if no page parameter is provided
+	        }
+	        
+	        
+	       	
 		}
 		
 		
 		public void loadEntities() {
 	 		
 			villaModel=gDao.getPlot1bhkProperties(pageSize,currentPage);
+			promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
 	 		
 	        
 	    }
 	 	
 	 	public void countTotalRecords() {
 	 	
-	 		totalRecords=gDao.getplot1bhkCountTotalRecords ();
+	 		totalRecords=gDao. getplot1bhkCountTotalRecords();
+	 		promoTotalRecords=gDao.getPromoCountTotalRecords();
 	        
 	    }
 	 	public void nextPage() {
+	 		
+	 		System.out.println("======================currentPage===========pageSize============totalRecords=====:"+currentPage+"  "+pageSize+"  "+totalRecords);
 	        if ((currentPage * pageSize) < totalRecords) {
-	            currentPage++;
+	            //currentPage++;
 	            loadEntities();
+	        }
+	        
+	        if ((promoCurrentPage * promoPageSize) < promoTotalRecords) {
+	        	//promoCurrentPage++;
+	            loadEntities();
+	            	
 	        }
 	    }
 
 	    public void previousPage() {
 	        if (currentPage > 1) {
-	            currentPage--;
+	            //currentPage--;
+	            loadEntities();
+	        }
+	        
+	        if (promoCurrentPage > 1) {
+	        	//promoCurrentPage--;
 	            loadEntities();
 	        }
 	    }
+	    
 	 	
 	    public int getTotalPages() {
 	        return (int) Math.ceil((double) totalRecords / pageSize);
 	    }
 		
-		
+	    public void storeSelectedPropertyInSession() {
+		    
+	        FacesContext facesContext = FacesContext.getCurrentInstance();
+	        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+	        session.setAttribute("plot1bhkKey", selectedProperty);
+	    }
 		
 		
 
 		public void submit() {
-	    	System.out.println("-------------submit ----------------------");
-        	log.info("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
-        	
+			
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+	        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+	      
+	        if (session != null) {
+	         	selectedProperty= (VillaModel) session.getAttribute("plot1bhkKey");
+	         	System.out.println("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
+	          }
+	    	 	
         	
         	if(selectedProperty.getVillaId()!=0)
         	{
@@ -154,6 +220,14 @@ private static final Logger log = LogManager.getLogger(Plot1bhkService.class);
 
 			public void setVillaModel(List<VillaModel> villaModel) {
 				this.villaModel = villaModel;
+			}
+			public List<PromoImageModel> getPromoImageModel() {
+				return promoImageModel;
+			}
+
+
+			public void setPromoImageModel(List<PromoImageModel> promoImageModel) {
+				this.promoImageModel = promoImageModel;
 			}
 
 
@@ -269,6 +343,39 @@ private static final Logger log = LogManager.getLogger(Plot1bhkService.class);
 			public void setTotalRecords(int totalRecords) {
 				this.totalRecords = totalRecords;
 			}
+			public int getPromoCurrentPage() {
+				return promoCurrentPage;
+			}
+
+
+
+
+			public int getPromoPageSize() {
+				return promoPageSize;
+			}
+
+
+
+
+			public void setPromoCurrentPage(int promoCurrentPage) {
+				this.promoCurrentPage = promoCurrentPage;
+			}
+
+
+
+
+			public void setPromoPageSize(int promoPageSize) {
+				this.promoPageSize = promoPageSize;
+			}
+
+
+		
+			@PreDestroy
+		    public void cleanup() {
+		        if (villaModel != null) {
+		        	villaModel.clear();
+		        }
+		    }    
 
 		
 		        
