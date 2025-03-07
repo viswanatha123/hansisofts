@@ -102,11 +102,11 @@
 				 
 				 
 						<p:messages id="msgs"/>
-						   <p:dialog header="Leads" id="leadid" widgetVar="leadsDialog" minHeight="700" width="800" showEffect="fade">
+						   <p:dialog header="Leads" id="leadid" widgetVar="leadsDialog" minHeight="700" width="900" showEffect="fade">
 							 	
 							             						                
 							                
-							          <p:dataTable var="product" value="#{leadsService.leadModelList}" >
+							          <p:dataTable var="product" value="#{leadsService.leadModelList}" style="font-weight: normal;color: block;font-size: 12px" >
 								            <p:column headerText="Lead Name">
 								                <h:outputText value="#{product.leadName}" />
 								            </p:column>
@@ -121,6 +121,10 @@
 								            
 								             <p:column headerText="Created Date">
 								                <h:outputText value="#{product.create_date}" />
+								            </p:column>
+								            
+								            <p:column headerText="Comment">
+								                <h:outputText value="#{product.comment}" />
 								            </p:column>
 								            
 								        </p:dataTable>

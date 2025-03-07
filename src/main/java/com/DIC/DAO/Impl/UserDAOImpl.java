@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -50,6 +52,7 @@ public class UserDAOImpl {
 					+ "from user_deta u, role r, user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1'\r\n"
 					+ "and r.is_active = '1' and ur.is_active='1' and r.is_profile ='Yes' and r.is_prof_menu ='Yes' and u.user_id = ? order by role_name;";
 			
+			String SQL_LEAD_SAVE_NEW="INSERT INTO leads (leads_id, lead_name, lead_contact, lead_email, pro_id, user_id, create_date, is_active,prop_type,comment) VALUES (nextval('leads_seq'), ?, ?, ?, ?, ?, current_timestamp, 1,?,?);";
 			String SQL_LEAD_SAVE="INSERT INTO leads (leads_id, lead_name, lead_contact, lead_email, pro_id, user_id, create_date, is_active,prop_type) VALUES (nextval('leads_seq'), ?, ?, ?, ?, ?, current_timestamp, 1,?);";
 
 			//String SQL_LISTED_PROP="select * from hansi_layout where user_id = ? order by create_date desc";
@@ -453,7 +456,7 @@ public class UserDAOImpl {
     
 // ***************** Save Leads details  **************
     
-    public String saveLeads(String leadName,String leadContact,String leadEmail,int proId, int userId, String propType)
+    public String saveLeads(String leadName,String leadContact,String leadEmail, int proId, int userId, String propType)
     {
     	String saveMessage="";
     	
@@ -530,6 +533,108 @@ public class UserDAOImpl {
         return saveMessage;
     }
     
+    
+    
+// ***************** Save Leads details  with comment **************
+    
+    public String saveLeads(String leadName,String leadContact,String leadEmail,String comment, int proId, int userId, String propType)
+    {
+    	String saveMessage="";
+    	
+    	ConnectionDAO condao;
+		BasicDataSource bds=null;
+		Connection con = null;
+			PreparedStatement pstmt = null;
+    	
+        try {
+        	
+        	condao=new ConnectionDAO();
+   			bds=condao.getDataSource();
+   			con=bds.getConnection();
+            
+            StringBuilder sql_lead_save = new StringBuilder(Constants.SQL.SQL_LEAD_SAVE_NEW);
+            pstmt = con.prepareStatement(sql_lead_save.toString());
+            
+            pstmt.setString(1,leadName );
+            pstmt.setString(2, leadContact);
+            pstmt.setString(3, leadEmail);
+            pstmt.setInt(4, proId);
+            pstmt.setInt(5, userId);
+            pstmt.setString(6, propType);
+            pstmt.setString(7, comment);
+            
+            
+            
+           
+            	int res=pstmt.executeUpdate();
+	            if(res > 0)
+	            {
+	            	saveMessage="Successful Registered.";
+	            }
+	            
+	            
+	            if(propType.equals("layout"))
+	            {
+		            PreparedStatement pstmt1=con.prepareStatement("update hansi_layout set lead_update=current_timestamp where layout_id = ?");
+		            pstmt1.setInt(1, proId);
+		            int res1=pstmt1.executeUpdate();
+	            }
+	            if(propType.equals("agri"))
+	            {
+		            PreparedStatement pstmt1=con.prepareStatement("update hansi_agricultural set lead_update=current_timestamp where agri_id = ?");
+		            pstmt1.setInt(1, proId);
+		            int res1=pstmt1.executeUpdate();
+	            }
+	            if(propType.equals("indi"))
+	            {
+		            PreparedStatement pstmt1=con.prepareStatement("update hansi_individual_site set lead_update=current_timestamp where ind_id = ?");
+		            pstmt1.setInt(1, proId);
+		            int res1=pstmt1.executeUpdate();
+	            }
+	            if(propType.equals("villa"))
+	            {
+		            PreparedStatement pstmt1=con.prepareStatement("update villa_plot set lead_update=current_timestamp where villa_id = ?");
+		            pstmt1.setInt(1, proId);
+		            int res1=pstmt1.executeUpdate();
+	            }
+	            
+	            
+	            
+	            
+	            
+	            
+	            log.info("***** Succful saved lead values *******");
+	            
+          } catch (Exception e) {
+         
+	        e.printStackTrace();
+	        System.err.println("Leads save Error :"+e.getClass().getName()+": "+e.getMessage());
+	        log.info("Leads save Error :"+e.getClass().getName()+": "+e.getMessage());
+	        saveMessage=e.getMessage();
+	        log.error("An error occurred: {}", e.getMessage());
+	        return saveMessage;
+	       
+          }finally {
+	             // Close the pool (important for proper shutdown)
+	             try {
+	            	 if (bds != null) {
+	            		 bds.close(); 
+	                 }
+	                 if (con != null) {
+	                	 con.close(); 
+	                 }
+	                 if (pstmt != null) {
+	                	 pstmt.close(); 
+	                 }
+	                 
+	                 
+	             } catch (SQLException e) {
+	                 e.printStackTrace();
+	             }
+          }
+
+        return saveMessage;
+    }
     
     
     //**************** listed propertys *************
@@ -689,6 +794,7 @@ public class UserDAOImpl {
 	        	 leadModel.setUserId(rs.getInt("user_id"));
 	        	 leadModel.setCreate_date(rs.getDate("create_date"));
 	        	 leadModel.setIs_active(rs.getInt("is_active"));
+	        	 leadModel.setComment(rs.getString("comment"));
 	        	
              leadModelList.add(leadModel);
 	         }

@@ -127,9 +127,19 @@ public class GeneralDAOImpl {
 					+ "					UNION all \r\n"
 					+ "					select owner_name, cost,corner_bit from villa_plot vp\r\n"
 					+ "					) dum where ";
-			
+			/*
 			String SQL_USER_ROLE="select r.role_name from user_deta u, role r,user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1'\r\n"
 					+ "and r.is_active = '1' and ur.is_active = '1' and u.user_id = ?";
+			*/
+			
+			String SQL_USER_ROLE="SELECT r.role_name\r\n"
+					+ "FROM user_deta u\r\n"
+					+ "INNER JOIN user_map_role ur ON u.user_id = ur.user_id\r\n"
+					+ "INNER JOIN role r ON ur.role_id = r.role_id\r\n"
+					+ "WHERE u.is_active = '1'\r\n"
+					+ "  AND r.is_active = '1'\r\n"
+					+ "  AND ur.is_active = '1'\r\n"
+					+ "  AND u.user_id = ?;";
 			
 			
 			String SQL_ROLE_BY_USER_ID="select user_role_id,u.user_id, u.fname,u.lname ,r.role_id,r.role_name,ur.is_active,r.is_profile  from user_deta u, role r, user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1'\r\n"
