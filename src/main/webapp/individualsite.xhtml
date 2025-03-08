@@ -237,6 +237,11 @@
 						                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 						                    </h:inputText> 
 						                    <p:message for="email" display="icon"/>
+						                    
+						                    <p:outputLabel style="font-weight: bold" for="comment" value="Comment  (100 char) : " />
+											<p:inputText id="comment" maxlength="100" value="#{individualSiteService.comment}"  requiredMessage="Required  Name">
+											</p:inputText>
+											<p:message for="comment" display="icon"/>
 							                
 					   
 							</p:panelGrid>

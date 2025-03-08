@@ -61,6 +61,7 @@ public class AgriculturalService implements Serializable{
 	private String custName;
 	private String contactNumber;
 	private String email;
+	private String comment;
 	
 	private int currentPage = 1;
 	private int pageSize = 10;
@@ -239,14 +240,14 @@ public class AgriculturalService implements Serializable{
     							log.info("******** SMS Didabled *****************");
     						}
 	        				
-	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getAgriId(),selectedProperty.getUserId(),"agri");
+	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,comment,selectedProperty.getAgriId(),selectedProperty.getUserId(),"agri");
 	        				SMTPService.sendAgriLeadEmail(custName,contactNumber,email,selectedProperty);
 	        				log.info("***** Successful submitted lead ******");
 	        			}
 	        			if(selectedProperty.getUserId()==0)
 	        			{
 	        				int defaultUserId=1;
-	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getAgriId(),defaultUserId,"agri");
+	        				String saveMessage=udo.saveLeads(custName,contactNumber,email,comment,selectedProperty.getAgriId(),defaultUserId,"agri");
 	        				log.info("***** Successful submitted lead ******");
 	        			}
 	        			
@@ -402,6 +403,14 @@ public class AgriculturalService implements Serializable{
 
 	public void setPromoImageModel(List<PromoImageModel> promoImageModel) {
 		this.promoImageModel = promoImageModel;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 	
 	
