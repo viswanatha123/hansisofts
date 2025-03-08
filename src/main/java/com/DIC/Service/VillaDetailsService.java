@@ -87,6 +87,7 @@ public class VillaDetailsService implements Serializable {
 	private String custName;
 	private String contactNumber;
 	private String email;
+	private String comment;
 
 	private List<PromoImageModel> promoImageModel;
 	
@@ -269,14 +270,14 @@ public class VillaDetailsService implements Serializable {
 							log.info("******** SMS Didabled *****************");
 						}
         				
-        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getVillaId(),selectedProperty.getUserId(),"villa");
+        				String saveMessage=udo.saveLeads(custName,contactNumber,email,comment,selectedProperty.getVillaId(),selectedProperty.getUserId(),"villa");
         				SMTPService.sendVillaLeadEmail(custName,contactNumber,email,selectedProperty);
         				log.info("***** Successful submitted lead ******");
         			}
         			if(selectedProperty.getUserId()==0)
         			{
         				int defaultUserId=1;
-        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getVillaId(),defaultUserId,"villa");
+        				String saveMessage=udo.saveLeads(custName,contactNumber,email,comment,selectedProperty.getVillaId(),defaultUserId,"villa");
         				log.info("***** Successful submitted lead ******");
         			}
         			
@@ -550,6 +551,20 @@ public class VillaDetailsService implements Serializable {
 
 		public void setPromoTotalRecords(int promoTotalRecords) {
 			this.promoTotalRecords = promoTotalRecords;
+		}
+
+
+
+
+		public String getComment() {
+			return comment;
+		}
+
+
+
+
+		public void setComment(String comment) {
+			this.comment = comment;
 		}
 	
 	

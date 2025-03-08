@@ -58,6 +58,9 @@ public class IndividualSiteService implements Serializable {
 	private String custName;
 	private String contactNumber;
 	private String email;
+	private String comment;
+	
+	
 	private int currentPage = 1;
 	private int pageSize = 10;
 	private int totalRecords;
@@ -226,14 +229,14 @@ public class IndividualSiteService implements Serializable {
 							log.info("******** SMS Didabled *****************");
 						}
         				
-        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getInd_id(),selectedProperty.getUserId(),"indi");
+        				String saveMessage=udo.saveLeads(custName,contactNumber,email,comment,selectedProperty.getInd_id(),selectedProperty.getUserId(),"indi");
         				SMTPService.sendIndiLeadEmail(custName,contactNumber,email,selectedProperty);
         				log.info("***** Successful submitted lead ******");
         			}
         			if(selectedProperty.getUserId()==0)
         			{
         				int defaultUserId=1;
-        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getInd_id(),defaultUserId,"indi");
+        				String saveMessage=udo.saveLeads(custName,contactNumber,email,comment,selectedProperty.getInd_id(),defaultUserId,"indi");
         				log.info("***** Successful submitted lead ******");
         			}
         			
@@ -400,6 +403,14 @@ public class IndividualSiteService implements Serializable {
 
 	public void setPromoPageSize(int promoPageSize) {
 		this.promoPageSize = promoPageSize;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 
