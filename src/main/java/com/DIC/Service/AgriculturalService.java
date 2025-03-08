@@ -150,7 +150,7 @@ public class AgriculturalService implements Serializable{
                 	promoImageModel=dao.getPromoImageLayout(promoPageSize, promoCurrentPage);
                 	for(AgriculturalModel x:agriculturalModelList)
                     {
-                        System.out.println("@@@@@@@@@@@@@@@@@@@@ :"+x.getOwnerName());
+                        System.out.println("@@@@@@@@@@@@@@@@@@@@ Water source :"+x.getWaterSource());
                     }
                 }
                 public void countTotalRecords() {
