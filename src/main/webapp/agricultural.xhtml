@@ -89,7 +89,8 @@
                                 			   <h:outputText  style="font-weight: normal; font-size: 11px;" value="#{product.agentName}" />
                                 			   
                                                <h:outputText style="font-weight:normal;font-size:11px;" value=" Contact Number : " />
-                                               <h:outputText  style="font-weight: normal; font-size: 11px;" value="#{product.contactNo}" />
+                                               <h:outputText  rendered="#{userRoleService.userRole.contains('Contact Num')? true : false }" style="font-weight: normal; font-size: 11px;" value="#{product.contactNo}" />
+                                               <h:outputText  rendered="#{userRoleService.userRole.contains('Contact Num')? false : true }" style="font-weight: normal; font-size: 11px" value=" -- " />
                                               
                                                <h:outputText style="font-weight:normal;font-size:11px;" value=" Ownership : " />
                                                <h:outputText style="font-weight: normal; font-size: 11px;" value="#{product.wonership}" />
