@@ -39,7 +39,7 @@ public class ReadyToMoveService {
 	private static final Logger log = LogManager.getLogger(ReadyToMoveService.class);
 	
 	
-	private String locationMessage;
+	
 	private String errorMessage;
 	
 	
@@ -235,11 +235,6 @@ public class ReadyToMoveService {
 
 
 
-			public String getLocationMessage() {
-				return locationMessage;
-			}
-
-
 
 
 			public String getErrorMessage() {
@@ -273,15 +268,6 @@ public class ReadyToMoveService {
 			public String getEmail() {
 				return email;
 			}
-
-
-
-
-			public void setLocationMessage(String locationMessage) {
-				this.locationMessage = locationMessage;
-			}
-
-
 
 
 			public void setErrorMessage(String errorMessage) {
