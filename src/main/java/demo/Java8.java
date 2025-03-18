@@ -1,47 +1,59 @@
 package demo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.StringJoiner;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Java8 {
 
 	public static void main(String[] args) {
-		
-		
-		List<Employee> list=new ArrayList<>();
-		list.add(new Employee("aaa",10,1000));
-		list.add(new Employee("ddd",40,2000));
-		list.add(new Employee("ccc",30,3000));
-		list.add(new Employee("aaa",20,4000));
-		list.add(new Employee("eee",50,5000));
-		
-		
 
-		int num=5;
+		int ch[]= {1,2,3,4,5,6,7};
 		
-		for(int i=num;i>=1;i--)
+		int n=ch.length;
+		
+		int po=2;
+		po=po % n;
+		
+		
+		reverse(ch,0,n-1);
+		reverse(ch,0,po-1);
+		//reverse(ch, po, n - 1);
+		
+		for(int i=0;i<ch.length;i++)
 		{
-			for(int j=0;j<=num -i+ 1;j++)
-			{
-				System.out.print(i);
-			}
+			System.out.println(ch[i]);
 		}
-
-
-	
 		
 	}
 	
 	
+	private static void reverse(int[] arr, int start, int end)
+	{
+		while (start < end)
+		{
+			int temp=arr[start];
+			arr[start]=arr[end];
+			arr[end]=temp;
+			
+			start++;
+			end--;
+		}
+	}
+	/*
+	private static void reverse(int[] arr, int start, int end) {
+        while (start < end) 
+        {
+            int temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
+            start++;
+            end--;
+        }
+    }
+   */
+		
+	
+		
 }
