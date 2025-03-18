@@ -37,7 +37,7 @@
                             <f:selectItems value="#{individualSiteService.secondryLocation}" />  
                             </p:selectOneMenu> 
                             
-                            <h:commandButton value="Search"  type="submit"  actionListener="#{individualSiteService.getindividualsiteDetails}" />
+                            <h:commandButton value="Search"  type="submit"  actionListener="#{individualSiteService.getindividualsiteDetails}" onclick="PF('spinnerDialog').show()" />
                         </h:panelGrid> 
              </p:panel>
               
@@ -81,7 +81,7 @@
               				
               				
               				<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
-                     			<p:graphicImage width="200" height="200" stream="false" cache="false" value="#{product.streamedContent}" />
+                     			<p:graphicImage width="250" height="200" stream="false" cache="false" styleClass="rounded-image" value="#{product.streamedContent}" />
               						
                      				
                      				

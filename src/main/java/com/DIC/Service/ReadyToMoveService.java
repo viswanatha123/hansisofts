@@ -81,23 +81,26 @@ public class ReadyToMoveService {
 				FacesContext context = FacesContext.getCurrentInstance();
 		        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		        
-		        String pageParam = request.getParameter("immedi");
-		        String promoParam = request.getParameter("promoimmedi");
+		        String pageParam = request.getParameter("readytomove");
+		        String promoParam = request.getParameter("readytomovepromo");
 		     	        
 		        if (pageParam != null && !pageParam.isEmpty()) {
 		            try {
 		            	
 		                currentPage = Integer.parseInt(pageParam);
-		               	             
+		                System.out.println("=========================== try =================="+currentPage);
+	             
 		            } catch (NumberFormatException e) {
 		            	
-		               currentPage = 1; // Default to page 1 if the parameter is invalid
+		            	System.out.println("=========================== Catch page =================="+currentPage);
+		                currentPage = 1; // Default to page 1 if the parameter is invalid
 		            }
 		        } else {
 		        
 		           //Default to page 1 if no page parameter is provided
 		        	currentPage = 1;
-		        			        	
+		        	System.out.println("=========================== else x=================="+currentPage);
+		        	
 		        }
 		        
 		        if (promoParam != null && !promoParam.isEmpty()) {
@@ -162,7 +165,7 @@ public class ReadyToMoveService {
 			    
 		        FacesContext facesContext = FacesContext.getCurrentInstance();
 		        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-		        session.setAttribute("plot1bhkKey", selectedProperty);
+		        session.setAttribute("selectedReadyToMove", selectedProperty);
 		    }
 			
 			
@@ -172,7 +175,7 @@ public class ReadyToMoveService {
 		        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
 		      
 		        if (session != null) {
-		         	selectedProperty= (VillaModel) session.getAttribute("plot1bhkKey");
+		         	selectedProperty= (VillaModel) session.getAttribute("selectedReadyToMove");
 		         	System.out.println("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
 		          }	
 	        	
