@@ -35,8 +35,8 @@
                     
                     			<h:panelGrid   columns="4" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
                   				<h:outputText style="font-weight: bold;color: green;font-size:15px;" value="#{product.i_am} : #{product.owner_name}" />
-                   				<h:outputText style="font-weight: bold;color: block; font-size:15px; float:right" value="#{product.bed_rooms} BHK #{product.property_type} for Sale in #{product.prim_location} , #{product.seco_location}" />
-                  				<h:outputText class="pi pi-globe" style="font-weight: bold;color: brown;font-size:15px; float:right" value=" Residential Villa/Flats for Sale in #{product.prim_location} , #{product.seco_location}" />
+                   				<h:outputText style="font-weight: bold;color: block; font-size:15px; float:right" value="#{product.bed_rooms} BHK #{product.property_type} for Sale in #{product.prim_location},   #{product.seco_location} " />
+                  				<h:outputText class="pi pi-globe" style="font-weight: bold;color: brown;font-size:15px; float:right" value=" Residential Villa/Flats for Sale in #{product.prim_location},   #{product.seco_location} " />
               					</h:panelGrid>
               					
               		
@@ -44,63 +44,63 @@
               					<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
                      			   <p:graphicImage width="200" height="200" stream="false" cache="false" value="#{product.streamedContent}" />
                                   				
-                     				    <h:panelGrid   columns="2"  width="80%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-left"> 
+                     				    <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;">  
                      			 
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" #{product.i_am} :   " />
-                     			 				<h:outputText style="font-weight: normal;color: block;font-size: 15px;" value="#{product.owner_name}" />
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" #{product.i_am} :   " />
+                     			 				<h:outputText style="font-weight: normal;color: block;font-size: 11px;" value="#{product.owner_name}" />
                      			 				
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px;" value=" Contact :           "/>
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px;" value="#{product.contact_owner}"/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 11px;" value=" Contact :           "/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 11px;" value="#{product.contact_owner}"/>
                      			 		
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px;" value=" Email :             "/>
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px;" value="#{product.email}"/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 11px;" value=" Email :             "/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 11px;" value="#{product.email}"/>
                      			 				
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px;" value=" Avail Date : " />
-                     		        			<h:outputText style="font-weight: normal;color: block;font-size: 15px;" value="#{product.avail_date}"/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 11px;" value=" Avail Date : " />
+                     		        			<h:outputText style="font-weight: normal;color: block;font-size: 11px;" value="#{product.avail_date}"/>
                      		        				 			                                                                                          
                                                
                                                
                                        </h:panelGrid>
                      			
                      			
-                     					<h:panelGrid   columns="2" width="80%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
+                     					<h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;"> 
                      			 
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" Road width : " />
-                     			 				<h:outputText style="font-weight: normal;color: block;font-size: 15px" value="#{product.road_width}" />
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Road width : " />
+                     			 				<h:outputText style="font-weight: normal;color: block;font-size: 11px" value="#{product.road_width}" />
                      			 		
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" Floors : "/>
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.floors}"/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Floors : "/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.floors}"/>
                      			 				
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" Bed Rooms : "/>
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.bed_rooms}"/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Bed Rooms : "/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.bed_rooms}"/>
                      			 				                     			 			                                                                                          
-                                                <h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" Bath Rooms : "/>
-                                                <h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.bath_rooms}"/>
+                                                <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Bath Rooms : "/>
+                                                <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.bath_rooms}"/>
                                                 
-                                                <h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" Furnished : "/>
-                                                <h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.furnished}"/>
+                                                <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Furnished : "/>
+                                                <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.furnished}"/>
                                                 
-                                                <h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" Floor Number : "/>
-                                                <h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.floorNum}"/>
+                                                <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Floor Number : "/>
+                                                <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.floorNum}"/>
                                        </h:panelGrid>
                                        
                                        
-                                       <h:panelGrid   columns="2" width="80%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
+                                       <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;"> 
                      			 
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" Flat Area : " />
-                     			 				<h:outputText style="font-weight: normal;color: block;font-size: 15px" value="#{product.plot_area}" />
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Flat Area : " />
+                     			 				<h:outputText style="font-weight: normal;color: block;font-size: 11px" value="#{product.plot_area}" />
                      			 		
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" Super Buildup Area : "/>
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.s_build_are}"/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Super Buildup Area : "/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.s_build_are}"/>
                      			 				
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" Property Available : "/>
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.pro_avail}"/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Property Available : "/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.pro_avail}"/>
                      			 				                     			 			                                                                                          
-                                                <h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" Per sqft Cost : "/>
-                                                <h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.persqft}"/>
+                                                <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Per sqft Cost : "/>
+                                                <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.persqft}"/>
                                                 
-                                                <h:outputText  style="font-weight: normal;color: block;font-size: 15px" value=" Total feets : "/>
-                                                <h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.total_feets}"/>
+                                                <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Total feets : "/>
+                                                <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.total_feets}"/>
                                        </h:panelGrid>
                      			
                      				<h:panelGrid   columns="1" width="60%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
@@ -114,7 +114,7 @@
 									                </p:commandButton>
 									                
 									                                      						
-                          						   <p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#1E90FF;font-weight: bold;color: black;font-size: 15px; width:170px" 
+                          						   <p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#1E90FF;font-weight: bold;color: black;font-size: 15px" 
 															 process="@this"
 															 action="#{readyToMoveService.storeSelectedPropertyInSession}" 
 							                                 onclick="PF('leadDialog').show()">           
