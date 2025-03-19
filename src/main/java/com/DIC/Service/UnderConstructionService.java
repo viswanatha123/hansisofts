@@ -4,9 +4,13 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,14 +19,15 @@ import org.primefaces.PrimeFaces;
 import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.DAO.Impl.LocationDAOImpl;
 import com.DIC.DAO.Impl.UserDAOImpl;
+import com.DIC.model.PromoImageModel;
 import com.DIC.model.VillaModel;
 
 import SMTPService.SMTPService;
 
 @ManagedBean(name="underConstructionService")
 
-//@RequestScoped
-@ViewScoped
+@RequestScoped
+//@ViewScoped
 public class UnderConstructionService {
 	
 	private static final Logger log = LogManager.getLogger(UnderConstructionService.class);
@@ -35,7 +40,10 @@ public class UnderConstructionService {
 	private int pageSize = 10;
 	private int totalRecords;
 	
-
+	private int promoCurrentPage = 1;
+	private int promoPageSize = 3;
+	private int promoTotalRecords;
+	private List<PromoImageModel> promoImageModel;
 
     private VillaModel selectedProperty;   
 	
@@ -43,6 +51,8 @@ public class UnderConstructionService {
 	private String contactNumber="";
 	private String email="";
 
+	
+	
 		private List<VillaModel> villaModel;
 		
 		
@@ -65,11 +75,49 @@ public class UnderConstructionService {
 	        loadEntities();
 			countTotalRecords();
 			
+			FacesContext context = FacesContext.getCurrentInstance();
+	        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+	        
+	        String underconstruction = request.getParameter("underconstruction");
+	        String underconstructionPromo = request.getParameter("underconstructionpromo");
+	     	        
+	        if (underconstruction != null && !underconstruction.isEmpty()) {
+	            try {
+	            	
+	                currentPage = Integer.parseInt(underconstruction);
+	                System.out.println("=========================== try =================="+currentPage);
+             
+	            } catch (NumberFormatException e) {
+	            	
+	            	System.out.println("=========================== Catch page =================="+currentPage);
+	                currentPage = 1; // Default to page 1 if the parameter is invalid
+	            }
+	        } else {
+	        
+	           //Default to page 1 if no page parameter is provided
+	        	currentPage = 1;
+	        	System.out.println("=========================== else x=================="+currentPage);
+	        	
+	        }
+	        
+	        if (underconstructionPromo != null && !underconstructionPromo.isEmpty()) {
+	            try {
+	            	promoCurrentPage = Integer.parseInt(underconstructionPromo);
+	            } catch (NumberFormatException e) {
+	            	promoCurrentPage = 1; // Default to page 1 if the parameter is invalid
+	            }
+	        } else {
+	        	promoCurrentPage = 1; // Default to page 1 if no page parameter is provided
+	        }
+			
 		}
+			
+	
 		
 		
 		public void loadEntities() {
-	 		
+			
+			promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
 			villaModel=gDao.getUnderConstruction(pageSize,currentPage);
 	 		
 	        
@@ -78,18 +126,28 @@ public class UnderConstructionService {
 	 	public void countTotalRecords() {
 	 	
 	 		totalRecords=gDao.getUnderConstructionCountTotalRecords();
+	 		promoTotalRecords=gDao.getPromoCountTotalRecords();
 	        
 	    }
 	 	public void nextPage() {
 	        if ((currentPage * pageSize) < totalRecords) {
-	            currentPage++;
+	            //currentPage++;
 	            loadEntities();
+	        }
+	        if ((promoCurrentPage * promoPageSize) < promoTotalRecords) {
+	        	//promoCurrentPage++;
+	            loadEntities();
+	            	
 	        }
 	    }
 
 	    public void previousPage() {
 	        if (currentPage > 1) {
-	            currentPage--;
+	            //currentPage--;
+	            loadEntities();
+	        }
+	        if (promoCurrentPage > 1) {
+	        	//promoCurrentPage--;
 	            loadEntities();
 	        }
 	    }
@@ -98,11 +156,26 @@ public class UnderConstructionService {
 	        return (int) Math.ceil((double) totalRecords / pageSize);
 	    }
 	    
+	    public void storeSelectedPropertyInSession() {
+		    
+	        FacesContext facesContext = FacesContext.getCurrentInstance();
+	        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+	        session.setAttribute("selectedUnderConstruction", selectedProperty);
+	    }
+	    
 	    
 
 			public void submit() {
-		    	System.out.println("-------------submit ----------------------");
-	        	log.info("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
+		    	
+	        	FacesContext facesContext = FacesContext.getCurrentInstance();
+		        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+		      
+		        if (session != null) {
+		         	selectedProperty= (VillaModel) session.getAttribute("selectedUnderConstruction");
+		         	System.out.println("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
+		          }	
+	        	
+	        	
 	        	
 	        	
 	        	if(selectedProperty.getVillaId()!=0)
@@ -146,6 +219,14 @@ public class UnderConstructionService {
 			public void setVillaModel(List<VillaModel> villaModel) {
 				this.villaModel = villaModel;
 			}
+				public List<PromoImageModel> getPromoImageModel() {
+					return promoImageModel;
+				}
+
+
+				public void setPromoImageModel(List<PromoImageModel> promoImageModel) {
+					this.promoImageModel = promoImageModel;
+				}
 
 
 
@@ -266,6 +347,45 @@ public class UnderConstructionService {
 
 			public void setFetchRecords(int fetchRecords) {
 				this.fetchRecords = fetchRecords;
+			}
+			
+			public int getPromoCurrentPage() {
+				return promoCurrentPage;
+			}
+
+
+
+
+			public int getPromoPageSize() {
+				return promoPageSize;
+			}
+
+
+
+
+			public void setPromoCurrentPage(int promoCurrentPage) {
+				this.promoCurrentPage = promoCurrentPage;
+			}
+
+
+
+
+			public void setPromoPageSize(int promoPageSize) {
+				this.promoPageSize = promoPageSize;
+			}
+
+
+
+
+			public int getPromoTotalRecords() {
+				return promoTotalRecords;
+			}
+
+
+
+
+			public void setPromoTotalRecords(int promoTotalRecords) {
+				this.promoTotalRecords = promoTotalRecords;
 			}
 		        
         
