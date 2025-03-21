@@ -66,7 +66,9 @@
                   			         	           <h:outputText class="pi pi-globe" style="font-weight: bold;color: brown;font-size:15px; float:right" value=" Residential Plot/Land for Sale in #{layoutDetailService.locationMessage}" />
               			             	    </h:panelGrid>
               			             	    <h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
-                     			                    <p:graphicImage width="250" height="200" stream="false" cache="false" styleClass="rounded-image" value="#{product.streamedContent}" />
+                     			                    
+                     			                    <p:graphicImage width="250" height="200" stream="false" cache="false" styleClass="rounded-image clickable-image-with-link" value="#{product.streamedContent}" alt="Image" />
+                     			                    
                      			                    <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;">
                      			 
                      			 				
@@ -229,6 +231,9 @@
 		   </p:dialog>
 
 <script type="text/javascript" src="resources/js/chatool.js"></script>
+
+
+
 </h:form>
 </div>
 </ui:define>
