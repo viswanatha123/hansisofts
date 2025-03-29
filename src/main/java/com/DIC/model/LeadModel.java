@@ -14,6 +14,9 @@ public class LeadModel implements Serializable{
 	private int userId;
 	private Date create_date;
 	private int is_active;
+	private String comment;
+	
+	
 	public int getLeads_id() {
 		return leads_id;
 	}
@@ -61,6 +64,12 @@ public class LeadModel implements Serializable{
 	}
 	public void setIs_active(int is_active) {
 		this.is_active = is_active;
+	}
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 	
 	

@@ -47,7 +47,7 @@
 		                            </p:selectOneMenu>
 		                            
 		                            
-		                            <h:commandButton value="Search"  type="submit"   actionListener="#{villaDetailsService.getVillaDetails}" />
+		                            <h:commandButton value="Search"  type="submit"   actionListener="#{villaDetailsService.getVillaDetails}" onclick="PF('spinnerDialog').show()" />
 		                           
 		                         
 		                         
@@ -91,7 +91,7 @@
               		
               					
               					<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
-                     			<p:graphicImage width="200" height="200" stream="false" cache="false" value="#{product.streamedContent}" />
+                     			<p:graphicImage width="250" height="200" stream="false" cache="false" styleClass="rounded-image" value="#{product.streamedContent}" />
                      			
                      			
                      				    <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;"> 
@@ -100,7 +100,8 @@
                      			 				<h:outputText style="font-weight: normal;color: block;font-size: 11px; " value="#{product.owner_name}" />
                      			 				
                      			 				<h:outputText  style="font-weight: normal;color: block;font-size: 11px; " value=" Contact : "/>
-                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 11px; " value="#{product.contact_owner}"/>
+                     			 				<h:outputText  rendered="#{userRoleService.userRole.contains('Contact Num')? true : false }" style="font-weight: normal;color: block;font-size: 11px; " value="#{product.contact_owner}"/>
+                     			 				<h:outputText  rendered="#{userRoleService.userRole.contains('Contact Num')? false : true }" style="font-weight: normal; font-size: 11px" value=" -- " />
                      			 		
                      			 				<h:outputText  style="font-weight: normal;color: block;font-size: 11px; " value=" Email : "/>
                      			 				<h:outputText  style="font-weight: normal;color: block;font-size: 11px; " value="#{product.email}"/>
@@ -177,6 +178,7 @@
                      			
                      			<h:panelGrid   columns="1" width="100%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
                                	 <h:outputText style="font-weight: normal; font-size: 15px" value="Location : #{product.address}" />
+                               	 <h:outputText style="font-weight: normal;color: black ;font-size: 15px" value="Description : #{product.comment}" />
                                </h:panelGrid>
                                
                                
@@ -256,6 +258,11 @@
 						                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 						                    </h:inputText> 
 						                    <p:message for="email" display="icon"/>
+						                    
+						                    <p:outputLabel style="font-weight: bold" for="comment" value="Comment  (100 char) : " />
+											<p:inputText id="comment" maxlength="100" value="#{villaDetailsService.comment}"  requiredMessage="Required  Name">
+											</p:inputText>
+											<p:message for="comment" display="icon"/>
 							                
 					   
 							</p:panelGrid>

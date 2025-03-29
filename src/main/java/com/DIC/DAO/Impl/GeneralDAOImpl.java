@@ -56,8 +56,8 @@ public class GeneralDAOImpl {
 		// SQL
 		interface SQL {
 			
-			String SQL_VILLA_INSERT="insert into villa_plot (villa_id,i_am,owner_name,contact_owner,email,property_type,address,road_width,floors,bed_rooms,bath_rooms,furnished,plot_area,s_build_are,pro_avail,avail_date,persqft,prim_location,seco_location,image,total_feets,cost,create_date,is_active,user_id,floor_num,corner_bit,rank,facing) \n"+ 
-					"values (nextval('hansi_villa_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,1,?,?,?,?,?);";
+			String SQL_VILLA_INSERT="insert into villa_plot (villa_id,i_am,owner_name,contact_owner,email,property_type,address,road_width,floors,bed_rooms,bath_rooms,furnished,plot_area,s_build_are,pro_avail,avail_date,persqft,prim_location,seco_location,image,total_feets,cost,create_date,is_active,user_id,floor_num,corner_bit,rank,facing,comment) \n"+ 
+					"values (nextval('hansi_villa_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,1,?,?,?,?,?,?);";
 				
 			String SQL_VILLA_DETAILS="select * from villa_plot where prim_location = ? and seco_location = ?";
 			String SQL_VILLA_READY_TO_MOVE="select * from villa_plot where pro_avail='Ready To Move' order by create_date desc LIMIT ? OFFSET ?;";
@@ -127,9 +127,19 @@ public class GeneralDAOImpl {
 					+ "					UNION all \r\n"
 					+ "					select owner_name, cost,corner_bit from villa_plot vp\r\n"
 					+ "					) dum where ";
-			
+			/*
 			String SQL_USER_ROLE="select r.role_name from user_deta u, role r,user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1'\r\n"
 					+ "and r.is_active = '1' and ur.is_active = '1' and u.user_id = ?";
+			*/
+			
+			String SQL_USER_ROLE="SELECT r.role_name\r\n"
+					+ "FROM user_deta u\r\n"
+					+ "INNER JOIN user_map_role ur ON u.user_id = ur.user_id\r\n"
+					+ "INNER JOIN role r ON ur.role_id = r.role_id\r\n"
+					+ "WHERE u.is_active = '1'\r\n"
+					+ "  AND r.is_active = '1'\r\n"
+					+ "  AND ur.is_active = '1'\r\n"
+					+ "  AND u.user_id = ?;";
 			
 			
 			String SQL_ROLE_BY_USER_ID="select user_role_id,u.user_id, u.fname,u.lname ,r.role_id,r.role_name,ur.is_active,r.is_profile  from user_deta u, role r, user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1'\r\n"
@@ -220,6 +230,7 @@ public class GeneralDAOImpl {
 		    pstmt.setString(24, villaModel.getCornerBit());
 		    pstmt.setInt(25, rankId);
 		    pstmt.setString(26, villaModel.getFacing());
+		    pstmt.setString(27, villaModel.getComment());
             
            
             	int res=pstmt.executeUpdate();
@@ -306,6 +317,7 @@ public class GeneralDAOImpl {
 	        	 villaModel.setIs_active(rs.getInt("is_active"));
 	        	 villaModel.setUserId(rs.getInt("user_id"));
 	        	 villaModel.setFloorNum(rs.getInt("floor_num"));
+	        	 villaModel.setComment(rs.getString("comment"));
 	        	 
 	        	 			// below for Image
 	        	 

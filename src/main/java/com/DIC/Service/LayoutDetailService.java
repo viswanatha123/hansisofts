@@ -73,6 +73,7 @@ public class LayoutDetailService implements Serializable{
 	private String custName;
 	private String contactNumber;
 	private String email;
+	private String comment;
 	   
 	private List<PromoImageModel> promoImageModel;
 	    private List<LayoutMode> layoutdetails;
@@ -201,7 +202,7 @@ public class LayoutDetailService implements Serializable{
         							log.info("******** SMS Didabled *****************");
         						}
         				
-        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getLayoutId(),selectedProperty.getUserId(),"layout");
+        				String saveMessage=udo.saveLeads(custName,contactNumber,email,comment,selectedProperty.getLayoutId(),selectedProperty.getUserId(),"layout");
         				SMTPService.sendLayoutLeadEmail(custName,contactNumber,email,selectedProperty);
         				log.info("***** Successful submitted lead ******");
         				
@@ -209,7 +210,7 @@ public class LayoutDetailService implements Serializable{
         			if(selectedProperty.getUserId()==0)
         			{
         				int defaultUserId=1;
-        				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getLayoutId(),defaultUserId,"layout");
+        				String saveMessage=udo.saveLeads(custName,contactNumber,email,comment,selectedProperty.getLayoutId(),defaultUserId,"layout");
         				log.info("***** Successful submitted lead ******");
         			}
         			
@@ -224,6 +225,7 @@ public class LayoutDetailService implements Serializable{
         	this.custName="";
         	this.contactNumber="";
         	this.email="";
+        	this.comment="";
         	
         }
         
@@ -398,6 +400,12 @@ public class LayoutDetailService implements Serializable{
 
 		public void setPromoTotalRecords(int promoTotalRecords) {
 			this.promoTotalRecords = promoTotalRecords;
+		}
+		public String getComment() {
+			return comment;
+		}
+		public void setComment(String comment) {
+			this.comment = comment;
 		}
 
 

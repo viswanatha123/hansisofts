@@ -38,7 +38,7 @@
                             <f:selectItems value="#{agriculturalService.secondryLocation}" />  
                             </p:selectOneMenu> 
                             
-                            <h:commandButton value="Search"  type="submit"  actionListener="#{agriculturalService.displayLocation}" />
+                            <h:commandButton value="Search"  type="submit"  actionListener="#{agriculturalService.displayLocation}" onclick="PF('spinnerDialog').show()" />
                         </h:panelGrid>  
 
            </p:panel>
@@ -69,7 +69,7 @@
               				</h:panelGrid>
                   
                  			<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
-                 				<p:graphicImage width="200" height="200" stream="false" cache="false" value="#{product.streamedContent}" />
+                 				<p:graphicImage width="250" height="200" stream="false" cache="false" styleClass="rounded-image" value="#{product.streamedContent}" />
                      			<h:outputText style="font-weight: bold;color: red;font-size: 15px"  value="Rs #{product.totalPrice}" />
                      			<h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;"> 
                      			 
@@ -89,7 +89,8 @@
                                 			   <h:outputText  style="font-weight: normal; font-size: 11px;" value="#{product.agentName}" />
                                 			   
                                                <h:outputText style="font-weight:normal;font-size:11px;" value=" Contact Number : " />
-                                               <h:outputText  style="font-weight: normal; font-size: 11px;" value="#{product.contactNo}" />
+                                               <h:outputText  rendered="#{userRoleService.userRole.contains('Contact Num')? true : false }" style="font-weight: normal; font-size: 11px;" value="#{product.contactNo}" />
+                                               <h:outputText  rendered="#{userRoleService.userRole.contains('Contact Num')? false : true }" style="font-weight: normal; font-size: 11px" value=" -- " />
                                               
                                                <h:outputText style="font-weight:normal;font-size:11px;" value=" Ownership : " />
                                                <h:outputText style="font-weight: normal; font-size: 11px;" value="#{product.wonership}" />
@@ -102,9 +103,9 @@
                  				<h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;"> 
                                 		                               
                                 			<h:outputText style="font-weight:normal;font-size:11px;" value=" Water Source : " />
-		                                     <p:graphicImage  rendered="#{product.waterSource eq 'No Water'}" width="25" height="25" name="images/nowater.jpg" />
-                                            <p:graphicImage  rendered="#{product.waterSource eq 'Bore Well'}" width="25" height="25" name="images/borewell.jpg" />
-                                            <p:graphicImage  rendered="#{product.waterSource eq 'Channel'}" width="25" height="25" name="images/waterchannel.jpg" />
+		                                    <p:graphicImage  rendered="#{product.waterSource eq 'No Water'}" width="25" height="25" name="images/icons/notwater.jpg" />
+                                            <p:graphicImage  rendered="#{product.waterSource eq 'Bore Well'}" width="25" height="25" name="images/icons/borewell.jpg" />
+                                            <p:graphicImage  rendered="#{product.waterSource eq 'Channel'}" width="25" height="25" name="images/icons/waterchannel.jpg" />
                                             
                                         	<h:outputText style="font-weight:normal;font-size:11px;" value=" Crop : " />
                                 			<p:graphicImage  rendered="#{product.crop eq 'Yes'}" width="25" height="25" name="images/yes.jpg" />
@@ -211,6 +212,12 @@
 						                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 						                    </h:inputText> 
 						                    <p:message for="email" display="icon"/>
+						                    
+						                    
+						                    <p:outputLabel style="font-weight: bold" for="comment" value="Comment  (100 char) : " />
+											<p:inputText id="comment" maxlength="100" value="#{agriculturalService.comment}"  requiredMessage="Required  Comment">
+											</p:inputText>
+											<p:message for="comment" display="icon"/>
 							                
 					   
 							</p:panelGrid>

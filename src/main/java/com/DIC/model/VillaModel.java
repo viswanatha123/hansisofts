@@ -37,6 +37,7 @@ public class VillaModel implements Serializable{
 	private int floorNum;
 	private String facing;
 	private String cornerBit;
+	private String comment;
 	
 	
 	
@@ -224,6 +225,12 @@ public class VillaModel implements Serializable{
 	}
 	public void setCornerBit(String cornerBit) {
 		this.cornerBit = cornerBit;
+	}
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	

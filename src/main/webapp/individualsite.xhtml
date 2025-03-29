@@ -37,7 +37,7 @@
                             <f:selectItems value="#{individualSiteService.secondryLocation}" />  
                             </p:selectOneMenu> 
                             
-                            <h:commandButton value="Search"  type="submit"  actionListener="#{individualSiteService.getindividualsiteDetails}" />
+                            <h:commandButton value="Search"  type="submit"  actionListener="#{individualSiteService.getindividualsiteDetails}" onclick="PF('spinnerDialog').show()" />
                         </h:panelGrid> 
              </p:panel>
               
@@ -81,7 +81,7 @@
               				
               				
               				<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
-                     			<p:graphicImage width="200" height="200" stream="false" cache="false" value="#{product.streamedContent}" />
+                     			<p:graphicImage width="250" height="200" stream="false" cache="false" styleClass="rounded-image" value="#{product.streamedContent}" />
               						
                      				
                      				
@@ -114,7 +114,8 @@
                                 			   <h:outputText  style="font-weight: normal; font-size: 13px" value="#{product.agentName}" />
                                 			   
                                                <h:outputText  style="font-weight: normal; font-size: 11px" value=" Contact Number : " />
-                                               <h:outputText  style="font-weight: normal; font-size: 13px" value="#{product.contactNo}" />
+                                               <h:outputText  rendered="#{userRoleService.userRole.contains('Contact Num')? true : false }" style="font-weight: normal; font-size: 13px" value="#{product.contactNo}" />
+                                               <h:outputText  rendered="#{userRoleService.userRole.contains('Contact Num')? false : true }" style="font-weight: normal; font-size: 11px" value=" -- " />
                                               
                                                <h:outputText style="font-weight: normal; font-size: 11px" value=" Wonership : " />
                                                <h:outputText style="font-weight: normal; font-size: 13px" value="#{product.wonership}" />
@@ -236,6 +237,11 @@
 						                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 						                    </h:inputText> 
 						                    <p:message for="email" display="icon"/>
+						                    
+						                    <p:outputLabel style="font-weight: bold" for="comment" value="Comment  (100 char) : " />
+											<p:inputText id="comment" maxlength="100" value="#{individualSiteService.comment}"  requiredMessage="Required  Name">
+											</p:inputText>
+											<p:message for="comment" display="icon"/>
 							                
 					   
 							</p:panelGrid>

@@ -194,6 +194,13 @@
                    </p:selectOneMenu> 
                    <p:message for="city" display="icon"/>
                    
+                   <p:outputLabel style="font-weight: bold" value="Description (150 char): " />
+                   <p:inputTextarea rows="5" cols="40" maxlength="150" id="comment" value="#{villaDataEntryService.comment}" >
+                   </p:inputTextarea>		
+                   <p:message for="comment" display="icon"/>
+                   
+                   
+                   
                    <p:outputLabel for="facing" value="Facing : " />  
                             <p:selectOneMenu id="facing" value="#{villaDataEntryService.facing}" style="width:150px"> 
                             <f:selectItem itemLabel="--" itemValue="--"/> 
