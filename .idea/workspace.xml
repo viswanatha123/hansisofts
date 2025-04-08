@@ -41,6 +41,7 @@
     "Maven.HansiSoft [clean].executor": "Run",
     "Maven.HansiSoft [compile].executor": "Run",
     "Maven.HansiSoft [package].executor": "Run",
+    "Maven.HansiSoft [validate].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -48,11 +49,11 @@
     "git-widget-placeholder": "venus",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Program Files/Java/jdk-17",
-    "project.structure.last.edited": "Modules",
+    "last_opened_file_path": "D:/hansisofts",
+    "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "configurable.group.tools"
+    "settings.editor.selected.configurable": "com.poratu.idea.plugins.tomcat.setting.TomcatServersConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -81,6 +82,9 @@
       <option name="catalinaBase" value="C:\Users\Viswanatha Reddy\.SmartTomcat\HansiSoft\HansiSoft" />
       <option name="contextPath" value="/HansiSoft" />
       <option name="docBase" value="$PROJECT_DIR$/src/main/webapp" />
+      <option name="envOptions">
+        <map />
+      </option>
       <option name="extraClassPath" value="" />
       <option name="tomcatInfo">
         <TomcatInfo>
