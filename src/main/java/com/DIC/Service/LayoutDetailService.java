@@ -6,12 +6,10 @@ import java.io.FileInputStream;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import com.DIC.DAO.Impl.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,18 +24,13 @@ import javax.faces.context.FacesContext;
 import org.primefaces.PrimeFaces;
 
 
-import com.DIC.DAO.Impl.ConnectionDAOImpl;
-import com.DIC.DAO.Impl.GeneralDAOImpl;
-import com.DIC.DAO.Impl.LocationDAOImpl;
-import com.DIC.DAO.Impl.SMSService;
-import com.DIC.DAO.Impl.UserDAOImpl;
-
 import com.DIC.model.LayoutMode;
 import com.DIC.model.PromoImageModel;
 import com.DIC.model.UserDetails;
 
 
 import SMTPService.SMTPService;
+import org.primefaces.model.StreamedContent;
 //import demo.SendSMS;
 
 
@@ -68,7 +61,10 @@ public class LayoutDetailService implements Serializable{
 	
 	
 	
-	private LayoutMode selectedProperty;   
+	private LayoutMode selectedProperty;
+	private List<LayoutMode> layoutData;
+
+
 	
 	private String custName;
 	private String contactNumber;
@@ -83,6 +79,7 @@ public class LayoutDetailService implements Serializable{
 	    SMSService sms;
 	    UserRoleService ur;
 	    GeneralDAOImpl gDao;
+		PropertyDAOImpl pDao;
 	    
 	    
 	    public LayoutDetailService(){
@@ -93,7 +90,7 @@ public class LayoutDetailService implements Serializable{
 	          udo=new UserDAOImpl();
 	          sms=new SMSService();
 	          ur=new UserRoleService();
-	          GeneralDAOImpl gDao;
+	          pDao=new PropertyDAOImpl();
 	          
 	          primaryModel=locationDao.getLayoutPrimaryLocation();
 	          
@@ -133,7 +130,7 @@ public class LayoutDetailService implements Serializable{
 	 		
         	layoutdetails=dao.getLayoutDetails(country,city,pageSize,currentPage);
         	promoImageModel=dao.getPromoImageLayout(promoPageSize, promoCurrentPage);
-	        
+
 	    }
         public void countTotalRecords() {
 		 	
@@ -228,10 +225,16 @@ public class LayoutDetailService implements Serializable{
         	this.comment="";
         	
         }
-        
-   public void reset() {
-	       PrimeFaces.current().resetInputs("form1:panelDialog");
-  }
+	public void reset() {
+		PrimeFaces.current().resetInputs("form1:panelDialog");
+	}
+
+
+	  public void propertyImage()
+	  {
+		  int layoutId=selectedProperty.getLayoutId();
+		  layoutData=pDao.getPropertyImage(selectedProperty.getLayoutId());
+	  }
    
         public List<LayoutMode> getLayoutdetails() {
 	        return  layoutdetails;
@@ -371,32 +374,19 @@ public class LayoutDetailService implements Serializable{
 			return promoCurrentPage;
 		}
 
-
-
-
 		public int getPromoPageSize() {
 			return promoPageSize;
 		}
 
-
-
-
 		public void setPromoCurrentPage(int promoCurrentPage) {
 			this.promoCurrentPage = promoCurrentPage;
 		}
-
-
-
-
 		public void setPromoPageSize(int promoPageSize) {
 			this.promoPageSize = promoPageSize;
 		}
 		public int getPromoTotalRecords() {
 			return promoTotalRecords;
 		}
-
-
-
 
 		public void setPromoTotalRecords(int promoTotalRecords) {
 			this.promoTotalRecords = promoTotalRecords;
@@ -408,12 +398,11 @@ public class LayoutDetailService implements Serializable{
 			this.comment = comment;
 		}
 
+		public List<LayoutMode> getLayoutData() {
+			return layoutData;
+		}
 
-
-
-	   
-	                
-	
-	    
-
+		public void setLayoutData(List<LayoutMode> layoutData) {
+			this.layoutData = layoutData;
+		}
 }
