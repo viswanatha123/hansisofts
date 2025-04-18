@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
+import com.DIC.DAO.Impl.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,10 +19,6 @@ import javax.faces.bean.ViewScoped;
 
 import org.primefaces.PrimeFaces;
 
-import com.DIC.DAO.Impl.ConnectionDAOImpl;
-import com.DIC.DAO.Impl.LocationDAOImpl;
-import com.DIC.DAO.Impl.SMSService;
-import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.AgriculturalModel;
 import com.DIC.model.LayoutMode;
 import com.DIC.model.PromoImageModel;
@@ -54,9 +52,11 @@ public class AgriculturalService implements Serializable{
 	 UserDAOImpl udo;
 	 SMSService sms;
 	 UserRoleService ur;
+	 PropertyDAOImpl pDao;
 	
 	
-	private AgriculturalModel selectedProperty;   
+	private AgriculturalModel selectedProperty;
+	private List<AgriculturalModel> agriData;
 	
 	private String custName;
 	private String contactNumber;
@@ -82,6 +82,7 @@ public class AgriculturalService implements Serializable{
         udo=new UserDAOImpl();
         sms=new SMSService();
         ur=new UserRoleService();
+		pDao=new PropertyDAOImpl();
         
         primaryModel=locationDao.getAgriPrimaryLocation();
         
@@ -268,6 +269,11 @@ public class AgriculturalService implements Serializable{
 	   public void reset() {
 		       PrimeFaces.current().resetInputs("form1:panelDialog");
 	  }
+
+	public void getAgriDialog()
+	{
+		agriData=pDao.getAgriData(selectedProperty.getAgriId());
+	}
 	           
            
            
@@ -412,8 +418,12 @@ public class AgriculturalService implements Serializable{
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	
-	
-	
-    
+
+	public List<AgriculturalModel> getAgriData() {
+		return agriData;
+	}
+
+	public void setAgriData(List<AgriculturalModel> agriData) {
+		this.agriData = agriData;
+	}
 }
