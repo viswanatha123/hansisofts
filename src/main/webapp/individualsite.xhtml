@@ -14,7 +14,7 @@
   <ui:define name="title"><p style="font-weight: bold; color:blue; font-size:15px">Sales for Individual Site</p>
   <p>For search property, Please select Primary Location and Secondary Location than click on Search button.</p>
   <div class="card">
-  <h:form id="form">
+  <h:form id="mainForm">
   	<p:dialog header="Loading...." widgetVar="spinnerDialog"   modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
             		<p:graphicImage name="images/builders/spin.gif" width="70px"  height="70px" />
     </p:dialog>
@@ -51,20 +51,8 @@
 
            
          <div style="display: flex; justify-content: center; align-items: center; ">
-                  
-                  
-                  
-                  
-                  
                <h:panelGrid   columns="2" style="width: auto; text-align: center">
-                
-                
-                
-           
             <p:dataScroller  value="#{individualSiteService.individualSiteList}" var="product" chunkSize="10">
-                 
-                  
-                  			
                   		<p:panel  style="width: 100%; height:300px; box-shadow: 10px 10px 5px grey; margin: auto; text-align: center;font-style: normal" >
                   		
                   		   <h:panelGrid   columns="4" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
@@ -75,14 +63,11 @@
                   				<h:outputText class="pi pi-globe" style="font-weight: bold;color: brown;font-size:15px; float:right" value=" Sales for Individual Site in #{individualSiteService.locationMessage }" />
               				</h:panelGrid>
               				
-              				
-              				
-              				
-              				
-              				
               				<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
-                     			<p:graphicImage width="250" height="200" stream="false" cache="false" styleClass="rounded-image" value="#{product.streamedContent}" />
-              						
+               					<p:commandLink action="#{individualSiteService.getIndiDialog}" update=":mainForm:proImg1" oncomplete="PF('proImg').show()"  >
+									<p:graphicImage width="250" height="200"  cache="false" stream="false"  styleClass="rounded-image clickable-image-with-link" value="#{product.streamedContent}" alt="Image"   />
+									<f:setPropertyActionListener value="#{product}" target="#{individualSiteService.selectedProperty}" />
+								</p:commandLink>
                      				
                      				
                      		   <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;">
@@ -198,18 +183,22 @@
 						<h:outputText value="Page #{individualSiteService.currentPage} of #{individualSiteService.totalPages}" />
 					</p:panelGrid>
 			</p:panel>
-	    </c:if>		
-		      
-		        
-				
-					
-			
-		
-			
-						
-		   
-                     
+	    </c:if>
+	  <p:dialog id="proImg1"
+				widgetVar="proImg"
+				modal="true"
+				header="Property Image"
+				minHeight="500"
+				width="670"
+				showEffect="fade">
 
+
+		  <h:panelGrid  columns="1" style="text-align: top;">
+			  <p:dataScroller value="#{individualSiteService.indiData}" var="product2" chunkSize="10">
+				  <p:graphicImage width="600" height="400" stream="false" cache="false" value="#{product2.streamedContent}"  style="text-align: top;" />
+			  </p:dataScroller>
+		  </h:panelGrid>
+	  </p:dialog>
  </h:form>
  
 <h:form id="form1">

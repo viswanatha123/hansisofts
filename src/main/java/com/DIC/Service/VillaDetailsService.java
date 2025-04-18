@@ -13,6 +13,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
+import com.DIC.DAO.Impl.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,11 +28,6 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.PrimeFaces;
 
-import com.DIC.DAO.Impl.ConnectionDAOImpl;
-import com.DIC.DAO.Impl.GeneralDAOImpl;
-import com.DIC.DAO.Impl.LocationDAOImpl;
-import com.DIC.DAO.Impl.SMSService;
-import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.LayoutMode;
 import com.DIC.model.PromoImageModel;
 import com.DIC.model.UserDetails;
@@ -82,7 +79,8 @@ public class VillaDetailsService implements Serializable {
 	
 
 
-    private VillaModel selectedProperty;   
+    private VillaModel selectedProperty;
+	private List<VillaModel> villaData;
 	
 	private String custName;
 	private String contactNumber;
@@ -98,17 +96,19 @@ public class VillaDetailsService implements Serializable {
 	    UserDAOImpl udo;
 	    SMSService sms;
 	    UserRoleService ur;
+		PropertyDAOImpl pDao;
 	    
 	    
 	     
 	    public VillaDetailsService()
 	    {
 	    	log.info("Loading LayoutDetailService init()");
-	    	gDao=new GeneralDAOImpl();
+	    	  gDao=new GeneralDAOImpl();
 	          locationDao=new LocationDAOImpl();
 	          udo=new UserDAOImpl();
 	          sms=new SMSService();
 	          ur=new UserRoleService();
+			  pDao=new PropertyDAOImpl();
 	          
 	          primaryModel=locationDao.getVillaPrimaryLocation();
 	          
@@ -309,6 +309,10 @@ public class VillaDetailsService implements Serializable {
    public void reset() {
 	       PrimeFaces.current().resetInputs("form1:panelDialog");
   }
+	public void getVillaDialog()
+	{
+		villaData=pDao.getVillaData(selectedProperty.getVillaId());
+	}
    
    
 	    
@@ -566,12 +570,12 @@ public class VillaDetailsService implements Serializable {
 		public void setComment(String comment) {
 			this.comment = comment;
 		}
-	
-	
 
-	    
-		
-		
-	    
+	public List<VillaModel> getVillaData() {
+		return villaData;
+	}
 
+	public void setVillaData(List<VillaModel> villaData) {
+		this.villaData = villaData;
+	}
 }

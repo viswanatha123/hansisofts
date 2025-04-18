@@ -12,7 +12,7 @@
   <ui:define name="title" ><p style="font-weight: bold; color:blue; font-size:15px"> Sales for Villa Flats</p>
   <p>For search property, Please select Primary Location and Secondary Location than click on Search button.</p>
   <div class="card">
-	<h:form id="form">
+	<h:form id="mainForm">
 	<p:dialog header="Loading...." widgetVar="spinnerDialog"   modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
             		<p:graphicImage name="images/builders/spin.gif" width="70px"  height="70px" />
     </p:dialog>
@@ -34,23 +34,17 @@
 		                            <f:selectItem itemLabel="Select Secondary Location" itemValue="" noSelectionOption="true" />  
 		                            <f:selectItems value="#{villaDetailsService.secondryLocation}" />  
 		                            </p:selectOneMenu>
-		                            
-		                             
-		                            
-		                            
-		                            <p:outputLabel for="ProType" style="font-weight: bold; color:white" value="Property Type : " />  
+
+		                             <p:outputLabel for="ProType" style="font-weight: bold; color:white" value="Property Type : " />
 		                            <p:selectOneMenu id="ProType" value="#{villaDetailsService.proType}"  style="width:100px">  
 		                            <f:selectItem itemLabel="All" itemValue="All"/>
 		                             <f:selectItem itemLabel="Villa" itemValue="Villa"/>
 		                             <f:selectItem itemLabel="Flat" itemValue="Flat"/>
 		                             <f:selectItem itemLabel="House" itemValue="House"/>
 		                            </p:selectOneMenu>
-		                            
-		                            
+
 		                            <h:commandButton value="Search"  type="submit"   actionListener="#{villaDetailsService.getVillaDetails}" onclick="PF('spinnerDialog').show()" />
-		                           
-		                         
-		                         
+
 		                        </h:panelGrid>  
 		         
 		     	</p:panel>
@@ -91,8 +85,11 @@
               		
               					
               					<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
-                     			<p:graphicImage width="250" height="200" stream="false" cache="false" styleClass="rounded-image" value="#{product.streamedContent}" />
-                     			
+
+									<p:commandLink action="#{villaDetailsService.getVillaDialog}" update=":mainForm:proImg1" oncomplete="PF('proImg').show()"  >
+										<p:graphicImage width="250" height="200"  cache="false" stream="false"  styleClass="rounded-image clickable-image-with-link" value="#{product.streamedContent}" alt="Image"   />
+										<f:setPropertyActionListener value="#{product}" target="#{villaDetailsService.selectedProperty}" />
+									</p:commandLink>
                      			
                      				    <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;"> 
                      			 
@@ -226,7 +223,21 @@
 					</p:panelGrid>
 			</p:panel>
 		</c:if>
-		
+		<p:dialog id="proImg1"
+				  widgetVar="proImg"
+				  modal="true"
+				  header="Property Image"
+				  minHeight="500"
+				  width="670"
+				  showEffect="fade">
+
+
+			<h:panelGrid  columns="1" style="text-align: top;">
+				<p:dataScroller value="#{villaDetailsService.villaData}" var="product2" chunkSize="10">
+					<p:graphicImage width="600" height="400" stream="false" cache="false" value="#{product2.streamedContent}"  style="text-align: top;" />
+				</p:dataScroller>
+			</h:panelGrid>
+		</p:dialog>
   
 
 </h:form>

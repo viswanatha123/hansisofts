@@ -230,10 +230,10 @@ public class LayoutDetailService implements Serializable{
 	}
 
 
-	  public void propertyImage()
+	  public void getLayoutDialog()
 	  {
-		  int layoutId=selectedProperty.getLayoutId();
-		  layoutData=pDao.getPropertyImage(selectedProperty.getLayoutId());
+		  //int layoutId=selectedProperty.getLayoutId();
+		  layoutData=pDao.getLayoutData(selectedProperty.getLayoutId());
 	  }
    
         public List<LayoutMode> getLayoutdetails() {
