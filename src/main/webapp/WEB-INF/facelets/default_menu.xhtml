@@ -131,10 +131,15 @@ and open the template in the editor.
 						             </p:submenu>
 					              </p:column>
 			              </p:submenu>
-			              
-			              
-			              
-			              
+
+						  <p:submenu label="Explore" style="text-align: center;width: 110px;" icon="pi pi-fw pi-home">
+							  <p:column>
+								  <p:submenu>
+									  <p:menuitem value="Agent properties"  icon="pi pi-fw pi-home"  outcome="agentProperty"/>
+								  </p:submenu>
+							  </p:column>
+						  </p:submenu>
+
 			              <p:submenu label="Admin"  style="text-align: center;width: 110px;" icon="pi pi-fw pi-cog">
 			                   	<p:column>
 				               		<p:submenu rendered="#{userRoleService.userRole.contains('Admin')? true : false }">
@@ -142,6 +147,8 @@ and open the template in the editor.
 			                		</p:submenu>
 					           </p:column>
 			              </p:submenu>
+
+
               			
 			 </p:megaMenu>
             
