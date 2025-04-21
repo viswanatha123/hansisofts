@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="302a6108-bb59-460a-9583-07c941d3768c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/DIC/Service/AgentPropertyService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/agentProperty.xhtml" afterDir="false" />
+    <list default="true" id="302a6108-bb59-460a-9583-07c941d3768c" name="Changes" comment="all">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/PropertyDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/PropertyDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/facelets/default_menu.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/facelets/default_menu.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/framework/utilities/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/framework/utilities/Constants.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,6 +112,15 @@
       <option name="presentableId" value="Default" />
       <updated>1717680337359</updated>
     </task>
+    <task id="LOCAL-00001" summary="agent">
+      <option name="closed" value="true" />
+      <created>1745117489626</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1745117489626</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -154,5 +160,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="agent" />
+    <MESSAGE value="all" />
+    <option name="LAST_COMMIT_MESSAGE" value="all" />
   </component>
 </project>

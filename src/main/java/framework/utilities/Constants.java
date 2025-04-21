@@ -22,11 +22,7 @@ public class  Constants {
     			,"sivakumar.m@hansisofts.com"};
     	*/
     	public static final String[] ADMIN_GROUP_EMAIL ={"viswanathareddy120@gmail.com"
-    			,"Sukumararapana@gmail.com"
-    			,"thotlakumari89@gmail.com"
-    			,"hemalatha.k@hansisofts.com"
-    			,"sekhar112003@gmail.com"
-    	};
+    			};
     	
 		
 	}
