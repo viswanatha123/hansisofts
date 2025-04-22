@@ -393,6 +393,7 @@ public class SMTPService {
    		 
    		 
    		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
+			 //recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
  	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
  	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
 	             message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
@@ -461,6 +462,7 @@ public class SMTPService {
    		 
    		 
    		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
+			//recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
  	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
  	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
 	             message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
@@ -495,6 +497,7 @@ public class SMTPService {
    		 
    		 
    		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
+			//recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
  	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
  	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
 	             message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
@@ -530,6 +533,7 @@ public class SMTPService {
    		 
    		 
    		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
+			//recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
  	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
  	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
 	             message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
