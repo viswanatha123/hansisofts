@@ -6,7 +6,6 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-      
 
 
        <h:body>
@@ -18,9 +17,10 @@
   <p>For search property, Please select Primary Location and Secondary Location than click on Search button.</p>
   <div class="card">
 	  <h:form id="mainForm">
- 	<p:dialog header="Loading please wait....." widgetVar="spinnerDialog"   modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
-            <p:graphicImage name="images/builders/spin.gif" width="70px"  height="70px" />
-     </p:dialog>
+		  <p:dialog widgetVar="spinnerDialog"  style="background-color: #3A3B3C;"  modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
+			  <p:graphicImage name="images/spin/spin1.gif" width="70px"  height="70px" />
+		  </p:dialog>
+
   <br></br>
   
 		  
@@ -40,9 +40,9 @@
 		                            <p:selectOneMenu id="city" value="#{layoutDetailService.city}" style="width:200px">  
 		                            <f:selectItem itemLabel="Select Secondary Location" itemValue="" noSelectionOption="true" />  
 		                            <f:selectItems value="#{layoutDetailService.secondryLocation}" />  
-		                            </p:selectOneMenu> 
-		                            
-		                           <h:commandButton value="Search"  type="submit"   actionListener="#{layoutDetailService.getLayoutDetails}" onclick="PF('spinnerDialog').show()" />
+		                            </p:selectOneMenu>
+
+									<h:commandButton value="Search"  type="submit"   actionListener="#{layoutDetailService.getLayoutDetails}" onclick="PF('spinnerDialog').show()" />
 		                         
 		                        </h:panelGrid>  
 		                        </p:panel>

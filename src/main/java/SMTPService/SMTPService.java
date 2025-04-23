@@ -230,7 +230,7 @@ public class SMTPService {
 			    		 String body=agentDetails+""+proDetals+""+thanks;
 			    		 
 			    		 
-			    		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
+			    		     recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
 			  	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
 			  	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
 				             message.setSubject(Constants.PropertyConstants.LAYOUT_SUBJECT);
