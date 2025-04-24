@@ -147,7 +147,8 @@ public class IndividualSiteService implements Serializable {
                 
                 public void loadEntities() {
                 	individualSiteList=dao.getIndividualSiteDetails(country,city,pageSize,currentPage);
-                	promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
+                	//promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
+					promoImageModel=dao.getPromoImage(promoPageSize, promoCurrentPage,country);
                 	
                 	for(IndividualSiteModel x:individualSiteList)
                     {
@@ -248,7 +249,7 @@ public class IndividualSiteService implements Serializable {
         	
           	
         	individualSiteList=dao.getIndividualSiteDetails(country,city,pageSize,currentPage);
-        	promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
+			promoImageModel=dao.getPromoImage(promoPageSize, promoCurrentPage,country);
         	this.custName="";
         	this.contactNumber="";
         	this.email="";
