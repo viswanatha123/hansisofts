@@ -129,7 +129,7 @@ public class LayoutDetailService implements Serializable{
         public void loadEntities() {
 	 		
         	layoutdetails=dao.getLayoutDetails(country,city,pageSize,currentPage);
-        	promoImageModel=dao.getPromoImageLayout(promoPageSize, promoCurrentPage);
+        	promoImageModel=dao.getPromoImage(promoPageSize, promoCurrentPage,country);
 
 	    }
         public void countTotalRecords() {
@@ -218,7 +218,7 @@ public class LayoutDetailService implements Serializable{
         	
         	
         	layoutdetails=dao.getLayoutDetails(country,city,pageSize,currentPage);
-        	promoImageModel=dao.getPromoImageLayout(promoPageSize, promoCurrentPage);
+        	promoImageModel=dao.getPromoImage(promoPageSize, promoCurrentPage,country);
         	this.custName="";
         	this.contactNumber="";
         	this.email="";

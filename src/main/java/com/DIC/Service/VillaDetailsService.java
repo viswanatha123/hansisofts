@@ -97,6 +97,7 @@ public class VillaDetailsService implements Serializable {
 	    SMSService sms;
 	    UserRoleService ur;
 		PropertyDAOImpl pDao;
+		ConnectionDAOImpl dao;
 	    
 	    
 	     
@@ -109,6 +110,7 @@ public class VillaDetailsService implements Serializable {
 	          sms=new SMSService();
 	          ur=new UserRoleService();
 			  pDao=new PropertyDAOImpl();
+			  dao=new ConnectionDAOImpl();
 	          
 	          primaryModel=locationDao.getVillaPrimaryLocation();
 	          
@@ -183,7 +185,8 @@ public class VillaDetailsService implements Serializable {
 	        public void loadEntities() {
 		 		
 	        	 //promoImageModel=gDao.getPromoImageVilla();
-	        	 promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
+	        	// promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
+				promoImageModel=dao.getPromoImage(promoPageSize, promoCurrentPage,country);
 	        	villaModel=gDao.getVillaDetails(country,city, proType,pageSize,currentPage);
 	        	
 	        	
@@ -288,7 +291,7 @@ public class VillaDetailsService implements Serializable {
         	
         	
         	villaModel=gDao.getVillaDetails(country,city, proType,pageSize,currentPage);
-        	 promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
+			promoImageModel=dao.getPromoImage(promoPageSize, promoCurrentPage,country);
         	this.custName="";
         	this.contactNumber="";
         	this.email="";

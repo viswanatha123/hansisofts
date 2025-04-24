@@ -149,7 +149,7 @@ public class AgriculturalService implements Serializable{
                 
                 public void loadEntities() {
                 	agriculturalModelList=dao.getAgriculturalDetails(country,city,pageSize,currentPage);
-                	promoImageModel=dao.getPromoImageLayout(promoPageSize, promoCurrentPage);
+                	promoImageModel=dao.getPromoImage(promoPageSize, promoCurrentPage,country);
                 	for(AgriculturalModel x:agriculturalModelList)
                     {
                         System.out.println("@@@@@@@@@@@@@@@@@@@@ Water source :"+x.getWaterSource());
@@ -259,7 +259,7 @@ public class AgriculturalService implements Serializable{
 	        	
 	        	
 	        	agriculturalModelList=dao.getAgriculturalDetails(country,city,pageSize,currentPage);
-	        	promoImageModel=dao.getPromoImageLayout(promoPageSize, promoCurrentPage);
+	        	promoImageModel=dao.getPromoImage(promoPageSize, promoCurrentPage,country);
 	        	this.custName="";
 	        	this.contactNumber="";
 	        	this.email="";
