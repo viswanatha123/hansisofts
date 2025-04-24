@@ -71,12 +71,14 @@ public class AgentPropertyService implements Serializable {
 
 
 
-    public void reset() {
-        this.userId = 0;
+    public void clearList() {
+        userId=0;
         updateResult="";
-        layoutdetails.clear();
+       layoutdetails.clear();
+        agriculturalModelList.clear();
+       individualSiteList.clear();
+        villaModel.clear();
     }
-
 
 
     public int getUserId() {

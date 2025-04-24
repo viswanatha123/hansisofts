@@ -41,12 +41,9 @@
                             </h:commandButton>
 
 
-                            <h:commandButton value="Reset" type="submit"
-                                             update="@mainForm"
-                                             process="@this"
-                                             actionListener="#{agentPropertyService.reset}" styleClass="mr-2 ui-button-outlined">
-                                <p:resetInput target="mainForm"/>
-                            </h:commandButton>
+                            <p:commandButton value="Reset"
+                                             action="#{agentPropertyService.clearList}"
+                                             update="@form" />
 
                         </p:panelGrid>
                     </p:panel>
@@ -67,7 +64,7 @@
 
                     <p:dataScroller  value="#{agentPropertyService.layoutdetails}" var="product" chunkSize="10"  >
 
-                        <p:panel  style="width: 100%; height:300px; box-shadow: 10px 10px 5px grey; margin: auto; text-align: top;font-style: normal" >
+                        <p:panel  id="panel2" style="width: 100%; height:300px; box-shadow: 10px 10px 5px grey; margin: auto; text-align: top;font-style: normal" >
                             <h:panelGrid   columns="4" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
 
                                 <h:outputText style="font-weight: bold;color: green;font-size:15px;" value="#{product.name}" />
