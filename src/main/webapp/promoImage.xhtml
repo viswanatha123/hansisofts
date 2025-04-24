@@ -59,7 +59,7 @@
                  
                  
                      
-                    <h:outputText style="font-weight: bold" value="Image Name : " />
+                    <h:outputText style="font-weight: bold" value="Customer Name : " />
                     <h:inputText id="name"  value="#{promoImageService.imageName}"  >
                     </h:inputText>
                     
@@ -75,9 +75,23 @@
                     <h:outputText style="font-weight: bold" value="Display Order : " />
                     <p:inputNumber id="displayorder" value="#{promoImageService.displayOrder}">
                     </p:inputNumber>
-            
-				        		 
-        	   </p:panelGrid>
+
+
+                    <h:outputText style="font-weight: bold" value="Primary Location : " />
+
+                    <p:selectOneMenu id="country" value="#{promoImageService.country}" style="width:200px">
+                        <f:selectItem itemLabel="Select Primary Location" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{promoImageService.primLocationSort}" />
+                    </p:selectOneMenu>
+
+                    <h:outputText style="font-weight: bold" value="Default Image : " />
+                    <p:selectOneMenu id="defaultImage" value="#{promoImageService.defaultImage}"  style="width:150px">
+                        <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                        <f:selectItem itemLabel="No" itemValue="No"/>
+                    </p:selectOneMenu>
+
+
+                </p:panelGrid>
         			
                     
      
@@ -133,6 +147,8 @@
 			             <p:column headerText="Display order">
 			                        <h:outputText style="font-weight:15;" value="#{product.displayOrder}"/>
 			             </p:column>
+
+
 			             
 			              <p:column exportable="false" >
 			                <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
