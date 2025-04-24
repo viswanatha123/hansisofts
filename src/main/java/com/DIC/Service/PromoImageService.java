@@ -1,12 +1,13 @@
 package com.DIC.Service;
 
-import java.util.List;
+import java.util.*;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import com.DIC.DAO.Impl.LocationDAOImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.primefaces.PrimeFaces;
@@ -27,12 +28,23 @@ import com.DIC.model.VillaModel;
 public class PromoImageService {
 	
 	private static final Logger log = LogManager.getLogger(PromoImageService.class);
-	
+
+
+
+
+	LocationDAOImpl locationDao;
+	private Map<String, String> primaryModel;
+	private Map<String,String> primLocation;
+	private TreeMap<String, String> primLocationSort;
+
+
 	private String imageName;
 	private UploadedFile file;
 	private String updateResult;
 	private String comment;
 	private int displayOrder;
+	private String country;
+	private String defaultImage;
 	
 	private String statusMessage;
 	
@@ -47,11 +59,26 @@ public class PromoImageService {
 	public PromoImageService()
 	{
 		log.info("Loading PromoImageService init()");
+
+		locationDao=new LocationDAOImpl();
     	gDao=new GeneralDAOImpl();
+
+		primaryModel=locationDao.getLayoutPrimaryLocation();
+		primLocation  = new HashMap<>();
+		for(Map.Entry<String, String> pp:primaryModel.entrySet())
+		{
+			log.info("Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
+
+			primLocation.put(pp.getKey(), pp.getValue());
+
+		}
+		primLocationSort=new TreeMap<>(primLocation);
     	
     	promoImageModelList=gDao.getPromoImage();
     	
 	}
+
+
 	
 	public void upload()
     {
@@ -72,6 +99,8 @@ public class PromoImageService {
   	       promoImageModel.setImageName(imageName);
   	       promoImageModel.setComment(comment);
   	       promoImageModel.setDisplayOrder(displayOrder);
+			 promoImageModel.setPrimLocation(country);
+				promoImageModel.setDefaultImage(defaultImage);
   	        
   	    	          
   	          updateResult=dao.promoImageUpload(promoImageModel);
@@ -183,8 +212,51 @@ public class PromoImageService {
 		this.displayOrder = displayOrder;
 	}
 
-	
-    
-	
+	public String getCountry() {
+		return country;
+	}
 
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public ConnectionDAOImpl getDao() {
+		return dao;
+	}
+
+	public void setDao(ConnectionDAOImpl dao) {
+		this.dao = dao;
+	}
+
+	public TreeMap<String, String> getPrimLocationSort() {
+		return primLocationSort;
+	}
+
+	public void setPrimLocationSort(TreeMap<String, String> primLocationSort) {
+		this.primLocationSort = primLocationSort;
+	}
+
+	public Map<String, String> getPrimLocation() {
+		return primLocation;
+	}
+
+	public void setPrimLocation(Map<String, String> primLocation) {
+		this.primLocation = primLocation;
+	}
+
+	public Map<String, String> getPrimaryModel() {
+		return primaryModel;
+	}
+
+	public void setPrimaryModel(Map<String, String> primaryModel) {
+		this.primaryModel = primaryModel;
+	}
+
+	public String getDefaultImage() {
+		return defaultImage;
+	}
+
+	public void setDefaultImage(String defaultImage) {
+		this.defaultImage = defaultImage;
+	}
 }

@@ -14,11 +14,15 @@ public class PromoImageModel implements Serializable{
 	private Date createDate;
 	private int is_active;
 	private String comment;
+	private String primLocation;
+	private String defaultImage;
 	
 	 private InputStream inputStream;
 	 private UploadedFile file;
      private String imageName;
      private int displayOrder;
+
+
     
 	
 	
@@ -90,8 +94,19 @@ public class PromoImageModel implements Serializable{
 		this.displayOrder = displayOrder;
 	}
 
+	public String getDefaultImage() {
+		return defaultImage;
+	}
 
+	public void setDefaultImage(String defaultImage) {
+		this.defaultImage = defaultImage;
+	}
 
-	
+	public String getPrimLocation() {
+		return primLocation;
+	}
 
+	public void setPrimLocation(String primLocation) {
+		this.primLocation = primLocation;
+	}
 }
