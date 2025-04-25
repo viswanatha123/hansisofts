@@ -11,6 +11,7 @@ import com.DIC.DAO.Impl.LocationDAOImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.primefaces.PrimeFaces;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.file.UploadedFile;
 
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
@@ -83,14 +84,23 @@ public class PromoImageService {
 	public void upload()
     {
 		updateResult="";
-		log.info("**** Clicked on submit button uploadImage ---->******"+file);
-		
+		log.info("**** Clicked on submit button uploadImage ---->******"+file.getFileName());
+		promoImageModelList=gDao.getPromoImage();
+		String fileName=file.getFileName();
+		if (!fileName.endsWith(".jpg") && !fileName.endsWith(".jpeg"))
+		{
+			System.out.println("======================== this is not jpg file ============================== : "+file.getFileName());
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid type, ", "Only JPG/JPEG files are allowed."));
+
+			PrimeFaces.current().ajax().addCallbackParam("validationFailed", true);
+
+			return;
+		}
+
 		if (file != null) {
             try {
-               
-            
-  	          
-  	     
+
   	         dao=new ConnectionDAOImpl();
   	          
   	       PromoImageModel promoImageModel=new PromoImageModel();
@@ -112,6 +122,7 @@ public class PromoImageService {
   	         this.imageName="";
     	     this.file=null;
     	     this.comment="";
+				this.country = "";
     	     
     	     promoImageModelList=gDao.getPromoImage();
     	     
@@ -125,7 +136,8 @@ public class PromoImageService {
         } 
 	        
     }
-	
+
+
 	public void clear()
     {
   	    this.imageName="";

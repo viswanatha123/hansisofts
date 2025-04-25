@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="302a6108-bb59-460a-9583-07c941d3768c" name="Changes" comment="all">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/ConnectionDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/ConnectionDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/Service/PromoImageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/Service/PromoImageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/model/PromoImageModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/model/PromoImageModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/promoImage.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/promoImage.xhtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,6 +66,7 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\hansisofts\src\main\webapp" />
+      <recent name="D:\hansisofts\src\main\java\com\DIC\Service" />
       <recent name="D:\hansisofts\src\main\webapp\resources\images\spin" />
       <recent name="D:\hansisofts" />
     </key>
