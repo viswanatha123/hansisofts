@@ -2081,6 +2081,8 @@ public class GeneralDAOImpl {
     // ********************************** Package price details *********************
     public List<PackPriceModel> getPackagePriceDetails()
   	{
+
+		  System.out.println("********************* calling package details ********************");
               
   		
     	List<PackPriceModel> packPriceModelList=new ArrayList<>();
