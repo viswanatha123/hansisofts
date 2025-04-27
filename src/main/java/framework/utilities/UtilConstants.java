@@ -15,4 +15,7 @@ public interface UtilConstants {
 	
 	int NEW_DEFAULT_USER_ID=2;
 
+
+	int DEFAULT_USER=2;
+
 }

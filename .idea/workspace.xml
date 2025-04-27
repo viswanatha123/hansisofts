@@ -7,7 +7,7 @@
     <list default="true" id="302a6108-bb59-460a-9583-07c941d3768c" name="Changes" comment="all">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/GeneralDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/GeneralDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/userRole.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/userRole.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/framework/utilities/UtilConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/framework/utilities/UtilConstants.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

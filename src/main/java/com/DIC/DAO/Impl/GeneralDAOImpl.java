@@ -1977,7 +1977,7 @@ public class GeneralDAOImpl {
 
 			StringBuilder sql_user_map_package_id = new StringBuilder(Constants.SQL.SQL_USER_MAP_PACKAGE_ID);
 			pstmt = con.prepareStatement(sql_user_map_package_id.toString());
-			pstmt.setInt(1,2 );
+			pstmt.setInt(1,UtilConstants.DEFAULT_USER );
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
 			{
