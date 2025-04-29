@@ -6,30 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="302a6108-bb59-460a-9583-07c941d3768c" name="Changes" comment="all">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/agentProperties.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/agentProperties.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/agentProperty.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/agentProperty.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/agriDataEntry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/agriDataEntry.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/agricultural.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/agricultural.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/budget1.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/budget1.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/budget2.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/budget2.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/budget3.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/budget3.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/budget4.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/budget4.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/cornerBit.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/cornerBit.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/eastFacingPlots.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/eastFacingPlots.xhtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/immediateProperty.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/immediateProperty.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/indiSiteDataEntry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/indiSiteDataEntry.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/individualsite.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/individualsite.xhtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/ownerProperties.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/ownerProperties.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/plots1BHK.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/plots1BHK.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/plots2BHK.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/plots2BHK.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/plots3BHK.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/plots3BHK.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/plots4BHK.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/plots4BHK.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/plotsDataEntry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/plotsDataEntry.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/readyToMove.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/readyToMove.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/underConstruction.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/underConstruction.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/userRegist.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/userRegist.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/villaPlotDataentry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/villaPlotDataentry.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/villaPlotSearch.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/villaPlotSearch.xhtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
