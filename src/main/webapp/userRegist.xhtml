@@ -26,15 +26,15 @@
    <ui:define name="title"><p:outputLabel id="display1" style="color: block">User Registration &nbsp;</p:outputLabel><p:outputLabel id="display2" style="color: red">FREE</p:outputLabel>
       
    			<center>
-			  <font size="4" color="blue" style="text-align: center;">New User Registration  </font>
+			  <font size="4" color="black" style="text-align: center;">New User Registration  </font>
 			</center>
   <div class="card">
   			
 <h:form id="form">
 
- 		<p:dialog header="Loading...." widgetVar="spinnerDialog"   modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
-            <p:graphicImage name="images/builders/spin.gif" width="70px"  height="70px" />
-        </p:dialog>
+    <p:dialog widgetVar="spinnerDialog"  style="background-color: #3A3B3C;"  modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
+        <p:graphicImage name="images/spin/spin1.gif" width="70px"  height="70px" />
+    </p:dialog>
   <p:messages id="msgs"/>
    <br></br>
    <center>
@@ -45,7 +45,7 @@
                 
              	<c:if test="#{userRegistService.errorMessage.equals('User name already exists')}">
 					  <center>
-					  <font size="4" color="red" style="text-align: center;">User name already exists.  </font>
+					  <font size="4" color="Black" style="text-align: center;">User name already exists.</font>
 					  </center>
   			   </c:if>
                 
@@ -123,13 +123,13 @@
                 </p:panelGrid>  
                 
                 <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
-                <p:outputLabel style="font-weight: bold; color:Blue; font-size:18px;" value="User name Rules :" />
-               	<p:outputLabel style="font-weight: 100; color:red; font-style:italic;" value="1.User name should be at least Minimum 3 character to Maximum 15 character." />
-               	<p:outputLabel style="font-weight: 100; color:Red; font-style:italic;"  value="2.User name should not be Allowed the space." />
-               	<p:outputLabel style="font-weight: bold; color:Blue; font-size:18px;"  value="Password rules: " />
-               	<p:outputLabel style="font-weight: 100; color:Red; font-style:italic;"  value="1.Password should be at the Minimum 8 character to Maximum 15 character." />
-               	<p:outputLabel style="font-weight: 100; color:Red; font-style:italic;"  value="2.Password should not allow the space." />
-               	<p:outputLabel style="font-weight: 100; color:Red; font-style:italic;"  value="3.Password should allows the Numbers and Special Characters." />
+                <p:outputLabel style="font-weight: bold; color:black; font-size:18px;" value="User name Rules :" />
+               	<p:outputLabel style="font-weight: 100; color:black; font-style:italic;" value="1.User name should be at least Minimum 3 character to Maximum 15 character." />
+               	<p:outputLabel style="font-weight: 100; color:black; font-style:italic;"  value="2.Space does not allowed to Username." />
+               	<p:outputLabel style="font-weight: bold; color:black; font-size:18px;"  value="Password rules: " />
+               	<p:outputLabel style="font-weight: 100; color:black; font-style:italic;"  value="1.Password should be at the Minimum 8 character to Maximum 15 character." />
+               	<p:outputLabel style="font-weight: 100; color:black; font-style:italic;"  value="2.Password should not allow the space." />
+               	<p:outputLabel style="font-weight: 100; color:black; font-style:italic;"  value="3.Password should allows the Numbers and Special Characters." />
               </p:panelGrid>                   
                   
                   <p:graphicImage width="102%"  height="400px" name="images/newRegist.jpg" />

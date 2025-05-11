@@ -121,9 +121,14 @@ public class ConnectionDAOImpl {
 			String SQL_RENTAL_DATA_INSERT="INSERT INTO rental_plot (rental_id,own_name,address,own_con_no,pro_type,tot_bed_rooms,tot_floors,tot_bath_rooms,furniture,rent_pref,sec_depo,mon_rent,kitc_room,facing,tot_area_sqft,prim_location,seco_location,image,create_date, is_active,avail_date) VALUES (nextval('rental_plot_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,1,?)";
 			String SQL_RENTAL_DETAILS="select * from rental_plot where prim_location = ? and seco_location = ?";
 			String SQL_PACKAGE_ENQUIRY="INSERT INTO hansi_enquiry (enqi_id, name, email, phone, create_date, is_active,enq_type) VALUES(nextval('hansi_enquiry_seq'),?, ?, ?, current_timestamp, 1,?)";
-			String SQL_PROMO_IMAGE="insert into promo_img (promo_id,image,create_date, is_active,comment,img_name,display_order) values (nextval('promo_seq'),?,current_timestamp, 1,?,?,?)";
+			//String SQL_PROMO_IMAGE="insert into promo_img (promo_id,image,create_date, is_active,comment,img_name,display_order) values (nextval('promo_seq'),?,current_timestamp, 1,?,?,?)";
+			String SQL_PROMO_IMAGE="insert into promo_img (promo_id,image,create_date, is_active,comment,img_name,display_order,prim_location,default_dis) values (nextval('promo_seq'),?,current_timestamp, 1,?,?,?,?,?)";
+
 			String SQL_Individual_COUNT="select count(*) from hansi_individual_site where prim_location = ? and seco_location = ?";
-			String SQL_PROMO_IMAGE_LAYOUT="select * from promo_img where is_active ='1' order by display_order LIMIT ? OFFSET ?";
+			//String SQL_PROMO_IMAGE_LAYOUT="select * from promo_img where is_active ='1' order by display_order LIMIT ? OFFSET ?";
+			String SQL_PROMO_IMAGE_LAYOUT="select * from promo_img where prim_location = ? and is_active ='1' order by promo_id LIMIT ? OFFSET ?";
+
+
 			String SQL_LAYOUT_COUNT="select count(*) from hansi_layout where prim_location = ? and seco_location = ?";
 			String SQL_PROMO_COUNT="select count(*) from promo_img where is_active ='1'";
 			String SQL_AGRI_COUNT="select count(*)  from hansi_agricultural where prim_location = ? and seco_location = ?";
@@ -1460,12 +1465,10 @@ public class ConnectionDAOImpl {
             pstmt.setString(2, promoImageModel.getComment());
             pstmt.setString(3, promoImageModel.getImageName());
             pstmt.setInt(4, promoImageModel.getDisplayOrder());
+			pstmt.setString(5,promoImageModel.getPrimLocation());
+			pstmt.setString(6,promoImageModel.getDefaultImage());
         
-           
-            
-            
-          
-        	
+
         	int res=pstmt.executeUpdate();
         	System.out.println("*****Successful updated image*******");
             if(res > 0)
@@ -1473,10 +1476,7 @@ public class ConnectionDAOImpl {
             	succVal="Successful updated Image";
             }
             
-           
-       
-       
-    
+
         
         } catch (Exception e) {
                 
@@ -1493,9 +1493,9 @@ public class ConnectionDAOImpl {
     
     
     //************** getPromoImageLayout*********************
-    public List<PromoImageModel> getPromoImageLayout(int pageSize, int currentPage)
+    public List<PromoImageModel> getPromoImage(int pageSize, int currentPage, String prim_location)
    	{
-    	
+    	System.out.println("*************************** primelocation*************** :"+prim_location);
     	ConnectionDAO condao;
     	BasicDataSource bds=null;
     	Connection con = null;
@@ -1515,52 +1515,98 @@ public class ConnectionDAOImpl {
 			System.out.println(" Owner Properties Query : "+sql_promo_image .toString());
 			log.info("owner properties : "+sql_promo_image .toString());
 							pstmt = con.prepareStatement(sql_promo_image.toString());
-							pstmt.setInt(1, pageSize);
-				            pstmt.setInt(2, (currentPage - 1) * pageSize);
+							pstmt.setString(1, prim_location);
+							pstmt.setInt(2, pageSize);
+				            pstmt.setInt(3, (currentPage - 1) * pageSize);
+
 						    ResultSet rs = pstmt.executeQuery();
-   	         while ( rs.next() ) {
-   	        	PromoImageModel promoImageModel=new PromoImageModel();
-   	        	 
-   	        	 
-   	        	promoImageModel.setPromoId(rs.getInt("promo_id"));
-   	        	promoImageModel.setCreateDate(rs.getDate("create_date"));
-   	        	promoImageModel.setIs_active(rs.getInt("is_active"));
-   	        	promoImageModel.setComment(rs.getString("comment"));
-   	        	promoImageModel.setImageName(rs.getString("img_name"));
-   	        	
-     	 		        		InputStream imageStream = rs.getBinaryStream("image");
-   					        	if(rs.getBytes("image").length!=0) {
-   					        	     BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
-   					        	     
-   					        	  promoImageModel.setStreamedContent(DefaultStreamedContent.builder()
-   					        	         .name("US_Piechart.jpg")
-   					        	         .contentType("image/jpg")
-   					        	         .stream(() -> bufferedStream) // Stream the content directly
-   					        	         .build());
-   					        	 }
-   					        	 else
-   				                 {
-   				                	// Defalut Image
-   				                	 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
-   				                	 ResultSet rsDef = pstmtDefault.executeQuery();
-   				                	 while ( rsDef.next())
-   				                			 {
-   				                		      byte[] def=rsDef.getBytes("image");
-   				                		      promoImageModel.setStreamedContent(DefaultStreamedContent.builder()
-   				                             .name("US_Piechart.jpg")
-   				                             .contentType("image/jpg")
-   				                             .stream(() -> new ByteArrayInputStream(def)).build());
-   				                			 }
-   				                	 
-   				                  }
-   	        	  
-   	                     
-   					        	promoImageModelList.add(promoImageModel);
-   	         }
-   	         	
+
+			if (rs.next()) {
+
+				System.out.println("************************** True ************** primelocation*************** :"+prim_location);
+									do {
+
+										System.out.println("************************** Result ************** primelocation*************** :"+rs.getInt("promo_id"));
+										PromoImageModel promoImageModel=new PromoImageModel();
+
+
+										promoImageModel.setPromoId(rs.getInt("promo_id"));
+										promoImageModel.setCreateDate(rs.getDate("create_date"));
+										promoImageModel.setIs_active(rs.getInt("is_active"));
+										promoImageModel.setComment(rs.getString("comment"));
+										promoImageModel.setImageName(rs.getString("img_name"));
+
+										InputStream imageStream = rs.getBinaryStream("image");
+										if(rs.getBytes("image").length!=0) {
+											BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
+
+											promoImageModel.setStreamedContent(DefaultStreamedContent.builder()
+													.name("US_Piechart.jpg")
+													.contentType("image/jpg")
+													.stream(() -> bufferedStream) // Stream the content directly
+													.build());
+										}
+										else
+										{
+											// Defalut Image
+											PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+											ResultSet rsDef = pstmtDefault.executeQuery();
+											while ( rsDef.next())
+											{
+												byte[] def=rsDef.getBytes("image");
+												promoImageModel.setStreamedContent(DefaultStreamedContent.builder()
+														.name("US_Piechart.jpg")
+														.contentType("image/jpg")
+														.stream(() -> new ByteArrayInputStream(def)).build());
+											}
+
+										}
+
+
+										promoImageModelList.add(promoImageModel);
+									}while (rs.next());
+			} else {
+
+				System.out.println("************************** False ************** ");
+				PreparedStatement  pstmt1 = con.prepareStatement("select * from promo_img where default_dis ='Yes' order by promo_id desc LIMIT ? OFFSET ?");
+									pstmt1.setInt(1, pageSize);
+									pstmt1.setInt(2, (currentPage - 1) * pageSize);
+									ResultSet rs1 = pstmt1.executeQuery();
+
+
+										while ( rs1.next() ) {
+											PromoImageModel promoImageModel = new PromoImageModel();
+
+
+											promoImageModel.setPromoId(rs1.getInt("promo_id"));
+											promoImageModel.setCreateDate(rs1.getDate("create_date"));
+											promoImageModel.setIs_active(rs1.getInt("is_active"));
+											promoImageModel.setComment(rs1.getString("comment"));
+											promoImageModel.setImageName(rs1.getString("img_name"));
+
+											InputStream imageStream = rs1.getBinaryStream("image");
+											if (rs1.getBytes("image").length != 0) {
+												BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
+
+												promoImageModel.setStreamedContent(DefaultStreamedContent.builder()
+														.name("US_Piechart.jpg")
+														.contentType("image/jpg")
+														.stream(() -> bufferedStream) // Stream the content directly
+														.build());
+											}
+
+											promoImageModelList.add(promoImageModel);
+										}
+				rs.close();
+				pstmt1.close();
+
+			}
+
+
    	     
    	         rs.close();
    	         log.info("### : *** Connection Closed from getPromoImage()");
+
    	     } catch (Exception e) {
    	        e.printStackTrace();
    	        System.err.println(e.getClass().getName()+": "+e.getMessage());

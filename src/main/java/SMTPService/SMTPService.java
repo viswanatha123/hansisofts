@@ -230,7 +230,7 @@ public class SMTPService {
 			    		 String body=agentDetails+""+proDetals+""+thanks;
 			    		 
 			    		 
-			    		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
+			    		     recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
 			  	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
 			  	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
 				             message.setSubject(Constants.PropertyConstants.LAYOUT_SUBJECT);
@@ -392,10 +392,19 @@ public class SMTPService {
    		 String body=customerDetails+""+propertySetils+""+thanks;
    		 
    		 
-   		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
- 	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
- 	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
-	             message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
+   		  //recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
+
+			String AgentEmail=userDetails.getEmail();
+			System.out.println("************************** Email  ******************************* :"+AgentEmail);
+
+			//recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
+ 	             //message.addRecipients(Message.RecipientType.TO, recipientAddresses);
+ 	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userDetails.getEmail()"+;viswanathareddy120@gmail.com"));
+
+
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userDetails.getEmail()));
+			message.setRecipients(Message.RecipientType.CC, InternetAddress.parse("viswanathareddy120@gmail.com"));
+            message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
 	             message.setText(body);
 	             Transport.send(message);
 
@@ -425,10 +434,14 @@ public class SMTPService {
    		 
    		 String body=customerDetails+""+propertySetils+""+thanks;
    		 
-   		 
-   		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
+   		 		/*
+   		  		recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
  	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
  	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("viswanathareddy120@gmail.com"));
+				*/
+				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userDetails.getEmail()));
+				message.setRecipients(Message.RecipientType.CC, InternetAddress.parse("viswanathareddy120@gmail.com"));
+
 	             message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
 	             message.setText(body);
 	             Transport.send(message);
@@ -459,9 +472,13 @@ public class SMTPService {
    		 
    		 String body=customerDetails+""+propertySetils+""+thanks;
    		 
-   		 
-   		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
- 	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
+   		 	/*
+   		  	recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
+			//recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
+			*/
+				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userDetails.getEmail()));
+				message.setRecipients(Message.RecipientType.CC, InternetAddress.parse("viswanathareddy120@gmail.com"));
+			    //message.addRecipients(Message.RecipientType.TO, recipientAddresses);
  	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
 	             message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
 	             message.setText(body);
@@ -493,10 +510,15 @@ public class SMTPService {
    		 
    		 String body=customerDetails+""+propertySetils+""+thanks;
    		 
-   		 
-   		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
+   		 		/*
+   		  		recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
+					//recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
  	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
  	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+				*/
+
+				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userDetails.getEmail()));
+				message.setRecipients(Message.RecipientType.CC, InternetAddress.parse("viswanathareddy120@gmail.com"));
 	             message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
 	             message.setText(body);
 	             Transport.send(message);
@@ -528,11 +550,16 @@ public class SMTPService {
    		 
    		 String body=customerDetails+""+propertySetils+""+thanks;
    		 
-   		 
+   		 /*
    		  recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail() == null ? "viswanatha.reddy@hansisofts.com" : userDetails.getEmail());
+			//recipientAddresses[recipientAddresses.length-1]=new InternetAddress(userDetails.getEmail());
  	             message.addRecipients(Message.RecipientType.TO, recipientAddresses);
  	             //message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
-	             message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
+			*/
+
+				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userDetails.getEmail()));
+				message.setRecipients(Message.RecipientType.CC, InternetAddress.parse("viswanathareddy120@gmail.com"));
+	            message.setSubject(Constants.PropertyConstants.LEAD_SUBJECT);
 	             message.setText(body);
 	             Transport.send(message);
 

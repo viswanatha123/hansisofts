@@ -160,7 +160,7 @@ public class GeneralDAOImpl {
 			
 			String SQL_UPDATE_LIST_LIMIT="update user_map_package set is_enable=? where user_id= ?";
 			String SQL_UPDATE_DEFAULT_PACKAGE="INSERT INTO public.user_map_package (user_mp_pack_id, user_id, pack_id, create_date, is_active,is_enable)\r\n"
-					+ "VALUES(nextval('user_map_package_seq'), ?, 1, current_timestamp, 1,false);";
+					+ "VALUES(nextval('user_map_package_seq'), ?, ?, current_timestamp, 1,false);";
 			
 			String SQL_UPDATE_PACK_NAME="update user_map_package set pack_id = ? where user_id = ?";
 			
@@ -184,6 +184,14 @@ public class GeneralDAOImpl {
 			String SQL_PROMO_IMAGE_VILLA="select * from promo_img where is_active ='1' order by display_order LIMIT ? OFFSET ?";
 			String SQL_DEL_PROMO_IMAGE="delete from promo_img where promo_id=?";
 			String SQL_PROMO_COUNT="select count(*) from promo_img where is_active ='1'";
+
+			String SQL_USER_MAP_PACKAGE_ID="select u.user_id ,ump.pack_id ,p.pack_name,p.pack_type,p.list_limit,p.pack_cost, p.pack_duration \n" +
+					"from user_deta u,\n" +
+					"user_map_package ump,\n" +
+					"package p \n" +
+					"where u.user_id =ump.user_id \n" +
+					"and ump.pack_id =p.pack_id \n" +
+					"and u.user_id = ?;";
 		}
 	}
 	
@@ -1928,6 +1936,7 @@ public class GeneralDAOImpl {
 			        StringBuilder sql_update_default_package = new StringBuilder(Constants.SQL.SQL_UPDATE_DEFAULT_PACKAGE);
 			        pstmt = con.prepareStatement(sql_update_default_package.toString());
 			        pstmt.setInt(1, userId);
+						pstmt.setInt(2, getUserMapPackage());
 			        
 			      	int res=pstmt.executeUpdate();
 			      	
@@ -1946,6 +1955,72 @@ public class GeneralDAOImpl {
   
     	
     }
+	//************************* user_map_package ***********************
+
+
+	public int getUserMapPackage()
+	{
+
+		String saveMessage="";
+		ConnectionDAO condao;
+		BasicDataSource bds=null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		int packageId=1;
+
+		try {
+
+			condao=new ConnectionDAO();
+			bds=condao.getDataSource();
+			con=bds.getConnection();
+
+			StringBuilder sql_user_map_package_id = new StringBuilder(Constants.SQL.SQL_USER_MAP_PACKAGE_ID);
+			pstmt = con.prepareStatement(sql_user_map_package_id.toString());
+			pstmt.setInt(1,UtilConstants.DEFAULT_USER );
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next())
+			{
+				packageId=rs.getInt("pack_id");
+			}
+
+
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			System.err.println("Leads save Error :"+e.getClass().getName()+": "+e.getMessage());
+			log.info("Leads save Error :"+e.getClass().getName()+": "+e.getMessage());
+			saveMessage=e.getMessage();
+			log.error("An error occurred: {}", e.getMessage());
+
+
+		}finally {
+			// Close the pool (important for proper shutdown)
+			try {
+				if (bds != null) {
+					bds.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return packageId;
+	}
+
+
+
+
+
     
     // ******************** update package Name *************
     
@@ -1956,7 +2031,7 @@ public class GeneralDAOImpl {
     	
     	if(packName.equals("Basic"))
     	{
-    		packId=1;
+    		packId=4;
     	}
     	if(packName.equals("Advance"))
     	{
@@ -1966,6 +2041,10 @@ public class GeneralDAOImpl {
     	{
     		packId=3;
     	}
+		if(packName.equals("Old"))
+		{
+			packId=1;
+		}
     	
     	int succVal=0;
     	
@@ -2002,6 +2081,8 @@ public class GeneralDAOImpl {
     // ********************************** Package price details *********************
     public List<PackPriceModel> getPackagePriceDetails()
   	{
+
+		  System.out.println("********************* calling package details ********************");
               
   		
     	List<PackPriceModel> packPriceModelList=new ArrayList<>();

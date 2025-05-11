@@ -13,9 +13,9 @@
   <p>Owner Properties Villa Flats</p>
   <div class="card">
 	<h:form id="form">
-	<p:dialog header="Loading please wait....." widgetVar="spinnerDialog"   modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
-	            <p:graphicImage name="images/builders/spin.gif" width="70px"  height="70px" />
-	     </p:dialog>
+		<p:dialog widgetVar="spinnerDialog"  style="background-color: #3A3B3C;"  modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
+			<p:graphicImage name="images/spin/spin1.gif" width="70px"  height="70px" />
+		</p:dialog>
   <br></br>
   
   				
@@ -31,8 +31,8 @@
                     
                     			<h:panelGrid   columns="4" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
                   				<h:outputText style="font-weight: bold;color: green;font-size:15px;" value="#{product.i_am} : #{product.owner_name}" />
-                   				<h:outputText style="font-weight: bold;color: block; font-size:15px; float:right" value="#{product.bed_rooms} BHK #{product.property_type} for Sale in #{readyToMoveService.locationMessage}" />
-                  				<h:outputText class="pi pi-globe" style="font-weight: bold;color: brown;font-size:15px; float:right" value=" Residential Villa/Flats for Sale in #{readyToMoveService.locationMessage}" />
+                   				<h:outputText style="font-weight: bold;color: block; font-size:15px; float:right" value="#{product.bed_rooms} BHK #{product.property_type} for Sale in #{product.prim_location},   #{product.seco_location} " />
+                  				<h:outputText class="pi pi-globe" style="font-weight: bold;color: brown;font-size:15px; float:right" value=" Residential Villa/Flats for Sale in #{product.prim_location},   #{product.seco_location} " />
               					</h:panelGrid>
               					
               		<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">

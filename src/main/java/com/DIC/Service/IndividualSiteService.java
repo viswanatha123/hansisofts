@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
+import com.DIC.DAO.Impl.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,11 +19,6 @@ import javax.faces.bean.ViewScoped;
 
 import org.primefaces.PrimeFaces;
 
-import com.DIC.DAO.Impl.ConnectionDAOImpl;
-import com.DIC.DAO.Impl.GeneralDAOImpl;
-import com.DIC.DAO.Impl.LocationDAOImpl;
-import com.DIC.DAO.Impl.SMSService;
-import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.model.AgriculturalModel;
 import com.DIC.model.IndividualSiteModel;
 import com.DIC.model.LayoutMode;
@@ -53,7 +50,8 @@ public class IndividualSiteService implements Serializable {
 	
 	
 	
-	private IndividualSiteModel selectedProperty; 
+	private IndividualSiteModel selectedProperty;
+	private List<IndividualSiteModel> indiData;
 	
 	private String custName;
 	private String contactNumber;
@@ -77,6 +75,7 @@ public class IndividualSiteService implements Serializable {
 	GeneralDAOImpl gDao;
 	SMSService sms;
 	UserRoleService ur;
+	PropertyDAOImpl pDao;
 	
 	
 	 	public IndividualSiteService()
@@ -87,6 +86,7 @@ public class IndividualSiteService implements Serializable {
 	          sms=new SMSService();
 	          ur=new UserRoleService();
 	          gDao=new GeneralDAOImpl();
+			  pDao=new PropertyDAOImpl();
         
         primaryModel=locationDao.getIndivPrimaryLocation();
         
@@ -147,7 +147,8 @@ public class IndividualSiteService implements Serializable {
                 
                 public void loadEntities() {
                 	individualSiteList=dao.getIndividualSiteDetails(country,city,pageSize,currentPage);
-                	promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
+                	//promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
+					promoImageModel=dao.getPromoImage(promoPageSize, promoCurrentPage,country);
                 	
                 	for(IndividualSiteModel x:individualSiteList)
                     {
@@ -248,7 +249,7 @@ public class IndividualSiteService implements Serializable {
         	
           	
         	individualSiteList=dao.getIndividualSiteDetails(country,city,pageSize,currentPage);
-        	promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
+			promoImageModel=dao.getPromoImage(promoPageSize, promoCurrentPage,country);
         	this.custName="";
         	this.contactNumber="";
         	this.email="";
@@ -258,13 +259,18 @@ public class IndividualSiteService implements Serializable {
    public void reset() {
 	       PrimeFaces.current().resetInputs("form1:panelDialog");
   }
- 
-              
-        
-        
-        
-        
-     public String getLocationMessage() {
+	public void getIndiDialog()
+	{
+		indiData=pDao.getIndiData(selectedProperty.getInd_id());
+	}
+
+
+
+
+
+
+
+	public String getLocationMessage() {
         return locationMessage;
     }
 
@@ -414,13 +420,13 @@ public class IndividualSiteService implements Serializable {
 	}
 
 
+	public List<IndividualSiteModel> getIndiData() {
+		return indiData;
+	}
 
-
-
-
-       
-
-
+	public void setIndiData(List<IndividualSiteModel> indiData) {
+		this.indiData = indiData;
+	}
 }
 
 

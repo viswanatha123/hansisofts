@@ -73,6 +73,7 @@ public class LayoutMode implements Serializable{
 		
 	public StreamedContent getStreamedContent() {
 		return streamedContent;
+
 	}
 
 	public void setStreamedContent(StreamedContent streamedContent) {
