@@ -390,6 +390,8 @@ public class PropertyDAOImpl {
 
     public List<AgriculturalModel> getAgriculturalDetailsByuserId(int userId)
     {
+
+        System.out.println("-------------------------Agri data __________________________________");
         ConnectionDAO condao;
         BasicDataSource bds=null;
         Connection con = null;

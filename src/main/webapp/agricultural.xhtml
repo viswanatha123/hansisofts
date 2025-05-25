@@ -10,7 +10,7 @@
 
         
   <ui:composition template="/WEB-INF/facelets/template.xhtml">
-  <ui:param name="page" value="Layout Details" />
+  <ui:param name="page" value="Agricultural Land" />
   <ui:define name="title"><p style="font-weight: bold; color:blue; font-size:15px">Sales for Agricultural Land</p>
   <p>For search property, Please select Primary Location and Secondary Location than click on Search button.</p>
   <div class="card">
@@ -59,8 +59,10 @@
 			<h:panelGrid   columns="2" style="width: auto; text-align: center">
 		     
 		     <p:dataScroller value="#{agriculturalService.agriculturalModelList}" var="product" chunkSize="10">
+				 <h:link value="Open Layout in New Tab" outcome="agriculturalNewTab" target="_blank" >
+				 <f:param name="agriPropertyId" value="#{product.agriId}" />
                    <p:panel  style="width: 100%; height:340px; box-shadow: 10px 10px 5px grey; " >
-                   
+
                    
                    			<h:panelGrid   columns="3" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
                   				<h:outputText style="font-weight: bold;color: green;font-size:15px;" value=" Owner Name  : #{product.ownerName}" />
@@ -160,6 +162,7 @@
 	                         
               </p:panel>
               <br></br>
+				 </h:link>
         </p:dataScroller>
         
          			<h:panelGrid  columns="1" style="vertical-align: top;">
