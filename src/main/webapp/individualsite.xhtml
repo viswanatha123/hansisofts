@@ -53,6 +53,8 @@
          <div style="display: flex; justify-content: center; align-items: center; ">
                <h:panelGrid   columns="2" style="width: auto; text-align: center">
             <p:dataScroller  value="#{individualSiteService.individualSiteList}" var="product" chunkSize="10">
+				<h:link value="Open Layout in New Tab" outcome="indiSiteNewTab" target="_blank" >
+				<f:param name="indiPropertyId" value="#{product.ind_id}" />
                   		<p:panel  style="width: 100%; height:300px; box-shadow: 10px 10px 5px grey; margin: auto; text-align: center;font-style: normal" >
                   		
                   		   <h:panelGrid   columns="4" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
@@ -155,7 +157,8 @@
 							                          			
                          </p:panel>
               		     <br></br>
-			      </p:dataScroller>
+				</h:link>
+			</p:dataScroller>
 			      
 			      
 			      
