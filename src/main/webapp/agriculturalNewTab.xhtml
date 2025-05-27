@@ -101,7 +101,7 @@
                             <h:outputText value="blank" style="color: #EEEEEE;"  />
                         </h:panelGrid>
                         <h:panelGrid   columns="4"  style="background-color: #EEEEEE; top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:90%; ">
-                            <h:outputText value="Posted : #{layoutNewTabService.layoutDetails.createdOnDate}" style="font-weight: normal;color: block;font-size: 20px">
+                            <h:outputText value="Posted : #{agriculturalNewTabService.agriData.createdOnDate}" style="font-weight: normal;color: block;font-size: 20px">
                                 <f:convertDateTime type="date" dateStyle="full"/>
                             </h:outputText>
                             <h:link width="33%"  value = "Find Builders" class="pi pi-user" outcome = "builders.xhtml" style="font-weight: normal;color: block;font-size: 20px" />
