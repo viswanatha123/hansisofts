@@ -43,7 +43,6 @@ public class PromoImageService {
 	private UploadedFile file;
 	private String updateResult;
 	private String comment;
-	private int displayOrder;
 	private String country;
 	private String defaultImage;
 	
@@ -108,9 +107,8 @@ public class PromoImageService {
   	       promoImageModel.setFile(file);
   	       promoImageModel.setImageName(imageName);
   	       promoImageModel.setComment(comment);
-  	       promoImageModel.setDisplayOrder(displayOrder);
-			 promoImageModel.setPrimLocation(country);
-				promoImageModel.setDefaultImage(defaultImage);
+  	       promoImageModel.setPrimLocation(country);
+		   promoImageModel.setDefaultImage(defaultImage);
   	        
   	    	          
   	          updateResult=dao.promoImageUpload(promoImageModel);
@@ -216,13 +214,7 @@ public class PromoImageService {
 		this.selectedProduct = selectedProduct;
 	}
 
-	public int getDisplayOrder() {
-		return displayOrder;
-	}
 
-	public void setDisplayOrder(int displayOrder) {
-		this.displayOrder = displayOrder;
-	}
 
 	public String getCountry() {
 		return country;

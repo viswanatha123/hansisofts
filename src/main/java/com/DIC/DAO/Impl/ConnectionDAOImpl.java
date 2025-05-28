@@ -122,7 +122,8 @@ public class ConnectionDAOImpl {
 			String SQL_RENTAL_DETAILS="select * from rental_plot where prim_location = ? and seco_location = ?";
 			String SQL_PACKAGE_ENQUIRY="INSERT INTO hansi_enquiry (enqi_id, name, email, phone, create_date, is_active,enq_type) VALUES(nextval('hansi_enquiry_seq'),?, ?, ?, current_timestamp, 1,?)";
 			//String SQL_PROMO_IMAGE="insert into promo_img (promo_id,image,create_date, is_active,comment,img_name,display_order) values (nextval('promo_seq'),?,current_timestamp, 1,?,?,?)";
-			String SQL_PROMO_IMAGE="insert into promo_img (promo_id,image,create_date, is_active,comment,img_name,display_order,prim_location,default_dis) values (nextval('promo_seq'),?,current_timestamp, 1,?,?,?,?,?)";
+			//String SQL_PROMO_IMAGE="insert into promo_img (promo_id,image,create_date, is_active,comment,img_name,display_order,prim_location,default_dis) values (nextval('promo_seq'),?,current_timestamp, 1,?,?,?,?,?)";
+			String SQL_PROMO_IMAGE="insert into promo_img (promo_id,image,create_date, is_active,comment,img_name,display_order,prim_location,default_dis) values (nextval('promo_seq'),?,current_timestamp, 1,?,?,nextval('display_order_seq'),?,?)";
 
 			String SQL_Individual_COUNT="select count(*) from hansi_individual_site where prim_location = ? and seco_location = ?";
 			//String SQL_PROMO_IMAGE_LAYOUT="select * from promo_img where is_active ='1' order by display_order LIMIT ? OFFSET ?";
@@ -1464,9 +1465,9 @@ public class ConnectionDAOImpl {
             pstmt.setBinaryStream(1, fin2, file.getSize());
             pstmt.setString(2, promoImageModel.getComment());
             pstmt.setString(3, promoImageModel.getImageName());
-            pstmt.setInt(4, promoImageModel.getDisplayOrder());
-			pstmt.setString(5,promoImageModel.getPrimLocation());
-			pstmt.setString(6,promoImageModel.getDefaultImage());
+            //pstmt.setInt(4, promoImageModel.getDisplayOrder());
+			pstmt.setString(4,promoImageModel.getPrimLocation());
+			pstmt.setString(5,promoImageModel.getDefaultImage());
         
 
         	int res=pstmt.executeUpdate();
