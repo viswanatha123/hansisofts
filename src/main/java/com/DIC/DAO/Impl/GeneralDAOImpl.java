@@ -181,7 +181,7 @@ public class GeneralDAOImpl {
 			String SQL_PLOT4BHK_COUNT="select count(*) from villa_plot where bed_rooms='4'";
 			String SQL_PROMO_IMAGE="select * from promo_img order by display_order";
 			String SQL_VILLA_COUNT="select count(*) from villa_plot where prim_location = ? and seco_location = ?";
-			String SQL_PROMO_IMAGE_VILLA="select * from promo_img where is_active ='1' order by display_order LIMIT ? OFFSET ?";
+			String SQL_PROMO_IMAGE_VILLA="select * from promo_img where is_active ='1' order by display_order desc LIMIT ? OFFSET ?";
 			String SQL_DEL_PROMO_IMAGE="delete from promo_img where promo_id=?";
 			String SQL_PROMO_COUNT="select count(*) from promo_img where is_active ='1'";
 

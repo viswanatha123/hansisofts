@@ -109,8 +109,8 @@ public class PromoImageService {
   	       promoImageModel.setImageName(imageName);
   	       promoImageModel.setComment(comment);
   	       promoImageModel.setDisplayOrder(displayOrder);
-			 promoImageModel.setPrimLocation(country);
-				promoImageModel.setDefaultImage(defaultImage);
+		   promoImageModel.setPrimLocation(country);
+		   promoImageModel.setDefaultImage(defaultImage);
   	        
   	    	          
   	          updateResult=dao.promoImageUpload(promoImageModel);
