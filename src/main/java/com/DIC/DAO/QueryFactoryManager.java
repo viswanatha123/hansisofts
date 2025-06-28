@@ -9,4 +9,5 @@ public interface QueryFactoryManager {
 
     /* this method provide query based on pass parameter */
         public String getQueryByParam(String query);
+        public String getQueryCountByParam(String query);
 }
