@@ -14,15 +14,17 @@ import org.primefaces.PrimeFaces;
 
 import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.util.List;
 
 @ManagedBean(name="villaLinkService")
-@RequestScoped
+@SessionScoped
 public class VillaLinkService implements Serializable {
 
     private static final Logger log = LogManager.getLogger(VillaLinkService.class);
@@ -49,17 +51,12 @@ public class VillaLinkService implements Serializable {
     private String contactNumber="";
     private String email="";
 
-
-
-
     GeneralDAOImpl gDao;
     UserDAOImpl udo;
-
-
     private String linkParam;
     private String linkParamdCount;
 
-    GeneralDAOImpl gdo;
+    //GeneralDAOImpl gdo;
     QueryFactoryManager qfm;
 
 
@@ -67,26 +64,16 @@ public class VillaLinkService implements Serializable {
 
         linkParam = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("villaLinkParam");
         linkParamdCount = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("villaLinkParamCount");
-
-
-
         qfm=new QueryFactoryManagerImpl();
         query=qfm.getQueryByParam(linkParam);
         queryCount=qfm.getQueryCountByParam(linkParamdCount);
 
-        System.out.println("******************* query count *********************** "+linkParamdCount);
-
-
-        gdo=new GeneralDAOImpl();
-
-
+        gDao=new GeneralDAOImpl();
 
         //villaModel=gdo.getVillaLink(query, pageSize,currentPage);
         //promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
         countTotalRecords(queryCount);
         loadEntities();
-
-        System.out.println("*********** Query Link *************** :"+query);
 
     }
 
@@ -96,21 +83,20 @@ public class VillaLinkService implements Serializable {
         //villaModel=gDao.getPlot1bhkProperties(pageSize,currentPage);
        // promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
 
-        villaModel=gdo.getVillaLink(query, pageSize,currentPage);
+        villaModel=gDao.getVillaLink(query, pageSize,currentPage);
         promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
     }
 
     public void countTotalRecords(String queryCount) {
 
-        totalRecords=gDao. getVillaLinkCountTotalRecords(queryCount);
+        totalRecords=gDao.getVillaLinkCountTotalRecords(queryCount);
         promoTotalRecords=gDao.getPromoCountTotalRecords();
-
-        System.out.println("************************** count records ***********************"+totalRecords);
 
     }
     public void nextPage() {
+        System.out.println("-------------------------------------- query ---------------------------------- :"+query);
 
-        System.out.println("======================currentPage===========pageSize============totalRecords=====:"+currentPage+"  "+pageSize+"  "+totalRecords);
+        System.out.println("Next======================currentPage===========pageSize============totalRecords=====query :"+currentPage+"  "+pageSize+"  "+totalRecords+"   "+query);
         if ((currentPage * pageSize) < totalRecords) {
             //currentPage++;
             loadEntities();
@@ -124,13 +110,14 @@ public class VillaLinkService implements Serializable {
     }
 
     public void previousPage() {
-        if (currentPage > 1) {
+        System.out.println("privious======================currentPage===========pageSize============totalRecords=====query :"+currentPage+"  "+pageSize+"  "+totalRecords+"   "+query);
+        if (currentPage >= 1) {
             //currentPage--;
             loadEntities();
         }
 
-        if (promoCurrentPage > 1) {
-            //promoCurrentPage--;
+        if (promoCurrentPage >= 1) {
+            promoCurrentPage--;
             loadEntities();
         }
     }

@@ -2784,6 +2784,7 @@ public class GeneralDAOImpl {
 
 			if (rs.next()) {
 				totalRecords = rs.getInt(1);
+
 			}
 			pstmt.close();
 			rs.close();

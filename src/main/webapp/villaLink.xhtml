@@ -18,6 +18,13 @@
                     </p:dialog>
                     <br></br>
 
+                    <c:if test="#{plot1bhkService.totalRecords > 0}">
+                        <p:panel>
+                            <p:panelGrid columns="1" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
+                                <h:outputText  style="font-weight: normal; font-style:italic; font-size:15px; color: blue; text-align: left;" value="Selected properties : #{plot1bhkService.totalRecords}" />
+                            </p:panelGrid>
+                        </p:panel>
+                    </c:if>
 
 
 
@@ -171,12 +178,12 @@
                     <p:panel>
                         <p:panelGrid columns="3" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
                             <h:commandButton value="Previous" action="#{villaLinkService.previousPage}" disabled="#{villaLinkService.currentPage == 1}" >
-                                <f:param name="page1" value="#{villaLinkService.currentPage - 1}"/>
-                                <f:param name="promopage1" value="#{villaLinkService.promoCurrentPage - 1}"/>
+                                <f:setPropertyActionListener target="#{villaLinkService.currentPage}" value="#{villaLinkService.currentPage - 1}" />
+                                <f:setPropertyActionListener target="#{villaLinkService.promoCurrentPage}" value="#{villaLinkService.promoCurrentPage - 1}" />
                             </h:commandButton>
                             <h:commandButton value="Next" action="#{villaLinkService.nextPage}" disabled="#{villaLinkService.currentPage * villaLinkService.pageSize >= plot1bhkService.totalRecords}" >
-                                <f:param name="page1" value="#{villaLinkService.currentPage + 1}"/>
-                                <f:param name="promopage1" value="#{villaLinkService.promoCurrentPage + 1}"/>
+                                <f:setPropertyActionListener target="#{villaLinkService.currentPage}" value="#{villaLinkService.currentPage + 1}" />
+                                <f:setPropertyActionListener target="#{villaLinkService.promoCurrentPage}" value="#{villaLinkService.promoCurrentPage + 1}" />
                             </h:commandButton>
                             <h:outputText value="Page #{villaLinkService.currentPage} of #{villaLinkService.totalPages}" />
                         </p:panelGrid>

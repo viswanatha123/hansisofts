@@ -9,12 +9,13 @@ public class QueryFactoryManagerImpl implements QueryFactoryManager {
     @Override
     public String getQueryByParam(String query) {
 
+        System.out.println("******************* xxxxxxxxxxxxx *********************** "+query);
         String sql_query="";
 
-        sql_query= QueryConstantsService.QueryLink.sql_bangalore_one_bhk;
+
         if(query.equals(QueryConstantsService.param_bangalore_one_bhk))
         {
-
+            sql_query= QueryConstantsService.QueryLink.sql_bangalore_one_bhk;
         }
         if(query.equals(QueryConstantsService.param_bangalore_two_bhk))
         {
@@ -27,13 +28,18 @@ public class QueryFactoryManagerImpl implements QueryFactoryManager {
 
     public String getQueryCountByParam(String query) {
 
-        System.out.println("******************* xxxxxxxxxxxxx *********************** "+query);
+
 
         String sql_queryCount="";
 
-        if(query.equals("param_bangalore_one_bhk_count"))
+        if(query.equals(QueryConstantsService.param_bangalore_one_bhk_count))
         {
             sql_queryCount= QueryConstantsService.QueryLink.sql_bangalore_one_bhk_count;
+
+        }
+        if(query.equals(QueryConstantsService.param_bangalore_two_bhk_count))
+        {
+            sql_queryCount= QueryConstantsService.QueryLink.sql_bangalore_two_bhk_count;
 
         }
 
