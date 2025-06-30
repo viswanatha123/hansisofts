@@ -69,6 +69,7 @@ public class VillaLinkService implements Serializable {
         queryCount=qfm.getQueryCountByParam(linkParamdCount);
 
         gDao=new GeneralDAOImpl();
+        udo=new UserDAOImpl();
 
         //villaModel=gdo.getVillaLink(query, pageSize,currentPage);
         //promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
@@ -131,7 +132,7 @@ public class VillaLinkService implements Serializable {
 
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
-        session.setAttribute("plot1bhkKey", selectedProperty);
+        session.setAttribute("villalinkSession", selectedProperty);
     }
 
 
@@ -140,9 +141,11 @@ public class VillaLinkService implements Serializable {
 
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
-
+        System.out.println("-------------null checking----------------- >"+ selectedProperty.getUserId());
         if (session != null) {
-            selectedProperty= (VillaModel) session.getAttribute("plot1bhkKey");
+            selectedProperty= (VillaModel) session.getAttribute("villalinkSession");
+            System.out.println("------------------------------ >"+ selectedProperty.getUserId());
+
             System.out.println("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
         }
 
@@ -151,9 +154,12 @@ public class VillaLinkService implements Serializable {
         {
             if(custName!=null && contactNumber!=null && contactNumber!=null)
             {
+                log.info("***** not Successful submitted lead ******1");
                 if(selectedProperty.getUserId()!=0)
                 {
+                    log.info("***** not Successful submitted lead ******2");
                     String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getVillaId(),selectedProperty.getUserId(),"villa");
+                    log.info("***** not Successful submitted lead ******3");
                     SMTPService.sendVillaLeadEmail(custName,contactNumber,email,selectedProperty);
                     log.info("***** Successful submitted lead ******");
                 }

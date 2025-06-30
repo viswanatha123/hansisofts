@@ -33,7 +33,7 @@ public class QueryConstantsService implements Serializable {
                 public static final String  sql_bangalore_two_bhk="select * from villa_plot where bed_rooms='2' order by create_date desc LIMIT ? OFFSET ?";
                 public static final String  sql_bangalore_two_bhk_count="select count(*) from villa_plot where bed_rooms='2'";
 
-                public static final String  sql_bangalore_two_bhk_head="2 BHK Flatas in ";
+
 
             }
 

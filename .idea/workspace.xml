@@ -6,14 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="302a6108-bb59-460a-9583-07c941d3768c" name="Changes" comment="all">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/QueryFactoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/QueryFactoryManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/Service/PropertyLink/QueryConstantsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/Service/PropertyLink/QueryConstantsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/Service/PropertyLink/VillaLinkService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/Service/PropertyLink/VillaLinkService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/agriDataEntry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/agriDataEntry.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/indiSiteDataEntry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/indiSiteDataEntry.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/packPrice.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/packPrice.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/villaLink.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/villaLink.xhtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
