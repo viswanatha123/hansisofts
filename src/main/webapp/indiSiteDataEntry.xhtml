@@ -141,12 +141,11 @@
                             <f:selectItems value="#{indiSiteDataEntryService.secondryLocation}" />  
                             </p:selectOneMenu> 
                       <p:message for="city" display="icon"/>      
-    
-                    
-                    <p:outputLabel style="font-weight: bold" value="Description : " />
-                    <p:inputText id="comment"  value="#{indiSiteDataEntryService.comment}" >
-                    </p:inputText>
-                    <p:message for="comment" display="icon"/>
+
+                        <p:outputLabel style="font-weight: bold" value="Description (150 char): " />
+                        <p:inputTextarea rows="5" cols="40" maxlength="150" id="comment" value="#{indiSiteDataEntryService.comment}" >
+                        </p:inputTextarea>
+                        <p:message for="comment" display="icon"/>
                     
                     <p:outputLabel for="facing" value="Facing : " />  
                             <p:selectOneMenu id="facing" value="#{indiSiteDataEntryService.facing}" style="width:150px"> 

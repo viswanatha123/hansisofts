@@ -14,17 +14,14 @@ import org.primefaces.PrimeFaces;
 
 import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.util.List;
 
 @ManagedBean(name="villaLinkService")
-@SessionScoped
+@ViewScoped
 public class VillaLinkService implements Serializable {
 
     private static final Logger log = LogManager.getLogger(VillaLinkService.class);
@@ -33,7 +30,7 @@ public class VillaLinkService implements Serializable {
     private List<VillaModel> villaModel;
 
     private String locationMessage;
-    private String errorMessage;
+    //private String errorMessage;
     private int currentPage=1;
     private int pageSize = 10;
     private int totalRecords=10;
@@ -55,6 +52,7 @@ public class VillaLinkService implements Serializable {
     UserDAOImpl udo;
     private String linkParam;
     private String linkParamdCount;
+    private String linkParamdHead;
 
     //GeneralDAOImpl gdo;
     QueryFactoryManager qfm;
@@ -64,7 +62,9 @@ public class VillaLinkService implements Serializable {
 
         linkParam = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("villaLinkParam");
         linkParamdCount = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("villaLinkParamCount");
+        linkParamdHead = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("villaLinkParamHead");
         qfm=new QueryFactoryManagerImpl();
+        System.out.println("************************************* query param in service ***************************** "+linkParam);
         query=qfm.getQueryByParam(linkParam);
         queryCount=qfm.getQueryCountByParam(linkParamdCount);
 
@@ -98,12 +98,12 @@ public class VillaLinkService implements Serializable {
 
         System.out.println("Next======================currentPage===========pageSize============totalRecords=====query :"+currentPage+"  "+pageSize+"  "+totalRecords+"   "+query);
         if ((currentPage * pageSize) < totalRecords) {
-            //currentPage++;
+            currentPage++;
             loadEntities();
         }
 
         if ((promoCurrentPage * promoPageSize) < promoTotalRecords) {
-            //promoCurrentPage++;
+            promoCurrentPage++;
             loadEntities();
 
         }
@@ -197,15 +197,6 @@ public class VillaLinkService implements Serializable {
     }
 
 
-
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-
-
-
     public VillaModel getSelectedProperty() {
         return selectedProperty;
     }
@@ -237,15 +228,6 @@ public class VillaLinkService implements Serializable {
     public void setLocationMessage(String locationMessage) {
         this.locationMessage = locationMessage;
     }
-
-
-
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
-
 
 
     public void setSelectedProperty(VillaModel selectedProperty) {
@@ -368,5 +350,13 @@ public class VillaLinkService implements Serializable {
 
     public void setTotalRecords(int totalRecords) {
         this.totalRecords = totalRecords;
+    }
+
+    public String getLinkParamdHead() {
+        return linkParamdHead;
+    }
+
+    public void setLinkParamdHead(String linkParamdHead) {
+        this.linkParamdHead = linkParamdHead;
     }
 }

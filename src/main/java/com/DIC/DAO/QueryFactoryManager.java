@@ -11,4 +11,5 @@ public interface QueryFactoryManager {
         public String getQueryByParam(String query);
 
         public String getQueryCountByParam(String query);
+
 }
