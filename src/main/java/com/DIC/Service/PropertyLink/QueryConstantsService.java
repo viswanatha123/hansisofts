@@ -17,8 +17,8 @@ public class QueryConstantsService implements Serializable {
                 public static String param_bangalore_two_bhk="param_bangalore_two_bhk";
                 public static String param_bangalore_two_bhk_count="param_bangalore_two_bhk_count";
 
-                public static String param_bangalore_one_bhk_head="1 BHK Float in Sale";
-                public static String param_bangalore_two_bhk_head="2 BHK Float in Sale";
+                public static String param_bangalore_one_bhk_head="1 BHK Flat in Sale";
+                public static String param_bangalore_two_bhk_head="2 BHK Flat in Sale";
 
 
 
