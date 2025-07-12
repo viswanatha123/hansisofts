@@ -73,7 +73,9 @@
 			
 
 			<p:dataScroller value="#{villaDetailsService.villaModel}" var="product" chunkSize="10">
-						   	     	
+				<h:link value="Open Villa in New Tab" outcome="villaNewTab" target="_blank" >
+				<f:param name="villaPropertyId" value="#{product.villaId}" />
+
                     <p:panel  style="width: 100%; height:300px; box-shadow: 10px 10px 5px grey; margin: auto; text-align: center;font-style: normal" >
                     
                     			<h:panelGrid   columns="4" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
@@ -149,6 +151,7 @@
                                                 
                                                 <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Total feets : "/>
                                                 <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.total_feets}"/>
+
                                        </h:panelGrid>
                      			
                      				<h:panelGrid   columns="1" width="60%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
@@ -195,6 +198,7 @@
                     
                     </p:panel>
               		<br></br>
+				</h:link>
 			</p:dataScroller>
 
 			

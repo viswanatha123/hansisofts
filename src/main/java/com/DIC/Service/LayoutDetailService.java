@@ -1,23 +1,15 @@
 package com.DIC.Service;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import com.DIC.DAO.Impl.*;
+import com.DIC.DAO.QueryFactoryManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -30,7 +22,6 @@ import com.DIC.model.UserDetails;
 
 
 import SMTPService.SMTPService;
-import org.primefaces.model.StreamedContent;
 //import demo.SendSMS;
 
 
@@ -80,10 +71,14 @@ public class LayoutDetailService implements Serializable{
 	    UserRoleService ur;
 	    GeneralDAOImpl gDao;
 		PropertyDAOImpl pDao;
+
+
 	    
 	    
 	    public LayoutDetailService(){
-	    
+
+
+
 	    	log.info("Loading LayoutDetailService init()");
 	          dao=new ConnectionDAOImpl();
 	          locationDao=new LocationDAOImpl();
@@ -91,7 +86,8 @@ public class LayoutDetailService implements Serializable{
 	          sms=new SMSService();
 	          ur=new UserRoleService();
 	          pDao=new PropertyDAOImpl();
-	          
+
+
 	          primaryModel=locationDao.getLayoutPrimaryLocation();
 	          
 	          primLocation  = new HashMap<>(); 

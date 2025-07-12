@@ -22,7 +22,7 @@
        <h:body>
   <ui:composition template="/WEB-INF/facelets/template.xhtml">
   <ui:param name="page" value="Admin" />
-  <ui:define name="title"><p:outputLabel id="display1" style="color: block">Post Property &nbsp;</p:outputLabel><p:outputLabel id="display2" style="color: red">FREE</p:outputLabel>
+  <ui:define name="title">
   <p>Individual Site DataEntry</p>
   
       
@@ -141,12 +141,11 @@
                             <f:selectItems value="#{indiSiteDataEntryService.secondryLocation}" />  
                             </p:selectOneMenu> 
                       <p:message for="city" display="icon"/>      
-    
-                    
-                    <p:outputLabel style="font-weight: bold" value="Description : " />
-                    <p:inputText id="comment"  value="#{indiSiteDataEntryService.comment}" >
-                    </p:inputText>
-                    <p:message for="comment" display="icon"/>
+
+                        <p:outputLabel style="font-weight: bold" value="Description (150 char): " />
+                        <p:inputTextarea rows="5" cols="40" maxlength="150" id="comment" value="#{indiSiteDataEntryService.comment}" >
+                        </p:inputTextarea>
+                        <p:message for="comment" display="icon"/>
                     
                     <p:outputLabel for="facing" value="Facing : " />  
                             <p:selectOneMenu id="facing" value="#{indiSiteDataEntryService.facing}" style="width:150px"> 

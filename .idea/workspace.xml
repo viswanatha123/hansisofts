@@ -6,10 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="302a6108-bb59-460a-9583-07c941d3768c" name="Changes" comment="all">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/agricultural.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/agricultural.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/individualsite.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/individualsite.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/layoutDetails.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/layoutDetails.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/villaPlotSearch.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/villaPlotSearch.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/Service/PropertyLink/QueryConstantsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/Service/PropertyLink/QueryConstantsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/agriDataEntry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/agriDataEntry.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/indiSiteDataEntry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/indiSiteDataEntry.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/plotsDataEntry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/plotsDataEntry.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/villaLink.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/villaLink.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/villaPlotDataentry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/villaPlotDataentry.xhtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,23 +57,27 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;Smart Tomcat.HS.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;email&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev1&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/hansisofts/src/main/webapp/resources/images/package&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/hansisofts&quot;,
     &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.poratu.idea.plugins.tomcat.setting.TomcatServersConfigurable&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\hansisofts\src\main\webapp\resources\images\package" />
+      <recent name="D:\hansisofts\src\main\java\framework\utilities" />
+      <recent name="D:\hansisofts\src\main\java\com\DIC\DAO\Impl" />
+      <recent name="D:\hansisofts\src\main\java\com\DIC\DAO" />
       <recent name="D:\hansisofts\src\main\webapp" />
-      <recent name="D:\hansisofts\src\main\java\com\DIC\Service" />
-      <recent name="D:\hansisofts\src\main\webapp\resources\images\spin" />
-      <recent name="D:\hansisofts" />
+      <recent name="D:\hansisofts\src\main\webapp\WEB-INF\facelets" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.DIC.Service.PropertyLink" />
+      <recent name="com.DIC.Service" />
     </key>
   </component>
   <component name="RunManager">
@@ -176,7 +182,7 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/DIC/Service/UserLoginService.java</url>
           <line>159</line>
           <option name="timeStamp" value="1" />
