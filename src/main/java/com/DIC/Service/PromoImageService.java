@@ -1,9 +1,12 @@
 package com.DIC.Service;
 
+import java.io.Serializable;
 import java.util.*;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -24,13 +27,11 @@ import com.DIC.model.VillaModel;
 
 @ManagedBean(name="promoImageService")
 
-//@RequestScoped
-@ViewScoped
-public class PromoImageService {
+@RequestScoped
+//@ViewScoped
+public class PromoImageService implements Serializable {
 	
 	private static final Logger log = LogManager.getLogger(PromoImageService.class);
-
-
 
 
 	LocationDAOImpl locationDao;
