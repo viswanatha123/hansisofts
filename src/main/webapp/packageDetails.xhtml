@@ -215,15 +215,15 @@
 						                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 						                    </h:inputText> 
 						                    <p:message for="email" display="icon"/>
-							                
-					   
+
+
 							</p:panelGrid>
 					   </p:panelGrid>      
 					</p:panel>		
 		        			
 		        
 		        <br></br>
-		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form1" actionListener="#{packPriceService.submit}" >
+		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form1" actionListener="#{packPriceService.submit}" onclick="PF('spinnerDialog').show()">
 		                    <p:resetInput target="form"/>                
 		                  </h:commandButton>
 		                  <p:commandButton value="Reset" update="panelDialog" process="@this"
@@ -231,6 +231,12 @@
                                  styleClass="mr-2 ui-button-outlined"/>
 				  
 		   </p:dialog>
+		<p:dialog widgetVar="spinnerDialog" style="background-color: #3A3B3C;"
+		           modal="true" closable="false" draggable="false" resizable="false"
+		         showEffect="fade" hideEffect="fade">
+		   <p:graphicImage name="images/spin/spin1.gif" width="70px" height="70px" />
+		 </p:dialog>
+
 
      		
  <script type="text/javascript" src="resources/js/chatool.js"></script>    				
