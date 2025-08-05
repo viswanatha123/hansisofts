@@ -26,7 +26,9 @@
   <ui:param name="page" value="Admin" />
    <ui:define name="title">
    <p>Villa/Flat DataEntry</p>
-   
+       <p>
+           <h:outputText style="font-weight: normal; font-size: 14px;color: #555;" value="Provide detailed information about the villa or flat site including address, built-up area, cost per square foot, and contact details of the agent or owner. This section helps manage listings for villa or flat properties available for sale." />
+       </p>
     <div class="villaDataEntry" jsf:rendered="#{villaDataEntryService.isEnable eq false and villaDataEntryService.listedCount eq 0}">
 	   
 	       <p:panel  style="background: #FFFF00;width: 100%; height:50px;font-size: 15px ; text-align:center" >
