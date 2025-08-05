@@ -24,7 +24,10 @@
   <ui:param name="page" value="Admin" />
   <ui:define name="title">
    <p>Layout Data Entry</p>
-   <p>Enter complete details of the  layout including cost per square foot, agent and owner information. This section is used to manage and list layout properties for sale.</p>
+      <p>
+          <h:outputText style="font-weight: normal; font-size: 14px;color: #555;" value=" Enter complete details of the layout including cost per square foot, agent and owner information.
+This section is used to manage and list layout properties for sale." />
+      </p>
    
 	   <div class="plotDataEntry" jsf:rendered="#{plotsDataEntryService.isEnable eq false and plotsDataEntryService.listedCount eq 0}">
 	   
