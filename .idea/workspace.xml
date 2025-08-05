@@ -4,26 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="302a6108-bb59-460a-9583-07c941d3768c" name="Changes" comment="all">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="35b4d421-845a-4cfc-b9d4-d9661e08ac2d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/Service/PropertyLink/QueryConstantsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/Service/PropertyLink/QueryConstantsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/agriDataEntry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/agriDataEntry.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/indiSiteDataEntry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/indiSiteDataEntry.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/plotsDataEntry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/plotsDataEntry.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/villaLink.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/villaLink.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/villaPlotDataentry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/villaPlotDataentry.xhtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -38,60 +25,23 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 7
-}</component>
-  <component name="ProjectId" id="2hVXhGYDDKEd9Msbb0zzRyMZckS" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="30kwiHDF8GHP5KaMvyeOIObsR3V" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Maven.HansiSoft [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.HansiSoft [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.HansiSoft [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.HansiSoft [validate].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Smart Tomcat.HS.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev1&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/hansisofts&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "dev1",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\hansisofts\src\main\java\framework\utilities" />
-      <recent name="D:\hansisofts\src\main\java\com\DIC\DAO\Impl" />
-      <recent name="D:\hansisofts\src\main\java\com\DIC\DAO" />
-      <recent name="D:\hansisofts\src\main\webapp" />
-      <recent name="D:\hansisofts\src\main\webapp\WEB-INF\facelets" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.DIC.Service.PropertyLink" />
-      <recent name="com.DIC.Service" />
-    </key>
-  </component>
+}]]></component>
   <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="hansisofts" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="hansisofts" />
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
     <configuration name="HS" type="com.poratu.idea.plugins.tomcat">
       <predefined_log_file enabled="true" id="Tomcat Localhost Log" />
       <predefined_log_file enabled="true" id="Tomcat Access Log" />
@@ -119,75 +69,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="302a6108-bb59-460a-9583-07c941d3768c" name="Changes" comment="" />
-      <created>1717680337359</created>
+      <changelist id="35b4d421-845a-4cfc-b9d4-d9661e08ac2d" name="Changes" comment="" />
+      <created>1754185006165</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1717680337359</updated>
+      <updated>1754185006165</updated>
     </task>
-    <task id="LOCAL-00001" summary="agent">
-      <option name="closed" value="true" />
-      <created>1745117489626</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1745117489626</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="RECENT_FILTERS">
-      <map>
-        <entry key="User">
-          <value>
-            <list>
-              <RecentGroup>
-                <option name="FILTER_VALUES">
-                  <option value="*" />
-                </option>
-              </RecentGroup>
-            </list>
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="user">
-                    <value>
-                      <list>
-                        <option value="*" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="agent" />
-    <MESSAGE value="all" />
-    <option name="LAST_COMMIT_MESSAGE" value="all" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/DIC/Service/UserLoginService.java</url>
-          <line>159</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
