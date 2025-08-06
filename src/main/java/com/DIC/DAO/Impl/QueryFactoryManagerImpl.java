@@ -25,6 +25,11 @@ public class QueryFactoryManagerImpl implements QueryFactoryManager {
         {
             sql_query= QueryConstantsService.QueryLink.sql_bangalore_three_bhk;
         }
+        if(query.equals(QueryConstantsService.param_bangalore_ready_to_move))
+        {
+            sql_query= QueryConstantsService.QueryLink.sql_bangalore_ready_to_move;
+        }
+
 
         return sql_query;
     }
@@ -49,6 +54,11 @@ public class QueryFactoryManagerImpl implements QueryFactoryManager {
         if(query.equals(QueryConstantsService.param_bangalore_three_bhk_count))
         {
             sql_queryCount= QueryConstantsService.QueryLink.sql_bangalore_three_bhk_count;
+
+        }
+        if(query.equals(QueryConstantsService.param_bangalore_ready_to_move_count))
+        {
+            sql_queryCount= QueryConstantsService.QueryLink.sql_bangalore_ready_to_move_count;
 
         }
 
