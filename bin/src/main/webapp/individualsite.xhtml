@@ -1,0 +1,260 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+       <h:body>
+	
+        
+  <ui:composition template="/WEB-INF/facelets/template.xhtml">
+  <ui:param name="page" value="Layout Details" />
+  <ui:define name="title"><p style="font-weight: bold; color:blue; font-size:15px">Sales for Individual Site</p>
+  <p>For search property, Please select Primary Location and Secondary Location than click on Search button.</p>
+  <div class="card">
+  <h:form id="mainForm">
+	  <p:dialog widgetVar="spinnerDialog"  style="background-color: #3A3B3C;"  modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
+		  <p:graphicImage name="images/spin/spin1.gif" width="70px"  height="70px" />
+	  </p:dialog>
+  <br></br>
+  
+   <p:panel  style="background: #800000;width: 100%; height:50px;font-size: 15px">   
+              
+                        <h:panelGrid columns="7" cellpadding="5" style="width: 100%;">  
+                            <p:outputLabel for="country" style="font-weight: bold; color:white" value="Primary Location : " />  
+                        
+                            <p:selectOneMenu id="country" value="#{individualSiteService.country}" style="width:200px">  
+                            <p:ajax listener="#{individualSiteService.onCountryChange}" update="city" />  
+                            <f:selectItem itemLabel="Select Primary Location" itemValue="" noSelectionOption="true" />  
+                            <f:selectItems value="#{individualSiteService.primLocationSort}" />  
+                            </p:selectOneMenu> 
+                        
+                            <p:outputLabel for="city" style="font-weight: bold; color:white" value="Secondary Location : " />  
+                            <p:selectOneMenu id="city" value="#{individualSiteService.city}" style="width:200px">  
+                            <f:selectItem itemLabel="Select Secondary Location" itemValue="" noSelectionOption="true" />  
+                            <f:selectItems value="#{individualSiteService.secondryLocation}" />  
+                            </p:selectOneMenu> 
+                            
+                            <h:commandButton value="Search"  type="submit"  actionListener="#{individualSiteService.getindividualsiteDetails}" onclick="PF('spinnerDialog').show()" />
+                        </h:panelGrid> 
+             </p:panel>
+              
+              <c:if test="#{individualSiteService.totalRecords > 0}">
+				<p:panel>   
+						<p:panelGrid columns="1" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
+							<h:outputText  style="font-weight: normal; font-style:italic; font-size:15px; color: blue; text-align: left;" value="Selected properties : #{indivSiteService.totalRecords}" />
+						</p:panelGrid>
+				</p:panel>
+			</c:if>
+
+           
+         <div style="display: flex; justify-content: center; align-items: center; ">
+               <h:panelGrid   columns="2" style="width: auto; text-align: center">
+            <p:dataScroller  value="#{individualSiteService.individualSiteList}" var="product" chunkSize="10">
+				<h:link value="Open Layout in New Tab" outcome="indiSiteNewTab" target="_blank" >
+				<f:param name="indiPropertyId" value="#{product.ind_id}" />
+                  		<p:panel  style="width: 100%; height:300px; box-shadow: 10px 10px 5px grey; margin: auto; text-align: center;font-style: normal" >
+                  		
+                  		   <h:panelGrid   columns="4" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
+                  		   
+                  		   
+                  				<h:outputText style="font-weight: bold;color: green;font-size:15px;" value=" #{product.ownerName}" />
+                  				<h:outputText style="font-weight: bold;color: block; font-size:15px; float:right" value="Cost : Negotiation" />
+                  				<h:outputText class="pi pi-globe" style="font-weight: bold;color: brown;font-size:15px; float:right" value=" Sales for Individual Site in #{individualSiteService.locationMessage }" />
+              				</h:panelGrid>
+              				
+              				<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
+               					<p:commandLink action="#{individualSiteService.getIndiDialog}" update=":mainForm:proImg1" oncomplete="PF('proImg').show()"  >
+									<p:graphicImage width="250" height="200"  cache="false" stream="false"  styleClass="rounded-image clickable-image-with-link" value="#{product.streamedContent}" alt="Image"   />
+									<f:setPropertyActionListener value="#{product}" target="#{individualSiteService.selectedProperty}" />
+								</p:commandLink>
+                     				
+                     				
+                     		   <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;">
+                     			 
+                     				
+                     			  
+                     			 
+                     			 				<h:outputText  style="font-weight: normal;color: blue;font-size: 11px" value=" Per Sqft : " />
+                     			 				<h:outputText style="font-weight: normal;color: blue;font-size: 11px" value="#{product.persqft}" />
+                     			 				
+                     			 				<h:outputText  style="font-weight: normal;color: blue;font-size: 11px" value=" Dimensiond : "/>
+                     			 				<h:outputText  style="font-weight: normal;color: blue;font-size: 11px" value="#{product.length} X #{product.width}"/>
+                     			 				
+                     			 				<h:outputText  style="font-weight: normal;color: blue;font-size: 11px" value=" Plot Area : " />
+                     			 				<h:outputText  style="font-weight: normal;color: blue;font-size: 11px" value="#{product.length*product.width}" />
+                     			 		                                                  
+                                                <h:outputText  style="font-weight: normal;color: blue;font-size: 11px" value=" Site Number  :  "/>
+                                                <h:outputText  style="font-weight: normal;color: blue;font-size: 11px" value="#{product.siteNo}"/>
+                                                
+                                                <h:outputText  style="font-weight: normal;color: blue;font-size: 11px" value=" Facing : "/>
+                                                <h:outputText  style="font-weight: normal;color: blue;font-size: 11px" value="#{product.facing}"/>
+                                                
+                                               
+                                   </h:panelGrid>
+                                   
+                                    <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;"> 
+                     			 
+                                			   <h:outputText  style="font-weight: normal; font-size: 11px" value=" Contact Name : " />
+                                			   <h:outputText  style="font-weight: normal; font-size: 13px" value="#{product.agentName}" />
+                                			   
+                                               <h:outputText  style="font-weight: normal; font-size: 11px" value=" Contact Number : " />
+                                               <h:outputText  rendered="#{userRoleService.userRole.contains('Contact Num')? true : false }" style="font-weight: normal; font-size: 13px" value="#{product.contactNo}" />
+                                               <h:outputText  rendered="#{userRoleService.userRole.contains('Contact Num')? false : true }" style="font-weight: normal; font-size: 11px" value=" -- " />
+                                              
+                                               <h:outputText style="font-weight: normal; font-size: 11px" value=" Wonership : " />
+                                               <h:outputText style="font-weight: normal; font-size: 13px" value="#{product.wonership}" />
+                                                                                           
+                                              <h:outputText  style="font-weight: normal; font-size: 11px" value=" Transaction : " /> 
+                                              <h:outputText  style="font-weight: normal; font-size: 13px" value="#{product.transaction}" />
+                                  </h:panelGrid>
+                  		
+                  		
+                  		
+                     
+                             <h:panelGrid   columns="1" width="60%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
+                     			 				<h:outputText style="font-weight: bold;color: red;font-size: 15px"  value="Rs #{product.totalPrice}" />
+
+                     			 				    <p:commandButton type="submit" value="Callback"  style="background:#FFA500;font-weight: bold;color: black;font-size: 15px; width:100px" 
+															 process="@this" 
+							                                 onclick="PF('leadDialog').show()">           
+							                              <f:setPropertyActionListener value="#{product}" target="#{individualSiteService.selectedProperty}" />
+									                </p:commandButton>
+                          						
+                          						   <p:commandButton type="submit" value="Enquiry"  style="background:#1E90FF;font-weight: bold;color: black;font-size: 15px; width:100px" 
+															 process="@this" 
+							                                 onclick="PF('leadDialog').show()">           
+							                              <f:setPropertyActionListener value="#{product}" target="#{individualSiteService.selectedProperty}" />
+									                </p:commandButton>
+							</h:panelGrid>
+							
+							
+					</h:panelGrid>		                
+                     			 				    
+									                
+					        <h:panelGrid   columns="1" width="100%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
+                               					<h:outputText style="font-weight: normal; font-size: 15px" value="Location : #{product.location}" />
+                                                <h:outputText style="font-weight: normal;color: black ;font-size: 15px" value="Description : #{product.comment}" />
+                                               
+                              </h:panelGrid>
+                              <br></br>
+                              <h:panelGrid  columns="4" width="100%"  columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="font-weight: normal; font-weight: bold; font-size: 13px" >			
+                          				
+                          			<h:outputText value="Posted : #{product.createdOnDate}" >
+									    <f:convertDateTime type="date" dateStyle="full"/>   
+									</h:outputText>
+									 <h:link  value = "Find Builders" class="pi pi-user" outcome = "builders.xhtml" style="font-weight: normal; font-weight: bold; font-size: 13px;color:block;float: right; margin-right: 50px;" />
+					           		<h:link  value = "Find Agents"  class="pi pi-user" outcome = "agents.xhtml" style="font-weight: normal; font-weight: bold; font-size: 13px;color:block;float: right; margin-right: 50px;" />
+					           		<h:link  value = "Enquiry" class="pi pi-user" outcome = "enquiry.xhtml" style="font-weight: normal; font-weight: bold; font-size: 13px;color:block;float: right; margin-right: 50px;" />
+					          
+					          </h:panelGrid>
+					          
+					 
+					            
+						
+							                          			
+                         </p:panel>
+              		     <br></br>
+				</h:link>
+			</p:dataScroller>
+			      
+			      
+			      
+			   
+			                   	
+						     <h:panelGrid  columns="1" style="vertical-align: top;">
+							           <p:dataScroller value="#{individualSiteService.promoImageModel}" var="product1" chunkSize="10">
+										         <p:graphicImage width="300" height="500" stream="false" cache="false" value="#{product1.streamedContent}" />
+						            	</p:dataScroller>	
+							
+					     	</h:panelGrid>
+						
+							
+		        </h:panelGrid>
+		        
+		        
+		        
+		      </div>
+		      
+		 <c:if test="#{individualSiteService.totalRecords > 0}">     
+		      <p:panel>   
+					<p:panelGrid columns="3" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
+						<h:commandButton value="Previous" action="#{individualSiteService.previousPage}" disabled="#{individualSiteService.currentPage == 1}" />
+						<h:commandButton value="Next" action="#{individualSiteService.nextPage}" disabled="#{individualSiteService.currentPage * individualSiteService.pageSize >= individualSiteService.totalRecords}" />
+						<h:outputText value="Page #{individualSiteService.currentPage} of #{individualSiteService.totalPages}" />
+					</p:panelGrid>
+			</p:panel>
+	    </c:if>
+	  <p:dialog id="proImg1"
+				widgetVar="proImg"
+				position="bottom"
+				modal="true"
+				header="Property Image"
+				minHeight="500"
+				width="670"
+				showEffect="fade">
+
+
+		  <h:panelGrid  columns="1" style="text-align: top;">
+			  <p:dataScroller value="#{individualSiteService.indiData}" var="product2" chunkSize="10">
+				  <p:graphicImage width="600" height="400" stream="false" cache="false" value="#{product2.streamedContent}"  style="text-align: top;" />
+			  </p:dataScroller>
+		  </h:panelGrid>
+	  </p:dialog>
+ </h:form>
+ 
+<h:form id="form1">
+		<p:messages id="msgs"/>
+		 	<p:dialog header="Call back details" widgetVar="leadDialog" minHeight="600" width="700" showEffect="fade">
+		        
+		        	<p:panel id="panelDialog" style="background-image: url('back1.jpg'); ">   
+					    <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
+					        <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+					        
+					        
+					        			    <p:outputLabel required="true" style="font-weight: bold" for="name" indicateRequired="true" value="Name : " />
+						                    <p:inputText id="name" value="#{individualSiteService.custName}" required="true" requiredMessage="Required  Name">
+						                    </p:inputText>
+						                    <p:message for="name" display="icon"/>
+						                    
+						                    
+						                    <p:outputLabel style="font-weight: bold" for="ContactNumber" indicateRequired="true" value="Contact Number : " />
+							                <p:inputMask id="ContactNumber"  mask="9999999999" required="true"  maxlength="10" value="#{individualSiteService.contactNumber}" >
+							                </p:inputMask>
+							                <p:message for="ContactNumber" display="icon"/>
+							      							        
+									        <h:outputText style="font-weight: bold; font-size: 14px;color:black; text-align:left;" value="Email : " />
+						                    <h:inputText id="email"  size="30" value="#{individualSiteService.email}"  validatorMessage="Invalid email format">
+						                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						                    </h:inputText> 
+						                    <p:message for="email" display="icon"/>
+						                    
+						                    <p:outputLabel style="font-weight: bold" for="comment" value="Comment  (100 char) : " />
+											<p:inputText id="comment" maxlength="100" value="#{individualSiteService.comment}"  requiredMessage="Required  Name">
+											</p:inputText>
+											<p:message for="comment" display="icon"/>
+							                
+					   
+							</p:panelGrid>
+					   </p:panelGrid>      
+					</p:panel>		
+		        			
+		        
+		        <br></br>
+		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form1" actionListener="#{individualSiteService.submit}" onclick="PF('spinnerDialog').show()" >
+		                    <p:resetInput target="form1"/>                
+		                  </h:commandButton>
+		                  <p:commandButton value="Reset" update="panelDialog" process="@this"
+                                 action="#{individualSiteService.reset}"
+                                 styleClass="mr-2 ui-button-outlined"/>
+				  
+		   </p:dialog>
+<script type="text/javascript" src="resources/js/chatool.js"></script>		   
+</h:form>
+</div>
+</ui:define>
+</ui:composition>
+</h:body>
+</html>

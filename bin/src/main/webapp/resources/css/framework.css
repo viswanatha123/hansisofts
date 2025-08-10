@@ -1,0 +1,109 @@
+body {
+    font-size:14px;
+    color:#555;
+}
+
+#content {
+    font-size:15px;
+}
+
+#login_form {
+    font-size:0.85em;
+}
+
+.page-title {
+    font-size:25px;
+    margin-bottom:20px;
+    border-bottom: 1px #eee solid;
+}
+
+.page-title i {
+    margin-left:15px;
+}
+
+.ui-growl {
+    width:280px;
+    right:5px;
+}
+
+.ui-growl-item-container {
+    top: 80px;
+    background-image: linear-gradient(#333, #111);
+    color:#EDEDED;
+    opacity: .98;
+}
+
+.ui-growl-message {
+    width: 180px;
+}
+
+#sidebar {
+    margin-top: 30px;
+    border-right: 1px #eee solid
+}
+
+#logo {
+    margin-right:40px;
+}
+
+#content {
+    padding-left:5%;
+    padding-right:5%;
+    padding-bottom:80px;
+}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height:80px;
+    width:100%;
+    padding-left:5%;
+    padding-right:5%;
+    padding-top:9px;
+    border-top: 1px #eee solid;
+    background:#fff;    
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
+    color: #fff;
+    background-color: #8d8d8d;
+}
+
+.nav-pills > li > a:hover {
+    background-color: #ededed;
+}
+
+.nav > li > a {
+    color: #1d1d1d;
+}
+
+.dashboard {
+    text-align:center;
+    vertical-align: middle;
+    padding:20px;
+    border: 2px solid #fff;
+    border-radius: 9px;
+}
+
+.dashboard label {
+    padding:8px;
+    border: 2px solid #ffffff;
+    margin-bottom:10px;
+}
+
+.UNINITIALIZED {
+    background: #eeeeee
+}
+
+.OPERATIONAL {
+    background: #d5ffd5;
+}
+
+.MALFUNCTION {
+    background: #f7c3c3;
+}
+
+.BUSY {
+    background: #ff9;
+}

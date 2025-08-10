@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+       <h:body>
+       
+  <ui:composition template="/WEB-INF/facelets/template.xhtml">
+  <ui:param name="page" value="Layout Details" />
+  <ui:define name="title" >
+  <p>Profile</p>
+  <p:messages id="msgs"/>
+  <br></br>
+		
+		  				<div class="card">
+					   
+					        <h5> Profile Menu </h5>
+					     
+					        <p:megaMenu orientation="Profile Menu" autoDisplay="false">
+					            <p:submenu label="Menu" icon="pi pi-fw pi-cog">
+					                <p:column>
+					                    <p:submenu label="Options">
+					              					 <c:forEach var="item" items="#{userProfileService.userProfileRoleModel}">
+					                         			  <p:menuitem value="#{item.roleName}" icon="pi pi-fw pi-user" outcome = "#{item.profUrl}" />
+					              					  </c:forEach> 
+					                    </p:submenu>
+					                   
+					                </p:column>
+					            </p:submenu>
+					        </p:megaMenu>
+							
+					  
+					  </div>
+ 
+
+  <div class="card">
+        <h5>Events and Validation</h5>
+        <p:tabView dynamic="true" cache="false">
+  
+            
+            <p:tab title="Profile" >
+               		<h:panelGrid columns="3" cellpadding="7" styleClass="mb-3">
+               			<p:dataTable id="product" widgetVar="dtProducts" var="product"   value="#{userProfileService.userDetails}" editable="true"  style="margin-bottom:20px;width:100%;" 
+				reflow="true" styleClass="products-table"  rowKey="#{product.userId}"  paginatorPosition="bottom" >
+						  
+					           			  
+            			  
+            			  <p:column headerText="User Id">
+			                        <h:outputText value="#{product.userId}"/>
+			              </p:column>
+			            
+			            
+			              <p:column headerText="First Name">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.fName}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="fName" value="#{product.fName}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			               <p:column headerText="Last Name">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.lName}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="lName" value="#{product.lName}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			               <p:column headerText="User Name">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.userName}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="useriName" value="#{product.userName}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+		               
+			               <p:column headerText="Address">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.address}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="address" value="#{product.address}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			               <p:column headerText="Phone No">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.phone}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="phone" value="#{product.phone}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			              <p:column headerText="Created Date">
+			                
+			                        <h:outputText value="#{product.create_date}"/>
+			              </p:column>
+			              
+			              <p:column headerText="Property Listed">
+			                     <h:outputText value="#{userProfileService.listedCount}"/>
+			              </p:column>
+			              
+			               <p:column headerText="Pack Name">
+			                     <h:outputText value="#{product.packName}"/>
+			              </p:column>
+			              
+			              <p:column headerText="Pack Duration Days">
+			                     <h:outputText value="#{userProfileService.packDuration}"/>
+			              </p:column>
+			              
+			              <p:column headerText="Is Enable Pack">
+			                     <h:outputText value="#{product.isEnable}"/>
+			              </p:column>
+			              
+			              <p:column headerText="List Limit">
+			                     <h:outputText value="#{product.listLimit}"/>
+			              </p:column>
+			         			               
+			              <p:column headerText="Is Active">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.is_active}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="isActive" value="#{product.is_active}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			              <p:column headerText="Last Work Day">
+			                     <h:outputText value="#{userProfileService.lastWorkDay}"/>
+			              </p:column>
+				            
+				</p:dataTable>
+			  </h:panelGrid>
+            </p:tab>
+    
+	          
+		           <p:tab title="Leads" >
+		           		<ui:include src="leads.xhtml"/>
+		           
+		           </p:tab>
+		           <p:tab title="Property List" >
+		           		<ui:include src="propertyList.xhtml"/>
+		           
+		           </p:tab>
+           
+        </p:tabView>
+    </div>
+  
+  
+  
+  
+  
+<script type="text/javascript" src="resources/js/chatool.js"></script>
+  </ui:define>
+  </ui:composition>
+  
+  </h:body>
+  </html>
+      

@@ -134,6 +134,7 @@ public class ConnectionDAOImpl {
 			String SQL_PROMO_COUNT="select count(*) from promo_img where is_active ='1'";
 			String SQL_AGRI_COUNT="select count(*)  from hansi_agricultural where prim_location = ? and seco_location = ?";
 			String SQL_PROMO_IMAGE_VILLA="select * from promo_img where is_active ='1' LIMIT ? OFFSET ?";
+			String SQL_IMAGE_UPLOAD_GALARY="INSERT INTO prop_galary (galary_id,image, create_date, is_active, user_id) values (nextval('prop_galary_seq'), ?, current_timestamp,1, ?)";
 		
 		}
                 
@@ -760,21 +761,19 @@ public class ConnectionDAOImpl {
             pstmt.setString(20, plotsDataEntryModel.getAgentName());
                     InputStream fin2=plotsDataEntryModel.getInputStream();
 		            UploadedFile file=plotsDataEntryModel.getFile();
-		    pstmt.setBinaryStream(21, fin2, file.getSize());  
-		    pstmt.setDouble(22, plotsDataEntryModel.getPersqft() * (plotsDataEntryModel.getLength() * plotsDataEntryModel.getWidth()));
-		    pstmt.setInt(23, userId);
-		    pstmt.setString(24, plotsDataEntryModel.getCornerBit());
-		    pstmt.setInt(25, rankId);
-		    
-         
-            
-           
-            int res=pstmt.executeUpdate();
-            System.out.println("Result status  - >"+res);
-	            if(res > 0)
-	            {
-	            	succVal="Successful updated record";
-	            }
+			pstmt.setBinaryStream(21, fin2, file.getSize());
+			pstmt.setDouble(22, plotsDataEntryModel.getPersqft() * (plotsDataEntryModel.getLength() * plotsDataEntryModel.getWidth()));
+			pstmt.setInt(23, userId);
+			pstmt.setString(24, plotsDataEntryModel.getCornerBit());
+			pstmt.setInt(25, rankId);
+
+
+			int res = pstmt.executeUpdate();
+			System.out.println("Result status  - >" + res);
+			if (res > 0) {
+				succVal = "Successful updated record";
+				uploadGalary(plotsDataEntryModel, userId);
+			}
            
         } catch (Exception e) {
          
@@ -792,11 +791,45 @@ public class ConnectionDAOImpl {
         return succVal;
     }
     
+    //*********************************************
+
+	public void uploadGalary(PlotsDataEntryModel plotsDataEntryModel,  int userId)
+	{
+		System.out.println("Database upload Image size :"+plotsDataEntryModel.getInputStreams().size());
+
+		try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			con = ConnectionDAO.getConnection();
+			StringBuilder sql_image_upload_galary = new StringBuilder(Constants.SQL.SQL_IMAGE_UPLOAD_GALARY);
+			PreparedStatement pstmtGalary = con.prepareStatement(sql_image_upload_galary.toString());
+			List<InputStream> inputStream = plotsDataEntryModel.getInputStreams();
+			for (int i = 0; i < plotsDataEntryModel.getInputStreams().size(); i++) {
+
+				if(inputStream.get(i)==null)
+				{
+					System.out.println("******************************** null ************************");
+				}
+				else {
+					System.out.println("******************************** Not null ************************");
+				}
+				pstmtGalary.setBinaryStream(1, inputStream.get(i));
+				pstmtGalary.setInt(2, userId);
+				int x = pstmtGalary.executeUpdate();
+			}
+
+		} catch (Exception e) {
+
+					e.printStackTrace();
+					System.err.println(e.getClass().getName()+": "+e.getMessage());
+					System.out.println("Error message  - >"+e.getMessage());
+
+					log.error("An error occurred: {}", e.getMessage());
+
+				}
+
+	}
     
-    
-    
-    
-    //************************************IndividualSiteDetails******************************************//
 
   //************************************IndividualSiteDetails******************************************//
 

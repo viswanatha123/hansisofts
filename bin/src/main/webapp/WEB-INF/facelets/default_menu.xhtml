@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      
+   <h:head>
+   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+ <link href="resources/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+  <link href="resources/css/demo/demo.css" rel="stylesheet" />
+  </h:head>
+ 
+
+    <h:body>
+      <div class="card">
+  
+    	
+        <ui:composition>
+          <h:form>
+        
+	
+			 
+			 <!-- 
+            <li class="#{page == 'index' ? 'active' : null}">
+                <p:link outcome="index">
+                    <i class="fa fa-fw fa-flag"/>
+                    Index
+                </p:link>
+            </li>
+            -->
+           
+              <p:megaMenu class="#{'active'}">
+              
+				              <p:submenu label="Home" style="text-align: center;width: 110px;" icon="pi pi-fw pi-home">
+				               <p:column>
+				               		<p:submenu>
+				                    	<p:menuitem value="Home" rendered="#{userRoleService.userRole.contains('Home')? true : false }" icon="pi pi-fw pi-home"  outcome="index"/>
+					                </p:submenu>
+					           </p:column>
+					          </p:submenu>
+			              
+			             
+				              <p:submenu label="Buy" style="text-align: center;width: 110px;" icon="pi pi-fw pi-book">
+					               <p:column>
+					               
+					               		<p:submenu label="Property Types">
+							                <p:menuitem value="Layout" rendered="#{userRoleService.userRole.contains('Layout Sear')? true : false }" icon="pi pi-fw pi-credit-card" outcome="layoutDetails"/>
+							                <p:menuitem value="Agricultural Land" rendered="#{userRoleService.userRole.contains('Agri Sear')? true : false }" icon="pi pi-fw pi-discord" outcome="agricultural"/>
+							                <p:menuitem value="Individual Site" rendered="#{userRoleService.userRole.contains('Indi Sear')? true : false }" icon="pi pi-fw pi-tablet" outcome="individualsite"/>
+							                <p:menuitem value="Villa/Flat Site" rendered="#{userRoleService.userRole.contains('Villa Sear')? true : false }" icon="pi pi-fw pi-tablet" outcome="villaPlotSearch"/>
+						                    <p:menuitem value="Rented"  icon="pi pi-fw pi-tablet" outcome="rentalDetails"/>
+						                
+						                </p:submenu>
+					               </p:column>
+					               <p:column>
+					               		<p:submenu label="Budget" rendered="#{userRoleService.userRole.contains('Budget')? true : false }">
+					               		
+					               		 	<p:menuitem value="Under 50 Lac"    outcome="budget1">
+							                </p:menuitem>
+							                <p:menuitem value="50 Lac - 1 Cr"    outcome="budget2">
+							                </p:menuitem>
+							                <p:menuitem value="1 Cr - 2 Cr"    outcome="budget3">
+							                </p:menuitem>
+							                <p:menuitem value="Above 2 Cr"    outcome="budget4">
+							                </p:menuitem>
+							                
+						                </p:submenu>
+					               </p:column>
+					               
+					                <p:column>
+					               		<p:submenu label="Popular Choices">
+							                <p:menuitem value="Ready to Move" rendered="#{userRoleService.userRole.contains('Ready To Move')? true : false }" icon="pi pi-fw pi-credit-card"  outcome="readyToMove">
+							                </p:menuitem>
+							                <p:menuitem value="Under Construction" rendered="#{userRoleService.userRole.contains('Ready To Move')? true : false }" icon="pi pi-fw pi-credit-card"  outcome="underConstruction">
+							                </p:menuitem>
+							                <p:menuitem value="Owner Properties" rendered="#{userRoleService.userRole.contains('Owner Prop')? true : false }" icon="pi pi-fw pi-credit-card"  outcome="ownerProperties">
+							                </p:menuitem>
+							                <p:menuitem value="Agent Properties" rendered="#{userRoleService.userRole.contains('Owner Prop')? true : false }" icon="pi pi-fw pi-credit-card"  outcome="agentProperties">
+							                </p:menuitem>
+							                <p:menuitem value="Corner Bit" rendered="#{userRoleService.userRole.contains('Owner Prop')? true : false }" icon="pi pi-fw pi-credit-card"  outcome="cornerBit">
+							                </p:menuitem>
+							            </p:submenu>
+					               </p:column>
+			            	 </p:submenu>
+			                
+			              <p:submenu label="Sell" style="text-align: center;width: 110px;" icon="pi pi-fw pi-book">
+				              <p:column>
+							        <p:submenu label="Property Types">
+							                <p:menuitem value="Layout" rendered="#{userRoleService.userRole.contains('Layout Entry')? true : false }" icon="pi pi-fw pi-credit-card" outcome="plotsDataEntry"/>
+							                <p:menuitem value="Agricultural Land" rendered="#{userRoleService.userRole.contains('Agri Entry')? true : false }" icon="pi pi-fw pi-discord" outcome="agriDataEntry"/>
+							                <p:menuitem value="Individual Site" rendered="#{userRoleService.userRole.contains('Indiv Entry')? true : false }" icon="pi pi-fw pi-tablet" outcome="indiSiteDataEntry"/>
+							                <p:menuitem value="Villa/Flat Site" rendered="#{userRoleService.userRole.contains('Villa Entry')? true : false }" icon="pi pi-fw pi-tablet" outcome="villaPlotDataentry"/>
+							                <p:menuitem value="Rent" rendered="#{userRoleService.userRole.contains('Rent Entry')? true : false }" icon="pi pi-fw pi-tablet" outcome="agentProperties"/>
+					                </p:submenu>
+					          </p:column>
+					          <p:column>
+				                <p:submenu label="Agent and Builder">
+						                <p:menuitem value="Ad Packages"  icon="pi pi-fw pi-credit-card" outcome="packageDetails"/>
+						        </p:submenu>
+			                  </p:column>
+			              </p:submenu>
+			              
+			              <p:submenu label="Rent" style="text-align: center;width: 110px;" icon="pi pi-fw pi-book">
+			              <p:column>
+					        <p:submenu label="Rented Property" rendered="#{userRoleService.userRole.contains('Rent Pro')? true : false }">
+					                <p:menuitem value="Layout for Rent"/>
+					                <p:menuitem value="Agricultural Land for Rent"/>
+					                <p:menuitem value="Individual Site for Rent"/>
+					                <p:menuitem value="Villa for Rent" />
+			                </p:submenu>
+			               </p:column>
+			               		  <p:column>
+					               	<p:submenu label="Budget" rendered="#{userRoleService.userRole.contains('Rent Budget')? true : false }">
+								        <p:menuitem value="Under 50 Lac"/>
+								        <p:menuitem value="50 Lac - 1 Cr"/>
+								        <p:menuitem value="1 Cr - 2 Cr"/>
+								        <p:menuitem value="Above 2 Cr"/>
+						             </p:submenu>
+					              </p:column>
+			              </p:submenu>
+
+						  <p:submenu label="Explore" style="text-align: center;width: 110px;" icon="pi pi-fw pi-home">
+							  <p:column>
+								  <p:submenu>
+									  <p:menuitem value="Agent properties"  icon="pi pi-fw pi-home"  outcome="agentProperty"/>
+								  </p:submenu>
+							  </p:column>
+						  </p:submenu>
+
+			              <p:submenu label="Admin"  style="text-align: center;width: 110px;" icon="pi pi-fw pi-cog">
+			                   	<p:column>
+				               		<p:submenu rendered="#{userRoleService.userRole.contains('Admin')? true : false }">
+			                			<p:menuitem value="Admin" icon="pi pi-fw pi-cog" outcome="adminLogin"/>
+			                		</p:submenu>
+					           </p:column>
+			              </p:submenu>
+
+
+              			
+			 </p:megaMenu>
+            
+    
+  
+  
+</h:form>
+</ui:composition>
+ </div>
+</h:body>
+</html>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+   
+    <div class="card">
+  
+    	
+        <ui:composition>
+          <h:form>
+        
+	
+			 
+			 <!-- 
+            <li class="#{page == 'index' ? 'active' : null}">
+                <p:link outcome="index">
+                    <i class="fa fa-fw fa-flag"/>
+                    Index
+                </p:link>
+            </li>
+            -->
+            
+            	
+        
+            
+              <p:menubar class="#{'active'}">
+			              <p:submenu label="Home" icon="pi pi-fw pi-home">
+				                <p:menuitem value="Home" icon="pi pi-fw pi-home" outcome="index"/>
+				                
+			              </p:submenu>
+			              
+			              <p:submenu label="Buy Properties" icon="pi pi-fw pi-book">
+			                <p:menuitem value="Layout" icon="pi pi-fw pi-credit-card" outcome="layoutDetails"/>
+			                <p:menuitem value="Agricultural Land" icon="pi pi-fw pi-discord" outcome="agricultural"/>
+			                <p:menuitem value="Individual Site" icon="pi pi-fw pi-tablet" outcome="individualsite"/>
+			                <p:menuitem value="Villa/Plot Site" icon="pi pi-fw pi-tablet" outcome="villaPlotSearch"/>
+			              </p:submenu>
+			              
+			              <p:submenu label="Sell Properties" icon="pi pi-fw pi-book">
+			              <p:menuitem value="Layout" icon="pi pi-fw pi-credit-card" outcome="plotsDataEntry"/>
+			               <p:menuitem value="Agricultural Land" icon="pi pi-fw pi-discord" outcome="agriDataEntry"/>
+			                <p:menuitem value="Individual Site" icon="pi pi-fw pi-tablet" outcome="indiSiteDataEntry"/>
+			                <p:menuitem value="Villa/Plot Site" icon="pi pi-fw pi-tablet" outcome="villaPlotDataentry"/>
+			              </p:submenu>
+			              
+			              <p:submenu label="Admin" icon="pi pi-fw pi-cog">
+			                <p:menuitem value="Admin" icon="pi pi-fw pi-cog" outcome="adminLogin"/>
+			              </p:submenu>
+              			
+			 </p:menubar>
+            
+            <!-- 
+            <li class="#{'active'}">
+                <p:link outcome="activeModelList">
+                    <i class="fa fa-fw fa-flag"/>
+                    Active Model List
+                </p:link>
+            </li>
+            -->
+            
+            
+            <!--        
+            <li class="#{page == 'dashboard' ? 'active' : null}">
+                <p:link outcome="dashboard">
+                    <c:choose>
+                        <c:when test="#{dashboard.operational}">
+                            <i class="fa fa-fw fa-tachometer"/>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="fa fa-fw fa-warning"/>
+                        </c:otherwise>
+                    </c:choose>
+                    Dashboard
+                </p:link>
+            </li>
+       		-->
+       		
+       		
+       		
+       	<script type="text/javascript" src="resources/js/chatool.js"></script>	
+          </h:form>           
+        </ui:composition>
+      
+</div>
+
+    </body>
+</html>

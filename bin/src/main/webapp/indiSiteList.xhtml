@@ -1,0 +1,272 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+       <h:body>
+		<h:form>
+        
+  <ui:composition template="/WEB-INF/facelets/template.xhtml">
+  <ui:param name="page" value="" />
+  <ui:define name="title" ><p style="font-weight: bold; color:blue; font-size:15px"> IndividualSite Details</p>
+  <p>All IndividualSite details</p>
+  <div class="card">
+	<h:form id="form">
+	 <p:growl id="msgs" showDetail="true"/>
+  <br></br>
+  
+			<center>
+			  <font size="4" color="blue" style="text-align: center;">All User Details  </font>
+			</center>	
+					<br></br>	  
+						  
+				<p:dataTable id="product" widgetVar="dtProducts" var="product"   value="#{IndiSiteListService.indisitedetails}" editable="true"  style="margin-bottom:20px" 
+				reflow="true" styleClass="products-table" selection="#{crudView.selectedProducts}"
+            rowKey="#{product.userId}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom" >
+						  
+						  <p:ajax event="rowEdit" listener="#{IndiSiteListService.onRowEdit}" update=":form:msgs"/>
+            			  <p:ajax event="rowEditCancel" listener="#{IndiSiteListService.onRowCancel}" update=":form:msgs"/>
+            			  
+     
+			            
+			              <p:column headerText="Owner Name">
+			                <p:cellEditor >
+			                    <f:facet  name="output">
+			                        <h:outputText style="font-weight:100;" value="#{product.ownerName}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText  id="fName" value="#{product.ownerName}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			               <p:column headerText="Address">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText style="font-weight:100;" value="#{product.location}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="lName" value="#{product.location}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			               <p:column headerText="Per Sqft Cost">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText style="font-weight:100;" value="#{product.persqft}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="useriName" value="#{product.persqft}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			   			               
+			               
+			               <p:column headerText="Concact Number">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText style="font-weight:100;" value="#{product.contactNo}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="address" value="#{product.contactNo}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			               <p:column headerText="Plot No">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText style="font-weight:100;" value="#{product.siteNo}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="plotarea" value="#{product.siteNo}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			               
+			               <p:column headerText="Length">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText style="font-weight:100;" value="#{product.length}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="ownerName" value="#{product.length}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               <p:column headerText="Width">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText style="font-weight:100;" value="#{product.width}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="wonership" value="#{product.width}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               <p:column headerText="OwnerShip">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText style="font-weight:100;" value="#{product.wonership}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="dimensiond" value="#{product.wonership}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               <p:column headerText="Transaction">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText style="font-weight:100;" value="#{product.transaction}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="transaction" value="#{product.transaction}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               <p:column headerText="Primary Location">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText style="font-weight:100;" value="#{product.primLocation}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="comment" value="#{product.primLocation}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               <p:column headerText="Secondary Location">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText style="font-weight:100;" value="#{product.secoLocation}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="length" value="#{product.secoLocation}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               <p:column headerText="Description">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText style="font-weight:100;" value="#{product.comment}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="width" value="#{product.comment}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			                <p:column headerText="Facing">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText style="font-weight:100;" value="#{product.facing}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="primLocation" value="#{product.facing}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			               <p:column headerText="Agent Name">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText style="font-weight:100;" value="#{product.agentName}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="secoLocation" value="#{product.agentName}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			               			               
+			               <p:column headerText="Total Price">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText style="font-weight:100;" value="#{product.totalPrice}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="totalPrice" value="#{product.totalPrice}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			               
+			               <p:column headerText="Created OnDate">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText style="font-weight:100;" value="#{product.createdOnDate}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="createdOnDate" value="#{product.createdOnDate}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			                
+			              <p:column headerText="Is Active">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText style="font-weight:100;" value="#{product.is_active}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="isActive" value="#{product.is_active}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			           
+			               
+			               
+			             
+			            <p:column exportable="false" rendered="#{userRoleService.userRole.contains('Indi Del')? true : false }">
+			               <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
+			                                 process="@this" 
+			                                 oncomplete="PF('deleteProductDialog').show()">
+			                    <f:setPropertyActionListener value="#{product}" target="#{IndiSiteListService.selectedProduct}" />
+			                </p:commandButton>
+			             </p:column>
+				            
+				            
+				</p:dataTable>
+				
+				
+	   <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
+            message="Delete the product?" header="Confirm" severity="warn">
+            <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{IndiSiteListService.deleteProduct}"
+                process="@this" update=":form:product"
+                oncomplete="PF('deleteProductDialog').hide()" />
+            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                onclick="PF('deleteProductDialog').hide()" />
+        </p:confirmDialog>
+  
+				
+ 
+  <script type="text/javascript" src="resources/js/chatool.js"></script>
+  </h:form>
+  
+</div>
+</ui:define>
+</ui:composition>
+</h:form>
+</h:body>
+</html>

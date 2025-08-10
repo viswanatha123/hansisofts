@@ -1,0 +1,485 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+
+<h:body>
+
+
+    <ui:composition template="/WEB-INF/facelets/template.xhtml">
+        <ui:param name="page" value="Agent Property" />
+        <ui:define name="title" ><p style="font-weight: bold; color:blue; font-size:15px"> Agent Property</p>
+            <p>Provide customer id  and click on Search button.</p>
+            <div class="card">
+                <h:form id="mainForm">
+                    <p:dialog widgetVar="spinnerDialog"  style="background-color: #3A3B3C;"  modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
+                        <p:graphicImage name="images/spin/spin1.gif" width="70px"  height="70px" />
+                    </p:dialog>
+                    <h:outputText style="font-weight: bold;color: red ; font-size: 17px" value="#{agentPropertyService.updateResult}" />
+
+                    <p:panel id="panel1" style="background-image: url('back1.jpg'); ">
+                        <p:panelGrid columns="4" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+
+
+                            <p:outputLabel style="font-weight: bold" for="agentid"  value="Agent Id :" />
+                            <p:inputText id="agentid"  value="#{agentPropertyService.userId}" >
+                            </p:inputText>
+
+
+
+                            <h:commandButton value="Search"   type="submit"
+                                             process="@this"
+                                             update="@mainForm"
+                                             actionListener="#{agentPropertyService.getAgentPropertyDetails}" onclick="PF('spinnerDialog').show()">
+                                <p:resetInput target="mainForm"/>
+                            </h:commandButton>
+
+
+                            <p:commandButton value="Reset"
+                                             action="#{agentPropertyService.clearList}"
+                                             update="@form" />
+
+                        </p:panelGrid>
+                    </p:panel>
+
+
+
+
+
+
+
+
+                    <h:panelGrid   columns="1" style="width: 80%; text-align: center"  rendered="#{agentPropertyService.layoutdetails.size() > 0}">
+                        <br></br>
+                        <center>
+                            <font size="4" color="blue" style="text-align: center;"> Layout Details  </font>
+                        </center>
+                        <br></br>
+
+                    <p:dataScroller  value="#{agentPropertyService.layoutdetails}" var="product" chunkSize="10"  >
+
+                        <p:panel  id="panel2" style="width: 100%; height:300px; box-shadow: 10px 10px 5px grey; margin: auto; text-align: top;font-style: normal" >
+                            <h:panelGrid   columns="4" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
+
+                                <h:outputText style="font-weight: bold;color: green;font-size:15px;" value="#{product.name}" />
+                                <h:outputText style="font-weight: bold;color: block; font-size:15px; float:right" value="Cost : Negotiation" />
+                                <h:outputText class="pi pi-globe" style="font-weight: bold;color: brown;font-size:15px; float:right" value=" Residential Plot/Land for Sale in #{product.primLocation} ,  #{product.secoLocation}" />
+                            </h:panelGrid>
+                            <h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
+
+
+                                <p:graphicImage width="250" height="200" stream="false" cache="false" styleClass="rounded-image clickable-image-with-link" value="#{product.streamedContent}" alt="Image" />
+
+                                <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;">
+
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="  Per Sqft : " />
+                                    <h:outputText style="font-weight: normal;color: block;font-size: 11px" value="#{product.persqft}" />
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Dimensiond : "/>
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.length} X #{product.width}"/>
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Plot Area : " />
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.length*product.width}" />
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Facing : "/>
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.facing}"/>
+                                </h:panelGrid>
+                                <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;">
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Agent Contact Name : " />
+                                    <h:outputText  style="font-weight: normal;color:block; font-size: 11px" value="#{product.agentName}" />
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Agent Contact No : " />
+
+
+                                    <h:outputText  rendered="#{userRoleService.userRole.contains('Contact Num')? true : false }" style="font-weight: normal; font-size: 11px" value="#{product.contactOwner}" />
+                                    <h:outputText  rendered="#{userRoleService.userRole.contains('Contact Num')? false : true }" style="font-weight: normal; font-size: 11px" value=" -- " />
+
+
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Owner Name : " />
+                                    <h:outputText style="font-weight: normal;color:block; font-size: 11px" value="#{product.ownerName}" />
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Owner Ship : " />
+                                    <h:outputText  style="font-weight: normal; font-size: 11px" value="#{product.wonership}" />
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Transaction : " />
+                                    <h:outputText  style="font-weight: normal;color:block; font-size: 11px" value="#{product.transaction}" />
+                                </h:panelGrid>
+                                <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;">
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Swimming Pool  : " />
+                                    <p:graphicImage  rendered="#{product.swimingPool eq 'Yes'}" width="30" height="30" name="images/swimpool.jpg" />
+
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="Play ground  : " />
+                                    <p:graphicImage rendered="#{product.playground eq 'Yes'}" width="30" height="30" name="images/playground.jpg" />
+
+
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="Park  : " />
+
+                                    <p:graphicImage rendered="#{product.park eq 'Yes'}" width="30" height="30" name="images/parking.jpg" />
+
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="Boundary Wall  : " />
+                                    <p:graphicImage rendered="#{product.wall eq 'Yes'}" width="30" height="30" name="images/wall.jpg" />
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="Greater Community  : " />
+                                    <p:graphicImage rendered="#{product.community eq 'Yes'}" width="30" height="30" name="images/g_community.jpg" />
+                                </h:panelGrid>
+                                <h:panelGrid   columns="1" width="60%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right">
+                                    <h:outputText style="font-weight: bold;color: red;font-size: 15px"  value="Rs #{product.totalPrice}" />
+
+
+                                </h:panelGrid>
+                            </h:panelGrid>
+
+                            <h:panelGrid   columns="1" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
+                                <h:outputText style="font-weight: normal; font-size: 15px" value="Location : #{product.location}" />
+                                <h:outputText style="font-weight: normal;;font-size: 15px" value="Description : #{product.comment}" />
+
+                            </h:panelGrid>
+
+                            <br></br>
+                            <h:panelGrid  columns="4" width="100%"  columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="font-weight: normal; font-weight: bold; font-size: 13px" >
+
+                                <h:outputText value="Posted : #{product.createdOnDate}" >
+                                    <f:convertDateTime type="date" dateStyle="full"/>
+                                </h:outputText>
+                                <h:link width="33%"  value = "Find Builders" class="pi pi-user" outcome = "builders.xhtml" style="font-weight: bold; font-size: 14px;color:block; margin-right: 50px; " />
+                                <h:link width="33%"  value = "Find Agents"  class="pi pi-user" outcome = "agents.xhtml" style="font-weight: bold; font-size: 14px;color:block; margin-right: 50px;" />
+                                <h:link width="33%"  value = "Enquiry" class="pi pi-user" outcome = "enquiry.xhtml" style="font-weight: bold; font-size: 14px;color:block; margin-right: 50px; " />
+                            </h:panelGrid>
+                        </p:panel>
+                        <br></br>
+                    </p:dataScroller>
+                    </h:panelGrid>
+
+
+                    <h:panelGrid   columns="1" style="width: 80%; text-align: center"  rendered="#{agentPropertyService.agriculturalModelList.size() > 0}">
+                    <br></br>
+                    <center>
+                        <font size="4" color="blue" style="text-align: center;"> Agriculture Details  </font>
+                    </center>
+                    <br></br>
+
+                    <p:dataScroller  value="#{agentPropertyService.agriculturalModelList}" var="product" chunkSize="10"  >
+
+                        <p:panel  style="width: 100%; height:340px; box-shadow: 10px 10px 5px grey; " >
+
+
+                            <h:panelGrid   columns="3" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
+                                <h:outputText style="font-weight: bold;color: green;font-size:15px;" value=" Owner Name  : #{product.ownerName}" />
+                                <h:outputText style="font-weight: bold;color: black; font-size:15px; float:right" value="Cost : Negotiation" />
+                                <h:outputText class="pi pi-globe" style="font-weight: bold;color: brown;font-size:15px; float:right" value="  Sales for Agricultural Land in #{product.primLocation}  ,  #{product.secoLocation}" />
+                            </h:panelGrid>
+
+                            <h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
+                                <p:graphicImage width="250" height="200" stream="false" cache="false" styleClass="rounded-image" value="#{product.streamedContent}" />
+
+                                <h:outputText style="font-weight: bold;color: red;font-size: 15px"  value="Rs #{product.totalPrice}" />
+                                <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;">
+
+                                    <h:outputText style="font-weight: normal;color:block;font-size:11px;" value=" Per Acre  : " />
+                                    <h:outputText style="font-weight: normal;color: block;font-size: 11px;" value="#{product.perCent}" />
+
+                                    <h:outputText  style="font-weight:normal;color:block;font-size:11px;" value=" Total Acres  :  " />
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px;" value="#{product.numberCents}" />
+
+                                    <h:outputText style="font-weight:normal;color:block;font-size:11px;" value=" Survey Number  :  "/>
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px;" value="#{product.surveyNo}"/>
+
+
+                                </h:panelGrid>
+                                <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;">
+                                    <h:outputText style="font-weight:normal;font-size:11px;" value=" Contact Name : " />
+                                    <h:outputText  style="font-weight: normal; font-size: 11px;" value="#{product.agentName}" />
+
+                                    <h:outputText style="font-weight:normal;font-size:11px;" value=" Contact Number : " />
+                                    <h:outputText  rendered="#{userRoleService.userRole.contains('Contact Num')? true : false }" style="font-weight: normal; font-size: 11px;" value="#{product.contactNo}" />
+                                    <h:outputText  rendered="#{userRoleService.userRole.contains('Contact Num')? false : true }" style="font-weight: normal; font-size: 11px" value=" -- " />
+
+                                    <h:outputText style="font-weight:normal;font-size:11px;" value=" Ownership : " />
+                                    <h:outputText style="font-weight: normal; font-size: 11px;" value="#{product.wonership}" />
+
+                                    <h:outputText style="font-weight:normal;font-size:11px;" value=" Transaction : " />
+                                    <h:outputText  style="font-weight: normal; font-size: 11px;" value="#{product.transaction}" />
+
+
+                                </h:panelGrid>
+                                <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;">
+
+                                    <h:outputText style="font-weight:normal;font-size:11px;" value=" Water Source : " />
+                                    <p:graphicImage  rendered="#{product.waterSource eq 'No Water'}" width="25" height="25" name="images/icons/notwater.jpg" />
+                                    <p:graphicImage  rendered="#{product.waterSource eq 'Bore Well'}" width="25" height="25" name="images/icons/borewell.jpg" />
+                                    <p:graphicImage  rendered="#{product.waterSource eq 'Channel'}" width="25" height="25" name="images/icons/waterchannel.jpg" />
+
+                                    <h:outputText style="font-weight:normal;font-size:11px;" value=" Crop : " />
+                                    <p:graphicImage  rendered="#{product.crop eq 'Yes'}" width="25" height="25" name="images/yes.jpg" />
+                                    <p:graphicImage  rendered="#{product.crop eq 'No'}" width="25" height="25" name="images/no.jpg" />
+
+                                    <h:outputText style="font-weight:normal;font-size:11px;" value=" Power Supply : " />
+                                    <p:graphicImage  rendered="#{product.crop eq 'Yes'}" width="25" height="25" name="images/yes.jpg" />
+                                    <p:graphicImage  rendered="#{product.crop eq 'No'}" width="25" height="25" name="images/no.jpg" />
+
+                                </h:panelGrid>
+
+                            </h:panelGrid>
+
+                            <h:panelGrid   columns="1" width="100%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right">
+                                <h:outputText style="font-weight: normal; font-size: 15px" value="Location : #{product.location}" />
+                                <h:outputText style="font-weight: normal;color: black ;font-size: 15px" value="Description : #{product.comment}" />
+
+                            </h:panelGrid>
+
+                            <h:panelGrid   columns="6" width="100%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" >
+
+
+                                <h:outputText value="Posted : #{product.createdOnDate}" >
+                                    <f:convertDateTime type="date" dateStyle="full"/>
+                                </h:outputText>
+                                <h:link  value = "Find Builders" class="pi pi-user" outcome = "builders.xhtml" style="font-weight: bold; font-size: 14px;color:block;  " />
+                                <h:link  value = "Find Agents"  class="pi pi-user" outcome = "agents.xhtml" style="font-weight: bold; font-size: 14px;color:block;" />
+                                <h:link  value = "Enquiry" class="pi pi-user" outcome = "enquiry.xhtml" style="font-weight: bold; font-size: 14px;color:block;" />
+
+
+                            </h:panelGrid>
+
+                        </p:panel>
+                        <br></br>
+
+                    </p:dataScroller>
+                    </h:panelGrid>
+
+
+                    <h:panelGrid   columns="1" style="width: 80%; text-align: center"  rendered="#{agentPropertyService.individualSiteList.size() > 0}">
+                    <br></br>
+                    <center>
+                        <font size="4" color="blue" style="text-align: center;"> Individual Details  </font>
+                    </center>
+                    <br></br>
+
+                    <p:dataScroller  value="#{agentPropertyService.individualSiteList}" var="product" chunkSize="10"  >
+
+                        <p:panel  style="width: 100%; height:300px; box-shadow: 10px 10px 5px grey; margin: auto; text-align: center;font-style: normal" >
+
+                            <h:panelGrid   columns="4" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
+
+
+                                <h:outputText style="font-weight: bold;color: green;font-size:15px;" value=" #{product.ownerName}" />
+                                <h:outputText style="font-weight: bold;color: block; font-size:15px; float:right" value="Cost : Negotiation" />
+                                <h:outputText class="pi pi-globe" style="font-weight: bold;color: brown;font-size:15px; float:right" value=" Sales for Individual Site in #{product.primLocation }   ,  #{product.secoLocation}" />
+                            </h:panelGrid>
+
+                            <h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
+                                <p:graphicImage width="250" height="200" stream="false" cache="false" styleClass="rounded-image" value="#{product.streamedContent}" />
+
+
+
+                                <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;">
+
+
+
+
+                                    <h:outputText  style="font-weight: normal;color: blue;font-size: 11px" value=" Per Sqft : " />
+                                    <h:outputText style="font-weight: normal;color: blue;font-size: 11px" value="#{product.persqft}" />
+
+                                    <h:outputText  style="font-weight: normal;color: blue;font-size: 11px" value=" Dimensiond : "/>
+                                    <h:outputText  style="font-weight: normal;color: blue;font-size: 11px" value="#{product.length} X #{product.width}"/>
+
+                                    <h:outputText  style="font-weight: normal;color: blue;font-size: 11px" value=" Plot Area : " />
+                                    <h:outputText  style="font-weight: normal;color: blue;font-size: 11px" value="#{product.length*product.width}" />
+
+                                    <h:outputText  style="font-weight: normal;color: blue;font-size: 11px" value=" Site Number  :  "/>
+                                    <h:outputText  style="font-weight: normal;color: blue;font-size: 11px" value="#{product.siteNo}"/>
+
+                                    <h:outputText  style="font-weight: normal;color: blue;font-size: 11px" value=" Facing : "/>
+                                    <h:outputText  style="font-weight: normal;color: blue;font-size: 11px" value="#{product.facing}"/>
+
+
+                                </h:panelGrid>
+
+                                <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;">
+
+                                    <h:outputText  style="font-weight: normal; font-size: 11px" value=" Contact Name : " />
+                                    <h:outputText  style="font-weight: normal; font-size: 13px" value="#{product.agentName}" />
+
+                                    <h:outputText  style="font-weight: normal; font-size: 11px" value=" Contact Number : " />
+                                    <h:outputText  rendered="#{userRoleService.userRole.contains('Contact Num')? true : false }" style="font-weight: normal; font-size: 13px" value="#{product.contactNo}" />
+                                    <h:outputText  rendered="#{userRoleService.userRole.contains('Contact Num')? false : true }" style="font-weight: normal; font-size: 11px" value=" -- " />
+
+                                    <h:outputText style="font-weight: normal; font-size: 11px" value=" Wonership : " />
+                                    <h:outputText style="font-weight: normal; font-size: 13px" value="#{product.wonership}" />
+
+                                    <h:outputText  style="font-weight: normal; font-size: 11px" value=" Transaction : " />
+                                    <h:outputText  style="font-weight: normal; font-size: 13px" value="#{product.transaction}" />
+                                </h:panelGrid>
+
+
+
+
+                                <h:panelGrid   columns="1" width="60%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right">
+                                    <h:outputText style="font-weight: bold;color: red;font-size: 15px"  value="Rs #{product.totalPrice}" />
+                                 </h:panelGrid>
+
+
+                            </h:panelGrid>
+
+
+                            <h:panelGrid   columns="1" width="100%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right">
+                                <h:outputText style="font-weight: normal; font-size: 15px" value="Location : #{product.location}" />
+                                <h:outputText style="font-weight: normal;color: black ;font-size: 15px" value="Description : #{product.comment}" />
+
+                            </h:panelGrid>
+                            <br></br>
+                            <h:panelGrid  columns="4" width="100%"  columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="font-weight: normal; font-weight: bold; font-size: 13px" >
+
+                                <h:outputText value="Posted : #{product.createdOnDate}" >
+                                    <f:convertDateTime type="date" dateStyle="full"/>
+                                </h:outputText>
+                                <h:link  value = "Find Builders" class="pi pi-user" outcome = "builders.xhtml" style="font-weight: normal; font-weight: bold; font-size: 13px;color:block;float: right; margin-right: 50px;" />
+                                <h:link  value = "Find Agents"  class="pi pi-user" outcome = "agents.xhtml" style="font-weight: normal; font-weight: bold; font-size: 13px;color:block;float: right; margin-right: 50px;" />
+                                <h:link  value = "Enquiry" class="pi pi-user" outcome = "enquiry.xhtml" style="font-weight: normal; font-weight: bold; font-size: 13px;color:block;float: right; margin-right: 50px;" />
+
+                            </h:panelGrid>
+                 </p:panel>
+                        <br></br>
+                    </p:dataScroller>
+                    </h:panelGrid>
+
+
+                    <h:panelGrid   columns="1" style="width: 80%; text-align: center"  rendered="#{agentPropertyService.villaModel.size() > 0}">
+                    <br></br>
+                    <center>
+                        <font size="4" color="blue" style="text-align: center;"> Villa Details  </font>
+                    </center>
+                    <br></br>
+
+                    <p:dataScroller  value="#{agentPropertyService.villaModel}" var="product" chunkSize="10"  >
+                        <p:panel  style="width: 100%; height:300px; box-shadow: 10px 10px 5px grey; margin: auto; text-align: center;font-style: normal" >
+
+                            <h:panelGrid   columns="4" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
+                                <h:outputText style="font-weight: normal; font-weight: bold; color: green;font-size:13px;" value="#{product.i_am} : #{product.owner_name}" />
+                                <h:outputText style="font-weight: normal; font-weight: bold; color: block; font-size:13px; float:right; " value="#{product.bed_rooms} BHK #{product.property_type} for Sale in #{product.prim_location} ,  #{product.seco_location}" />
+                                <h:outputText class="pi pi-globe" style="font-weight: normal; font-weight: bold; color: brown;font-size:13px; float:right; " value=" Residential Villa/Flats for Sale in #{product.prim_location},  #{product.seco_location}" />
+                            </h:panelGrid>
+
+
+
+                            <h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
+
+                                <p:graphicImage width="250" height="200" stream="false" cache="false" styleClass="rounded-image" value="#{product.streamedContent}" />
+
+
+
+                                <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;">
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px;" value=" #{product.i_am} : " />
+                                    <h:outputText style="font-weight: normal;color: block;font-size: 11px; " value="#{product.owner_name}" />
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px; " value=" Contact : "/>
+                                    <h:outputText  rendered="#{userRoleService.userRole.contains('Contact Num')? true : false }" style="font-weight: normal;color: block;font-size: 11px; " value="#{product.contact_owner}"/>
+                                    <h:outputText  rendered="#{userRoleService.userRole.contains('Contact Num')? false : true }" style="font-weight: normal; font-size: 11px" value=" -- " />
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px; " value=" Email : "/>
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px; " value="#{product.email}"/>
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px; " value="Availability Date : " />
+                                    <h:outputText style="font-weight: normal;color: block;font-size: 11px; " value="#{product.avail_date}"/>
+
+
+
+                                </h:panelGrid>
+
+
+                                <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;">
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Road width : " />
+                                    <h:outputText style="font-weight: normal;color: block;font-size: 11px" value="#{product.road_width}" />
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Floors : "/>
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.floors}"/>
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Bed Rooms : "/>
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.bed_rooms}"/>
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Bath Rooms : "/>
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.bath_rooms}"/>
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Furnished : "/>
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.furnished}"/>
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Floor Number : "/>
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.floorNum}"/>
+                                </h:panelGrid>
+
+
+                                <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;">
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Flat Area : " />
+                                    <h:outputText style="font-weight: normal;color: block;font-size: 11px" value="#{product.plot_area}" />
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Super Buildup Area : "/>
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.s_build_are}"/>
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Property Available : "/>
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.pro_avail}"/>
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Per sqft Cost : "/>
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.persqft}"/>
+
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value=" Total feets : "/>
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 11px" value="#{product.total_feets}"/>
+                                </h:panelGrid>
+
+                                <h:panelGrid   columns="1" width="60%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right">
+                                    <h:outputText style="font-weight: bold;color: red;font-size: 15px"  value="Rs #{product.cost}" />
+
+
+
+                                </h:panelGrid>
+
+
+                            </h:panelGrid>
+
+
+
+                            <h:panelGrid   columns="1" width="100%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right">
+                                <h:outputText style="font-weight: normal; font-size: 15px" value="Location : #{product.address}" />
+                                <h:outputText style="font-weight: normal;color: black ;font-size: 15px" value="Description : #{product.comment}" />
+                            </h:panelGrid>
+
+
+                            <br></br>
+                            <h:panelGrid  columns="4" width="100%"  columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="font-weight: normal; font-weight: bold; font-size: 13px" >
+                                <h:outputText value="Posted : #{product.create_date}" >
+                                    <f:convertDateTime type="date" dateStyle="full"/>
+                                </h:outputText>
+
+                                <h:link  value = "Find Builders" class="pi pi-user" outcome = "builders.xhtml" style="font-weight: normal; font-weight: bold; font-size: 13px;color:block;float: right; margin-right: 50px;" />
+                                <h:link  value = "Find Agents"  class="pi pi-user" outcome = "agents.xhtml" style="font-weight: normal; font-weight: bold; font-size: 13px;color:block;float: right; margin-right: 50px;" />
+                                <h:link  value = "Enquiry" class="pi pi-user" outcome = "enquiry.xhtml" style="font-weight: normal; font-weight: bold; font-size: 13px;color:block;float: right; margin-right: 50px;" />
+
+                            </h:panelGrid>
+
+
+
+                        </p:panel>
+                    </p:dataScroller>
+                    </h:panelGrid>
+
+
+                </h:form>
+
+
+
+            </div>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

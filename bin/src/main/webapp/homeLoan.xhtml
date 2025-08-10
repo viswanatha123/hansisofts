@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      
+   <h:head>
+   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
+   <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+   <link href="resources/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+   <link href="resources/css/demo/demo.css" rel="stylesheet" />
+   </h:head>
+  
+   <h:body>
+  <ui:composition template="/WEB-INF/facelets/template.xhtml" style="background-image: url('back1.jpg'); ">
+  <ui:param name="page" value="Admin" />
+   <ui:define name="title"><p:outputLabel id="display1" style="color: black">Home loan Registration &nbsp;</p:outputLabel><p:outputLabel id="display2" style="color: red">FREE</p:outputLabel>
+   <p>HomeLoan DataEntry</p>
+  <div class="card">
+  			
+  <h:form  id="form" enctype="multipart/form-data">
+  <p:messages id="msgs"/>
+   <br></br>
+  		 <p:panel>   
+                <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                    <h:outputText style="font-weight: bold;color: green" value="#{HomeLoanDataEntryService.updateResult}" />
+                </p:panelGrid>
+             </p:panel>
+             
+             <p:panel style="background-image: url('back1.jpg'); ">   
+                <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
+                	<p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                    
+                    
+                       
+                    <p:outputLabel style="font-weight: bold" indicateRequired="true" value="Agent Name : " />
+                    <p:inputText id="agentName" required="true" value="#{HomeLoanDataEntryService.agentName}" >
+                    </p:inputText>
+                    <p:message for="agentName" display="icon"/>
+                    
+                    <p:outputLabel style="font-weight: bold" value=" Age : " />
+                    <p:inputNumber id="age" required="true"  maxlength="2" maxValue="99" value="#{HomeLoanDataEntryService.age}" >
+                    </p:inputNumber>
+                    <p:message for="age" display="icon"/>
+                    
+                    <p:outputLabel required="true" style="font-weight: bold" for="gender"  value=" Gender : " />
+                    <p:selectOneRadio id="gender" value="#{HomeLoanDataEntryService.gender}" layout="lineDirection">
+                         <f:selectItem itemLabel="Male" itemValue="Male" />
+			             <f:selectItem itemLabel="Female" itemValue="Female" />
+			             </p:selectOneRadio>
+					        <p:message for="gender" display="icon"/>  
+			        
+			        
+                    
+                    <p:outputLabel style="font-weight: bold" for="contactNo" indicateRequired="true" value="Contact NO : " />
+                    <p:inputMask id="contactNo"  mask="9999999999" required="true"  maxlength="10" value="#{HomeLoanDataEntryService.contactNo}" >
+                    </p:inputMask>
+                    <p:message for="contactNo" display="icon"/>
+                                        
+                    <p:outputLabel style="font-weight: bold; font-size: 14px;color:black; text-align:left;" value="Email : " />
+		            <p:inputText id="email"  size="30" value="#{HomeLoanDataEntryService.email}"  validatorMessage="Invalid email format">
+		            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+		            </p:inputText>
+		            <p:message for="email" display="icon"/>
+		            
+		            <p:outputLabel style="font-weight: bold" value=" Loan Amt : " />
+                    <p:inputNumber id="loanAmt" required="true"   value="#{HomeLoanDataEntryService.loanAmt}" >
+                    </p:inputNumber>
+                    <p:message for="loanAmt" display="icon"/>
+                    
+                    <p:outputLabel style="font-weight: bold" value=" Monthly Inc : " />
+                    <p:inputNumber id="monthlyInc"  required="true"   value="#{HomeLoanDataEntryService.monthlyInc}" >
+                    </p:inputNumber>
+                    <p:message for="monthlyInc" display="icon"/>
+                    
+                    <p:outputLabel style="font-weight: bold" for="empType" value="Employment Type : " />
+                    <p:selectOneRadio id="empType" value="#{HomeLoanDataEntryService.empType}" layout="lineDirection">
+                         <f:selectItem itemLabel="Salaried" itemValue="Salaried" />
+		                 <f:selectItem itemLabel="Business " itemValue="Business "/>
+		                 <f:selectItem itemLabel="self employed professional" itemValue="self employed professional"/>
+		            </p:selectOneRadio>
+		            <p:message for="empType" display="icon"/>
+                                                
+                    
+                    
+			        <h:commandButton value="Submit"   type="submit" 
+                    process="@this"
+                    update="@form"
+                    actionListener="#{HomeLoanDataEntryService.upload}" >
+                    <p:resetInput target="form"/>
+   </h:commandButton>
+   
+   <h:commandButton id="discardChangesButton"
+                       process="@this"
+                       value="Clear"
+                           update="@form"
+                       actionListener="#{HomeLoanDataEntryService.clear()}" >
+                       
+       <p:resetInput target="form"/>
+   </h:commandButton>
+</p:panelGrid>                     
+  <p style="font-weight: bold;color: black; font-size: 18px"> Please provide Your Contact Details.</p>
+  <p style="font-weight: bold;color: black; font-size: 18px"> Please contact our customer care ,if any further assist required.</p>
+  <p style="font-weight: bold;color: black; font-size: 18px"> Customer care number : 8088471208.</p>
+  <p style="font-weight: bold;color: black; font-size: 18px">E-mail : customer.support@hansisofts.com</p>
+  <p:graphicImage width="102%"  height="400px" name="images/homeLoan.jpg" />
+  
+   
+</p:panelGrid>      
+    
+          
+       
+</p:panel>
+     
+                    
+                       
+            
+  <script type="text/javascript" src="resources/js/chatool.js"></script>          
+  </h:form>
+</div>
+</ui:define>
+</ui:composition>
+</h:body>
+</html>
