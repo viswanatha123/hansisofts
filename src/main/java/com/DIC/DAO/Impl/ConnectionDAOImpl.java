@@ -3,6 +3,9 @@ package com.DIC.DAO.Impl;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
+import framework.utilities.Constants;
+import framework.utilities.GeneralConstants;
+import framework.utilities.UtilConstants;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.file.UploadedFile;
@@ -134,8 +137,8 @@ public class ConnectionDAOImpl {
 			String SQL_PROMO_COUNT="select count(*) from promo_img where is_active ='1'";
 			String SQL_AGRI_COUNT="select count(*)  from hansi_agricultural where prim_location = ? and seco_location = ?";
 			String SQL_PROMO_IMAGE_VILLA="select * from promo_img where is_active ='1' LIMIT ? OFFSET ?";
-			String SQL_IMAGE_UPLOAD_GALARY="INSERT INTO prop_galary (galary_id,image, create_date, is_active, user_id) values (nextval('prop_galary_seq'), ?, current_timestamp,1, ?)";
-		
+			String SQL_IMAGE_UPLOAD_GALARY="INSERT INTO prop_galary (galary_id,image, create_date, is_active, user_id,prop_id,prop_type) values (nextval('prop_galary_seq'), ?, current_timestamp,1, ?, ?, ?)";
+			String SQL_LATEST_LAYOUT_ID="select layout_id from hansi_layout order by create_date desc limit 1";
 		}
                 
 	}
@@ -772,7 +775,9 @@ public class ConnectionDAOImpl {
 			System.out.println("Result status  - >" + res);
 			if (res > 0) {
 				succVal = "Successful updated record";
-				uploadGalary(plotsDataEntryModel, userId);
+				int layoutId=getLatestPropertyId();
+				System.out.println("Layout Layout id : "+layoutId);
+				uploadGalary(plotsDataEntryModel, userId,layoutId, GeneralConstants.PropertyType.layout );
 			}
            
         } catch (Exception e) {
@@ -790,10 +795,42 @@ public class ConnectionDAOImpl {
 
         return succVal;
     }
-    
+
+	//***************************getLatestPropertyid **************************
+
+	public int getLatestPropertyId()
+	{
+
+		int lyoutId=0;
+			try {
+				Connection con = null;
+				PreparedStatement pstmt = null;
+				con=ConnectionDAO.getConnection();
+				StringBuilder sq_latest_layout_id = new StringBuilder(Constants.SQL.SQL_LATEST_LAYOUT_ID);
+				pstmt = con.prepareStatement(sq_latest_layout_id.toString());
+				ResultSet rs = pstmt.executeQuery();
+				while ( rs.next() ) {
+					lyoutId=rs.getInt("layout_id");
+
+				}
+
+				pstmt.close();
+				rs.close();
+				con.close();
+				//log.info("### : *** Connection Closed from getActiveModelList()");
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.err.println(e.getClass().getName()+": "+e.getMessage());
+				log.error("An error occurred: {}", e.getMessage());
+			}
+		return lyoutId;
+		}
+
+
+
     //*********************************************
 
-	public void uploadGalary(PlotsDataEntryModel plotsDataEntryModel,  int userId)
+	public void uploadGalary(PlotsDataEntryModel plotsDataEntryModel,  int userId, int layoutId, int propType)
 	{
 		System.out.println("Database upload Image size :"+plotsDataEntryModel.getInputStreams().size());
 
@@ -805,16 +842,10 @@ public class ConnectionDAOImpl {
 			PreparedStatement pstmtGalary = con.prepareStatement(sql_image_upload_galary.toString());
 			List<InputStream> inputStream = plotsDataEntryModel.getInputStreams();
 			for (int i = 0; i < plotsDataEntryModel.getInputStreams().size(); i++) {
-
-				if(inputStream.get(i)==null)
-				{
-					System.out.println("******************************** null ************************");
-				}
-				else {
-					System.out.println("******************************** Not null ************************");
-				}
 				pstmtGalary.setBinaryStream(1, inputStream.get(i));
 				pstmtGalary.setInt(2, userId);
+				pstmtGalary.setInt(3, layoutId);
+				pstmtGalary.setInt(4, propType);
 				int x = pstmtGalary.executeUpdate();
 			}
 
