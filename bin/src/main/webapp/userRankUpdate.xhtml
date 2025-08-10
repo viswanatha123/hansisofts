@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+       <h:body>
+		<h:form>
+        
+  <ui:composition template="/WEB-INF/facelets/template.xhtml">
+  <ui:param name="page" value="Layout Details" />
+  <ui:define name="title"><p style="font-weight: bold; color:blue; font-size:15px">Rank update</p>
+  <p>Provide user id and click on submit button</p>
+  <div class="card">
+  <h:form id="form">
+  <p:messages id="msgs"/>
+  <br></br>
+  
+  
+  
+  
+  			<table width="100%">
+  			 <tr>
+  			 		<c:if test="#{userRankUpdateService.statusMessage == 0}">
+  			 				<h:outputText style="font-weight: bold;color: red ; font-size: 17px" value="User does not exist." />
+  			 		</c:if>
+  			 		<c:if test="#{userRankUpdateService.statusMessage > 0}">
+  			 				<h:outputText style="font-weight: bold;color: green ; font-size: 17px" value="Successful updated rank." />
+  			 		</c:if>
+  			 </tr>	
+  			 <tr>
+  			 <br></br><br></br>
+  			 </tr>
+  		  			
+  			 <tr>
+  
+  					<table width="50%">
+	              			<tr>
+		                        <td> 
+		                           <p:outputLabel for="userid" style="font-weight: bold; color:block" indicateRequired="true" value="Enter User Id  : " /> 
+		                        </td>
+		                        <td> 
+		                           <p:inputNumber id="userid" value="#{userRankUpdateService.userId}" required="true" requiredMessage="Provide uesr id" placeholder=""  modifyValueOnWheel="false">
+					               </p:inputNumber>
+					           </td>
+					           <td>
+					               <h:commandButton value="Search"  type="submit"  actionListener="#{userRankUpdateService.getUserDetials}" />
+					               
+					               
+					                <h:commandButton id="discardChangesButton"
+	                                   process="@this"
+	                                   value="Clear"
+                                           update="@form"
+	                                   actionListener="#{userRankUpdateService.clear()}" >
+	                                   
+					                   <p:resetInput target="form"/>
+					               </h:commandButton>
+		                       </td> 
+		                        
+		                   </tr>  
+	                   </table>
+	                   <br></br><br></br>
+	                   <table width="50%">
+	                   		<tr>
+	                   			<td>First Name : <h:outputText style="color: green ; font-size: 15px" value="#{userRankUpdateService.fName}" /></td>
+	                   			<td>Last Name  : <h:outputText style="color: green ; font-size: 15px" value="#{userRankUpdateService.lName}" /></td>
+	                   		</tr>
+	                   </table>
+	                   <br></br><br></br>
+	                   
+	                   <c:if test="#{userRankUpdateService.userName != null}"> 
+			                   <table width="50%" border="1">
+			                   		<tr>
+			                   			<td>Select Rank : <h:outputText style="color: green ; font-size: 15px"  /></td>
+			                   			<td>
+			                      			 
+			                                 <p:selectOneMenu id="playground" value="#{userRankUpdateService.rank}" style="width:150px">
+			                                 <f:selectItem itemLabel="0" itemValue="0"/>  
+				                             <f:selectItem itemLabel="1" itemValue="1"/>
+				                             <f:selectItem itemLabel="2" itemValue="2"/>
+				                             <f:selectItem itemLabel="3" itemValue="3"/>
+				                             </p:selectOneMenu>
+				                             <br></br><br></br>
+				                             
+				                             
+				                             <h:commandButton value="Update Rank"  type="submit"  actionListener="#{userRankUpdateService.updateRank}" process="@this" update=":form:form">
+                                        				
+                   						     </h:commandButton>
+				                            
+			                            </td>
+			                   		</tr>
+			                   </table>
+	                   </c:if>
+	                   
+  			</tr>
+  			</table>
+  
+  <script type="text/javascript" src="resources/js/chatool.js"></script>
+  </h:form>
+  </div>
+  </ui:define>
+  </ui:composition>
+  </h:form>
+  </h:body>
+  </html>

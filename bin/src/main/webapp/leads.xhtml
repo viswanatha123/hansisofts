@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+       <h:body>
+       
+  <ui:composition template="/WEB-INF/facelets/template.xhtml">
+  <ui:param name="page" value="Leads" />
+  <ui:define name="title" >
+  <p>Leads</p>
+  <br></br>
+  <div class="card">
+  
+  <h:form  id="lead">
+	          <p:dataTable id="product" widgetVar="dtProducts" var="product"   value="#{leadsService.allPropertyListVal}" editable="true"  style="margin-bottom:20px" 
+				reflow="true" styleClass="products-table" selection="#{crudView.selectedProperty}"
+                 rowKey="#{product.propId}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom" >
+						  
+						 						  
+			            
+			              <p:column headerText="Property Name">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.propName}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="name" value="#{product.propName}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			                <p:column headerText="Property Type">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.propType}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="proptype" value="#{product.propType}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               <p:column headerText="Property Cost">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.cost}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="cost" value="#{product.cost}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               <p:column headerText="Primary Location">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.primLocation}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="primLocation" value="#{product.primLocation}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               <p:column headerText="Secondary Location">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.secoLocation}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="secoLocation" value="#{product.secoLocation}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			               <p:column headerText="Created Date">
+			                
+			                        <h:outputText value="#{product.createdOnDate}"/>
+			              </p:column>
+			              <p:column headerText="Lead Update">
+			                
+			                        <h:outputText value="#{product.leadUpdate}"/>
+			              </p:column>
+			              
+			              <p:column headerText="Leads Disabled" rendered="#{userRoleService.userRole.contains('Lead')? false : true }" style="font-weight: bold;color: red;font-size: 15px">
+			              </p:column>
+			               
+			               <p:column headerText="Leads Enabled" rendered="#{userRoleService.userRole.contains('Lead')? true : false }" style="font-weight: bold;color: block;font-size: 15px">
+			               <p:commandButton value="---#{product.count}-->" icon="ui-icon-calculator" style="background:#00FF00;font-weight: bold;color: black;font-size: 15px" 
+			                                 process="@this" update="@form"
+			                                 oncomplete="PF('leadsDialog').show()" action="#{leadsService.propVal}">
+			                    <f:setPropertyActionListener value="#{product}" target="#{leadsService.selectedProperty}" />
+			                </p:commandButton>
+			              </p:column> 
+				 </p:dataTable>
+				 
+				 
+				 
+						<p:messages id="msgs"/>
+						   <p:dialog header="Leads" id="leadid" widgetVar="leadsDialog" minHeight="700" width="900" showEffect="fade">
+							 	
+							             						                
+							                
+							          <p:dataTable var="product" value="#{leadsService.leadModelList}" style="font-weight: normal;color: block;font-size: 12px" >
+								            <p:column headerText="Lead Name">
+								                <h:outputText value="#{product.leadName}" />
+								            </p:column>
+								
+								            <p:column headerText="Lead Contact">
+								                <h:outputText value="#{product.leadContact}" />
+								            </p:column>
+								            
+								            <p:column headerText="Lead Email" width="40%">
+								                <h:outputText value="#{product.leadEmail}" />
+								            </p:column>
+								            
+								             <p:column headerText="Created Date">
+								                <h:outputText value="#{product.create_date}" />
+								            </p:column>
+								            
+								            <p:column headerText="Comment">
+								                <h:outputText value="#{product.comment}" />
+								            </p:column>
+								            
+								        </p:dataTable>
+	          				            
+						               
+						   
+						   </p:dialog>
+	<script type="text/javascript" src="resources/js/chatool.js"></script>
+	</h:form>
+  
+  
+  </div>
+  </ui:define>
+  </ui:composition>
+  </h:body>
+  </html>

@@ -46,9 +46,7 @@ import org.primefaces.model.StreamedContent;
 import org.primefaces.model.file.UploadedFile;
 
 
-
-
-
+import org.primefaces.model.file.UploadedFiles;
 import org.primefaces.util.EscapeUtils;
 
 @ManagedBean(name="plotsDataEntryService")
@@ -84,13 +82,14 @@ public class PlotsDataEntryService implements Serializable{
   	  private int userId;
   	  private String cornerBit;
 
-      
   	  private String country;   
 	  private String city;  
 	  private Map<String, String> primaryModel;
 	  private Map<String,String> primLocation; 
 	  private TreeMap<String, String> primLocationSort;
 	  private List<String> secondryLocation;
+
+	  private UploadedFiles filesx;
 	  	  
 	  
 	   ConnectionDAOImpl dao;
@@ -161,35 +160,45 @@ public class PlotsDataEntryService implements Serializable{
 	            try {
 	            	
 	                log.info("Selected county and city ---------->:"+country+"     "+city);
-	  	         
-	  	          PlotsDataEntryModel plotsDataEntryModel=new PlotsDataEntryModel();
-	  	          plotsDataEntryModel.setName(name);
-	  	          plotsDataEntryModel.setLocation(location);
-	  	          plotsDataEntryModel.setPersqft(persqft);
-	  	          plotsDataEntryModel.setContactOwner(contactOwner);
-	  	          plotsDataEntryModel.setOwnerName(ownerName);
-	  	          plotsDataEntryModel.setWonership(wonership);
-	  	          plotsDataEntryModel.setTransaction(transaction);
-	  	          plotsDataEntryModel.setComment(comment);
-	  	          plotsDataEntryModel.setLength(length);
-	  	          plotsDataEntryModel.setWidth(width);
-	  	       
-	  	          plotsDataEntryModel.setPrimLocation(country);
-	  	          plotsDataEntryModel.setSecoLocation(city);
-	  	          plotsDataEntryModel.setSwimingPool(swimingPool);
-	  	          plotsDataEntryModel.setPlayground(playground);
-	  	          plotsDataEntryModel.setPark(park);
-	  	          plotsDataEntryModel.setWall(wall);
-	  	          plotsDataEntryModel.setCommunity(community);
-	  	          plotsDataEntryModel.setFacing(facing);
-	  	          plotsDataEntryModel.setAgentName(agentName);
-	  	          plotsDataEntryModel.setInputStream(file.getInputStream());
-	  	          plotsDataEntryModel.setFile(file);
-	  	          plotsDataEntryModel.setCornerBit(cornerBit);
-	  	          
-	  	    
-	  	          
-	  	          		HttpSession session = SessionUtils.getSession();
+
+					PlotsDataEntryModel plotsDataEntryModel = new PlotsDataEntryModel();
+					plotsDataEntryModel.setName(name);
+					plotsDataEntryModel.setLocation(location);
+					plotsDataEntryModel.setPersqft(persqft);
+					plotsDataEntryModel.setContactOwner(contactOwner);
+					plotsDataEntryModel.setOwnerName(ownerName);
+					plotsDataEntryModel.setWonership(wonership);
+					plotsDataEntryModel.setTransaction(transaction);
+					plotsDataEntryModel.setComment(comment);
+					plotsDataEntryModel.setLength(length);
+					plotsDataEntryModel.setWidth(width);
+
+					plotsDataEntryModel.setPrimLocation(country);
+					plotsDataEntryModel.setSecoLocation(city);
+					plotsDataEntryModel.setSwimingPool(swimingPool);
+					plotsDataEntryModel.setPlayground(playground);
+					plotsDataEntryModel.setPark(park);
+					plotsDataEntryModel.setWall(wall);
+					plotsDataEntryModel.setCommunity(community);
+					plotsDataEntryModel.setFacing(facing);
+					plotsDataEntryModel.setAgentName(agentName);
+					plotsDataEntryModel.setInputStream(file.getInputStream());
+					plotsDataEntryModel.setFile(file);
+					plotsDataEntryModel.setCornerBit(cornerBit);
+
+					System.out.println("Service Upload image size :" + filesx.getFiles().size());
+					List<InputStream> inputStreams = new ArrayList<>();
+					List<UploadedFile> files = new ArrayList<>();
+					for (UploadedFile f : filesx.getFiles()) {
+						if (f.getSize() > 0) {
+							inputStreams.add(f.getInputStream());
+							files.add(file);
+						}
+					}
+					plotsDataEntryModel.setInputStreams(inputStreams);
+					plotsDataEntryModel.setFiles(files);
+
+	          		HttpSession session = SessionUtils.getSession();
 				       	if (session != null)
 				    	{
 				    		if(session.getAttribute("userId")!=null)
@@ -552,7 +561,11 @@ public class PlotsDataEntryService implements Serializable{
 				this.cornerBit = cornerBit;
 			}
 
-			
-	      
+			public UploadedFiles getFilesx() {
+				return filesx;
+			}
 
+			public void setFilesx(UploadedFiles filesx) {
+				this.filesx = filesx;
+			}
 }

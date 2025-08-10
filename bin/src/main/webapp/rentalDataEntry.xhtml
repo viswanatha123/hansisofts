@@ -1,0 +1,223 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      
+      <h:head>
+        
+      <!-- Bootstrap and PrimeFaces javascripts -->
+        <h:outputScript library="primefaces" name="jquery/jquery.js"/>
+        <h:outputScript name="bootstrap.min.js" library="js"/>
+		
+      
+          <!-- Stylesheets -->
+        <h:outputStylesheet name="logo-nav.css" library="css"/>
+        <h:outputStylesheet name="bootstrap.min.css" library="css"/>
+		
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/favicon.ico"/>
+
+     
+     
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    DIC Admin Tool
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+  <!-- CSS Files -->
+ <link href="resources/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="resources/css/demo/demo.css" rel="stylesheet" />
+  </h:head>
+  
+  
+  
+       <h:body>
+
+        
+  <ui:composition template="/WEB-INF/facelets/template.xhtml">
+  <ui:param name="page" value="Admin" />
+  <ui:define name="title"><p:outputLabel id="display1" style="color: block">Post Property &nbsp;</p:outputLabel><p:outputLabel id="display2" style="color: red">FREE</p:outputLabel>
+  <p>Enter Rented Details</p>
+  <div class="card">
+  <h:form id="form" enctype="multipart/form-data">
+  <p:messages id="msgs"/>
+  
+  			<p:panel>   
+                <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                    <h:outputText style="font-weight: bold;color: green" value="#{rentalDataEntryService.updateResult}" />
+                </p:panelGrid>
+             </p:panel>
+             
+             <p:panel style="background-image: url('back1.jpg'); ">   
+             
+             <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+             
+                  <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                          
+			                    <p:outputLabel style="font-weight: bold" for="name" indicateRequired="true" value="Owner Name : " />
+			                    <p:inputText id="name"  value="#{rentalDataEntryService.own_name}" required="true" requiredMessage="Required Owner Name">
+			                    </p:inputText>
+			                    <p:message for="name" display="icon"/>
+			                    
+			                    <p:outputLabel style="font-weight: bold" value="Address : " />
+			                    <p:inputText id="address"  value="#{rentalDataEntryService.address}" >
+			                    </p:inputText>
+			                    <p:message for="address" display="icon"/>
+			                    
+			                    <p:outputLabel style="font-weight: bold" for="contactno" indicateRequired="true" value="Owner Contact No : " />
+			                    <p:inputMask id="contactno"  mask="9999999999"  value="#{rentalDataEntryService.own_con_no}" required="true" requiredMessage="Required Owner Contact No ">
+			                    			                    	
+			                    </p:inputMask>
+			                    <p:message for="contactno" display="icon"/>
+			                    
+			                    <p:outputLabel for="propertyType" value="Property Type : " />  
+			                            <p:selectOneMenu id="propertyType"  value="#{rentalDataEntryService.pro_type}"  style="width:150px">  
+			                                <f:selectItem itemLabel="House" itemValue="House"/>
+			                                <f:selectItem itemLabel="Plot" itemValue="Plot"/>
+			                                <f:selectItem itemLabel="Villa" itemValue="Villa"/>
+			                                <f:selectItem itemLabel="Land" itemValue="Land"/>
+			                                <f:selectItem itemLabel="Shop" itemValue="Shop"/>
+			                    		</p:selectOneMenu>
+			                    <p:message for="propertyType" display="icon"/>
+			                    
+			                    <p:outputLabel style="font-weight: bold" value="Total Bed Rooms : " />
+			                    <p:inputText id="totalBedRooms"  value="#{rentalDataEntryService.tot_bed_rooms}" >
+			                    </p:inputText>
+			                    <p:message for="totalBedRooms" display="icon"/>
+			                    
+			                    <p:outputLabel style="font-weight: bold" value="Total Floors : " />
+			                    <p:inputText id="totalFloors"  value="#{rentalDataEntryService.tot_floors}" >
+			                    </p:inputText>
+			                    <p:message for="totalFloors" display="icon"/>
+			                    
+			                    <p:outputLabel style="font-weight: bold" value="Total Bath Rooms : " />
+			                    <p:inputText id="totalBathRooms"  value="#{rentalDataEntryService.tot_bath_rooms}" >
+			                    </p:inputText>
+			                    <p:message for="totalBathRooms" display="icon"/>
+			                    
+			                    <p:outputLabel for="furniture" value="Furniture : " />  
+			                            <p:selectOneMenu id="furniture"  value="#{rentalDataEntryService.furniture}"  style="width:150px">  
+			                                <f:selectItem itemLabel="Furnished" itemValue="Furnished"/>
+			                                <f:selectItem itemLabel="Semi-Furnished" itemValue="Semi-Furnished"/>
+			                                <f:selectItem itemLabel="Un-Furnished" itemValue="Un-Furnished"/>
+			                    		</p:selectOneMenu>
+			                    <p:message for="furniture" display="icon"/>
+			                    
+			                    <p:outputLabel for="rentPrefered" value="Rent Prefered : " />  
+			                            <p:selectOneMenu id="rentPrefered"  value="#{rentalDataEntryService.rent_pref}"  style="width:150px">  
+			                                <f:selectItem itemLabel="Family" itemValue="Family"/>
+			                                <f:selectItem itemLabel="Bachelors" itemValue="Bachelors"/>
+			                                <f:selectItem itemLabel="Business" itemValue="Business"/>
+			                    		</p:selectOneMenu>
+			                    <p:message for="rentPrefered" display="icon"/>
+			                    
+			                    <p:outputLabel style="font-weight: bold" value="Security Deposit : " />
+			                    <p:inputText id="securityDeposit"  value="#{rentalDataEntryService.sec_depo}" >
+			                    </p:inputText>
+			                    <p:message for="securityDeposit" display="icon"/>
+			                    
+			                    <p:outputLabel style="font-weight: bold" value="Monthly Rent/Lease : " />
+			                    <p:inputText id="monthlyRent"  value="#{rentalDataEntryService.mon_rent}" >
+			                    </p:inputText>
+			                    <p:message for="monthlyRent" display="icon"/>
+			                    
+			                    <p:outputLabel for="kitchen" value="Kitchen Room : " />  
+			                            <p:selectOneMenu id="kitchen"  value="#{rentalDataEntryService.kitc_room}"  style="width:150px">  
+			                                <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+			                                <f:selectItem itemLabel="No" itemValue="No"/>
+
+			                    		</p:selectOneMenu>
+			                    <p:message for="kitchen" display="icon"/>
+			                    
+			                    <p:outputLabel for="facing" value="Facing : " />  
+			                            <p:selectOneMenu id="facing"  value="#{rentalDataEntryService.facing}"  style="width:150px">  
+			                                <f:selectItem itemLabel="--" itemValue="--"/>
+			                                <f:selectItem itemLabel="East" itemValue="East"/>
+			                                <f:selectItem itemLabel="West" itemValue="West"/>
+			                                <f:selectItem itemLabel="North" itemValue="North"/>
+			                                <f:selectItem itemLabel="South" itemValue="South"/>
+			                    		</p:selectOneMenu>
+			                    <p:message for="facing" display="icon"/>
+			                    
+			                    <p:outputLabel style="font-weight: bold" value="Total Area Sqft : " />
+			                    <p:inputText id="totalAreaSqft"  value="#{rentalDataEntryService.tot_area_sqft}" >
+			                    </p:inputText>
+			                    <p:message for="totalAreaSqft" display="icon"/>
+			                    
+		                  
+             
+                    
+		                     <p:outputLabel for="country" value="Primary Location : " />  
+		                        
+		                            <p:selectOneMenu id="country" value="#{rentalDataEntryService.country}"  style="width:150px" required="true" requiredMessage="Select Primary Location">  
+		                            <p:ajax listener="#{rentalDataEntryService.onCountryChange}" update="city" />  
+		                            <f:selectItem itemLabel="Select Primary Location" itemValue="" noSelectionOption="true" />  
+		                            <f:selectItems value="#{rentalDataEntryService.primLocationSort}" />  
+		                            </p:selectOneMenu>
+                     		<p:message for="country" display="icon"/>
+                     
+		                    <p:outputLabel for="city" style="width:170px" value="Secondary Location : " /> 
+		                            <p:selectOneMenu id="city" value="#{rentalDataEntryService.city}" style="width:150px" required="true" requiredMessage="Select Secondary Location">  
+		                            <f:selectItem itemLabel="Select Secondary Location" itemValue="" noSelectionOption="true" />  
+		                            <f:selectItems value="#{rentalDataEntryService.secondryLocation}" />  
+		                            </p:selectOneMenu> 
+                    		<p:message for="city" display="icon"/>
+                    		
+                    		<p:outputLabel style="font-weight: bold; width:210px;" value="Image Upload (JPG,PNG,JPEG): "   />
+                    		<p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                            <p:fileUpload id="image" value="#{rentalDataEntryService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/> 
+                            </p:panelGrid>
+                            <p:message for="image" display="icon"/>
+     
+                 			<p:outputLabel for="availDate" value="Availability Date : " />
+        					<p:datePicker id="availDate" value="#{rentalDataEntryService.avail_date}" showIcon="true" />
+                   			 <p:message for="availDate" display="icon"/>
+                       
+                       
+		                   <h:commandButton value="Submit"   type="submit" 
+		                                    process="@this"
+		                                    update="@form"
+		                                    actionListener="#{rentalDataEntryService.upload}" >
+		                                    <p:resetInput target="form"/>
+		                   </h:commandButton>
+                   
+		                   <h:commandButton id="discardChangesButton"
+			                                   process="@this"
+			                                   value="Clear"
+		                                           update="@form"
+			                                   actionListener="#{rentalDataEntryService.clear()}" >
+	                                   
+	                       <p:resetInput target="form"/>
+	                     </h:commandButton>
+                  </p:panelGrid> 
+                  
+                  <p style="font-weight: bold;color: black; font-size: 18px"> Please provide your Rental property details which you want to sell.</p>
+                  <p style="font-weight: bold;color: black; font-size: 18px"> Please contact our customer care ,if any further assist required.</p>
+                  <p style="font-weight: bold;color: black; font-size: 18px"> Customer care number : 8088471208.</p>
+                   <p style="font-weight: bold;color: black; font-size: 18px">E-mail : customer.support@hansisofts.com</p>
+                  <p:graphicImage width="105%"  height="400px" name="images/Rent.jpg" />
+                   
+               </p:panelGrid>   
+                  
+                  
+                  
+                                     
+           </p:panel>
+  <script type="text/javascript" src="resources/js/chatool.js"></script>  
+  </h:form>
+</div>
+</ui:define>
+</ui:composition>
+</h:body>
+</html>

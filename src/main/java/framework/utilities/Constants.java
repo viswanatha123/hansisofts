@@ -26,7 +26,7 @@ public class  Constants {
     	
 		
 	}
-	
+
 	public interface PropertyConstants
 	{
 		public static final String LAYOUT_SUBJECT="HansiSoft Solutions,,. New Layout listed..";
@@ -70,13 +70,11 @@ public class  Constants {
 	    public static String apiKey = "FtyePe5DffirXSPYmYRGldgAQb7x7CuyoO1o2fiqJdlPjXBFyy0JEu8HM5Nd";
 	    public static String route = "q";
 	    public static String flash = "1";
-	    
-	    
-	 	
-	
+
 	}
-	
-	
-	
+
+	public interface PropertyType {
+		public static final int LAYOUT=1;
+	}
 
 }

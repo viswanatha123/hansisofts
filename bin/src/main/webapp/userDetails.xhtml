@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+       <h:body>
+		<h:form>
+        
+  <ui:composition template="/WEB-INF/facelets/template.xhtml">
+  <ui:param name="page" value="" />
+  <ui:define name="title" ><p style="font-weight: bold; color:blue; font-size:15px"> User Details</p>
+  <p>All User details</p>
+  <div class="card">
+	<h:form id="form">
+	 <p:growl id="msgs" showDetail="true"/>
+  <br></br>
+  
+			<center>
+			  <font size="4" color="blue" style="text-align: center;">All User Details  </font>
+			</center>	
+					<br></br>	  
+						  
+				<p:dataTable id="product" widgetVar="dtProducts" var="product"   value="#{userDetailsService.userDetailsList}" editable="true"  style="margin-bottom:20px" 
+				reflow="true" styleClass="products-table" selection="#{crudView.selectedProducts}"
+            rowKey="#{product.userId}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom" >
+						  
+						  <p:ajax event="rowEdit" listener="#{userDetailsService.onRowEdit}" update=":form:msgs"/>
+            			  <p:ajax event="rowEditCancel" listener="#{userDetailsService.onRowCancel}" update=":form:msgs"/>
+            			  
+            		
+            			  
+            			  
+            			  <p:column headerText="User Id">
+			                        <h:outputText value="#{product.userId}"/>
+			              </p:column>
+			            
+			            
+			              <p:column headerText="First Name">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.fName}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="fName" value="#{product.fName}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			               <p:column headerText="Last Name">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.lName}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="lName" value="#{product.lName}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			               <p:column headerText="User Name">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.userName}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="useriName" value="#{product.userName}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			   		               
+			              <p:column headerText="Password Mask">
+			                        <h:outputText value="xxxxxxxxxxxxx"/>
+			              </p:column>
+			              
+			              <p:column headerText="Password Show" rendered="#{userRoleService.userRole.contains('Password Show')? true : false }">
+			                        <h:outputText value="#{product.userPassword}"/>
+			              </p:column>
+			               
+			               
+			               <p:column headerText="Address">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.address}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="address" value="#{product.address}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			               <p:column headerText="Phone No">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.phone}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="phone" value="#{product.phone}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			               
+			              <p:column headerText="Created Date">
+			                
+			                        <h:outputText value="#{product.create_date}"/>
+			              </p:column>
+			               
+			               
+			              <p:column headerText="Is Active">
+			                <p:cellEditor>
+			                    <f:facet name="output">
+			                        <h:outputText value="#{product.is_active}"/>
+			                    </f:facet>
+			                    <f:facet name="input">
+			                        <p:inputText id="isActive" value="#{product.is_active}" style="width:100%"/>
+			                    </f:facet>
+			                </p:cellEditor>
+			               </p:column>
+			               
+			            
+			            <p:column style="width:6rem" rendered="#{userRoleService.userRole.contains('User Edit')? true : false }">
+			                <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
+			            </p:column>
+			            
+			       
+				         <p:column exportable="false" rendered="#{userRoleService.userRole.contains('User Del')? true : false }">
+			               <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
+			                                 process="@this" 
+			                                 oncomplete="PF('deleteProductDialog').show()">
+			                    <f:setPropertyActionListener value="#{product}" target="#{userDetailsService.selectedProduct}" />
+			                </p:commandButton>
+			             </p:column>
+					
+				        
+			
+				            
+				            
+				</p:dataTable>
+				
+  
+   		<p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
+            message="Delete the product?" header="Confirm" severity="warn">
+            <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{userDetailsService.deleteProduct}"
+                process="@this" update=":form:product"
+                oncomplete="PF('deleteProductDialog').hide()" />
+            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                onclick="PF('deleteProductDialog').hide()" />
+        </p:confirmDialog>
+  
+  <script type="text/javascript" src="resources/js/chatool.js"></script>
+  </h:form>
+  
+</div>
+</ui:define>
+</ui:composition>
+</h:form>
+</h:body>
+</html>
