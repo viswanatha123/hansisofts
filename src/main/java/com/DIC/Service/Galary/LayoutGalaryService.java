@@ -7,12 +7,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 import java.util.List;
 
 @ManagedBean(name="layoutGalaryService")
-@ViewScoped
+@RequestScoped
 public class LayoutGalaryService implements Serializable {
 
     private static final Logger log = LogManager.getLogger(LayoutGalaryService.class);

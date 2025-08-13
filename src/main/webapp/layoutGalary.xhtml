@@ -18,13 +18,17 @@
             <div class="card">
                 <h:form id="mainForm">
 
-                    <div style="display: flex; justify-content: center; align-items: top; ">
-                        <p:dataScroller  value="#{layoutGalaryService.layoutGalaryModel}" var="product" chunkSize="10"  >
-                            <h:panelGrid   columns="2" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right" style="text-align: left;width: auto;">
-                                <p:graphicImage width="450" height="400"  cache="false" stream="false" value="#{product.streamedContent}" alt="Image"   />   />
-                            </h:panelGrid>
-                        </p:dataScroller>
-                    </div>
+
+                    <p:dataTable id="product" widgetVar="dtProducts" var="product"   value="#{layoutGalaryService.layoutGalaryModel}" editable="true"  style="margin-bottom:20px"
+                                 reflow="true" styleClass="products-table" selection="#{crudView.selectedProducts}"
+                                 rowKey="#{product.promoId}" paginator="true" rows="1" rowSelectMode="add" paginatorPosition="bottom" >
+
+                        <p:column headerText="Image">
+                            <h:panelGroup layout="block" style="display: flex; justify-content: center; align-items: center; width: 100%;">
+                            <p:graphicImage width="750" height="700" stream="false" cache="false" value="#{product.streamedContent}" />
+                            </h:panelGroup>
+                        </p:column>
+                    </p:dataTable>
 
                 </h:form>
             </div>
