@@ -4,13 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35b4d421-845a-4cfc-b9d4-d9661e08ac2d" name="Changes" comment="">
+    <list default="true" id="76596275-ec1a-466b-8bd4-b7c29350986d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/DIC/Service/Galary/LayoutGalaryModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/DIC/Service/Galary/LayoutGalaryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/layoutGalary.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/ConnectionDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/ConnectionDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/GeneralDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/GeneralDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/layoutDetails.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/layoutDetails.xhtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -26,21 +40,27 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 0
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
 }</component>
-  <component name="ProjectId" id="30kwiHDF8GHP5KaMvyeOIObsR3V" />
+  <component name="ProjectId" id="318rV0dXz5xMon9aMY5QjdfBf9O" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "readytomove",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;galary&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/hansisofts/src/main/webapp&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\hansisofts\src\main\webapp" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="HS" type="com.poratu.idea.plugins.tomcat">
       <predefined_log_file enabled="true" id="Tomcat Localhost Log" />
@@ -69,11 +89,11 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="35b4d421-845a-4cfc-b9d4-d9661e08ac2d" name="Changes" comment="" />
-      <created>1754185006165</created>
+      <changelist id="76596275-ec1a-466b-8bd4-b7c29350986d" name="Changes" comment="" />
+      <created>1754916562975</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1754185006165</updated>
+      <updated>1754916562975</updated>
     </task>
     <servers />
   </component>
