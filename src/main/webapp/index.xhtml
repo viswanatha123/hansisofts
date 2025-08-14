@@ -165,29 +165,48 @@
 							        </f:facet>
 							    </p:panelGrid>
 						</td>
-						
+
 						</tr>
 				</table>
 
 	  			<br></br><br></br><br></br>
+	  <p style="text-align:left;color: black; font-size: 20px;font-family:Century Gothic;font-weight: normal;">Property Options in Top Cities for Buy </p>
+	  <h:form>
+		  <p:tabView>
+				  <br></br><br></br>
 
-	  <h:panelGrid   columns="1"  style="background-color: #EEEEEE; top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
-
-	 			 <h:link value="1 BHK Flats in Bangalore" outcome="villaLink" target="_blank" >
-					  <f:param name="villaLinkParam" value="#{queryConstantsService.param_bangalore_one_bhk}" />
-					  <f:param name="villaLinkParamCount" value="#{queryConstantsService.param_bangalore_one_bhk_count}" />
-					 <f:param name="villaLinkParamHead" value="#{queryConstantsService.param_bangalore_one_bhk_head}" />
-
-				  </h:link>
-					<b></b>
-				  <h:link value="2 BHK Flats in Bangalore" outcome="villaLink" target="_blank" >
-						<f:param name="villaLinkParam" value="#{queryConstantsService.param_bangalore_two_bhk}" />
-					    <f:param name="villaLinkParamCount" value="#{queryConstantsService.param_bangalore_two_bhk_count}" />
-					    <f:param name="villaLinkParamHead" value="#{queryConstantsService.param_bangalore_two_bhk_head}" />
-				  </h:link>
-
-	  </h:panelGrid>
-
+		  <p:tab title="Bangalore">
+		  <h:link value="1 BHK Flats in Bangalore" outcome="villaLink" target="_blank" >
+		  <f:param name="villaLinkParam" value="#{queryConstantsService.param_bangalore_one_bhk}" />
+		  <f:param name="villaLinkParamCount" value="#{queryConstantsService.param_bangalore_one_bhk_count}" />
+		  <f:param name="villaLinkParamHead" value="#{queryConstantsService.param_bangalore_one_bhk_head}" />
+		  </h:link>
+		  <br></br>
+			  <h:link value="2 BHK Flats in Bangalore" outcome="villaLink" target="_blank" >
+				  <f:param name="villaLinkParam" value="#{queryConstantsService.param_bangalore_two_bhk}" />
+				  <f:param name="villaLinkParamCount" value="#{queryConstantsService.param_bangalore_two_bhk_count}" />
+				  <f:param name="villaLinkParamHead" value="#{queryConstantsService.param_bangalore_two_bhk_head}" />
+			  </h:link>
+			  <br></br>
+			  <h:link value="3 BHK Flats in Bangalore" outcome="villaLink" target="_blank" >
+				  <f:param name="villaLinkParam" value="#{queryConstantsService.param_bangalore_three_bhk}" />
+				  <f:param name="villaLinkParamCount" value="#{queryConstantsService.param_bangalore_three_bhk_count}" />
+				  <f:param name="villaLinkParamHead" value="#{queryConstantsService.param_bangalore_three_bhk_head}" />
+			  </h:link>
+			  <br></br>
+			  <h:link value="Ready To Move  Bangalore" outcome="villaLink" target="_blank" >
+				  <f:param name="villaLinkParam" value="#{queryConstantsService.param_bangalore_ready_to_move}" />
+				  <f:param name="villaLinkParamCount" value="#{queryConstantsService.param_bangalore_ready_to_move_count}" />
+				  <f:param name="villaLinkParamHead" value="#{queryConstantsService.param_bangalore_ready_to_move_head}" />
+			  </h:link>
+		  </p:tab>
+		  <p:tab title="Hyderabad">
+		  </p:tab>
+			  <p:tab title="Chennai">
+			  </p:tab>
+		  </p:tabView>
+	  </h:form>
+	  
 	  			<br></br><br></br><br></br>
 							    <p style="text-align:left;color: block; font-size: 20px;font-family:Century Gothic;font-weight: normal;">Budget friendly properties</p>
 				

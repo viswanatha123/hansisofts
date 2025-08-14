@@ -48,8 +48,12 @@
   <ui:param name="page" value="Admin" />
   <ui:define name="title">
   <p>Agricultural Details Enter</p>
-       
-  	   <div class="agriDataEntry" jsf:rendered="#{agriculturalDataEntryhService.isEnable eq false and agriculturalDataEntryhService.listedCount eq 0}">
+	  <p>
+		  <h:outputText style="font-weight: normal; font-size: 14px;color: #555;" value=" Fill in the details of the agricultural land including location, size, cost per acre, and agent/owner information. This section is used to manage listings for farmland available for sale." />
+	  </p>
+
+
+	  <div class="agriDataEntry" jsf:rendered="#{agriculturalDataEntryhService.isEnable eq false and agriculturalDataEntryhService.listedCount eq 0}">
 	   
 	       <p:panel  style="background: #FFFF00;width: 100%; height:50px;font-size: 15px ; text-align:center" >
 	  			<p:outputLabel  style="font-weight: bold; color:red;" value="Please subscribe package to listing propertys, Contact support team +91 9632152255 ." />

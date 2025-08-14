@@ -121,10 +121,9 @@
                 </p:panelGrid>                     
                         
             </p:panel>
-            
 
 		    <br></br> <br></br>
-		    <p:dataTable id="product" widgetVar="dtProducts" var="product"   value="#{promoImageService.promoImageModelList}" editable="true"  style="margin-bottom:20px" 
+		    <p:dataTable id="product" widgetVar="dtProducts" var="product"   value="#{promoImageService.promoImageModelList}" editable="true"  style="margin-bottom:20px"
 				reflow="true" styleClass="products-table" selection="#{crudView.selectedProducts}"
             rowKey="#{product.promoId}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom" >
             
@@ -179,7 +178,7 @@
 		
   
   
-  <script type="text/javascript" src="resources/js/chatool.js"></script>  
+  <script type="text/javascript" src="resources/js/chatool.js"></script>
   </h:form>
 </div>
 </ui:define>
