@@ -3,12 +3,15 @@ package com.DIC.Service.Galary;
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.DAO.Impl.GeneralDAOImpl;
 import com.DIC.Service.LayoutDetailService;
+import com.DIC.model.LayoutMode;
+import framework.utilities.SessionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,13 +22,18 @@ public class LayoutGalaryService implements Serializable {
     private static final Logger log = LogManager.getLogger(LayoutGalaryService.class);
 
     private List<LayoutGalaryModel> layoutGalaryModel;
-    private int activeIndex = 0;
+    private String layoutName;
+
 
     GeneralDAOImpl gDao;
     public LayoutGalaryService()
     {
         gDao=new GeneralDAOImpl();
-        layoutGalaryModel=gDao.getLayoutGalary();
+        HttpSession session = SessionUtils.getSession();
+        LayoutMode selectedProperty = (LayoutMode) session.getAttribute("LayoutId");
+        System.out.println("====================================== Selected property id ==========================="+selectedProperty.getLayoutId());
+        layoutName=selectedProperty.getName();
+        layoutGalaryModel=gDao.getLayoutGalary(selectedProperty);
         System.out.println("Galary Size : "+layoutGalaryModel.size());
     }
 
@@ -38,11 +46,13 @@ public class LayoutGalaryService implements Serializable {
         this.layoutGalaryModel = layoutGalaryModel;
     }
 
-    public int getActiveIndex() {
-        return activeIndex;
+
+
+    public String getLayoutName() {
+        return layoutName;
     }
 
-    public void setActiveIndex(int activeIndex) {
-        this.activeIndex = activeIndex;
+    public void setLayoutName(String layoutName) {
+        this.layoutName = layoutName;
     }
 }

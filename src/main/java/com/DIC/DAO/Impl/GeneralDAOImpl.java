@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.DIC.Service.Galary.LayoutGalaryModel;
+import framework.utilities.GeneralConstants;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -195,7 +196,7 @@ public class GeneralDAOImpl {
 					"and u.user_id = ?;";
 
 
-			String SQL_LAYOUT_GALARY = "select * from public.prop_galary";
+			String SQL_LAYOUT_GALARY = "select * from public.prop_galary where is_active ='1' and user_id = ? and prop_id = ? and prop_type = ?";
 		}
 
 	}
@@ -3525,7 +3526,7 @@ public class GeneralDAOImpl {
 
 //**************************** get Layout Galary images **************
 
-	public List<LayoutGalaryModel> getLayoutGalary() {
+	public List<LayoutGalaryModel> getLayoutGalary(LayoutMode selectedProperty) {
 
 		List<LayoutGalaryModel> LayoutGalaryModellList = new ArrayList<>();
 
@@ -3535,6 +3536,10 @@ public class GeneralDAOImpl {
 			con = ConnectionDAO.getConnection();
 			StringBuilder sql_layout_GALARY = new StringBuilder(GeneralDAOImpl.Constants.SQL.SQL_LAYOUT_GALARY);
 			pstmt = con.prepareStatement(sql_layout_GALARY.toString());
+			pstmt.setInt(1,selectedProperty.getUserId());
+			pstmt.setInt(2,selectedProperty.getLayoutId());
+			pstmt.setInt(3, GeneralConstants.PropertyType.layout);
+
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				LayoutGalaryModel layoutGalaryModel = new LayoutGalaryModel();
