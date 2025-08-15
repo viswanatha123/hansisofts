@@ -3,6 +3,7 @@ package com.DIC.DAO.Impl;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
+import com.DIC.Service.Galary.LayoutGalaryModel;
 import framework.utilities.Constants;
 import framework.utilities.GeneralConstants;
 import framework.utilities.UtilConstants;
@@ -139,6 +140,7 @@ public class ConnectionDAOImpl {
 			String SQL_PROMO_IMAGE_VILLA="select * from promo_img where is_active ='1' LIMIT ? OFFSET ?";
 			String SQL_IMAGE_UPLOAD_GALARY="INSERT INTO prop_galary (galary_id,image, create_date, is_active, user_id,prop_id,prop_type) values (nextval('prop_galary_seq'), ?, current_timestamp,1, ?, ?, ?)";
 			String SQL_LATEST_LAYOUT_ID="select layout_id from hansi_layout order by create_date desc limit 1";
+
 		}
                 
 	}
@@ -259,9 +261,8 @@ public class ConnectionDAOImpl {
     
     public List<ConnectorMode> getActiveModelList()
 	{
-    	
-    	System.out.println("############## Started working getActiveModelList() #####################");
-		//log.info("### : get started :: getActiveModelList() ");
+
+
 		List<ConnectorMode> connectorModelList = new ArrayList<>();
 		try {
 			Connection con = null;
@@ -284,9 +285,8 @@ public class ConnectionDAOImpl {
 	        	 conM.setModel_register_env(rs.getString("model_register_env"));
 	        	 conM.setSource_db(rs.getString("source_db"));
 	        	 conM.setUnify_groups(rs.getString("unify_groups"));
-	        	 connectorModelList.add(conM);
-	        
-	        	 //System.out.println("################################### : "+rs.getString("server_host"));
+				 connectorModelList.add(conM);
+
 	            
 	         }
 	         	
@@ -300,7 +300,7 @@ public class ConnectionDAOImpl {
 	        System.err.println(e.getClass().getName()+": "+e.getMessage());
 	        log.error("An error occurred: {}", e.getMessage());
 	     }
-	return connectorModelList;		
+	return connectorModelList;
 	}
     
     
