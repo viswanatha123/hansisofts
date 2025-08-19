@@ -151,8 +151,12 @@
 			                        <h:outputText style="font-weight:15;" value="#{product.displayOrder}"/>
 			             </p:column>
 
+                         <p:column headerText="Created Date">
+                                   <h:outputText value="#{product.createDate}">
+                                   <f:convertDateTime pattern="dd-MM-yyyy" />
+                         </h:outputText>
+                         </p:column>
 
-			             
 			              <p:column exportable="false" >
 			                <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
 			                                 process="@this" 
