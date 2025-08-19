@@ -52,7 +52,7 @@
                     <h:outputText style="font-weight: bold;color: green" value="#{promoImageService.updateResult}" />
                 </p:panelGrid>
              </p:panel>
-             
+
              <p:panel style="background-image: url('back1.jpg'); "> 
             
                 <p:panelGrid columns="2" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
@@ -146,13 +146,17 @@
 			             <p:column headerText="IS ACTIVE">
 			                        <h:outputText style="font-weight:15;" value="#{product.is_active}"/>
 			             </p:column>
-			             
+
 			             <p:column headerText="Display order">
 			                        <h:outputText style="font-weight:15;" value="#{product.displayOrder}"/>
 			             </p:column>
 
+                <p:column headerText="Created Date">
+                    <h:outputText value="#{product.createDate}">
+                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                    </h:outputText>
+                </p:column>
 
-			             
 			              <p:column exportable="false" >
 			                <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
 			                                 process="@this" 
@@ -160,8 +164,8 @@
 			                    <f:setPropertyActionListener value="#{product}" target="#{promoImageService.selectedProduct}" />
 			                </p:commandButton>
 			             </p:column>
-			             
-			         
+
+
             
             </p:dataTable>
             
