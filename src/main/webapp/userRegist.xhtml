@@ -84,11 +84,11 @@
                     	<f:validateRegex pattern="((?=.*\d)(?=.*[a-z]).{8,15})" />
                     </p:password>
                     <p:message for="UserPassword" display="icon"/>
-                    
-                    
-                    <p:outputLabel style="font-weight: bold" value="Address : " />
-                    <p:inputText id="address"  value="#{userRegistService.address}" >
-                    </p:inputText>
+
+
+                    <p:outputLabel style="font-weight: bold" value="Address :(150 char)" />
+                    <p:inputTextarea rows="5" cols="40" maxlength="150" id="address"  value="#{userRegistService.address}" >
+                    </p:inputTextarea>
                     <p:message for="address" display="icon"/>
                            
                     <p:outputLabel style="font-weight: bold" for="contactNo" indicateRequired="true" value="Mobile Number : " />
