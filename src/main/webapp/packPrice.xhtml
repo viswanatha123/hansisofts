@@ -62,14 +62,13 @@
 
 					<p:commandButton type="submit" value=" Contact Us " icon="ui-icon-calculator" style="background:#40E0D0;font-weight: bold;color: black;font-size: 15px; width: 150px;"
 									 process="@this"
-									 onclick="PF('leadDialog').show();PF('leadDialog').show()"  oncomplete="PF('spinnerDialog').hide()"/>
+									 onclick="PF('leadDialog').show()" />
 
 
 
 					<p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#DFFF00;font-weight: bold;color: black;font-size: 15px; width: 150px;"
 									 process="@this"
-									 onclick="PF('spinnerDialog').show();PF('leadDialog').show()"
-									 oncomplete="PF('spinnerDialog').hide()"/>
+									 onclick="PF('leadDialog').show()"/>
 
 
 
@@ -118,14 +117,13 @@
 
 					<p:commandButton type="submit" value=" Contact Us " icon="ui-icon-calculator" style="background:#40E0D0;font-weight: bold;color: black;font-size: 15px; width: 150px;"
 									 process="@this"
-									 onclick="PF('spinnerDialog').show();PF('leadDialog').show()"
-									 oncomplete="PF('spinnerDialog').hide()"/>
+									 onclick="PF('leadDialog').show()"/>
 
 
 
 					<p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#DFFF00;font-weight: bold;color: black;font-size: 15px; width: 150px;"
 									 process="@this"
-									 onclick="PF('spinnerDialog').show();PF('leadDialog').show()" oncomplete="PF('spinnerDialog').hide()"/>
+									 onclick="PF('leadDialog').show()"/>
 
 
 				</p:panelGrid>
@@ -172,13 +170,13 @@
 
 					<p:commandButton type="submit" value=" Contact Us " icon="ui-icon-calculator" style="background:#40E0D0;font-weight: bold;color: black;font-size: 15px; width: 150px;"
 									 process="@this"
-									 onclick="PF('spinnerDialog').show();PF('leadDialog').show()" oncomplete="PF('spinnerDialog').hide()"/>
+									 onclick="PF('leadDialog').show()"/>
 
 
 
 					<p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#DFFF00;font-weight: bold;color: black;font-size: 15px; width: 150px;"
 									 process="@this"
-									 onclick="PF('spinnerDialog').show();PF('leadDialog').show()" oncomplete="PF('spinnerDialog').hide()"/>
+									 onclick="PF('leadDialog').show()"/>
 
 
 				</p:panelGrid>
@@ -221,8 +219,7 @@
 
 
 		<br></br>
-		<h:commandButton value="Submit"   type="submit"  process="@this" update="@form1" actionListener="#{packPriceService.submit}" onclick="PF('spinnerDialog').show()"
-						 oncomplete="PF('spinnerDialog').hide()">
+		<h:commandButton value="Submit"   type="submit"  process="@this" update="@form1" actionListener="#{packPriceService.submit}" onclick="PF('spinnerDialog').show()">
 			<p:resetInput target="form1"/>
 		</h:commandButton>
 		<p:commandButton value="Reset" update="panelDialog" process="@this"
