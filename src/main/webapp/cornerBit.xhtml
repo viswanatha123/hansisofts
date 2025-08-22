@@ -25,20 +25,29 @@
                     <h:outputText  style="font-weight: normal; font-style:italic; font-size:15px; color: blue; text-align: left;" value="Selected properties : #{cornerBitService.totalRecords}" />
                 </p:panelGrid>
             </p:panel>
+
+	  <div style="display:flex; align-items:flex-start; gap:20px;">
+
+	                       <!-- LEFT COLUMN : Properties -->
+	                           <div style="flex:3;">
   
   
   			<p:dataScroller value="#{cornerBitService.budgetModelList}" var="product" chunkSize="10">
                     <p:panel  style="width: 100%; height:340px; box-shadow: 10px 10px 5px grey; " >
+
+						<h:panelGrid columns="4" style="font-size:15px; width:100%;">
+							                                      <h:outputText style="font-weight: bold;color: green;" value="Owner Name : #{product.name}" />
+							                                      <h:outputText style="font-weight: bold;color: black;" value="Property Type : #{product.pro_type}" />
+							                                     <h:outputText style="font-weight: bold;color: brown;"
+							                                                   value="Property for Sale in #{product.prim_location}, #{product.seco_location}" />
+							                               </h:panelGrid>
                   
                   
-                  				<h:panelGrid   columns="4" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
-                  				<h:outputText style="font-weight: bold;color: green;font-size:15px;" value="Owner Name : #{product.name}" />
-                   				<h:outputText style="font-weight: bold;color: block; font-size:15px; float:right" value="Propery Type : #{product.pro_type}" />
-                  				<h:outputText class="pi pi-globe" style="font-weight: bold;color: brown;font-size:15px; float:right" value=" Property for Sale in #{product.prim_location},   #{product.seco_location} " />
-              					</h:panelGrid>
+
               					
               					<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
-                     				<p:graphicImage width="200" height="200" stream="false" cache="false" value="#{product.streamedContent}" />
+									<p:graphicImage width="200" height="200" stream="false" cache="false"
+													value="#{product.streamedContent}" />
                      			
                      				 <h:panelGrid   columns="2" style="background: #E5E4E2;" width="80%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
                      			 
@@ -57,14 +66,16 @@
                      			 				<h:outputText style="font-weight: bold;color: red;font-size: 15px"  value="Rs #{product.cost}" />
                      			 				
                           						<p:commandButton type="submit" value="Callback" icon="ui-icon-calculator" style="background:#FFA500;font-weight: bold;color: black;font-size: 15px" 
-															 process="@this" 
+															 process="@this"
+																 action="#{cornerBitService.storeSelectedPropertyInSession}"
 							                                 onclick="PF('leadDialog1').show()">           
 							                              <f:setPropertyActionListener value="#{product}" target="#{cornerBitService.selectedProperty}" />
 									            </p:commandButton>
 									                
 									                                      						
                           						<p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#1E90FF;font-weight: bold;color: black;font-size: 15px; width:170px" 
-															 process="@this" 
+															 process="@this"
+																 action="#{cornerBitService.storeSelectedPropertyInSession}"
 							                                 onclick="PF('leadDialog1').show()">           
 							                              <f:setPropertyActionListener value="#{product}" target="#{cornerBitService.selectedProperty}" />
 									            </p:commandButton>
@@ -95,6 +106,16 @@
             	  </p:panel>
               <br></br>
            </p:dataScroller>
+							   </div>
+	  <div style="flex:1; max-width:350px;">
+	  <p:panel header="Promotions" style="text-align:center;">
+	  <p:dataScroller value="#{cornerBitService.promoImageModel}" var="promo" chunkSize="5">
+	  <p:graphicImage width="300" height="500" stream="false" cache="false"
+					  value="#{promo.streamedContent}" style="margin-bottom:20px;" />
+	  </p:dataScroller>
+	  </p:panel>
+	  </div>
+	  </div>
            
     	<p:panel>   
          	<p:panelGrid columns="3" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
