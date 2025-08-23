@@ -29,8 +29,10 @@ public class QueryFactoryManagerImpl implements QueryFactoryManager {
         {
             sql_query= QueryConstantsService.QueryLink.sql_bangalore_ready_to_move;
         }
-
-
+        if(query.equals(QueryConstantsService.param_flats_in_marthahalli))
+        {
+            sql_query= QueryConstantsService.QueryLink.sql_flats_in_marthahalli;
+        }
         return sql_query;
     }
 
@@ -61,7 +63,11 @@ public class QueryFactoryManagerImpl implements QueryFactoryManager {
             sql_queryCount= QueryConstantsService.QueryLink.sql_bangalore_ready_to_move_count;
 
         }
+        if(query.equals(QueryConstantsService.param_flats_in_marthahalli_count))
+        {
+            sql_queryCount= QueryConstantsService.QueryLink.sql_flats_in_marthahalli_count;
 
+        }
         return sql_queryCount;
 
     }
