@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <style>
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <ui:composition template="/WEB-INF/facelets/template.xhtml">
+        <ui:param name="page" value="Admin" />
+        <ui:define name="title">
+
+            <!-- Page Container -->
+            <div style="max-width: 1000px; margin: 100px auto; padding: 30px;">
+
+                <h:form id="form" enctype="multipart/form-data">
+
+                    <!-- Messages -->
+                    <p:messages id="msgs" />
+
+                    <!-- Title and Support Info Layout -->
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; margin-bottom: 30px; max-width: 100%;">
+
+                        <!-- Page Title -->
+                        <div style="flex-grow: 1; min-width: 200px;">
+                            <h2 style="margin: 0; color: #2c3e50;">Payment Page</h2>
+                        </div>
+
+                        <!-- Support Info -->
+                        <div style="max-width: 420px; text-align: right; font-size: 16px; color: #444; line-height: 1.6; padding: 0;">
+
+
+                            <div style="margin-top: 10px;">
+                                📞 <strong>Customer Support:</strong><br/>
+                                <span>8328518573</span><br/>
+                                <span>9632152255</span>
+                            </div>
+                            <div style="margin-top: 8px;">
+                                🕘 <strong>Hours:</strong> Mon–Sat, 9:00 AM – 6:00 PM
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Page Description -->
+                    <p style="font-size: 17px; color: #444; text-align: center; line-height: 1.8; max-width: 850px; margin: 0 auto 40px;">
+                        Welcome to our secure payment gateway. You can easily complete your transaction by scanning the QR code or selecting one of the available UPI options below.
+                        Please ensure that you enter the correct amount while making the payment.
+                        Once your payment is successful, you will receive a confirmation message instantly.
+                    </p>
+
+                    <!-- ✅ Centered QR Code Image -->
+                    <div style="text-align: center; margin: 40px 0;">
+                        <p:graphicImage name="images/payment/payment.jpg1" alt="UPI QR Code"
+                                        style="height: 300px; width: 300px; border-radius: 10px;" />
+                        <p style="margin-top: 12px; font-size: 15px; color: #555;">
+                            Scan this QR code with your preferred UPI app to pay instantly.
+                        </p>
+                    </div>
+
+                    <!-- UPI Methods -->
+                    <h3 style="text-align: center; color: #2c3e50;">Available UPI Methods</h3>
+                    <p:panelGrid columns="3" styleClass="ui-panelgrid-blank" style="margin: 20px auto; text-align: center;">
+                        <p:commandButton value="Google Pay" icon="pi pi-google" style="margin: 8px;" />
+                        <p:commandButton value="PhonePe" icon="pi pi-mobile" style="margin: 8px;" />
+                        <p:commandButton value="Paytm" icon="pi pi-credit-card" style="margin: 8px;" />
+                    </p:panelGrid>
+
+                    <!-- Instruction Note -->
+                    <p style="text-align: center; font-size: 14px; color: #777; margin-top: 20px;">
+                        Select your UPI app above or simply scan the QR code to proceed with your payment securely.
+                    </p>
+
+                </h:form>
+            </div>
+
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
