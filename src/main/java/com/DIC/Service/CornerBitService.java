@@ -23,9 +23,7 @@ import SMTPService.SMTPService;
 @ViewScoped
 public class CornerBitService implements Serializable {
 
-	private static final Logger log = Logger.getLogger(CornerBitService.class.getName());
 
-	private String locationMessage;
 	private int currentPage = 1;
 	private int pageSize = 10;
 	private int totalRecords;
@@ -116,8 +114,6 @@ public class CornerBitService implements Serializable {
 	}
 
 	// Getters and Setters
-	public String getLocationMessage() { return locationMessage; }
-	public void setLocationMessage(String locationMessage) { this.locationMessage = locationMessage; }
 
 	public List<BudgetModel> getBudgetModelList() { return budgetModelList; }
 	public void setBudgetModelList(List<BudgetModel> budgetModelList) { this.budgetModelList = budgetModelList; }
