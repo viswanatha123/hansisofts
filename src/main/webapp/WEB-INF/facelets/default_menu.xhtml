@@ -147,8 +147,13 @@ and open the template in the editor.
 			                		</p:submenu>
 					           </p:column>
 			              </p:submenu>
-
-
+				  <p:submenu label="Payment" style="text-align: center;width: 110px;" icon="pi pi-fw pi-credit-card">
+					  <p:column>
+						  <p:submenu rendered="#{userRoleService.userRole.contains('Admin')}">
+							  <p:menuitem value="Payment" icon="pi pi-fw pi-credit-card" outcome="paymentMethod"/>
+						  </p:submenu>
+					  </p:column>
+				  </p:submenu>
               			
 			 </p:megaMenu>
             
