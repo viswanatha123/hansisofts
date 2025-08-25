@@ -63,7 +63,6 @@ public class OwnerPropertiesService {
 	}
 
 
-
 	public void loadEntities() {
 		villaModel = gDao.getOwnerProperties(pageSize, currentPage);
 		promoImageModel = gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
