@@ -162,12 +162,13 @@
 					</div>
 					<p:panel>
 						<p:panelGrid columns="3" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
-							<h:commandButton value="Previous" action="#{ownerPropertiesService.previousPage}" disabled="#{ownerPropertiesService.currentPage == 1}" />
-							<h:commandButton value="Next" action="#{ownerPropertiesService.nextPage}" disabled="#{ownerPropertiesService.currentPage *ownerPropertiesService.pageSize >=ownerPropertiesService.totalRecords}" />
+							<h:commandButton value="Previous" action="#{ownerPropertiesService.previousPage}" disabled="#{ownerPropertiesService.currentPage == 1}">
+							</h:commandButton>
+							<h:commandButton value="Next" action="#{ownerPropertiesService.nextPage}" disabled="#{ownerPropertiesService.currentPage * ownerPropertiesService.pageSize >= ownerPropertiesService.totalRecords}">
+							</h:commandButton>
 							<h:outputText value="Page #{ownerPropertiesService.currentPage} of #{ownerPropertiesService.totalPages}" />
 						</p:panelGrid>
 					</p:panel>
-
 
 
 				</h:form>
