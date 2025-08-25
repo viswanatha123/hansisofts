@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import com.DIC.model.VillaModel;
 import SMTPService.SMTPService;
 
 @ManagedBean(name = "ownerPropertiesService")
+//@RequestScoped
 @ViewScoped
 public class OwnerPropertiesService {
 
@@ -58,34 +60,9 @@ public class OwnerPropertiesService {
 
 		loadEntities();
 		countTotalRecords();
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-
-		// Read page params for properties
-		String pageParam = request.getParameter("owner");
-		if (pageParam != null && !pageParam.isEmpty()) {
-			try {
-				currentPage = Integer.parseInt(pageParam);
-			} catch (NumberFormatException e) {
-				currentPage = 1;
-			}
-		} else {
-			currentPage = 1;
-		}
-
-		// Read page params for promo images
-		String promoParam = request.getParameter("ownerpromo");
-		if (promoParam != null && !promoParam.isEmpty()) {
-			try {
-				promoCurrentPage = Integer.parseInt(promoParam);
-			} catch (NumberFormatException e) {
-				promoCurrentPage = 1;
-			}
-		} else {
-			promoCurrentPage = 1;
-		}
 	}
+
+
 
 	public void loadEntities() {
 		villaModel = gDao.getOwnerProperties(pageSize, currentPage);
