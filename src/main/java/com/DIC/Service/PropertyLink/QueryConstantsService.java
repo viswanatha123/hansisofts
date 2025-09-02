@@ -23,10 +23,22 @@ public class QueryConstantsService implements Serializable {
                 public static String param_bangalore_ready_to_move="param_bangalore_ready_to_move";
                 public static String param_bangalore_ready_to_move_count="param_bangalore_ready_to_move_count";
 
+
+
+                public static String param_flats_in_marthahalli="param_flats_in_marthahalli";
+                public static String param_flats_in_marthahalli_count="param_flats_in_marthahalli_count";
+
+
+
+
                 public static String param_bangalore_one_bhk_head="1 BHK Flat in Sale";
                 public static String param_bangalore_two_bhk_head="2 BHK Flat in Sale";
                 public static String param_bangalore_three_bhk_head="3 BHK Flat in Sale";
                 public static String param_bangalore_ready_to_move_head="Ready To Move  Bangalore";
+
+
+
+                public static String param_flats_in_marthahalli_head="Flats in Marthahalli";
 
 
 
@@ -51,9 +63,10 @@ public class QueryConstantsService implements Serializable {
                 public static final String  sql_bangalore_ready_to_move_count="select count(*) from villa_plot where pro_avail='Ready To Move' and prim_location ='Bangalore'";
 
 
+                public static final String  sql_flats_in_marthahalli="select * from villa_plot where property_type ='Plot' and prim_location ='Bangalore' and seco_location ='Maratha Halli' order by create_date desc LIMIT ? OFFSET ?";
+                public static final String  sql_flats_in_marthahalli_count="select count(*) from villa_plot where property_type ='Plot' and prim_location ='Bangalore' and seco_location ='Maratha Halli'";
 
     }
-
 
     public String getParam_bangalore_one_bhk() {
         return param_bangalore_one_bhk;
@@ -85,6 +98,18 @@ public class QueryConstantsService implements Serializable {
     public  void setParam_bangalore_ready_to_move(String param_bangalore_ready_to_move) {
         this.param_bangalore_ready_to_move = param_bangalore_ready_to_move;
     }
+
+
+    public  String getParam_flats_in_marthahalli() {
+        return param_flats_in_marthahalli;
+    }
+
+    public  void setParam_flats_in_marthahalli(String param_flats_in_marthahalli) {
+        this.param_flats_in_marthahalli = param_flats_in_marthahalli;
+    }
+
+
+
     public String getParam_bangalore_one_bhk_count() {
         return param_bangalore_one_bhk_count;
     }
@@ -116,6 +141,17 @@ public class QueryConstantsService implements Serializable {
         this.param_bangalore_ready_to_move_count = param_bangalore_ready_to_move_count;
     }
 
+
+    public String getParam_flats_in_marthahalli_count() {
+        return param_flats_in_marthahalli_count;
+    }
+
+    public void setParam_flats_in_marthahalli_count(String param_flats_in_marthahalli_count) {
+        this.param_flats_in_marthahalli_count = param_flats_in_marthahalli_count;
+    }
+
+
+
     public  String getParam_bangalore_one_bhk_head() {
         return param_bangalore_one_bhk_head;
     }
@@ -146,4 +182,14 @@ public class QueryConstantsService implements Serializable {
     public void setParam_bangalore_ready_to_move_head(String param_bangalore_ready_to_move_head) {
         this.param_bangalore_ready_to_move_head = param_bangalore_ready_to_move_head;
     }
+
+    public String getParam_flats_in_marthahalli_head() {
+        return param_flats_in_marthahalli_head;
+    }
+
+    public void setParam_flats_in_marthahalli_head(String param_flats_in_marthahalli_head) {
+        this.param_flats_in_marthahalli_head = param_flats_in_marthahalli_head;
+    }
+
+
 }
