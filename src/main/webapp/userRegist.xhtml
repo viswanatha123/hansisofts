@@ -86,6 +86,14 @@
                     <p:message for="UserPassword" display="icon"/>
 
 
+                    <p:outputLabel style="font-weight: bold" indicateRequired="true" value="ConfirmPassword : " />
+                    <p:password id="ConfirmPassword" required="true" value="#{userRegistService.confirmPassword}"  requiredMessage="ConfirmPassword is required">
+                         <f:validateLength minimum="8" maximum="15"></f:validateLength>
+                         <f:validateRegex pattern="((?=.*\d)(?=.*[a-z]).{8,15})" />
+                    </p:password>
+                    <p:message for="ConfirmPassword" display="icon"/>
+
+
                     <p:outputLabel style="font-weight: bold" value="Address :(150 char)" />
                     <p:inputTextarea rows="5" cols="40" maxlength="150" id="address"  value="#{userRegistService.address}" >
                     </p:inputTextarea>
