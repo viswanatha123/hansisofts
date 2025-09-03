@@ -1,6 +1,8 @@
 package com.DIC.DAO.Impl;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -319,9 +321,38 @@ public class UserDAOImpl {
 				userDetails.setIs_active(rs.getInt("is_active"));
 				userDetails.setEmail(rs.getString("email"));
 				
-				//userDetails.setListLimit(rs.getInt("list_limit"));
-				
-				//userDetailsList.add(userDetails);
+
+				InputStream imageStream = rs.getBinaryStream("image");
+				if (rs.getBytes("image").length!=0)  {
+
+
+					BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
+
+					userDetails.setStreamedContent(DefaultStreamedContent.builder()
+							.name("US_Piechart.jpg")
+							.contentType("image/jpg")
+							.stream(() -> bufferedStream) // Stream the content directly
+							.build());
+				}
+				else
+				{
+
+
+					// Defalut Image
+					PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =2");
+					ResultSet rsDef = pstmtDefault.executeQuery();
+					while ( rsDef.next())
+					{
+						byte[] def=rsDef.getBytes("image");
+						userDetails.setStreamedContent(DefaultStreamedContent.builder()
+								.name("US_Piechart.jpg")
+								.contentType("image/jpg")
+								.stream(() -> new ByteArrayInputStream(def)).build());
+
+
+					}
+
+				}
 						
 			}
 		} catch (SQLException e) {

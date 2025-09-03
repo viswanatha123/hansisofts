@@ -1,5 +1,7 @@
 package com.DIC.model;
 
+import org.primefaces.model.StreamedContent;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -22,8 +24,8 @@ public class UserDetails implements Serializable {
 	private Boolean isEnable;
 	private int rank;
 	
-	
 	private String disName;
+	private StreamedContent streamedContent;
 	
 
 	public String getUserPassword() {
@@ -176,6 +178,11 @@ public class UserDetails implements Serializable {
 		this.rank = rank;
 	}
 
-	
+	public StreamedContent getStreamedContent() {
+		return streamedContent;
+	}
 
+	public void setStreamedContent(StreamedContent streamedContent) {
+		this.streamedContent = streamedContent;
+	}
 }
