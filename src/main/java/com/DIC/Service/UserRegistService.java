@@ -33,6 +33,7 @@ public class UserRegistService implements Serializable {
 	private String lName;
 	private String userName;
 	private String userPassword;
+	private String confirmPassword;
 	private String address;
 	private String phone;
 	private String email;
@@ -90,10 +91,11 @@ public class UserRegistService implements Serializable {
 				statusMessage="User name already exists, Please try with different user name.";
 			}else
 			{
-				
-		
-					UserDetails userDetails=new UserDetails();
-					
+				if(userPassword.equals(confirmPassword)) {
+
+
+					UserDetails userDetails = new UserDetails();
+
 					userDetails.setfName(fName);
 					userDetails.setlName(lName);
 					userDetails.setUserName(userName.trim());
@@ -101,38 +103,38 @@ public class UserRegistService implements Serializable {
 					userDetails.setAddress(address);
 					userDetails.setPhone(phone);
 					userDetails.setEmail(email);
-					
-					int userId=gdao.saveUserRegist(userDetails,UtilConstants.BASIC_PACKAGE_LIST_LIMIT);
-					
-					if(userId > 0)
-					{
-						
-						
-						String body="Hi "+fName+" "+lName+",\n\n Congratulation...\n Your account has been created successfully.\n\n"
-								+" Customer ID : "+userId+"\n User Name : "+userName+"\n First Name : "+fName+"\n Last Name : "+lName+"\n Contact Number : "+phone+" \n Email : "+email+" \n Address : "+address+" \n Date : "+LocalDate.now().toString()+". \n\n\n Thank you\n HansiSoft Solutions..";
-						
-						SMTPService.sendRegiEmail(email,Constants.SMTPServer.SUBJECT,body);
-						
-						statusMessage="Successful Registerd.";
-						
-						this.fName="";
-						this.lName="";
-						this.userName="";
-						this.userPassword="";
-						this.address="";
-						this.phone="";
-						this.email="";
-						
+
+					int userId = gdao.saveUserRegist(userDetails, UtilConstants.BASIC_PACKAGE_LIST_LIMIT);
+
+					if (userId > 0) {
+
+
+						String body = "Hi " + fName + " " + lName + ",\n\n Congratulation...\n Your account has been created successfully.\n\n"
+								+ " Customer ID : " + userId + "\n User Name : " + userName + "\n First Name : " + fName + "\n Last Name : " + lName + "\n Contact Number : " + phone + " \n Email : " + email + " \n Address : " + address + " \n Date : " + LocalDate.now().toString() + ". \n\n\n Thank you\n HansiSoft Solutions..";
+
+						SMTPService.sendRegiEmail(email, Constants.SMTPServer.SUBJECT, body);
+
+						statusMessage = "Successful Registerd.";
+
+						this.fName = "";
+						this.lName = "";
+						this.userName = "";
+						this.userPassword = "";
+						this.address = "";
+						this.phone = "";
+						this.email = "";
+
+					} else {
+						statusMessage = "Error Occured, Please contact support..";
 					}
-					else
-					{
-						statusMessage="Error Occured, Please contact support..";
-					}
-					
-					
+
+				}
+				else{
+					statusMessage = "Both password fields must match . Please try again";
+				}
 			}
 	}
-	
+
 	/*
 	public void clear()
 	{
@@ -181,6 +183,10 @@ public class UserRegistService implements Serializable {
 		return userPassword;
 	}
 
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
 	public String getAddress() {
 		return address;
 	}
@@ -211,6 +217,10 @@ public class UserRegistService implements Serializable {
 
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 
 	public void setAddress(String address) {
