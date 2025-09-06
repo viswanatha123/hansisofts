@@ -149,7 +149,7 @@ public class GeneralDAOImpl {
 
 			String SQL_ALL_USERS = "select * from user_deta order by fname ,lname";
 
-			String SQL_USER_REGIST = "INSERT INTO user_deta (user_id, fname, lname, user_name, user_pass, address, phone, create_date, is_active,email) VALUES (nextval('user_seq'), ?, ?,?, ?,?,?, current_timestamp, 1, ?);";
+			String SQL_USER_REGIST = "INSERT INTO user_deta (user_id, fname, lname, user_name, user_pass, address, phone, create_date, is_active,email,image) VALUES (nextval('user_seq'), ?, ?,?, ?,?,?, current_timestamp, 1, ?, ?);";
 
 			String SQL_FIND_USER_ID_BY_USER_DETAILS = "select user_id from user_deta where fname=? and lname=? and user_name=? and  phone=?";
 			String NEW_USER_DEFAULT_ROLE = "select r.role_id,ur.is_active from user_deta u, role r, user_map_role ur where u.user_id=ur.user_id and ur.role_id =r.role_id and u.is_active = '1' and r.is_active = '1' and u.user_id = 2 order by role_id";
@@ -1453,6 +1453,9 @@ public class GeneralDAOImpl {
 			pstmt.setString(5, userDetails.getAddress());
 			pstmt.setString(6, userDetails.getPhone());
 			pstmt.setString(7, userDetails.getEmail());
+			InputStream fin2 = userDetails.getInputStream();
+			UploadedFile file = userDetails.getFile();
+			pstmt.setBinaryStream(8, fin2, file.getSize());
 
 
 			int res = pstmt.executeUpdate();
