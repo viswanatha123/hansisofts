@@ -62,8 +62,8 @@ public class QueryConstantsService implements Serializable {
                 public static final String  sql_bangalore_ready_to_move_count="select count(*) from villa_plot where pro_avail='Ready To Move' and prim_location ='Bangalore'";
 
 
-                public static final String  sql_flats_in_marthahalli="select * from villa_plot where property_type ='Plot' and prim_location ='Bangalore' and seco_location ='Maratha Halli' order by create_date desc LIMIT ? OFFSET ?";
-                public static final String  sql_flats_in_marthahalli_count="select count(*) from villa_plot where property_type ='Plot' and prim_location ='Bangalore' and seco_location ='Maratha Halli'";
+                public static final String  sql_flats_in_marthahalli="select * from villa_plot where property_type ='Flat' and prim_location ='Bangalore' and seco_location ='Maratha Halli' order by create_date desc LIMIT ? OFFSET ?";
+                public static final String  sql_flats_in_marthahalli_count="select count(*) from villa_plot where property_type ='Flat' and prim_location ='Bangalore' and seco_location ='Maratha Halli'";
 
                 public static final String  sql_hyderabad_one_bhk="select * from villa_plot where bed_rooms='1' and prim_location ='Hyderabad' order by create_date desc LIMIT ? OFFSET ?";
                 public static final String  sql_hyderabad_one_bhk_count="select count(*) from villa_plot where bed_rooms='1' and prim_location ='Hyderabad'";
