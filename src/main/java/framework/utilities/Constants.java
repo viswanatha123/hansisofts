@@ -11,7 +11,7 @@ public class  Constants {
 		public static final String PORT="465";
 		public static final String AUTH="true";
     	public static final String USER_NAME="hansisoft.hr@hansisofts.com";
-    	public static final String PASSWORD="HansiSofts@123";
+    	public static final String PASSWORD="HansiSofts@1234";
     	public static final String FROMEMAIL="hansisoft.hr@hansisofts.com";
     	public static final String SUBJECT="HansiSoft Solutions,,. New Account created successfull..";
     	/*
