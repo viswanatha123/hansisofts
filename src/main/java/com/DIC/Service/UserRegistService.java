@@ -1,5 +1,6 @@
 package com.DIC.Service;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
@@ -17,7 +18,7 @@ import javax.faces.bean.SessionScoped;
 import org.primefaces.PrimeFaces;
 
 import com.DIC.DAO.Impl.GeneralDAOImpl;
-
+import org.primefaces.model.file.UploadedFile;
 
 
 @ManagedBean(name="userRegistService")
@@ -33,6 +34,7 @@ public class UserRegistService implements Serializable {
 	private String lName;
 	private String userName;
 	private String userPassword;
+	private String confirmPassword;
 	private String address;
 	private String phone;
 	private String email;
@@ -40,11 +42,15 @@ public class UserRegistService implements Serializable {
 	private String errorMessage;
 	private String disName;
 	private String statusMessage;
-	
-	 GeneralDAOImpl gdao;
+    GeneralDAOImpl gdao;
 	 
-	 
-	 private Integer spinnerValue=1;
+	private Integer spinnerValue=1;
+
+	private InputStream inputStream;
+	private UploadedFile file;
+
+
+
 	 
 	 public UserRegistService()
 	 {
@@ -81,58 +87,64 @@ public class UserRegistService implements Serializable {
 	      }
 		      
 	public void save() {
-		
-		
-		
-		boolean valid = gdao.loginValidate(userName);
-			if(valid)
-			{
-				statusMessage="User name already exists, Please try with different user name.";
-			}else
-			{
-				
-		
-					UserDetails userDetails=new UserDetails();
-					
-					userDetails.setfName(fName);
-					userDetails.setlName(lName);
-					userDetails.setUserName(userName.trim());
-					userDetails.setUserPassword(userPassword.trim());
-					userDetails.setAddress(address);
-					userDetails.setPhone(phone);
-					userDetails.setEmail(email);
-					
-					int userId=gdao.saveUserRegist(userDetails,UtilConstants.BASIC_PACKAGE_LIST_LIMIT);
-					
-					if(userId > 0)
-					{
-						
-						
-						String body="Hi "+fName+" "+lName+",\n\n Congratulation...\n Your account has been created successfully.\n\n"
-								+" Customer ID : "+userId+"\n User Name : "+userName+"\n First Name : "+fName+"\n Last Name : "+lName+"\n Contact Number : "+phone+" \n Email : "+email+" \n Address : "+address+" \n Date : "+LocalDate.now().toString()+". \n\n\n Thank you\n HansiSoft Solutions..";
-						
-						SMTPService.sendRegiEmail(email,Constants.SMTPServer.SUBJECT,body);
-						
-						statusMessage="Successful Registerd.";
-						
-						this.fName="";
-						this.lName="";
-						this.userName="";
-						this.userPassword="";
-						this.address="";
-						this.phone="";
-						this.email="";
-						
+
+		if (file != null) {
+			try {
+
+				boolean valid = gdao.loginValidate(userName);
+				if (valid) {
+					statusMessage = "User name already exists, Please try with different user name.";
+				} else {
+					if (userPassword.equals(confirmPassword)) {
+
+
+						UserDetails userDetails = new UserDetails();
+
+						userDetails.setfName(fName);
+						userDetails.setlName(lName);
+						userDetails.setUserName(userName.trim());
+						userDetails.setUserPassword(userPassword.trim());
+						userDetails.setAddress(address);
+						userDetails.setPhone(phone);
+						userDetails.setEmail(email);
+						userDetails.setInputStream(file.getInputStream());
+						userDetails.setFile(file);
+
+						int userId = gdao.saveUserRegist(userDetails, UtilConstants.BASIC_PACKAGE_LIST_LIMIT);
+
+						if (userId > 0) {
+
+
+							String body = "Hi " + fName + " " + lName + ",\n\n Congratulation...\n Your account has been created successfully.\n\n"
+									+ " Customer ID : " + userId + "\n User Name : " + userName + "\n First Name : " + fName + "\n Last Name : " + lName + "\n Contact Number : " + phone + " \n Email : " + email + " \n Address : " + address + " \n Date : " + LocalDate.now().toString() + ". \n\n\n Thank you\n HansiSoft Solutions..";
+
+							SMTPService.sendRegiEmail(email, Constants.SMTPServer.SUBJECT, body);
+
+							statusMessage = "Successful Registerd.";
+
+							this.fName = "";
+							this.lName = "";
+							this.userName = "";
+							this.userPassword = "";
+							this.address = "";
+							this.phone = "";
+							this.email = "";
+
+						} else {
+							statusMessage = "Error Occured, Please contact support..";
+						}
+
+					} else {
+						statusMessage = "Both password fields must match . Please try again";
 					}
-					else
-					{
-						statusMessage="Error Occured, Please contact support..";
-					}
-					
-					
+				}
+
+			} catch (Exception e) {
+				System.out.println("Exception-File Upload." + e.getMessage());
 			}
+		}
 	}
-	
+
 	/*
 	public void clear()
 	{
@@ -181,6 +193,10 @@ public class UserRegistService implements Serializable {
 		return userPassword;
 	}
 
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
 	public String getAddress() {
 		return address;
 	}
@@ -211,6 +227,10 @@ public class UserRegistService implements Serializable {
 
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 
 	public void setAddress(String address) {
@@ -244,9 +264,20 @@ public class UserRegistService implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
-	
-	
 
+	public InputStream getInputStream() {
+		return inputStream;
+	}
+
+	public void setInputStream(InputStream inputStream) {
+		this.inputStream = inputStream;
+	}
+
+	public UploadedFile getFile() {
+		return file;
+	}
+
+	public void setFile(UploadedFile file) {
+		this.file = file;
+	}
 }

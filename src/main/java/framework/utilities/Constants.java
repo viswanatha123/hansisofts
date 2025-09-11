@@ -11,7 +11,7 @@ public class  Constants {
 		public static final String PORT="465";
 		public static final String AUTH="true";
     	public static final String USER_NAME="hansisoft.hr@hansisofts.com";
-    	public static final String PASSWORD="HansiSofts@123";
+    	public static final String PASSWORD="HansiSofts@1234";
     	public static final String FROMEMAIL="hansisoft.hr@hansisofts.com";
     	public static final String SUBJECT="HansiSoft Solutions,,. New Account created successfull..";
     	/*
@@ -26,7 +26,7 @@ public class  Constants {
     	
 		
 	}
-	
+
 	public interface PropertyConstants
 	{
 		public static final String LAYOUT_SUBJECT="HansiSoft Solutions,,. New Layout listed..";
@@ -70,13 +70,11 @@ public class  Constants {
 	    public static String apiKey = "FtyePe5DffirXSPYmYRGldgAQb7x7CuyoO1o2fiqJdlPjXBFyy0JEu8HM5Nd";
 	    public static String route = "q";
 	    public static String flash = "1";
-	    
-	    
-	 	
-	
+
 	}
-	
-	
-	
+
+	public interface PropertyType {
+		public static final int LAYOUT=1;
+	}
 
 }

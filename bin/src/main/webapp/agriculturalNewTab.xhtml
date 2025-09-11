@@ -1,0 +1,315 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+
+<h:body style="background-color: width;">
+
+
+    <ui:composition template="/WEB-INF/facelets/template.xhtml">
+        <ui:param name="page" value="Agricultural Land" />
+        <ui:define name="title" ><p style="font-weight: bold; color:blue; font-size:15px"> Agricultural Land</p>
+            <p style="font-weight: bold;color: brown;font-size:25px; float:left"> Sales for Agricultural Land</p>
+            <div class="card">
+                <h:form id="layoutNewTabForm">
+                    <p:dialog widgetVar="spinnerDialog"  style="background-color: #3A3B3C;"  modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
+                        <p:graphicImage name="images/spin/spin1.gif" width="70px"  height="70px" />
+                    </p:dialog>
+                    <br></br>
+
+                    <h:panelGrid   columns="1" style=" text-align: top; width:100%;">
+
+                        <h:panelGrid   columns="3"  style="background-color: #EEEEEE; top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:90%; ">
+                            <h:outputText style="font-weight: bold;color: green;font-size:25px;" value="#{agriculturalNewTabService.agriData.ownerName}" />
+                            <h:outputText style="font-weight: bold;color: block; font-size:25px;float:right" value="Cost : Negotiation" />
+                            <h:outputText class="pi pi-globe" style="font-weight: bold;color: brown;font-size:25px; float:right" value="   Sales for Agricultural Land  in #{agriculturalNewTabService.agriData.primLocation} , #{agriculturalNewTabService.agriData.secoLocation}" />
+                        </h:panelGrid>
+                        <h:panelGrid   columns="1"  style="background-color: #EEEEEE; top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:90%; ">
+                            <h:outputText value="blank" style="color: #EEEEEE;" />
+                            <h:outputText value="blank" style="color: #EEEEEE;"  />
+                            <h:outputText value="blank" style="color: #EEEEEE;"  />
+                        </h:panelGrid>
+                        <h:panelGrid   columns="2"  style="background-color: #EEEEEE; top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:90%; ">
+                            <p:graphicImage width="400" height="350"  cache="false" stream="false"  styleClass="rounded-image clickable-image-with-link" value="#{agriculturalNewTabService.agriData.streamedContent}" alt="Image"   />
+                            <h:outputText style="font-weight: bold;color: red;font-size: 25px; float:left;"  value="Rs ₹#{agriculturalNewTabService.agriData.totalPrice}" />
+                        </h:panelGrid>
+                        <h:panelGrid   columns="1"  style="background-color: #EEEEEE; top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:90%; ">
+                            <h:outputText value="blank" style="color: #EEEEEE;" />
+                            <h:outputText value="blank" style="color: #EEEEEE;"  />
+                            <h:outputText value="blank" style="color: #EEEEEE;"  />
+                        </h:panelGrid>
+                        <h:panelGrid   columns="3"  style="background-color: #EEEEEE; top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:90%; ">
+                                <h:panelGrid   columns="2"   style="border: 2px solid #ccc; border-radius: 10px;  background-color: #f9f9f9; background-color: #EEEEEE; top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:90%; ">
+                                    <h:outputText style="font-weight: normal;color:block;font-size:20px;" value=" Per Acre  : " />
+                                    <h:outputText style="font-weight: normal;color: block;font-size: 20px;" value="#{agriculturalNewTabService.agriData.perCent}" />
+
+                                    <h:outputText  style="font-weight:normal;color:block;font-size:20px;" value=" Total Acres  :  " />
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 20px;" value="#{agriculturalNewTabService.agriData.numberCents}" />
+
+                                    <h:outputText style="font-weight:normal;color:block;font-size:20px;" value=" Survey Number  :  "/>
+                                    <h:outputText  style="font-weight: normal;color: block;font-size: 20px;" value="#{agriculturalNewTabService.agriData.surveyNo}"/>
+                                </h:panelGrid>
+                                <h:panelGrid   columns="2"   style="border: 2px solid #ccc; border-radius: 10px;  background-color: #f9f9f9; background-color: #EEEEEE; top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:90%; ">
+                                    <h:outputText style="font-weight:normal;font-size:20px;" value=" Contact Name : " />
+                                    <h:outputText  style="font-weight: normal; font-size: 20px;" value="#{agriculturalNewTabService.agriData.agentName}" />
+
+                                    <h:outputText style="font-weight:normal;font-size:20px;" value=" Contact Number : " />
+                                    <h:outputText  rendered="#{userRoleService.userRole.contains('Contact Num')? true : false }" style="font-weight: normal; font-size: 20px;" value="#{agriculturalNewTabService.agriData.contactNo}" />
+                                    <h:outputText  rendered="#{userRoleService.userRole.contains('Contact Num')? false : true }" style="font-weight: normal; font-size: 20px" value=" -- " />
+
+                                    <h:outputText style="font-weight:normal;font-size:20px;" value=" Ownership : " />
+                                    <h:outputText style="font-weight: normal; font-size: 20px;" value="#{agriculturalNewTabService.agriData.wonership}" />
+
+                                    <h:outputText style="font-weight:normal;font-size:20px;" value=" Transaction : " />
+                                    <h:outputText  style="font-weight: normal; font-size: 20px;" value="#{agriculturalNewTabService.agriData.transaction}" />
+                                </h:panelGrid>
+                                <h:panelGrid   columns="2"   style="border: 2px solid #ccc; border-radius: 10px;  background-color: #f9f9f9; background-color: #EEEEEE; top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:90%; ">
+                                    <h:outputText style="font-weight:normal;font-size:25px" value=" Water Source : " />
+                                    <p:graphicImage  rendered="#{agriculturalNewTabService.agriData.waterSource eq 'No Water'}" width="25" height="25" name="images/icons/notwater.jpg" />
+                                    <p:graphicImage  rendered="#{agriculturalNewTabService.agriData.waterSource eq 'Bore Well'}" width="25" height="25" name="images/icons/borewell.jpg" />
+                                    <p:graphicImage  rendered="#{agriculturalNewTabService.agriData.waterSource eq 'Channel'}" width="25" height="25" name="images/icons/waterchannel.jpg" />
+
+                                    <h:outputText style="font-weight:normal;font-size:20px;" value=" Crop : " />
+                                    <p:graphicImage  rendered="#{agriculturalNewTabService.agriData.crop eq 'Yes'}" width="25" height="25" name="images/yes.jpg" />
+                                    <p:graphicImage  rendered="#{agriculturalNewTabService.agriData.crop eq 'No'}" width="25" height="25" name="images/no.jpg" />
+
+                                    <h:outputText style="font-weight:normal;font-size:20px;" value=" Power Supply : " />
+                                    <p:graphicImage  rendered="#{agriculturalNewTabService.agriData.crop eq 'Yes'}" width="25" height="25" name="images/yes.jpg" />
+                                    <p:graphicImage  rendered="#{agriculturalNewTabService.agriData.crop eq 'No'}" width="25" height="25" name="images/no.jpg" />
+                                </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid   columns="1"  style="background-color: #EEEEEE; top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:90%; ">
+                            <h:outputText value="blank" style="color: #EEEEEE;" />
+                            <h:outputText value="blank" style="color: #EEEEEE;"  />
+                            <h:outputText value="blank" style="color: #EEEEEE;"  />
+                        </h:panelGrid>
+                        <h:panelGrid   columns="1"  style="background-color: #EEEEEE; top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:90%; ">
+                            <h:outputText style="font-weight: normal; font-size: 25px" value="Location : #{agriculturalNewTabService.agriData.location}" />
+                        </h:panelGrid>
+                        <h:panelGrid   columns="1"  style="background-color: #EEEEEE; top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:90%; ">
+                            <h:outputText style="font-weight: normal;color: black ;font-size: 25px" value="Description : #{agriculturalNewTabService.agriData.comment}" />
+                        </h:panelGrid>
+                        <h:panelGrid   columns="1"  style="background-color: #EEEEEE; top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:90%; ">
+                            <h:outputText value="blank" style="color: #EEEEEE;" />
+                            <h:outputText value="blank" style="color: #EEEEEE;"  />
+                            <h:outputText value="blank" style="color: #EEEEEE;"  />
+                        </h:panelGrid>
+                        <h:panelGrid   columns="4"  style="background-color: #EEEEEE; top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:90%; ">
+                            <h:outputText value="Posted : #{agriculturalNewTabService.agriData.createdOnDate}" style="font-weight: normal;color: block;font-size: 20px">
+                                <f:convertDateTime type="date" dateStyle="full"/>
+                            </h:outputText>
+                            <h:link width="33%"  value = "Find Builders" class="pi pi-user" outcome = "builders.xhtml" style="font-weight: normal;color: block;font-size: 20px" />
+                            <h:link width="33%"  value = "Find Agents"  class="pi pi-user" outcome = "agents.xhtml" style="font-weight: normal;color: block;font-size: 20px" />
+                            <h:link width="33%"  value = "Enquiry" class="pi pi-user" outcome = "enquiry.xhtml" style="font-weight: normal;color: block;font-size: 20px" />
+                        </h:panelGrid>
+                        <h:panelGrid   columns="1"  style="background-color: #EEEEEE; top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:90%; ">
+                            <h:outputText value="blank" style="color: #EEEEEE;" />
+                            <h:outputText value="blank" style="color: #EEEEEE;"  />
+                            <h:outputText value="blank" style="color: #EEEEEE;"  />
+                        </h:panelGrid>
+                        <h:panelGrid   columns="2"  style="border: 2px solid #ccc; border-radius: 10px;  background-color: #f9f9f9; background-color: #EEEEEE; top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:90%; ">
+                        </h:panelGrid>
+                        <h:panelGrid   columns="1"  style="background-color: #EEEEEE; top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:90%; ">
+                            <h:outputText value="blank" style="color: #EEEEEE;" />
+                            <h:outputText value="blank" style="color: #EEEEEE;"  />
+                            <h:outputText value="blank" style="color: #EEEEEE;"  />
+                        </h:panelGrid>
+                        <h:panelGrid   columns="2" icon="pi pi-phone"  iconPos="left" style="text-align: center; background-color: #EEEEEE; top : 0;right : 10; padding : 0; bottom : 0; font-size:15px; width:90%; ">
+                            <p:commandButton type="submit" value="     Contact Owner   "  icon="pi pi-phone"
+                                             iconPos="left"
+                                             styleClass="fancy-btn" style="background:#FFA500;font-weight: bold;color: black;font-size: 15px; width:200px"
+                                             process="@this"
+                                             onclick="PF('leadDialog').show()">
+
+                            </p:commandButton>
+
+                            <p:commandButton type="submit" value="    Get Phone No   " icon="pi pi-phone"
+                                             iconPos="left"  style="background:#1E90FF;font-weight: bold;color: black;font-size: 15px; width:200px"
+                                             process="@this"
+                                             onclick="PF('leadDialog').show()">
+
+                            </p:commandButton>
+                        </h:panelGrid>
+                        <h:panelGrid   columns="1"  style="background-color: #EEEEEE; top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:90%; ">
+                            <h:outputText value="blank" style="color: #EEEEEE;" />
+                            <h:outputText value="blank" style="color: #EEEEEE;"  />
+                            <h:outputText value="blank" style="color: #EEEEEE;"  />
+                        </h:panelGrid>
+                        <h:panelGrid   columns="2"  style="border: 2px solid #ccc; border-radius: 10px;  background-color: #f9f9f9; background-color: #EEEEEE; top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:90%; ">
+                        </h:panelGrid>
+
+
+                    </h:panelGrid>
+              </h:form>
+
+                <h:form id="form1">
+                    <p:messages id="msgs"/>
+                    <p:dialog header="Call back details" widgetVar="leadDialog" minHeight="600" width="700" showEffect="fade">
+
+                        <p:panel id="panelDialog">
+                            <p:panelGrid columns="3" border="false" style="top : 0;left : 0; padding : 0; bottom : 0; font-weight: normal;color: block;font-size: 12px">
+
+
+                                <p:outputLabel required="true" style="font-weight: bold" for="name" indicateRequired="true" value="Name : " />
+                                <p:inputText id="name" value="#{agriculturalNewTabService.custName}" required="true" requiredMessage="Required  Name">
+                                </p:inputText>
+                                <p:message for="name" display="icon"/>
+
+
+                                <p:outputLabel style="font-weight: bold" for="ContactNumber" indicateRequired="true" value="Contact Number : " />
+                                <p:inputMask id="ContactNumber"  mask="9999999999" required="true"  maxlength="10" value="#{agriculturalNewTabService.contactNumber}" >
+                                </p:inputMask>
+                                <p:message for="ContactNumber" display="icon"/>
+
+                                <h:outputText style="font-weight: bold; font-size: 14px;color:black; text-align:left;" value="Email : " />
+                                <h:inputText id="email"  size="30" value="#{agriculturalNewTabService.email}"  validatorMessage="Invalid email format">
+                                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                </h:inputText>
+                                <p:message for="email" display="icon"/>
+
+                                <p:outputLabel style="font-weight: bold" for="comment" value="Comment  (100 char) : " />
+                                <p:inputText id="comment" maxlength="100" value="#{agriculturalNewTabService.comment}"  requiredMessage="Required  Name">
+                                </p:inputText>
+                                <p:message for="comment" display="icon"/>
+
+
+                            </p:panelGrid>
+                        </p:panel>
+
+
+                        <br></br>
+                        <h:commandButton value="Submit"   type="submit"  process="@this" update="@form1" actionListener="#{agriculturalNewTabService.submit}" onclick="PF('spinnerDialog').show()">
+                            <p:resetInput target="form1"/>
+                        </h:commandButton>
+                        <p:commandButton value="Reset" update="panelDialog" process="@this"
+                                         action="#{agriculturalNewTabService.reset}"
+                                         styleClass="mr-2 ui-button-outlined"/>
+
+                    </p:dialog>
+
+                    <script type="text/javascript" src="resources/js/chatool.js"></script>
+
+
+                </h:form>
+
+
+
+                <!--Scrolling Images-->
+                <table width="100%" height="400px" >
+                    <tr>
+                        <td>
+                            <p:contentFlow value="#{imagesViewService.images}" var="image">
+                                <p:graphicImage name="images/gallery/#{image}" styleClass="content"/>
+                                <div class="caption">#{image}</div>
+                            </p:contentFlow>
+                        </td>
+                    </tr>
+                </table>
+
+                <table width="100%" height="250px" style="background:#0c0d0c; padding:20px;">
+                    <tr>
+                        <td height="15px"><P  style="font-weight: 400; font-size: 20px;color:#fcc203; margin-top:25px; margin-left:20px;">About Our Company :</P></td>
+                    </tr>
+                    <tr >
+
+                        <th colspan="3" height="15px">
+                            <P style="font-weight: 400; font-size: 15px;color:#f7f7f2; margin-left:20px;">The Real Estate Business Launched in 2021, Hansi SoftSolutions is the India's No.1 online business marketing place to buying and selling properties like residential and commercial properties.</P>
+                        </th>
+
+                    </tr>
+                    <tr >
+                        <th width="25%" style="font-weight: bold; font-size: 18px;color:#ecf78b; padding-left:20px;">Buy Properties</th>
+                        <th width="25%" style="font-weight: bold; font-size: 18px;color:#ecf78b;">Sell Properties</th>
+                        <th width="25%" style="font-weight: bold; font-size: 18px;color:#ecf78b;" >
+                            <h:link  value = "Help" outcome = "help.xhtml" style="font-weight: bold; font-size: 14px;color:#f7f7f2;float: left; ">
+                            </h:link>
+                        </th>
+                        <th width="25%" style="font-weight: bold; font-size: 18px;color:#ecf78b;" >
+                            <h:link  value = "Enquiry" outcome = "enquiry.xhtml" style="font-weight: bold; font-size: 14px;color:#f7f7f2;float: left; padding-left:0px;">
+                            </h:link>
+                        </th>
+                    </tr >
+                    <tr >
+                        <td width="25%">
+                            <h:link  value = "Layout" outcome = "layoutDetails.xhtml" style="font-weight: bold; font-size: 14px;color:#f7f7f2;float: left; padding-left:20px;">
+                            </h:link>
+                        </td>
+                        <td width="25%">
+                            <h:link  value = "Layout" outcome = "plotsDataEntry.xhtml" style="font-weight: bold; font-size: 14px;color:#f7f7f2;float: left; ">
+                            </h:link>
+                        </td >
+                        <td width="25%">
+                            <h:link  value = "Gallery" outcome = "gallery.xhtml" style="font-weight: bold; font-size: 14px;color:#f7f7f2;float: left; ">
+                            </h:link>
+                        </td>
+                        <td width="25%">
+                            <h:link  value = "About Us" outcome = "aboutUs.xhtml" style="font-weight: bold; font-size: 14px;color:#f7f7f2;float: left; ">
+                            </h:link>
+                        </td>
+                    </tr>
+                    <tr >
+                        <td width="25%">
+                            <h:link  value = "Agricultural Land" outcome = "agricultural.xhtml" style="font-weight: bold; font-size: 14px;color:#f7f7f2;float: left; padding-left:20px;">
+                            </h:link>
+                        </td>
+                        <td width="25%">
+                            <h:link  value = "Agricultural Land" outcome = "agriDataEntry.xhtml" style="font-weight: bold; font-size: 14px;color:#f7f7f2;float: left; ">
+                            </h:link>
+                        </td >
+                        <td width="25%">
+                            <h:link  value = "Agents" outcome = "agents.xhtml" style="font-weight: bold; font-size: 14px;color:#f7f7f2;float: left; ">
+                            </h:link>
+                        </td>
+                        <td width="25%">
+                            <h:link  value = "Contact Us" outcome = "contactUs.xhtml" style="font-weight: bold; font-size: 14px;color:#f7f7f2;float: left; ">
+                            </h:link>
+                        </td>
+                    </tr>
+                    <tr >
+                        <td width="25%">
+                            <h:link  value = "Individual Site" outcome = "individualsite.xhtml" style="font-weight: bold; font-size: 14px;color:#f7f7f2;float: left; padding-left:20px;">
+                            </h:link>
+                        </td>
+                        <td width="25%">
+                            <h:link  value = "Individual Site" outcome = "indiSiteDataEntry.xhtml" style="font-weight: bold; font-size: 14px;color:#f7f7f2;float: left; ">
+                            </h:link>
+                        </td >
+                        <td width="25%">
+                            <h:link  value = "Builders" outcome = "builders.xhtml" style="font-weight: bold; font-size: 14px;color:#f7f7f2;float: left; ">
+                            </h:link>
+                        </td>
+
+                    </tr>
+
+                    <tr >
+
+
+                        <table width="100%" height="100px" style="background:#0c0d0c;">
+
+                            <tr>
+                                <th style="text-align:center;">
+
+
+
+                                    <a href="https://www.facebook.com/profile.php?id=100073184773935" target="_blank" ><p:graphicImage width="75px"  height="75px" name="images/facebook.jpg" style=" padding:15px; border-radius:75px;" /></a>
+                                    <a href="https://www.instagram.com/hansisoft.info/" target="_blank"><p:graphicImage width="75px"  height="75px" name="images/instagramIcon.jpg" style=" padding:15px; border-top-left-radius:300px; border-radius:75px"/></a>
+                                    <a href="https://www.youtube.com/@hansisoftsolutions8178/videos" target="_blank"><p:graphicImage width="79px"  height="73px" name="images/youtubeIcon.jpg" style=" padding:15px; border-radius:28px;"/></a>
+                                </th>
+                            </tr>
+                        </table>
+
+                    </tr>
+
+                </table>
+
+            </div>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

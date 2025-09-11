@@ -10,12 +10,9 @@ public interface UtilConstants {
 	
 	// package price enquiry;
 	int PACKAGE_ENQUIRY_TYPE=1;
-	
-	
-	
 	int NEW_DEFAULT_USER_ID=2;
-
-
 	int DEFAULT_USER=2;
+
+
 
 }

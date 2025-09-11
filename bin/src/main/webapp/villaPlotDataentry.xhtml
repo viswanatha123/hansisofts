@@ -1,0 +1,269 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+      
+   <h:head>
+   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
+   <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+   <link href="resources/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+   <link href="resources/css/demo/demo.css" rel="stylesheet" />
+   </h:head>
+  
+   <h:body>
+  <ui:composition template="/WEB-INF/facelets/template.xhtml" style="background-image: url('back1.jpg'); ">
+  <ui:param name="page" value="Admin" />
+   <ui:define name="title">
+   <p>Villa/Flat DataEntry</p>
+       <p>
+           <h:outputText style="font-weight: normal; font-size: 14px;color: #555;" value="Provide detailed information about the villa or flat site including address, built-up area, cost per square foot, and contact details of the agent or owner. This section helps manage listings for villa or flat properties available for sale." />
+       </p>
+
+       <div class="villaDataEntry" jsf:rendered="#{villaDataEntryService.isEnable eq false and villaDataEntryService.listedCount eq 0}">
+	   
+	       <p:panel  style="background: #FFFF00;width: 100%; height:50px;font-size: 15px ; text-align:center" >
+	  			<p:outputLabel  style="font-weight: bold; color:red;" value="Please subscribe package to listing propertys, Contact support team +91 9632152255 ." />
+	  		</p:panel>
+	  		<br></br><br></br><br></br>
+	  		<ui:insert name="package">
+                <ui:include src="packPrice.xhtml"/>
+            </ui:insert>
+	</div>
+    <div class="Error" jsf:rendered="#{villaDataEntryService.listedCount ge villaDataEntryService.listLimit and villaDataEntryService.isEnable eq true}">
+	  		<p:panel  style="background: #FFFF00;width: 100%; height:50px;font-size: 15px ; text-align:center" >
+	  			<p:outputLabel  style="font-weight: bold; color:red;" value="Exceed your limits property listing.. #{villaDataEntryService.listedCount}" />
+	  		</p:panel>
+	  </div>
+	  <div class="villaDataEntry" jsf:rendered="#{villaDataEntryService.listedCount lt villaDataEntryService.listLimit and villaDataEntryService.isEnable eq true or villaDataEntryService.listedCount eq 0 and villaDataEntryService.userId eq -1}">
+  
+  <div class="card">
+  			
+  <h:form  id="form" enctype="multipart/form-data">
+      <p:dialog widgetVar="spinnerDialog"  style="background-color: #3A3B3C;"  modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
+          <p:graphicImage name="images/spin/spin1.gif" width="70px"  height="70px" />
+      </p:dialog>
+  <p:messages id="msgs"/>
+   <br></br>
+  		 <p:panel>   
+                <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                    <h:outputText style="font-weight: bold;color: green" value="#{villaDataEntryService.updateResult}" />
+                </p:panelGrid>
+             </p:panel>
+             
+             <p:panel style="background-image: url('back1.jpg'); ">   
+                <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
+                	<p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                    
+                    <p:outputLabel required="true" style="font-weight: bold" for="i_am" indicateRequired="true" value="I am  : " />
+                    <p:selectOneRadio id="i_am" value="#{villaDataEntryService.i_am}" layout="lineDirection">
+			            <f:selectItem itemLabel="Owner" itemValue="Owner" />
+			            <f:selectItem itemLabel="Agent" itemValue="Agent"/>
+			            <f:selectItem itemLabel="Company" itemValue="Company"/>
+                        <f:selectItem itemLabel="Project" itemValue="Project"/>
+			        </p:selectOneRadio>
+			        <p:message for="i_am" display="icon"/>
+                    
+                       
+                    <p:outputLabel style="font-weight: bold" value="Name : " />
+                    <p:inputText id="ownerName"  value="#{villaDataEntryService.owner_name}" >
+                    </p:inputText>
+                    <p:message for="ownerName" display="icon"/>
+                    
+                    
+                    <p:outputLabel style="font-weight: bold" for="mobileNumber" indicateRequired="true" value="Mobile Number : " />
+                    <p:inputMask id="mobileNumber"  mask="9999999999" required="true"  maxlength="10" value="#{villaDataEntryService.contact_owner}" >
+                    </p:inputMask>
+                    <p:message for="mobileNumber" display="icon"/>
+                                        
+                    <p:outputLabel style="font-weight: bold; font-size: 14px;color:black; text-align:left;" value="Email : " />
+		            <p:inputText id="email"  size="30" value="#{villaDataEntryService.email}"  validatorMessage="Invalid email format">
+		            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+		            </p:inputText>
+		            <p:message for="email" display="icon"/>
+                                                
+                    <p:outputLabel required="true" style="font-weight: bold" for="proType" indicateRequired="true" value="Property Type : " />
+                    <p:selectOneRadio id="proType" value="#{villaDataEntryService.property_type}" layout="lineDirection">
+			            <f:selectItem itemLabel="Villa" itemValue="Villa" />
+			            <f:selectItem itemLabel="Flat" itemValue="Flat"/>
+			            <f:selectItem itemLabel="House" itemValue="House"/>
+			        </p:selectOneRadio>
+			        <p:message for="proType" display="icon"/>
+                    
+                    
+                    <p:outputLabel style="font-weight: bold" value="Address : " />
+                    <p:inputText id="address"  value="#{villaDataEntryService.address}" >
+                    </p:inputText>
+                    <p:message for="address" display="icon"/>
+                    
+                    <p:outputLabel style="font-weight: bold" for="roadWidth"  value="Road Width(Feets) : " />
+                    <p:inputNumber id="roadWidth" value="#{villaDataEntryService.road_width}"  requiredMessage="Road Width(Feets)"  decimalPlaces="0" modifyValueOnWheel="false">
+                    </p:inputNumber>
+                    <p:message for="roadWidth" display="icon"/>
+                                        
+                    <p:outputLabel style="font-weight: bold" for="floors" indicateRequired="true" value="Number Of Floors : " />
+                    <p:selectOneMenu id="floors" value="#{villaDataEntryService.floors}" style="width:150px"> 
+                            <f:selectItem itemLabel="1" itemValue="1"/>
+                            <f:selectItem itemLabel="2" itemValue="2"/>
+                            <f:selectItem itemLabel="3" itemValue="3"/>
+                            <f:selectItem itemLabel="4" itemValue="4"/>
+                            <f:selectItem itemLabel="5" itemValue="5"/>
+                            </p:selectOneMenu>
+                    <p:message for="floors" display="icon"/>
+                    
+                    <p:outputLabel style="font-weight: bold" for="bedRooms" indicateRequired="true" value="Number OF Bed Rooms : " />
+                    <p:selectOneMenu id="bedRooms" value="#{villaDataEntryService.bed_rooms}" style="width:150px"> 
+                            <f:selectItem itemLabel="1" itemValue="1"/>
+                            <f:selectItem itemLabel="2" itemValue="2"/>
+                            <f:selectItem itemLabel="3" itemValue="3"/>
+                            <f:selectItem itemLabel="4" itemValue="4"/>
+                            <f:selectItem itemLabel="5" itemValue="5"/>
+                            </p:selectOneMenu>
+                    <p:message for="bedRooms" display="icon"/>
+                    
+                    <p:outputLabel style="font-weight: bold;width:190px" for="bathRooms" indicateRequired="true" value="Number OF Bath Rooms : " />
+                    <p:selectOneMenu id="bathRooms" value="#{villaDataEntryService.bath_rooms}" style="width:150px"> 
+                            <f:selectItem itemLabel="1" itemValue="1"/>
+                            <f:selectItem itemLabel="2" itemValue="2"/>
+                            <f:selectItem itemLabel="3" itemValue="3"/>
+                            <f:selectItem itemLabel="4" itemValue="4"/>
+                            <f:selectItem itemLabel="5" itemValue="5"/>
+                            </p:selectOneMenu>
+                    <p:message for="bathRooms" display="icon"/>
+                    
+                    <p:outputLabel for="furnishedStatus" value="Furnished Status : " />  
+                        <p:selectOneMenu id="furnishedStatus" value="#{villaDataEntryService.furnished}" style="width:150px">  
+                        <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                        <f:selectItem itemLabel="No" itemValue="No"/>
+                    </p:selectOneMenu>
+                    <p:message for="furnishedStatus" display="icon"/>
+                    
+                    <p:outputLabel style="font-weight: bold" for="flatArea" indicateRequired="true" value="Flat Area  SQ Feet   :  " />
+                    <p:inputNumber id="flatArea" value="#{villaDataEntryService.plot_area}" required="true" requiredMessage="Plot Area  SQ Feet"  decimalPlaces="0" modifyValueOnWheel="false">
+                    </p:inputNumber>
+                    <p:message for="flatArea" display="icon"/>
+                    
+                    <p:outputLabel style="font-weight: bold;width:200px" for="sBArea" indicateRequired="true" value="Super Buildup Area  SQ Feet" />
+                    <p:inputNumber id="sBArea" value="#{villaDataEntryService.s_build_are}" required="true" requiredMessage="Super Buildup Area  SQ Feet "  decimalPlaces="0" modifyValueOnWheel="false">
+                    </p:inputNumber>
+                    <p:message for="sBArea" display="icon"/>
+                    
+                    <p:outputLabel style="font-weight: bold" for="proAvail" value="Property Availability : " />
+                    <p:selectOneRadio id="proAvail" value="#{villaDataEntryService.pro_avail}" layout="lineDirection">
+			            <f:selectItem itemLabel="Under Construction" itemValue="Under Construction" />
+			            <f:selectItem itemLabel="Ready To Move" itemValue="Ready To Move"/>
+			            <f:selectItem itemLabel="Commercial" itemValue="Commercial"/>
+			            <f:selectItem itemLabel="Residential" itemValue="Residential"/>
+			        </p:selectOneRadio>
+			        <p:message for="proAvail" display="icon"/>
+                                        
+                                     
+                    <p:outputLabel for="availDate" value="Availability Date : " />
+        			<p:datePicker id="availDate" value="#{villaDataEntryService.avail_date}" showIcon="true" />
+                    <p:message for="availDate" display="icon"/>
+                    
+                                          
+                    <p:outputLabel style="font-weight: bold" for="persqft" indicateRequired="true" value="Per Square Feet(Cost) : " />
+                    <p:inputNumber id="persqft"  value="#{villaDataEntryService.persqft}" required="true" requiredMessage="Required Length"  modifyValueOnWheel="false" >
+                    </p:inputNumber>
+                    <p:message for="persqft" display="icon"/>
+                    
+                    <p:outputLabel style="font-weight: bold" for="floorNumber"  value="Floor Number : " />
+                    <p:inputNumber id="floorNumber"  value="#{villaDataEntryService.floorNum}"    modifyValueOnWheel="false" >
+                    </p:inputNumber>
+                    <p:message for="floorNumber" display="icon"/>
+                                       
+                    <p:outputLabel for="country" value="Primary Location : " />  
+                            <p:selectOneMenu id="country" value="#{villaDataEntryService.country}" style="width:150px" required="true" requiredMessage="Select Primary Location">  
+                            <p:ajax listener="#{villaDataEntryService.onCountryChange}" update="city" />  
+                            <f:selectItem itemLabel="Primary Location" itemValue="" noSelectionOption="true"/>  
+                            <f:selectItems value="#{villaDataEntryService.primLocationSort}" />  
+                    </p:selectOneMenu>
+                    <p:message for="country" display="icon"/>
+                   
+                    <p:outputLabel for="city" value="Secondary Location : " />  
+                            <p:selectOneMenu id="city" value="#{villaDataEntryService.city}" style="width:150px" required="true" requiredMessage="Select Secondary Location">  
+                            <f:selectItem itemLabel="Secondary Location" itemValue="" noSelectionOption="true" />  
+                            <f:selectItems value="#{villaDataEntryService.secondryLocation}" />  
+                   </p:selectOneMenu> 
+                   <p:message for="city" display="icon"/>
+                   
+                   <p:outputLabel style="font-weight: bold" value="Description (150 char): " />
+                   <p:inputTextarea rows="5" cols="40" maxlength="150" id="comment" value="#{villaDataEntryService.comment}" >
+                   </p:inputTextarea>		
+                   <p:message for="comment" display="icon"/>
+                   
+                   
+                   
+                   <p:outputLabel for="facing" value="Facing : " />  
+                            <p:selectOneMenu id="facing" value="#{villaDataEntryService.facing}" style="width:150px"> 
+                            <f:selectItem itemLabel="--" itemValue="--"/> 
+                            <f:selectItem itemLabel="East" itemValue="East"/>
+                            <f:selectItem itemLabel="West" itemValue="West"/>
+                            <f:selectItem itemLabel="North" itemValue="North"/>
+                            <f:selectItem itemLabel="South" itemValue="South"/>
+                            </p:selectOneMenu>
+                            <p:message for="facing" display="icon"/>
+                    
+                    <p:outputLabel for="cornerbit" value="Corner Bit : " /> 
+                            <p:selectOneMenu id="cornerbit" value="#{villaDataEntryService.cornerBit}" style="width:150px"> 
+                            <f:selectItem itemLabel="No" itemValue="No"/>
+                            <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                            </p:selectOneMenu> 
+                            <p:message for="cornerbit" display="icon"/> 
+                                         
+                            
+                   <p:outputLabel style="font-weight: bold;width:210px;" value="Image Upload (JPG,PNG,JPEG) : "   />
+                   <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                   <p:fileUpload id="image" value="#{villaDataEntryService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  required="true" requiredMessage="Upload Image" /> 
+            	   </p:panelGrid>
+             	   <p:message for="image" display="icon"/>      
+                    
+                   <h:commandButton value="Submit"   type="submit" 
+                                    process="@this"
+                                    update="@form"
+                                    actionListener="#{villaDataEntryService.upload}" onclick="PF('spinnerDialog').show()">
+                                    <p:resetInput target="form"/>
+                   </h:commandButton>
+                   
+                   <h:commandButton id="discardChangesButton"
+	                                   process="@this"
+	                                   value="Clear"
+                                           update="@form"
+	                                   actionListener="#{villaDataEntryService.clear()}" >
+	                                   
+	                   <p:resetInput target="form"/>
+	               </h:commandButton>
+                </p:panelGrid>                     
+                  <p style="font-weight: bold;color: black; font-size: 18px"> Please provide your Villa  property details which you want to sell.</p>
+                  <p style="font-weight: bold;color: black; font-size: 18px"> Please contact our customer care ,if any further assist required.</p>
+                  <p style="font-weight: bold;color: black; font-size: 18px"> Customer care number : 8088471208.</p>
+                  <p style="font-weight: bold;color: black; font-size: 18px">E-mail : customer.support@hansisofts.com</p>
+                  <p:graphicImage width="102%"  height="400px" name="images/villa.jpg" />
+                   
+               </p:panelGrid>      
+                    
+                          
+                       
+            </p:panel>
+            
+  
+ 			
+ <script type="text/javascript" src="resources/js/chatool.js"></script>   
+ </h:form>
+</div>
+</div>
+</ui:define>
+</ui:composition>
+</h:body>
+</html>

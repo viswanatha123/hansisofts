@@ -1,5 +1,9 @@
 package com.DIC.model;
 
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.file.UploadedFile;
+
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -22,9 +26,11 @@ public class UserDetails implements Serializable {
 	private Boolean isEnable;
 	private int rank;
 	
-	
 	private String disName;
-	
+	private StreamedContent streamedContent;
+
+	private InputStream inputStream;
+	private UploadedFile file;
 
 	public String getUserPassword() {
 		return userPassword;
@@ -176,6 +182,27 @@ public class UserDetails implements Serializable {
 		this.rank = rank;
 	}
 
-	
+	public StreamedContent getStreamedContent() {
+		return streamedContent;
+	}
 
+	public void setStreamedContent(StreamedContent streamedContent) {
+		this.streamedContent = streamedContent;
+	}
+
+	public InputStream getInputStream() {
+		return inputStream;
+	}
+
+	public void setInputStream(InputStream inputStream) {
+		this.inputStream = inputStream;
+	}
+
+	public UploadedFile getFile() {
+		return file;
+	}
+
+	public void setFile(UploadedFile file) {
+		this.file = file;
+	}
 }

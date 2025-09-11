@@ -2,6 +2,8 @@ package com.DIC.model;
 
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.primefaces.model.file.UploadedFile;
 
@@ -36,6 +38,9 @@ public class PlotsDataEntryModel implements Serializable{
     private InputStream inputStream;
     private UploadedFile file;
     private String cornerBit;
+
+	private List<InputStream> inputStreams = new ArrayList<>();
+	private List<UploadedFile> files = new ArrayList<>();
     
     
    public UploadedFile getFile() {
@@ -245,6 +250,20 @@ public class PlotsDataEntryModel implements Serializable{
 		public void setCornerBit(String cornerBit) {
 			this.cornerBit = cornerBit;
 		}
-	    
 
+	public List<InputStream> getInputStreams() {
+		return inputStreams;
+	}
+
+	public void setInputStreams(List<InputStream> inputStreams) {
+		this.inputStreams = inputStreams;
+	}
+
+	public List<UploadedFile> getFiles() {
+		return files;
+	}
+
+	public void setFiles(List<UploadedFile> files) {
+		this.files = files;
+	}
 }

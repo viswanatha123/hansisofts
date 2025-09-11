@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+       <h:body>
+
+        
+  <ui:composition template="/WEB-INF/facelets/template.xhtml">
+  <ui:param name="page" value="Budget" />
+  <ui:define name="title"><p style="font-weight: bold; color:blue; font-size:15px">Budget properties</p>
+  <p>List out properties budget below from 1Cr - 2Cr </p>
+  <div class="card">
+  <h:form id="form">
+	  <p:dialog widgetVar="spinnerDialog"  style="background-color: #3A3B3C;"  modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
+		  <p:graphicImage name="images/spin/spin1.gif" width="70px"  height="70px" />
+	  </p:dialog>
+  <br></br>
+  
+  			<p:panel>   
+                <p:panelGrid columns="1" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
+                    <h:outputText  style="font-weight: normal; font-style:italic; font-size:15px; color: blue; text-align: left;" value="Selected properties : #{budgetService3.totalRecords}" />
+                </p:panelGrid>
+            </p:panel>
+  
+  			<p:dataScroller value="#{budgetService3.budgetModelList}" var="product" chunkSize="10">
+                    <p:panel  style="width: 100%; height:340px; box-shadow: 10px 10px 5px grey; " >
+                  
+                  
+                  				<h:panelGrid   columns="4" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
+                  				<h:outputText style="font-weight: bold;color: green;font-size:15px;" value="Owner Name : #{product.name}" />
+                   				<h:outputText style="font-weight: bold;color: block; font-size:15px; float:right" value="Property Type : #{product.pro_type}" />
+                  				<h:outputText class="pi pi-globe" style="font-weight: bold;color: brown;font-size:15px; float:right" value=" Property for Sale in #{product.prim_location},   #{product.seco_location} " />
+              					</h:panelGrid>
+              					
+              					<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
+                     				<p:graphicImage width="200" height="200" stream="false" cache="false" value="#{product.streamedContent}" />
+                     			
+                     				 <h:panelGrid   columns="2" style="background: #E5E4E2;" width="80%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
+                     			 
+                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" Name :" />
+                     			 				<h:outputText style="font-weight: normal;color: block;font-size: 15px" value="#{product.name}" />
+                     			 				
+                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" Contact : "/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.contactNo}"/>
+                     			 		
+                     			 				<h:outputText class="pi pi-check" style="font-weight: normal;color: block;font-size: 15px" value=" Property Type : "/>
+                     			 				<h:outputText  style="font-weight: normal;color: block;font-size: 15px" value="#{product.pro_type}"/>
+                     			              
+                                     </h:panelGrid>
+                                     
+                                     <h:panelGrid   columns="1" width="60%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
+                     			 				<h:outputText style="font-weight: bold;color: red;font-size: 15px"  value="Rs #{product.cost}" />
+                     			 				<p:commandButton type="submit" value="Callback" icon="ui-icon-calculator" style="background:#FFA500;font-weight: bold;color: black;font-size: 15px" 
+															 process="@this" 
+							                                 onclick="PF('leadDialog1').show()">           
+							                              <f:setPropertyActionListener value="#{product}" target="#{budgetService3.selectedProperty}" />
+									            </p:commandButton>
+									                
+									                                      						
+                          						<p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#1E90FF;font-weight: bold;color: black;font-size: 15px; width:170px" 
+															 process="@this" 
+							                                 onclick="PF('leadDialog1').show()">           
+							                              <f:setPropertyActionListener value="#{product}" target="#{budgetService3.selectedProperty}" />
+									            </p:commandButton>
+                     				</h:panelGrid>
+                                     
+                                     
+                                     
+              				  </h:panelGrid>
+              				  
+              				  
+              				  	<h:panelGrid   columns="1" width="100%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right"> 
+                               	 <h:outputText style="font-weight: normal; font-size: 15px" value="Location : #{product.location}" />
+                               </h:panelGrid>
+              				  <br></br>
+                              <h:panelGrid  columns="4" width="100%"  columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right">
+                          			<h:outputText value="Posted : #{product.create_date}" >
+									    <f:convertDateTime type="date" dateStyle="full"/>   
+									</h:outputText>
+									
+									<h:link  value = "Find Builders" class="pi pi-user" outcome = "builders.xhtml" style="font-weight: bold; font-size: 14px;color:block;float: right; margin-right: 50px;" />
+					           		<h:link  value = "Find Agents"  class="pi pi-user" outcome = "agents.xhtml" style="font-weight: bold; font-size: 14px;color:block;float: right; margin-right: 50px;" />
+					           		<h:link  value = "Enquiry" class="pi pi-user" outcome = "enquiry.xhtml" style="font-weight: bold; font-size: 14px;color:block;float: right; margin-right: 50px;" />
+					          
+					        </h:panelGrid> 
+  
+            	  </p:panel>
+              <br></br>
+           </p:dataScroller>
+           
+           <p:panel>   
+         	<p:panelGrid columns="3" styleClass="noBorder" style="margin:auto; top : 0;left : 0; padding : 0; bottom : 0; text-align: left; ">
+		        <h:commandButton value="Previous" action="#{budgetService3.previousPage}" disabled="#{budgetService3.currentPage == 1}" />
+		        <h:commandButton value="Next" action="#{budgetService3.nextPage}" disabled="#{budgetService3.currentPage * budgetService3.pageSize >= budgetService3.totalRecords}" />
+		        <h:outputText value="Page #{budgetService3.currentPage} of #{budgetService3.totalPages}" />
+		    </p:panelGrid>
+          </p:panel>
+           
+ 
+  </h:form>
+  
+  <h:form id="form1">
+		<p:messages id="msgs"/>
+		 	<p:dialog header="Call back details" widgetVar="leadDialog1" minHeight="600" width="700" showEffect="fade">
+		        
+		        	<p:panel id="panelDialog" style="background-image: url('back1.jpg'); ">   
+					    <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
+					        <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+					        
+					        
+					        			    <p:outputLabel required="true" style="font-weight: bold" for="name" indicateRequired="true" value="Name : " />
+						                    <p:inputText id="name" value="#{budgetService3.custName}" required="true" requiredMessage="Required  Name">
+						                    </p:inputText>
+						                    <p:message for="name" display="icon"/>
+						                    
+						                    
+						                    <p:outputLabel style="font-weight: bold" for="ContactNumber" indicateRequired="true" value="Contact Number : " />
+							                <p:inputMask id="ContactNumber"  mask="9999999999" required="true"  maxlength="10" value="#{budgetService3.contactNumber}" >
+							                </p:inputMask>
+							                <p:message for="ContactNumber" display="icon"/>
+							      							        
+									        <h:outputText style="font-weight: bold; font-size: 14px;color:black; text-align:left;" value="Email : " />
+						                    <h:inputText id="email"  size="30" value="#{budgetService3.email}"  validatorMessage="Invalid email format">
+						                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						                    </h:inputText> 
+						                    <p:message for="email" display="icon"/>
+							                
+					   
+							</p:panelGrid>
+					   </p:panelGrid>      
+					</p:panel>		
+		        			
+		        
+		        <br></br>
+		   		          <h:commandButton value="Submit"   type="submit"  process="@this" update="@form" actionListener="#{budgetService3.submit}" onclick="PF('spinnerDialog').show()" >
+		                    <p:resetInput target="form"/>                
+		                  </h:commandButton>
+		                  <p:commandButton value="Reset" update="panelDialog" process="@this"
+                                 action="#{budgetService3.reset}"
+                                 styleClass="mr-2 ui-button-outlined"/>
+				  
+		   </p:dialog>
+		   <script type="text/javascript" src="resources/js/chatool.js"></script>
+ </h:form>
+ </div>
+ </ui:define>
+ </ui:composition>
+ </h:body>
+ </html>

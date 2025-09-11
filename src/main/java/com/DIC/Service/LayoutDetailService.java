@@ -5,13 +5,16 @@ import java.util.*;
 
 import com.DIC.DAO.Impl.*;
 import com.DIC.DAO.QueryFactoryManager;
+import framework.utilities.SessionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.PrimeFaces;
 
@@ -121,7 +124,9 @@ public class LayoutDetailService implements Serializable{
 	        locationMessage=country+" ,   "+city;
 	        loadEntities(); 
 	    	countTotalRecords();
-        }
+	    }
+
+
         public void loadEntities() {
 	 		
         	layoutdetails=dao.getLayoutDetails(country,city,pageSize,currentPage);
@@ -229,6 +234,8 @@ public class LayoutDetailService implements Serializable{
 	  public void getLayoutDialog()
 	  {
 		  //int layoutId=selectedProperty.getLayoutId();
+		  HttpSession session = SessionUtils.getSession();
+		  session.setAttribute("LayoutId", selectedProperty);
 		  layoutData=pDao.getLayoutData(selectedProperty.getLayoutId());
 	  }
    
