@@ -9,7 +9,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:jsf="http://xmlns.jcp.org/jsf">
-      
+
    <h:head>
    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
@@ -20,7 +20,7 @@
    <link href="resources/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
    <link href="resources/css/demo/demo.css" rel="stylesheet" />
    </h:head>
-  
+
    <h:body>
   <ui:composition template="/WEB-INF/facelets/template.xhtml" style="background-image: url('back1.jpg'); ">
   <ui:param name="page" value="Admin" />
@@ -60,11 +60,20 @@
                     <h:outputText style="font-weight: bold;color: green" value="#{villaDataEntryService.updateResult}" />
                 </p:panelGrid>
              </p:panel>
+      <style>
+          /* Force required star (*) to red */
+          .ui-outputlabel-rfi {
+              color: red !important;
+              font-weight: bold;
+              font-size: 14px;
+              
+          }
+      </style>
              
              <p:panel style="background-image: url('back1.jpg'); ">   
                 <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
                 	<p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
-                    
+
                     <p:outputLabel required="true" style="font-weight: bold" for="i_am" indicateRequired="true" value="I am  : " />
                     <p:selectOneRadio id="i_am" value="#{villaDataEntryService.i_am}" layout="lineDirection">
 			            <f:selectItem itemLabel="Owner" itemValue="Owner" />
