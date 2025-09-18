@@ -65,10 +65,13 @@ This section is used to manage and list layout properties for sale." />
              <p:panel style="background-image: url('back1.jpg'); ">   
                 <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
                 	<p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
-                    
-            
-                    <p:outputLabel required="true" style="font-weight: bold" for="name" indicateRequired="true" value="Layout Name : " />
-                    <p:inputText id="name" value="#{plotsDataEntryService.name}" required="true" requiredMessage="Required Layout Name">
+
+
+                        <p:outputLabel for="name" style="font-weight: bold">
+                            Layout Name : <span style="color: red; font-weight: bold;">*</span>
+                        </p:outputLabel>
+
+                        <p:inputText id="name" value="#{plotsDataEntryService.name}">
                     </p:inputText>
                     <p:message for="name" display="icon"/>
                     
@@ -76,27 +79,38 @@ This section is used to manage and list layout properties for sale." />
                     <p:inputText id="location"  value="#{plotsDataEntryService.location}" >
                     </p:inputText>
                     <p:message for="location" display="icon"/>
-                    
-                    <p:outputLabel style="font-weight: bold" for="persqft" indicateRequired="true" value="Per Square Feet(Cost) : " />
-                    <p:inputNumber id="persqft"  value="#{plotsDataEntryService.persqft}" required="true" requiredMessage="Required Length"  modifyValueOnWheel="false" >
-                   </p:inputNumber>
-                    <p:message for="persqft" display="icon"/>
-                    
-                     
-                    <p:outputLabel style="font-weight: bold" for="agentName" indicateRequired="true" value="Agent Name : " />
-                    <p:inputText id="agentName"  required="true" value="#{plotsDataEntryService.agentName}" >
-                    </p:inputText> 
-                    <p:message for="agentName" display="icon"/>
-                                  
-                    
-                    <p:outputLabel style="font-weight: bold" for="contactOwner" indicateRequired="true" value="Agent Contact No : " />
-                    <p:inputMask id="contactOwner"  mask="9999999999" required="true"  maxlength="10" value="#{plotsDataEntryService.contactOwner}" >
-                    	
-                    </p:inputMask>
-                    <p:message for="contactOwner" display="icon"/>
-            		
-                    
-                    <p:outputLabel style="font-weight: bold" value="Owner Name : " />
+
+                        <p:outputLabel for="persqft" style="font-weight: bold">
+                            Per Square Feet (Cost) : <span style="color: red; font-weight: bold;">*</span>
+                        </p:outputLabel>
+
+                        <p:inputNumber id="persqft" value="#{plotsDataEntryService.persqft}"  modifyValueOnWheel="false" />
+
+                        <p:message for="persqft" display="icon"/>
+
+
+
+                        <p:outputLabel for="agentName" style="font-weight: bold">
+                            Agent Name : <span style="color: red; font-weight: bold;">*</span>
+                        </p:outputLabel>
+
+                        <p:inputText id="agentName" value="#{plotsDataEntryService.agentName}" />
+
+                        <p:message for="agentName" display="icon"/>
+
+
+
+                        <p:outputLabel for="contactOwner" style="font-weight: bold">
+                            Agent Contact No : <span style="color: red; font-weight: bold;">*</span>
+                        </p:outputLabel>
+
+                        <p:inputMask id="contactOwner" mask="9999999999"  maxlength="10" value="#{plotsDataEntryService.contactOwner}" />
+
+                        <p:message for="contactOwner" display="icon"/>
+
+
+
+                        <p:outputLabel style="font-weight: bold" value="Owner Name : " />
                     <p:inputText id="ownerName"  value="#{plotsDataEntryService.ownerName}" >
                     </p:inputText>
                     <p:message for="ownerName" display="icon"/>
@@ -123,34 +137,52 @@ This section is used to manage and list layout properties for sale." />
                     <p:inputTextarea rows="5" cols="40" maxlength="150" id="comment" value="#{plotsDataEntryService.comment}" >
                     </p:inputTextarea>		
                     <p:message for="comment" display="icon"/>
-                    
-                    <p:outputLabel style="font-weight: bold" for="length" indicateRequired="true" value="Length (Feets)  : " />
-                    <p:inputNumber id="length" value="#{plotsDataEntryService.length}" required="true" requiredMessage="Required Length"  decimalPlaces="0" modifyValueOnWheel="false">
-                    </p:inputNumber>
-                    <p:message for="length" display="icon"/>
-                     
-                     
-                    <p:outputLabel style="font-weight: bold" for="width" indicateRequired="true" value="Width (Feets)  : " />
-                    <p:inputNumber id="width" value="#{plotsDataEntryService.width}" required="true" requiredMessage="Required Width"  decimalPlaces="0" modifyValueOnWheel="false">
-                    </p:inputNumber>
-                    <p:message for="width" display="icon"/>
-          
-                     <p:outputLabel for="country" value="Primary Location : " />  
-                            <p:selectOneMenu id="country" value="#{plotsDataEntryService.country}" style="width:150px" required="true" requiredMessage="Select Primary Location">  
-                            <p:ajax listener="#{plotsDataEntryService.onCountryChange}" update="city" />  
-                            <f:selectItem itemLabel="Primary Location" itemValue="" noSelectionOption="true"/>  
-                            <f:selectItems value="#{plotsDataEntryService.primLocationSort}" />  
-                            </p:selectOneMenu>
-                            <p:message for="country" display="icon"/>
-                   
-                      <p:outputLabel for="city" value="Secondary Location : " />  
-                            <p:selectOneMenu id="city" value="#{plotsDataEntryService.city}" style="width:150px" required="true" requiredMessage="Select Secondary Location">  
-                            <f:selectItem itemLabel="Secondary Location" itemValue="" noSelectionOption="true" />  
-                            <f:selectItems value="#{plotsDataEntryService.secondryLocation}" />  
-                            </p:selectOneMenu> 
-                            <p:message for="city" display="icon"/>
-                      
-                      <p:outputLabel for="swimingPool" value="Swimming Pool : " /> 
+
+                        <p:outputLabel for="length" style="font-weight: bold">
+                            Length (Feets) : <span style="color: red; font-weight: bold;">*</span>
+                        </p:outputLabel>
+
+                        <p:inputNumber id="length" value="#{plotsDataEntryService.length}" decimalPlaces="0" modifyValueOnWheel="false" />
+
+                        <p:message for="length" display="icon"/>
+
+
+
+                        <p:outputLabel for="width" style="font-weight: bold">
+                            Width (Feets) : <span style="color: red; font-weight: bold;">*</span>
+                        </p:outputLabel>
+
+                        <p:inputNumber id="width" value="#{plotsDataEntryService.width}"  decimalPlaces="0" modifyValueOnWheel="false" />
+
+                        <p:message for="width" display="icon"/>
+
+
+                        <p:outputLabel for="country" style="font-weight: bold">
+                            Primary Location : <span style="color: red; font-weight: bold;">*</span>
+                        </p:outputLabel>
+
+                        <p:selectOneMenu id="country" value="#{plotsDataEntryService.country}" style="width:150px" >
+                            <p:ajax listener="#{plotsDataEntryService.onCountryChange}" update="city" />
+                            <f:selectItem itemLabel="Primary Location" itemValue="" noSelectionOption="true"/>
+                            <f:selectItems value="#{plotsDataEntryService.primLocationSort}" />
+                        </p:selectOneMenu>
+
+                        <p:message for="country" display="icon"/>
+
+
+                        <p:outputLabel for="city" style="font-weight: bold">
+                            Secondary Location : <span style="color: red; font-weight: bold;">*</span>
+                        </p:outputLabel>
+
+                        <p:selectOneMenu id="city" value="#{plotsDataEntryService.city}" style="width:150px" >
+                            <f:selectItem itemLabel="Secondary Location" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{plotsDataEntryService.secondryLocation}" />
+                        </p:selectOneMenu>
+
+                        <p:message for="city" display="icon"/>
+
+
+                        <p:outputLabel for="swimingPool" value="Swimming Pool : " />
                             <p:selectOneMenu id="swimingPool" value="#{plotsDataEntryService.swimingPool}" style="width:150px"> 
                              <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                              <f:selectItem itemLabel="No" itemValue="No"/>
