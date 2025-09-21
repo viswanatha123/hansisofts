@@ -30,6 +30,7 @@ import com.DIC.model.LeadModel;
 import com.DIC.model.PackageModel;
 import com.DIC.model.UserDetails;
 import com.DIC.model.UserProfileRoleModel;
+import org.primefaces.model.file.UploadedFile;
 
 @ManagedBean
 @ApplicationScoped
@@ -769,13 +770,7 @@ public class UserDAOImpl {
 	        	 allPropertyList.setCost(rs.getInt("Cost"));
 	        	 allPropertyList.setPrimLocation(rs.getString("Primary location"));
 	        	 allPropertyList.setSecoLocation(rs.getString("Second location"));
-	        	 
-	        	 
-	        
-	        	 
-	        	 
-	        	 
-                         
+
                      
                 allPropertyListList.add(allPropertyList);
 	            }
@@ -1167,8 +1162,83 @@ public class UserDAOImpl {
 
         return saveMessage;
     }
-    
+
+
+	public int updateRefresh(int userId)
+	{
+		System.out.println("******************* logged in user id ************* :"+userId);
+		int res=0;
+		int count=0;
+			try {
+
+				Connection con = null;
+				PreparedStatement pstmt = null;
+				con = ConnectionDAO.getConnection();
+
+				String[] updateQueries = {
+						"UPDATE hansi_layout SET last_updated_date = current_timestamp WHERE user_id = ?",
+						"UPDATE hansi_agricultural SET last_updated_date = current_timestamp WHERE user_id = ?",
+						"UPDATE hansi_individual_site SET last_updated_date = current_timestamp WHERE user_id = ?",
+						"UPDATE villa_plot SET last_updated_date = current_timestamp WHERE user_id = ?"
+				};
+
+				for (String query : updateQueries) {
+					pstmt = con.prepareStatement(query);
+					pstmt.setInt(1,userId);
+					res = pstmt.executeUpdate();
+					count+=res;
+				}
+
+			} catch (Exception e) {
+
+			e.printStackTrace();
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+
+			log.error("An error occurred: {}", e.getMessage());
+			}
+
+		return count;
+	}
 	
-	
+	public String findLastUpdatedDate(int userId)
+	{
+		String finalLastDate="not found.";
+
+		String[] lastUpdatedDate = {
+				"select last_updated_date from hansi_layout WHERE user_id = ?",
+				"select last_updated_date from hansi_agricultural WHERE user_id = ?",
+				"select last_updated_date from hansi_individual_site WHERE user_id = ?",
+				"select last_updated_date from villa_plot WHERE user_id = ?"
+		};
+		try {
+
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			con = ConnectionDAO.getConnection();
+			for (String query : lastUpdatedDate) {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1,userId);
+				ResultSet rs = pstmt.executeQuery();
+				while ( rs.next() ) {
+					Date  lastUDate=rs.getDate("last_updated_date");
+					String lastDate = lastUDate != null ? lastUDate.toString() : null;
+					System.out.println("************* Last Updated date ******** :"+lastDate);
+					if(lastDate!=null)
+					{
+						finalLastDate=lastDate;
+					}
+				}
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+
+			log.error("An error occurred: {}", e.getMessage());
+		}
+	return finalLastDate;
+	}
 
 }

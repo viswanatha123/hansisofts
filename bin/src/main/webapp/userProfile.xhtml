@@ -11,8 +11,23 @@
   <ui:composition template="/WEB-INF/facelets/template.xhtml">
   <ui:param name="page" value="Layout Details" />
   <ui:define name="title" >
+  <h:form id="userProfile">
   <p>Profile</p>
-  <p:messages id="msgs"/>
+	  <p:messages id="msgs"/>
+
+	  <h:panelGrid   columns="2" width="60%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right">
+	  <p:graphicImage width="200" height="200"  cache="false" stream="false"  style="border-radius: 50%; object-fit: cover;" value="#{userProfileService.userDetails.streamedContent}" alt="Image"   />
+
+			  <h:commandButton value="Profile Refresh"   type="submit"
+							   process="@this"
+							   update="@form"
+							   style="text-align: center; width: 200px; height: 40px; background-color: 151B54;"
+							   actionListener="#{userProfileService.refresh}" >
+				  <p:resetInput target="userProfile"/>
+			  </h:commandButton>
+
+	  </h:panelGrid>
+
   <br></br>
 		
 		  				<div class="card">
@@ -175,6 +190,7 @@
   
   
 <script type="text/javascript" src="resources/js/chatool.js"></script>
+  </h:form>
   </ui:define>
   </ui:composition>
   

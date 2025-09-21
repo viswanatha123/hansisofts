@@ -58,8 +58,8 @@ public class GeneralDAOImpl {
 		// SQL
 		interface SQL {
 
-			String SQL_VILLA_INSERT = "insert into villa_plot (villa_id,i_am,owner_name,contact_owner,email,property_type,address,road_width,floors,bed_rooms,bath_rooms,furnished,plot_area,s_build_are,pro_avail,avail_date,persqft,prim_location,seco_location,image,total_feets,cost,create_date,is_active,user_id,floor_num,corner_bit,rank,facing,comment) \n" +
-					"values (nextval('hansi_villa_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,1,?,?,?,?,?,?);";
+			String SQL_VILLA_INSERT = "insert into villa_plot (villa_id,i_am,owner_name,contact_owner,email,property_type,address,road_width,floors,bed_rooms,bath_rooms,furnished,plot_area,s_build_are,pro_avail,avail_date,persqft,prim_location,seco_location,image,total_feets,cost,create_date,is_active,user_id,floor_num,corner_bit,rank,facing,comment,last_updated_date) \n" +
+					"values (nextval('hansi_villa_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,1,?,?,?,?,?,?,current_timestamp);";
 
 			String SQL_VILLA_DETAILS = "select * from villa_plot where prim_location = ? and seco_location = ?";
 			String SQL_VILLA_READY_TO_MOVE = "select * from villa_plot where pro_avail='Ready To Move' order by create_date desc LIMIT ? OFFSET ?;";
@@ -279,11 +279,11 @@ public class GeneralDAOImpl {
 			StringBuilder sql_villa_details = new StringBuilder(Constants.SQL.SQL_VILLA_DETAILS);
 
 			if (proType.equals("All")) {
-				sql_villa_details.append(" and property_type in ('Villa','House','Plot','Flat') order by CASE WHEN rank = 1 THEN 1 WHEN rank = 2 THEN 2 WHEN rank = 3 THEN 3 ELSE 4 END, create_date desc LIMIT ? OFFSET ?;");
+				sql_villa_details.append(" and property_type in ('Villa','House','Plot','Flat') order by last_updated_date desc NULLS last LIMIT ? OFFSET ?;");
 			} else if (proType.equals("Flat")) {
-				sql_villa_details.append(" and property_type in ('Flat','Plot') order by CASE WHEN rank = 1 THEN 1 WHEN rank = 2 THEN 2 WHEN rank = 3 THEN 3 ELSE 4 END, create_date desc LIMIT ? OFFSET ?;");
+				sql_villa_details.append(" and property_type in ('Flat','Plot') order by last_updated_date desc NULLS last LIMIT ? OFFSET ?;");
 			} else {
-				sql_villa_details.append(" and property_type='" + proType + "' order by CASE WHEN rank = 1 THEN 1 WHEN rank = 2 THEN 2 WHEN rank = 3 THEN 3 ELSE 4 END, create_date desc LIMIT ? OFFSET ?;");
+				sql_villa_details.append(" and property_type='" + proType + "' order by last_updated_date desc NULLS last LIMIT ? OFFSET ?;");
 			}
 			con = ConnectionDAO.getConnection();
 

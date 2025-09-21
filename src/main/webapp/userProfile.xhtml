@@ -11,9 +11,24 @@
   <ui:composition template="/WEB-INF/facelets/template.xhtml">
   <ui:param name="page" value="Layout Details" />
   <ui:define name="title" >
+  <h:form id="userProfile">
   <p>Profile</p>
-	  <p:graphicImage width="200" height="200"  cache="false" stream="false"  style="border-radius: 50%; object-fit: cover;" value="#{userProfileService.userDetails.streamedContent}" alt="Image"   />
-  <p:messages id="msgs"/>
+	  <p:messages id="msgs"/>
+
+	  <h:panelGrid   columns="3" width="60%" columnClasses="width-25-pct-txt-left,width-25-pct-txt-center,width-25-pct-txt-right">
+		      <p:graphicImage width="200" height="200"  cache="false" stream="false"  style="border-radius: 50%; object-fit: cover;" value="#{userProfileService.userDetails.streamedContent}" alt="Image"   />
+			  <p:commandButton type="submit" value="Profile Refresh"
+							   process="@this"
+							   style="text-align: center; width: 200px; height: 40px; "
+							   actionListener="#{userProfileService.refresh}"
+							   onclick="PF('leadDialog').show()">
+
+				  <p:resetInput target="userProfile"/>
+			  </p:commandButton>
+		      <h:outputText value="Last updated date #{userProfileService.defaultLastUpdateDate}" style="color: green;"/>
+
+	  </h:panelGrid>
+
   <br></br>
 		
 		  				<div class="card">
@@ -170,12 +185,17 @@
            
         </p:tabView>
     </div>
-  
-  
+
+	  <p:dialog header="Refreshed Successful.." widgetVar="leadDialog" minHeight="200" width="300" showEffect="fade">
+		  <h:commandButton value="    Ok   "   type="submit"  process="@this" update="@form1"  onclick="PF('spinnerDialog').show()">
+
+		  </h:commandButton>
+	  </p:dialog>
   
   
   
 <script type="text/javascript" src="resources/js/chatool.js"></script>
+  </h:form>
   </ui:define>
   </ui:composition>
   
