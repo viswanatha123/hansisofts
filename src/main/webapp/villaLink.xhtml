@@ -14,10 +14,65 @@
 
             <div class="card">
                 <h:form id="form">
-                    <p:dialog widgetVar="spinnerDialog"  style="background-color: #3A3B3C;"  modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
-                        <p:graphicImage name="images/spin/spin1.gif" width="70px"  height="70px" />
+                    <!-- Spinner Dialog -->
+                    <p:dialog widgetVar="spinnerDialog"
+                              styleClass="spinnerDialog"
+                              modal="true" closable="false" draggable="false"
+                              resizable="false" showEffect="fade" hideEffect="fade">
+
+                        <!-- Spinner only -->
+                        <div class="dual-ring"> </div>
+
                     </p:dialog>
-                    <br></br>
+
+                    <!-- CSS for Dual Ring Spinner -->
+                    <style type="text/css">
+                        /* Spinner animation */
+                        .dual-ring {
+                            display: inline-block;
+                            width: 70px;
+                            height: 70px;
+                        }
+                        .dual-ring:after {
+                            content: " ";
+                            display: block;
+                            width: 56px;
+                            height: 56px;
+                            margin: 7px;
+                            border-radius: 50%;
+                            border: 6px solid #3498db;
+                            border-color: #3498db transparent #3498db transparent; /* safe for XHTML */
+                            animation: dual-ring-spin 1.2s linear infinite;
+                        }
+                        @keyframes dual-ring-spin {
+                            0% { transform: rotate(0deg); }
+                            100% { transform: rotate(360deg); }
+                        }
+
+                        /* Remove dialog default white bars */
+                        .ui-dialog.spinnerDialog .ui-dialog-titlebar {
+                            display: none !important;   /* hide header */
+                        }
+                        .ui-dialog.spinnerDialog .ui-dialog-content {
+                            background: transparent !important;
+                            border: none !important;
+                            box-shadow: none !important;
+                            padding: 0 !important;
+                            overflow: hidden !important;
+                            text-align: center; /* center spinner */
+                        }
+                        .ui-dialog.spinnerDialog {
+                            background: transparent !important;
+                            border: none !important;
+                            box-shadow: none !important;
+                        }
+                    </style>
+
+                    <!-- Auto Show Spinner on Form Submit -->
+                    <p:blockUI block="form1" widgetVar="blockUI" trigger="form1">
+                        <div class="dual-ring"> </div>
+                    </p:blockUI>
+                    <br> </br>
 
                     <c:if test="#{villaLinkService.totalRecords > 0}">
                         <p:panel>
