@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="76596275-ec1a-466b-8bd4-b7c29350986d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/DIC/Service/Galary/LayoutGalaryModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/DIC/Service/Galary/LayoutGalaryService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/layoutGalary.xhtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/ConnectionDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/ConnectionDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/GeneralDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/GeneralDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/layoutDetails.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/layoutDetails.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/Service/UserProfileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/Service/UserProfileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/userProfile.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/userProfile.xhtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,8 +49,8 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;galary&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/hansisofts/src/main/webapp&quot;
+    &quot;git-widget-placeholder&quot;: &quot;pushpa&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/hansisofts&quot;
   }
 }</component>
   <component name="RecentsManager">
