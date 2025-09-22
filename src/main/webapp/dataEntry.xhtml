@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+D XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -7,54 +7,66 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
       
-      <h:head>
-        
-      <!-- Bootstrap and PrimeFaces javascripts -->
-        <h:outputScript library="primefaces" name="jquery/jquery.js"/>
-        <h:outputScript name="bootstrap.min.js" library="js"/>
-		
-      
-          <!-- Stylesheets -->
-        <h:outputStylesheet name="logo-nav.css" library="css"/>
-        <h:outputStylesheet name="bootstrap.min.css" library="css"/>
-		
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/favicon.ico"/>
 
-     
+		  static String param_flats_in_whitefield_head = "Flats in Whitefield";
 
-  </h:head>
-  
-       <h:body>
+		  line:73 public static final String sql_flats_in_whitefield = "select * from villa_plot where property_type ='Flat' and prim_location ='Bangalore' and seco_location ='Whitefield' order by create_date desc LIMIT ? OFFSET ?";
+		  public static final String sql_flats_in_whitefield_count = "select count(*) from villa_plot where property_type ='Flat' and prim_location ='Bangalore' and seco_location ='Whitfield'";
 
-        
-		  <ui:composition template="/WEB-INF/facelets/adminTemplate.xhtml">
-		  <ui:param name="page" value="Image upload" />
-		  <ui:define name="title">Data Entry
-		 
-		 
-		  
-		  	     <p:tabView dynamic="true" cache="false" activeIndex="#{dataEntryService.index}">
-  					    <p:tab title="Layout">
-  					          <ui:include src="plotsDataEntryNew.xhtml" />
-			            </p:tab>
-			            
-			            <p:tab title="Agricultural">
-			            		<ui:include src="agriDataEntryNew.xhtml" />
-			            </p:tab>
-			            
-			            
-			            <p:tab title="Individual">
-			                   <ui:include src="indiSiteDataEntryNew.xhtml" />
-			            </p:tab>
-			            
-			            
-			             <p:tab title="Image Upload">
-			                   <ui:include src="imageUploadNew.xhtml" />
-			            </p:tab>
-  				</p:tabView>
+		  Line 120: public String getParam_flats_in_whitefield() {return param_flats_in_whitefield; }
 
-		 </ui:define>
-		 </ui:composition>
-</h:body>
-</html>
+		  public void setParam_flats_in_whitefield(String param_flats_in_whitefield) {
+		  this.param_flats_in_whitefield = param_flats_in_whitefield;
+		  }
+		  line167: public String getParam_flats_in_whitefield_count() {return param_flats_in_whitefield_count;}
+
+		  public void setParam_flats_in_whitefield_count(String param_flats_in_whitefield_count) {
+		  this.param_flats_in_whitefield_count = param_flats_in_whitefield_count;
+		  }
+		  Line 215: public String getParam_flats_in_whitefield_head() {
+		  return param_flats_in_whitefield_head;
+		  }
+
+		  public void setParam_flats_in_whitefield_head(String param_flats_in_whitefield_head) {
+		  this.param_flats_in_whitefield_head = param_flats_in_whitefield_head;
+
+
+
+
+
+		  <!-- Boots
+      </h:head>
+
+           <h:body>
+
+
+              <ui:composition template="/WEB-INF/facelets/adminTemplate.xhtml">
+              <ui:param name="page" value="Image upload" />
+              <ui:define name="title">Data Entry
+
+
+
+                       <p:tabView dynamic="true" cache="false" activeIndex="#{dataEntryService.index}">
+                              <p:tab title="Layout">
+                                    <ui:include src="plotsDataEntryNew.xhtml" />
+                            </p:tab>
+
+                            <p:tab title="Agricultural">
+                                    <ui:include src="agriDataEntryNew.xhtml" />
+                            </p:tab>
+
+
+                            <p:tab title="Individual">
+                                   <ui:include src="indiSiteDataEntryNew.xhtml" />
+                            </p:tab>
+
+
+                             <p:tab title="Image Upload">
+                                   <ui:include src="imageUploadNew.xhtml" />
+                            </p:tab>
+                      </p:tabView>
+
+             </ui:define>
+             </ui:composition>
+    </h:body>
+    </html>
