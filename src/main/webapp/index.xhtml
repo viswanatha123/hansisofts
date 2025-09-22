@@ -14,8 +14,7 @@
        
        <h:body>
 
-        
-  <ui:composition template="/WEB-INF/facelets/template.xhtml">
+		   <ui:composition template="/WEB-INF/facelets/template.xhtml">
   <ui:param name="page" value="Layout Details" />
   <ui:define name="title">
   <div class="card">
@@ -210,6 +209,12 @@
 						  <f:param name="villaLinkParam" value="#{queryConstantsService.param_flats_in_marthahalli}" />
 						  <f:param name="villaLinkParamCount" value="#{queryConstantsService.param_flats_in_marthahalli_count}" />
 						  <f:param name="villaLinkParamHead" value="#{queryConstantsService.param_flats_in_marthahalli_head}" />
+					  </h:link>
+					  <br/>
+					  <h:link value="Flats in Whitefield" outcome="villaLink" target="_blank">
+						  <f:param name="villaLinkParam" value="#{queryConstantsService.param_flats_in_whitefield}" />
+						  <f:param name="villaLinkParamCount" value="#{queryConstantsService.param_flats_in_whitefield_count}" />
+						  <f:param name="villaLinkParamHead" value="#{queryConstantsService.param_flats_in_whitefield_head}" />
 					  </h:link>
 
 				  </p:tab>
