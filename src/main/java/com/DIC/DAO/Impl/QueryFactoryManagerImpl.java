@@ -80,5 +80,6 @@ public class QueryFactoryManagerImpl implements QueryFactoryManager {
         }
         return sql_queryCount;
     }
+
 } //
 
