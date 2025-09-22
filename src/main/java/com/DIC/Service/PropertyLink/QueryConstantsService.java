@@ -245,5 +245,4 @@ public class QueryConstantsService implements Serializable {
     public void setParam_hyderabad_two_bhk_head(String param_hyderabad_two_bhk_head) {
         QueryConstantsService.param_hyderabad_two_bhk_head = param_hyderabad_two_bhk_head;
     }
-    
 }
