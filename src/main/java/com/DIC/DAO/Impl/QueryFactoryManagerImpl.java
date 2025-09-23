@@ -12,7 +12,6 @@ public class QueryFactoryManagerImpl implements QueryFactoryManager {
         System.out.println("******************* xxxxxxxxxxxxx *********************** " + query);
         String sql_query = "";
 
-
         if (query.equals(QueryConstantsService.param_bangalore_one_bhk)) {
             sql_query = QueryConstantsService.QueryLink.sql_bangalore_one_bhk;
         }
@@ -31,10 +30,13 @@ public class QueryFactoryManagerImpl implements QueryFactoryManager {
         }
         if (query.equals(QueryConstantsService.param_hyderabad_one_bhk)) {
             sql_query = QueryConstantsService.QueryLink.sql_hyderabad_one_bhk;
-
         }
 
-        return sql_query;
+        if (query.equals(QueryConstantsService.param_hyderabad_two_bhk)) {
+            sql_query = QueryConstantsService.QueryLink.sql_hyderabad_two_bhk;
+        }
+
+        return sql_query; //
     }
 
 
@@ -71,10 +73,10 @@ public class QueryFactoryManagerImpl implements QueryFactoryManager {
         {
             sql_queryCount = QueryConstantsService.QueryLink.sql_hyderabad_one_bhk_count;
         }
+        if (query.equals(QueryConstantsService.param_hyderabad_two_bhk_count)) {
+            sql_queryCount = QueryConstantsService.QueryLink.sql_hyderabad_two_bhk_count;
+        }
 
         return sql_queryCount;
-
     }
-
-
 }

@@ -29,15 +29,20 @@ public class QueryConstantsService implements Serializable {
                 public static String param_hyderabad_one_bhk="param_hyderabad_one_bhk";
                 public static String param_hyderabad_one_bhk_count="param_hyderabad_one_bhk_count";
 
+                public static String param_hyderabad_two_bhk="param_hyderabad_two_bhk";
+                public static String param_hyderabad_two_bhk_count="param_hyderabad_two_bhk_count";
 
 
 
-                public static String param_bangalore_one_bhk_head="1 BHK Flat in Sale";
+
+
+    public static String param_bangalore_one_bhk_head="1 BHK Flat in Sale";
                 public static String param_bangalore_two_bhk_head="2 BHK Flat in Sale";
                 public static String param_bangalore_three_bhk_head="3 BHK Flat in Sale";
                 public static String param_bangalore_ready_to_move_head="Ready To Move  Bangalore";
                 public static String param_flats_in_marthahalli_head="Flats in Marthahalli";
                 public static String param_hyderabad_one_bhk_head="1 BHK Flat in Sale";
+                public static String param_hyderabad_two_bhk_head="2 BHK Flat in Sale";
 
 
 
@@ -67,6 +72,9 @@ public class QueryConstantsService implements Serializable {
 
                 public static final String  sql_hyderabad_one_bhk="select * from villa_plot where bed_rooms='1' and prim_location ='Hyderabad' order by create_date desc LIMIT ? OFFSET ?";
                 public static final String  sql_hyderabad_one_bhk_count="select count(*) from villa_plot where bed_rooms='1' and prim_location ='Hyderabad'";
+                public static final String  sql_hyderabad_two_bhk="select * from villa_plot where bed_rooms='2' and prim_location ='Hyderabad' order by create_date desc LIMIT ? OFFSET ?";
+                public static final String  sql_hyderabad_two_bhk_count="select count(*) from villa_plot where bed_rooms='2' and prim_location ='Hyderabad'";
+
 
     }
 
@@ -217,6 +225,28 @@ public class QueryConstantsService implements Serializable {
         QueryConstantsService.param_hyderabad_one_bhk_head = param_hyderabad_one_bhk_head;
     }
 
+    public String getParam_hyderabad_two_bhk_count() {
+        return param_hyderabad_two_bhk_count;
+    }
 
+    public void setParam_hyderabad_two_bhk_count(String param_hyderabad_two_bhk_count) {
+        QueryConstantsService.param_hyderabad_two_bhk_count = param_hyderabad_two_bhk_count;
+    }
+
+    public String getParam_hyderabad_two_bhk() {
+        return param_hyderabad_two_bhk;
+    }
+
+    public void setParam_hyderabad_two_bhk(String param_hyderabad_two_bhk) {
+        QueryConstantsService.param_hyderabad_two_bhk = param_hyderabad_two_bhk;
+    }
+
+    public String getParam_hyderabad_two_bhk_head() {
+        return param_hyderabad_two_bhk_head;
+    }
+
+    public void setParam_hyderabad_two_bhk_head(String param_hyderabad_two_bhk_head) {
+        QueryConstantsService.param_hyderabad_two_bhk_head = param_hyderabad_two_bhk_head;
+    }
 
 }
