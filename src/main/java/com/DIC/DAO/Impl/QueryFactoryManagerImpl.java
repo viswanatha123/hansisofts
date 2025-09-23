@@ -12,7 +12,6 @@ public class QueryFactoryManagerImpl implements QueryFactoryManager {
         System.out.println("******************* xxxxxxxxxxxxx *********************** " + query);
         String sql_query = "";
 
-
         if (query.equals(QueryConstantsService.param_bangalore_one_bhk)) {
             sql_query = QueryConstantsService.QueryLink.sql_bangalore_one_bhk;
         }
