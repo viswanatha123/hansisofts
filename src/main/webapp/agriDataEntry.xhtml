@@ -84,36 +84,38 @@
              </p:panel>
              
              <p:panel style="background-image: url('back1.jpg'); ">   
-             
+
              <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
              
                   <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
-                          
-			                    <p:outputLabel style="font-weight: bold" for="name" indicateRequired="true" value="Owner Name : " />
-			                    <p:inputText id="name"  value="#{agriculturalDataEntryhService.ownerName}" required="true" requiredMessage="Required Owner Name">
-			                    </p:inputText>
-			                    <p:message for="name" display="icon"/>
-			                    
-			                    <p:outputLabel style="font-weight: bold" value="Agent Name : " />
-			                    <p:inputText id="agentName"  value="#{agriculturalDataEntryhService.agentName}" >
-			                    </p:inputText>
-			                    <p:message for="agentName" display="icon"/>
-			                    
-			                    <p:outputLabel style="font-weight: bold" for="contactno" indicateRequired="true" value="Agent Contact No : " />
-			                    <p:inputMask id="contactno"  mask="9999999999"  value="#{agriculturalDataEntryhService.contactNo}" required="true" requiredMessage="Required Agent Contact No ">
-			                    			                    	
-			                    </p:inputMask>
-			                    <p:message for="contactno" display="icon"/>
-			                    
-			                    <p:outputLabel style="font-weight: bold" indicateRequired="true" value="Survey No : " />
-			                    <p:inputText id="surveyNo"  value="#{agriculturalDataEntryhService.surveyNo}" required="true" requiredMessage="Required Survey Number.">
-			                    </p:inputText>
-			                    <p:message for="surveyNo" display="icon"/>
-			                    
-			                    <p:outputLabel style="font-weight: bold" value="Location : " />
-			                    <p:inputText id="location"  value="#{agriculturalDataEntryhService.location}" >
-			                   </p:inputText>
-			                   <p:message for="location" display="icon"/>
+
+					  <p:outputLabel for="name" style="font-weight: bold" indicateRequired="false">
+						  Owner Name: <span style="color: red; font-weight: bold;">*</span>
+					  </p:outputLabel>
+
+					  <p:inputText id="name" value="#{agriculturalDataEntryhService.ownerName}"
+								   required="true" requiredMessage="Owner Name is mandatory" />
+
+					  <p:message for="name" display="icon"/>
+
+					  <p:outputLabel for="contactno" style="font-weight: bold" indicateRequired="false">
+						  Agent Contact No: <span style="color: red; font-weight: bold;">*</span>
+					  </p:outputLabel>
+
+					  <p:inputMask id="contactno" mask="9999999999"
+								   value="#{agriculturalDataEntryhService.contactNo}"
+								   required="true" requiredMessage="Agent Contact No is mandatory" />
+
+					  <p:message for="contactno" display="icon"/>
+
+					  <p:outputLabel for="surveyNo" style="font-weight: bold" indicateRequired="false">
+						  Survey No : <span style="color: red; font-weight: bold;">*</span>
+					  </p:outputLabel>
+
+					  <p:inputText id="surveyNo" value="#{agriculturalDataEntryhService.surveyNo}"
+								   required="true" requiredMessage="Survey No is mandatory" />
+
+					  <p:message for="surveyNo" display="icon"/>
 			                    
 			                    <p:outputLabel for="wonership" value="Owner Ship : " />  
 			                            <p:selectOneMenu id="wonership"  value="#{agriculturalDataEntryhService.wonership}"  style="width:150px">  
@@ -128,18 +130,26 @@
 			                             <f:selectItem itemLabel="New Property" itemValue="New Property"/>
 			                   			</p:selectOneMenu>
 			                   <p:message for="transaction" display="icon"/>
-                    
-                    
-			                    <p:outputLabel style="font-weight: bold" for="perAcer" indicateRequired="true" value="Per Acer(Cost) : " />
-			                    <p:inputNumber id="perAcer"  value="#{agriculturalDataEntryhService.perCent}" required="true" requiredMessage="Required Per Cent(Cost)" >
-                   				</p:inputNumber>
-			                    <p:message for="perAcer" display="icon"/>
-			                    
-			                    
-			                    <p:outputLabel style="font-weight: bold" for="numberCents" indicateRequired="true" value="Number of Acers : " />
-			                    <p:inputText id="numberCents" value="#{agriculturalDataEntryhService.numberCents}" required="true" requiredMessage="Required Number of Cents">
-			                    </p:inputText> 
-			                    <p:message for="numberCents" display="icon"/>
+
+
+					  <p:outputLabel for="perAcer" style="font-weight: bold" indicateRequired="false">
+						  Per Acre (Cost) : <span style="color: red; font-weight: bold;">*</span>
+					  </p:outputLabel>
+
+					  <p:inputNumber id="perAcer" value="#{agriculturalDataEntryhService.perCent}"
+									 required="true" requiredMessage="Per Acre (Cost) is mandatory" />
+
+					  <p:message for="perAcer" display="icon"/>
+
+
+					  <p:outputLabel for="numberCents" style="font-weight: bold" indicateRequired="false">
+						  Number of Acres : <span style="color: red; font-weight: bold;">*</span>
+					  </p:outputLabel>
+
+					  <p:inputText id="numberCents" value="#{agriculturalDataEntryhService.numberCents}"
+								   required="true" requiredMessage="Number of Acres is mandatory" />
+
+					  <p:message for="numberCents" display="icon"/>
                     
                       
 		                       <p:outputLabel for="waterSource" value="Water Source : " />  
@@ -165,24 +175,34 @@
 		                             <f:selectItem itemLabel="No" itemValue="No"/>
 		                     		</p:selectOneMenu>
 		                     <p:message for="power" display="icon"/>
-		                  
-             
-                    
-		                     <p:outputLabel for="country" value="Primary Location : " />  
-		                        
-		                            <p:selectOneMenu id="country" value="#{agriculturalDataEntryhService.country}"  style="width:150px" required="true" requiredMessage="Select Primary Location">  
-		                            <p:ajax listener="#{agriculturalDataEntryhService.onCountryChange}" update="city" />  
-		                            <f:selectItem itemLabel="Select Primary Location" itemValue="" noSelectionOption="true" />  
-		                            <f:selectItems value="#{agriculturalDataEntryhService.primLocationSort}" />  
-		                            </p:selectOneMenu>
-                     		<p:message for="country" display="icon"/>
-                     
-		                    <p:outputLabel for="city" style="width:170px" value="Secondary Location : " /> 
-		                            <p:selectOneMenu id="city" value="#{agriculturalDataEntryhService.city}" style="width:150px" required="true" requiredMessage="Select Secondary Location">  
-		                            <f:selectItem itemLabel="Select Secondary Location" itemValue="" noSelectionOption="true" />  
-		                            <f:selectItems value="#{agriculturalDataEntryhService.secondryLocation}" />  
-		                            </p:selectOneMenu> 
-                    		<p:message for="city" display="icon"/>
+
+
+
+					  <p:outputLabel for="country" style="font-weight: bold" indicateRequired="false">
+						  Primary Location : <span style="color: red; font-weight: bold;">*</span>
+					  </p:outputLabel>
+
+					  <p:selectOneMenu id="country" value="#{agriculturalDataEntryhService.country}" style="width:150px"
+									   required="true" requiredMessage="Primary Location is mandatory">
+						  <p:ajax listener="#{agriculturalDataEntryhService.onCountryChange}" update="city" />
+						  <f:selectItem itemLabel="Select Primary Location" itemValue="" noSelectionOption="true"/>
+						  <f:selectItems value="#{agriculturalDataEntryhService.primLocationSort}" />
+					  </p:selectOneMenu>
+
+					  <p:message for="country" display="icon"/>
+
+
+					  <p:outputLabel for="city" style="font-weight: bold" indicateRequired="false">
+						  Secondary Location : <span style="color: red; font-weight: bold;">*</span>
+					  </p:outputLabel>
+
+					  <p:selectOneMenu id="city" value="#{agriculturalDataEntryhService.city}" style="width:150px"
+									   required="true" requiredMessage="Secondary Location is mandatory">
+						  <f:selectItem itemLabel="Select Secondary Location" itemValue="" noSelectionOption="true"/>
+						  <f:selectItems value="#{agriculturalDataEntryhService.secondryLocation}" />
+					  </p:selectOneMenu>
+
+					  <p:message for="city" display="icon"/>
      
                              <p:outputLabel style="font-weight: bold" value="Description (150 char): " />
 					         <p:inputTextarea rows="5" cols="40" maxlength="150" id="comment" value="#{agriculturalDataEntryhService.comment}" >
