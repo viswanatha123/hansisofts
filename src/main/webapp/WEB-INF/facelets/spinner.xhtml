@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <!-- Spinner Dialog -->
+    <p:dialog widgetVar="spinnerDialog" modal="true"
+              closable="false" draggable="false" resizable="false"
+              styleClass="spinnerDialog">
+        <div class="dual-ring"></div>
+    </p:dialog>
+
+    <!-- Spinner for BlockUI -->
+    <p:blockUI block="#{cc.attrs.blockTarget}"
+               widgetVar="blockUI" trigger="#{cc.attrs.blockTrigger}">
+        <div class="dual-ring"></div>
+    </p:blockUI>
+
+    <!-- Spinner CSS -->
+    <style>
+        .dual-ring {
+            display:inline-block;width:70px;height:70px
+        }
+        .dual-ring:after {
+            content:"";display:block;width:56px;height:56px;margin:7px;
+            border-radius:50%;border:6px solid #3498db;
+            border-color:#3498db transparent;
+            animation:spin 1.2s linear infinite
+        }
+        @keyframes spin {to{transform:rotate(360deg)}}
+
+        .ui-dialog.spinnerDialog,
+        .ui-dialog.spinnerDialog .ui-dialog-content {
+            background:transparent!important;border:none!important;
+            box-shadow:none!important;padding:0!important;
+            overflow:hidden!important;text-align:center
+        }
+        .ui-dialog.spinnerDialog .ui-dialog-titlebar {
+            display:none!important
+        }
+    </style>
+
+</ui:composition>
