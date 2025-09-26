@@ -42,7 +42,7 @@ public class QueryConstantsService implements Serializable {
     public static String param_bangalore_ready_to_move_head="Ready To Move  Bangalore";
     public static String param_flats_in_marthahalli_head="Flats in Marthahalli";
     public static String param_properties_in_marthahalli_head="Properties in Marthahalli";
-    public static String param_hyderabad_one_bhk_head="1 BHK Flat in Sale";
+    public static String param_hyderabad_one_bhk_head="1 BHK Flat in Sale";
     public static String param_hyderabad_two_bhk_head="2 BHK Flat in Sale";
     
 
