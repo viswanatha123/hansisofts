@@ -27,8 +27,8 @@ import com.DIC.model.VillaModel;
 
 @ManagedBean(name="promoImageService")
 
-@RequestScoped
-//@ViewScoped
+//@RequestScoped
+@ViewScoped
 public class PromoImageService implements Serializable {
 	
 	private static final Logger log = LogManager.getLogger(PromoImageService.class);
