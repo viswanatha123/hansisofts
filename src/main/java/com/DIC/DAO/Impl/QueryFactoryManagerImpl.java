@@ -49,6 +49,9 @@ public class QueryFactoryManagerImpl implements QueryFactoryManager {
         {
             sql_query= QueryConstantsService.QueryLink.sql_properties_in_marthahalli;
         }
+        if(query.equals(QueryConstantsService.param_flats_in_whitefield)) {
+            sql_query = QueryConstantsService.QueryLink.sql_flats_in_whitefield;
+        }
 
         return sql_query; //
     }
@@ -106,6 +109,9 @@ public class QueryFactoryManagerImpl implements QueryFactoryManager {
         {
             sql_queryCount= QueryConstantsService.QueryLink.sql_properties_in_marthahalli_count;
 
+        }
+        if(query.equals(QueryConstantsService.param_flats_in_whitefield_count)){
+            sql_queryCount = QueryConstantsService.QueryLink.sql_flats_in_whitefield_count;
         }
 
         return sql_queryCount;
