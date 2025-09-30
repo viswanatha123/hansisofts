@@ -14,7 +14,10 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import com.DIC.model.PromoImageModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.primefaces.PrimeFaces;
@@ -30,91 +33,155 @@ import SMTPService.SMTPService;
 
 @ManagedBean(name="agentPropertiesService")
 
-//@RequestScoped
-@ViewScoped
+@RequestScoped
 public class AgentPropertiesService {
-	
+
 private static final Logger log = LogManager.getLogger(AgentPropertiesService.class);
-	
+
 	private String locationMessage;
 	private String errorMessage;
 	private int currentPage = 1;
 	private int pageSize = 10;
 	private int totalRecords;
-	
-	
+	private int promoCurrentPage = 1;
+	private int promoPageSize = 3;
+	private int promoTotalRecords;
+	private List<PromoImageModel> promoImageModel;
 
 
-    private VillaModel selectedProperty;   
-	
+
+
+
+    private VillaModel selectedProperty;
+
 	private String custName="";
 	private String contactNumber="";
 	private String email="";
 
 		private List<VillaModel> villaModel;
-		
-		
+
+
 	    GeneralDAOImpl gDao;
 	    UserDAOImpl udo;
-	    
-	    
-	  
-	
+
+
+
+
 	    public AgentPropertiesService()
 		{
-			
+
 			log.info("Loading  AgentPropertiesService init()");
 	    	gDao=new GeneralDAOImpl();
 	    	udo=new UserDAOImpl();
-	        
-	 
-	        
+
+
+
 	        loadEntities();
 			countTotalRecords();
-			
-		}
-		
-		
-		public void loadEntities() {
-	 		
-			villaModel=gDao.getAgentProperties(pageSize,currentPage);
-	 		
-	        
-	    }
-	 	
-	 	public void countTotalRecords() {
-	 	
-	 		totalRecords=gDao.getAgentPropertiesCountTotalRecords();
-	        
-	    }
-	 	public void nextPage() {
-	        if ((currentPage * pageSize) < totalRecords) {
-	            currentPage++;
-	            loadEntities();
-	        }
-	    }
 
+			FacesContext context = FacesContext.getCurrentInstance();
+			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+
+			String pageParam = request.getParameter("agentProperties");
+			String promoParam = request.getParameter("agentProperties");
+
+			if (pageParam != null && !pageParam.isEmpty()) {
+				try {
+
+					currentPage = Integer.parseInt(pageParam);
+					System.out.println("=========================== try =================="+currentPage);
+
+				} catch (NumberFormatException e) {
+
+					System.out.println("=========================== Catch page =================="+currentPage);
+					currentPage = 1; // Default to page 1 if the parameter is invalid
+				}
+			} else {
+
+				//Default to page 1 if no page parameter is provided
+				currentPage = 1;
+				System.out.println("=========================== else x=================="+currentPage);
+
+			}
+
+			if (promoParam != null && !promoParam.isEmpty()) {
+				try {
+					promoCurrentPage = Integer.parseInt(promoParam);
+				} catch (NumberFormatException e) {
+					promoCurrentPage = 1; // Default to page 1 if the parameter is invalid
+				}
+			} else {
+				promoCurrentPage = 1; // Default to page 1 if no page parameter is provided
+			}
+
+		}
+
+
+	public void loadEntities() {
+
+		villaModel=gDao.getAgentProperties(pageSize,currentPage);
+		promoImageModel=gDao.getPromoImageVilla(promoPageSize, promoCurrentPage);
+
+
+	}
+
+	public void countTotalRecords() {
+
+		totalRecords=gDao.getAgentPropertiesCountTotalRecords();
+		promoTotalRecords=gDao.getPromoCountTotalRecords();
+
+	}
+	public void nextPage() {
+
+		if ((currentPage * pageSize) < totalRecords) {
+			//currentPage++;
+			loadEntities();
+
+		}
+
+		if ((promoCurrentPage * promoPageSize) < promoTotalRecords) {
+			//promoCurrentPage++;
+			loadEntities();
+
+		}
+	}
 	    public void previousPage() {
 	        if (currentPage > 1) {
 	            currentPage--;
 	            loadEntities();
 	        }
+			if (promoCurrentPage > 1) {
+				//promoCurrentPage--;
+				loadEntities();
+			}
 	    }
-	 	
+
 	    public int getTotalPages() {
 	        return (int) Math.ceil((double) totalRecords / pageSize);
 	    }
-		
-		
-		
-		
+
+	public void storeSelectedPropertyInSession() {
+
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+		session.setAttribute("selectedAgentProperties", selectedProperty);
+	}
+
+
+
+
 
 		public void submit() {
-	    	System.out.println("-------------submit ----------------------");
-        	log.info("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
-        	
-        	
-        	if(selectedProperty.getVillaId()!=0)
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+
+
+			if (session != null) {
+				selectedProperty= (VillaModel) session.getAttribute("selectedAgentProperties");
+				System.out.println("Selected property  : "+selectedProperty.getVillaId()+"  "+selectedProperty.getUserId()+"    "+custName+"  "+contactNumber+"    "+email);
+			}
+
+			if(selectedProperty.getVillaId()!=0)
         	{
         		if(custName!=null && contactNumber!=null && contactNumber!=null)
         		{
@@ -130,16 +197,16 @@ private static final Logger log = LogManager.getLogger(AgentPropertiesService.cl
         				String saveMessage=udo.saveLeads(custName,contactNumber,email,selectedProperty.getVillaId(),defaultUserId,"villa");
         				log.info("***** Successful submitted lead ******");
         			}
-        			
+
         			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "We received your contact details", "Our representative contact you soon, Thank you..");
         	        PrimeFaces.current().dialog().showMessageDynamic(message);
         		}
         	}
-        	
-        	
+
+
         	  loadEntities();
         }
-        
+
    public void reset() {
 	       PrimeFaces.current().resetInputs("form1:panelDialog");
   }
@@ -148,6 +215,14 @@ private static final Logger log = LogManager.getLogger(AgentPropertiesService.cl
 			public List<VillaModel> getVillaModel() {
 				return villaModel;
 			}
+	public List<PromoImageModel> getPromoImageModel() {
+		return promoImageModel;
+	}
+
+
+	public void setPromoImageModel(List<PromoImageModel> promoImageModel) {
+		this.promoImageModel = promoImageModel;
+	}
 
 
 
@@ -197,15 +272,25 @@ private static final Logger log = LogManager.getLogger(AgentPropertiesService.cl
 			public String getEmail() {
 				return email;
 			}
+	        public int getPromoCurrentPage() {
+		return promoCurrentPage;
+	}
 
+	        public int getPromoPageSize() {
+		return promoPageSize;
+	}
 
+	        public void setPromoCurrentPage(int promoCurrentPage) {
+		this.promoCurrentPage = promoCurrentPage;
+	}
 
+	        public void setPromoPageSize(int promoPageSize) {
+		this.promoPageSize = promoPageSize;
+	}
 
 			public void setLocationMessage(String locationMessage) {
 				this.locationMessage = locationMessage;
 			}
-
-
 
 
 			public void setErrorMessage(String errorMessage) {
@@ -213,13 +298,9 @@ private static final Logger log = LogManager.getLogger(AgentPropertiesService.cl
 			}
 
 
-
-
 			public void setSelectedProperty(VillaModel selectedProperty) {
 				this.selectedProperty = selectedProperty;
 			}
-
-
 
 
 			public void setCustName(String custName) {
@@ -227,20 +308,16 @@ private static final Logger log = LogManager.getLogger(AgentPropertiesService.cl
 			}
 
 
-
-
 			public void setContactNumber(String contactNumber) {
 				this.contactNumber = contactNumber;
 			}
-
-
 
 
 			public void setEmail(String email) {
 				this.email = email;
 			}
 
-		
+
 			public int getCurrentPage() {
 				return currentPage;
 			}
@@ -269,8 +346,28 @@ private static final Logger log = LogManager.getLogger(AgentPropertiesService.cl
 			public void setTotalRecords(int totalRecords) {
 				this.totalRecords = totalRecords;
 			}
-		
-		        
-        
 
+	       public GeneralDAOImpl getgDao() {
+		        return gDao;
+	       }
+
+	       public void setgDao(GeneralDAOImpl gDao) {
+		         this.gDao = gDao;
+	       }
+
+		   public UserDAOImpl getUdo() {
+		         return udo;
+	       }
+
+		   public void setUdo(UserDAOImpl udo) {
+		          this.udo = udo;
+	       }
+
+	       public int getPromoTotalRecords() {
+		         return promoTotalRecords;
+	       }
+
+	       public void setPromoTotalRecords(int promoTotalRecords) {
+		        this.promoTotalRecords = promoTotalRecords;
+	       }
 }
