@@ -26,6 +26,9 @@ public class QueryConstantsService implements Serializable {
     public static String param_flats_in_marthahalli="param_flats_in_marthahalli";
     public static String param_flats_in_marthahalli_count="param_flats_in_marthahalli_count";
 
+    public static String param_house_in_marthahalli="param_house_in_marthahalli";
+    public static String param_house_in_marthahalli_count="param_house_in_marthahalli_count";
+
     public static String param_hyderabad_one_bhk="param_hyderabad_one_bhk";
     public static String param_hyderabad_one_bhk_count="param_hyderabad_one_bhk_count";
 
@@ -43,6 +46,7 @@ public class QueryConstantsService implements Serializable {
     public static String param_hyderabad_one_bhk_head="1 BHK Flat in Sale";
     public static String param_hyderabad_two_bhk_head="2 BHK Flat in Sale";
     public static String param_properties_in_marthahalli_head="Properties in Marthahalli";
+    public static String param_house_in_marthahalli_head="House in Marthahalli";
     
 
 
@@ -76,6 +80,10 @@ public class QueryConstantsService implements Serializable {
 
         public static final String  sql_properties_in_marthahalli="select * from villa_plot where prim_location = 'Bangalore' and seco_location = 'Maratha Halli' order by create_date desc LIMIT ? OFFSET ?";
         public static final String  sql_properties_in_marthahalli_count="select count(*) from villa_plot where prim_location = 'Bangalore' and seco_location = 'Maratha Halli'";
+
+        public static final String  sql_house_in_marthahalli="select * from villa_plot where property_type ='House' and prim_location ='Bangalore' and seco_location ='Maratha Halli' order by create_date desc LIMIT ? OFFSET ?";
+        public static final String  sql_house_in_marthahalli_count="select count(*) from villa_plot where property_type ='House' and prim_location ='Bangalore' and seco_location ='Maratha Halli'";
+
 
 
     }
@@ -118,6 +126,13 @@ public class QueryConstantsService implements Serializable {
 
     public  void setParam_flats_in_marthahalli(String param_flats_in_marthahalli) {
         this.param_flats_in_marthahalli = param_flats_in_marthahalli;
+    }
+
+    public  String getParam_house_in_marthahalli() {
+        return param_house_in_marthahalli;
+    }
+    public  void setParam_house_in_marthahalli(String param_house_in_marthahalli) {
+        this.param_house_in_marthahalli = param_house_in_marthahalli;
     }
 
     public  String getParam_properties_in_marthahalli() {
@@ -170,6 +185,13 @@ public class QueryConstantsService implements Serializable {
         this.param_flats_in_marthahalli_count = param_flats_in_marthahalli_count;
     }
 
+    public String getParam_house_in_marthahalli_count() {
+        return param_house_in_marthahalli_count;
+    }
+
+    public void setParam_house_in_marthahalli_count(String param_house_in_marthahalli_count) {
+        this.param_house_in_marthahalli_count = param_house_in_marthahalli_count;
+    }
 
     public String getParam_properties_in_marthahalli_count() {
         return param_properties_in_marthahalli_count;
@@ -178,6 +200,9 @@ public class QueryConstantsService implements Serializable {
     public void setParam_properties_in_marthahalli_count(String param_properties_in_marthahalli_count) {
         this.param_properties_in_marthahalli_count = param_properties_in_marthahalli_count;
     }
+
+
+
 
 
 
@@ -218,6 +243,14 @@ public class QueryConstantsService implements Serializable {
 
     public void setParam_flats_in_marthahalli_head(String param_flats_in_marthahalli_head) {
         this.param_flats_in_marthahalli_head = param_flats_in_marthahalli_head;
+    }
+
+    public String getParam_house_in_marthahalli_head() {
+        return param_house_in_marthahalli_head;
+    }
+
+    public void setParam_house_in_marthahalli_head(String param_house_in_marthahalli_head) {
+        this.param_house_in_marthahalli_head = param_house_in_marthahalli_head;
     }
 
     public String getParam_properties_in_marthahalli_head() {
