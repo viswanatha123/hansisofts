@@ -7,210 +7,224 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:jsf="http://xmlns.jcp.org/jsf">
-      
-      <h:head>
-   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
- <link href="resources/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
-  <link href="resources/css/demo/demo.css" rel="stylesheet" />
-  </h:head>
-  
-       <h:body>
-  <ui:composition template="/WEB-INF/facelets/template.xhtml">
-  <ui:param name="page" value="Admin" />
-  <ui:define name="title">
-  <p>Individual Site DataEntry</p>
-      <p>
-          <h:outputText style="font-weight: normal; font-size: 14px;color: #555;" value="Enter the complete details of the individual site including site dimensions, location, cost per square foot, and agent/owner contact. This section is used to manage individual residential or commercial site listings." />
 
-      </p>
-      
-  	    <div class="indiDataEntry" jsf:rendered="#{indiSiteDataEntryService.isEnable eq false and indiSiteDataEntryService.listedCount eq 0}">
-	   
-	       <p:panel  style="background: #FFFF00;width: 100%; height:50px;font-size: 15px ; text-align:center" >
-	  			<p:outputLabel  style="font-weight: bold; color:red;" value="Please subscribe package to listing propertys, Contact support team +91 9632152255 ." />
-	  		</p:panel>
-	  		<br></br><br></br><br></br>
-	  		<ui:insert name="package">
-                <ui:include src="packPrice.xhtml"/>
-            </ui:insert>
-	   </div>
+<h:head>
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+    <link href="resources/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+    <link href="resources/css/demo/demo.css" rel="stylesheet" />
+</h:head>
 
-      <div class="Error" jsf:rendered="#{indiSiteDataEntryService.listedCount ge indiSiteDataEntryService.listLimit and indiSiteDataEntryService.isEnable eq true}">
-	  		<p:panel  style="background: #FFFF00;width: 100%; height:50px;font-size: 15px ; text-align:center" >
-	  			<p:outputLabel  style="font-weight: bold; color:red;" value="Exceed your limits property listing.. #{indiSiteDataEntryService.listedCount}" />
-	  		</p:panel>
-	  </div>
-	  <div class="indiDataEntry" jsf:rendered="#{indiSiteDataEntryService.listedCount lt indiSiteDataEntryService.listLimit and indiSiteDataEntryService.isEnable eq true or indiSiteDataEntryService.listedCount eq 0 and indiSiteDataEntryService.userId eq -1}">
-  <div class="card">
-  <h:form id="form" enctype="multipart/form-data">
+<h:body>
+    <ui:composition template="/WEB-INF/facelets/template.xhtml">
+        <ui:param name="page" value="Admin" />
+        <ui:define name="title">
+            <p>Individual Site DataEntry</p>
+            <p>
+                <h:outputText style="font-weight: normal; font-size: 14px;color: #555;" value="Enter the complete details of the individual site including site dimensions, location, cost per square foot, and agent/owner contact. This section is used to manage individual residential or commercial site listings." />
 
-      <p:dialog widgetVar="spinnerDialog"  style="background-color: #3A3B3C;"  modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
-          <p:graphicImage name="images/spin/spin1.gif" width="70px"  height="70px" />
-      </p:dialog>
-  <p:messages id="msgs"/>
-   <br></br>
-  
-  
-  			 <p:panel>   
-                <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
-                    <h:outputText style="font-weight: bold;color: green" value="#{indiSiteDataEntryService.updateResult}" />
-                </p:panelGrid>
-             </p:panel>
-             
-             <p:panel style="background-image: url('back1.jpg'); ">   
-                <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
-                
-                    <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
-            
-                    <p:outputLabel style="font-weight: bold" for="name" indicateRequired="true" value="Owner Name : " />
-                    <p:inputText id="name"  value="#{indiSiteDataEntryService.ownerName}" required="true" requiredMessage="Required Owner Name">
-                    </p:inputText>
-                    <p:message for="name" display="icon"/>
-                    
-                    <p:outputLabel style="font-weight: bold" value="Address : " />
-                    <p:inputText id="location" value="#{indiSiteDataEntryService.location}" >
-                    </p:inputText>
-                    <p:message for="location" display="icon"/>
-                    
-                    
-                    <p:outputLabel style="font-weight: bold" for="agentName"  value="Agent Name : " />
-                    <p:inputText id="agentName"  value="#{indiSiteDataEntryService.agentName}" >
-                    </p:inputText>
-                    <p:message for="agentName" display="icon"/>
-                    
-                    <p:outputLabel style="font-weight: bold" for="contactno" indicateRequired="true" value="Agent Contact No : " />
-                    <p:inputMask id="contactno" mask="9999999999" value="#{indiSiteDataEntryService.contactNo}" required="true" requiredMessage="Required Agent Contact No">
-                    	
-                    </p:inputMask>
-                    <p:message for="contactno" display="icon"/>
-                    
-                    
-                     <p:outputLabel style="font-weight: bold" value="Plot Number : " />
-                    <p:inputText id="siteno"  value="#{indiSiteDataEntryService.siteNo}" >
-                    </p:inputText>
-                    <p:message for="siteno" display="icon"/>
-                    
-                    
-                    <p:outputLabel style="font-weight: bold;width:170px" for="persqft" indicateRequired="true" value="Per Square Feet(Cost) : " />
-                    <p:inputText id="persqft"  value="#{indiSiteDataEntryService.persqft}" required="true" requiredMessage="Required Owner Name">
-                    </p:inputText>
-                    <p:message for="persqft" display="icon"/>
-                    
-                    
-                    <p:outputLabel style="font-weight: bold" for="length" indicateRequired="true" value="Length(Feets) : " />
-                    <p:inputText id="length"  value="#{indiSiteDataEntryService.length}" required="true" requiredMessage="Required Length(Feets)">
-                    </p:inputText>
-                    <p:message for="length" display="icon"/>
-                     
-                     
-                    <p:outputLabel style="font-weight: bold" for="width" indicateRequired="true" value="Width(Feets) : " />
-                    <p:inputText id="width"  value="#{indiSiteDataEntryService.width}" required="true" requiredMessage="Required Width(Feets)">
-                    </p:inputText>
-                    <p:message for="width" display="icon"/>
-                    
-                    
-                     <p:outputLabel for="wonership" value="Owner Ship : " />  
-                            <p:selectOneMenu id="wonership"   value="#{indiSiteDataEntryService.wonership}" requiredMessage="Woner Ship" style="width:150px">  
-                                <f:selectItem itemLabel="Freehold" itemValue="Freehold"/>
-                                <f:selectItem itemLabel="Buying" itemValue="Buying"/>
-                            </p:selectOneMenu>
-                    <p:message for="wonership" display="icon"/>
-                            
-                            
-                      <p:outputLabel for="transaction" value="Transaction : " />  
-                            <p:selectOneMenu id="transaction" value="#{indiSiteDataEntryService.transaction}" style="width:150px">  
-                             <f:selectItem itemLabel="Resale" itemValue="Resale"/>
-                             <f:selectItem itemLabel="New Property" itemValue="New Property"/>
-                            </p:selectOneMenu>
-                    <p:message for="transaction" display="icon"/>
-                                       
-                     <p:outputLabel for="country" value="Primary Location : " />  
-                        
-                            <p:selectOneMenu id="country" value="#{indiSiteDataEntryService.country}" style="width:150px" required="true" requiredMessage="Select Primary Location">  
-                            <p:ajax listener="#{indiSiteDataEntryService.onCountryChange}" update="city" />  
-                            <f:selectItem itemLabel="Select Primary Location" itemValue="" noSelectionOption="true" />  
-                            <f:selectItems value="#{indiSiteDataEntryService.primLocationSort}" />  
-                            </p:selectOneMenu>
-                     <p:message for="country" display="icon"/>
-                     
-                      <p:outputLabel for="city" value="Secondary Location : " />  
-                            <p:selectOneMenu id="city" value="#{indiSiteDataEntryService.city}" style="width:150px" required="true" requiredMessage="Select Secondary Location">  
-                            <f:selectItem itemLabel="Select Secondary Location" itemValue="" noSelectionOption="true" />  
-                            <f:selectItems value="#{indiSiteDataEntryService.secondryLocation}" />  
-                            </p:selectOneMenu> 
-                      <p:message for="city" display="icon"/>      
+            </p>
 
-                        <p:outputLabel style="font-weight: bold" value="Description (150 char): " />
-                        <p:inputTextarea rows="5" cols="40" maxlength="150" id="comment" value="#{indiSiteDataEntryService.comment}" >
-                        </p:inputTextarea>
-                        <p:message for="comment" display="icon"/>
-                    
-                    <p:outputLabel for="facing" value="Facing : " />  
-                            <p:selectOneMenu id="facing" value="#{indiSiteDataEntryService.facing}" style="width:150px"> 
-                            <f:selectItem itemLabel="--" itemValue="--"/> 
-                            <f:selectItem itemLabel="East" itemValue="East"/>
-                            <f:selectItem itemLabel="West" itemValue="West"/>
-                            <f:selectItem itemLabel="North" itemValue="North"/>
-                            <f:selectItem itemLabel="South" itemValue="South"/>
-                            </p:selectOneMenu>
-                     <p:message for="facing" display="icon"/> 
-                     
-                     <p:outputLabel for="cornerbit" value="Corner Bit : " /> 
-                            <p:selectOneMenu id="cornerbit" value="#{indiSiteDataEntryService.cornerBit}" style="width:150px"> 
-                            <f:selectItem itemLabel="No" itemValue="No"/>
-                            <f:selectItem itemLabel="Yes" itemValue="Yes"/>
-                            </p:selectOneMenu> 
-                            <p:message for="cornerbit" display="icon"/>
-                            
-                            
-     				 <p:outputLabel style="font-weight: bold; width:210px;" value="Image Upload (JPG,PNG,JPEG): " />
-                      <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
-                                     <p:fileUpload id="image" value="#{indiSiteDataEntryService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/> 
-            			  </p:panelGrid>
-                    <p:message for="image" display="icon"/>
-                    
-                       
-                   <h:commandButton value="Submit"   type="submit" 
-                                    process="@this"
-                                    update="@form"
-                                    actionListener="#{indiSiteDataEntryService.upload}" onclick="PF('spinnerDialog').show()">
-                                    <p:resetInput target="form"/>
-                   </h:commandButton>
-                   
-                     <h:commandButton id="discardChangesButton"
-	                                   process="@this"
-	                                   value="Clear"
-                                           update="@form"
-	                                   actionListener="#{indiSiteDataEntryService.clear}" >
-	                                   
-	                   <p:resetInput target="form"/>
-	          		</h:commandButton>
-                </p:panelGrid>   
-                 <p style="font-weight: bold;color: black; font-size: 18px"> Please provide your Individual Site property details which you want to sell.</p>
-                  <p style="font-weight: bold;color: black; font-size: 18px"> Please contact our customer care ,if any further assist required.</p>
-                  <p style="font-weight: bold;color: black; font-size: 18px"> Customer care number : 8088471208.</p>
-                  <p style="font-weight: bold;color: black; font-size: 18px">E-mail : customer.support@hansisofts.com</p>
-                  <p:graphicImage width="102%"  height="400px" name="images/indiv.jpg" />
-                   
-               </p:panelGrid>                   
-                    
-                    
-                          
-                       
-            </p:panel>
-            
-  
-  
- <script type="text/javascript" src="resources/js/chatool.js"></script> 
-</h:form>
-</div>
-</div>
-</ui:define>
-</ui:composition>
+            <div class="indiDataEntry" jsf:rendered="#{indiSiteDataEntryService.isEnable eq false and indiSiteDataEntryService.listedCount eq 0}">
+
+                <p:panel  style="background: #FFFF00;width: 100%; height:50px;font-size: 15px ; text-align:center" >
+                    <p:outputLabel  style="font-weight: bold; color:red;" value="Please subscribe package to listing propertys, Contact support team +91 9632152255 ." />
+                </p:panel>
+                <br></br><br></br><br></br>
+                <ui:insert name="package">
+                    <ui:include src="packPrice.xhtml"/>
+                </ui:insert>
+            </div>
+
+            <div class="Error" jsf:rendered="#{indiSiteDataEntryService.listedCount ge indiSiteDataEntryService.listLimit and indiSiteDataEntryService.isEnable eq true}">
+                <p:panel  style="background: #FFFF00;width: 100%; height:50px;font-size: 15px ; text-align:center" >
+                    <p:outputLabel  style="font-weight: bold; color:red;" value="Exceed your limits property listing.. #{indiSiteDataEntryService.listedCount}" />
+                </p:panel>
+            </div>
+            <div class="indiDataEntry" jsf:rendered="#{indiSiteDataEntryService.listedCount lt indiSiteDataEntryService.listLimit and indiSiteDataEntryService.isEnable eq true or indiSiteDataEntryService.listedCount eq 0 and indiSiteDataEntryService.userId eq -1}">
+                <div class="card">
+                    <h:form id="form" enctype="multipart/form-data">
+
+                        <p:dialog widgetVar="spinnerDialog"  style="background-color: #3A3B3C;"  modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
+                            <p:graphicImage name="images/spin/spin1.gif" width="70px"  height="70px" />
+                        </p:dialog>
+                        <p:messages id="msgs"/>
+                        <br></br>
+
+
+                        <p:panel>
+                            <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                                <h:outputText style="font-weight: bold;color: green" value="#{indiSiteDataEntryService.updateResult}" />
+                            </p:panelGrid>
+                        </p:panel>
+
+                        <p:panel style="background-image: url('back1.jpg'); ">
+                            <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+
+                                <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+
+                                    <p:outputLabel style="font-weight: bold" for="name" indicateRequired="false"> Owner Name: <span style="color:red;font-weight:bold;'">*</span>
+                                    </p:outputLabel>
+                                    <p:inputText id="name"  value="#{indiSiteDataEntryService.ownerName}" required="true" requiredMessage="Required Owner Name">
+                                    </p:inputText>
+                                    <p:message for="name" display="icon"/>
+
+                                    <p:outputLabel style="font-weight: bold" value="Address : " />
+                                    <p:inputText id="location" value="#{indiSiteDataEntryService.location}" >
+                                    </p:inputText>
+                                    <p:message for="location" display="icon"/>
+
+
+                                    <p:outputLabel style="font-weight: bold" for="agentName"  value="Agent Name : " />
+                                    <p:inputText id="agentName"  value="#{indiSiteDataEntryService.agentName}" >
+                                    </p:inputText>
+                                    <p:message for="agentName" display="icon"/>
+
+                                    <p:outputLabel style="font-weight: bold" for="contactno" indicateRequired="false" > Agent Contact No : <span style="color:red;font-weight:bold;'">*</span>
+                                    </p:outputLabel>
+                                    <p:inputMask id="contactno" mask="9999999999" value="#{indiSiteDataEntryService.contactNo}" required="true" requiredMessage="Required Agent Contact No">
+
+                                    </p:inputMask>
+                                    <p:message for="contactno" display="icon"/>
+
+
+                                    <p:outputLabel style="font-weight: bold" value="Plot Number : " />
+                                    <p:inputText id="siteno"  value="#{indiSiteDataEntryService.siteNo}" >
+                                    </p:inputText>
+                                    <p:message for="siteno" display="icon"/>
+
+
+                                    <p:outputLabel style="font-weight: bold;width:170px" for="persqft" indicateRequired="false" > Per Square Feet(Cost) : <span style="color:red;font-weight:bold;'">*</span>
+                                    </p:outputLabel>
+                                    <p:inputText id="persqft"  value="#{indiSiteDataEntryService.persqft}" required="true" requiredMessage="Required Per Square Feet(Cost)">
+                                    </p:inputText>
+                                    <p:message for="persqft" display="icon"/>
+
+
+                                    <p:outputLabel style="font-weight: bold" for="length" indicateRequired="false"> Length(Feets) :  <span style="color:red;font-weight:bold;'">*</span>
+                                    </p:outputLabel>
+                                    <p:inputText id="length"  value="#{indiSiteDataEntryService.length}" required="true" requiredMessage="Required Length(Feets)">
+                                    </p:inputText>
+                                    <p:message for="length" display="icon"/>
+
+
+                                    <p:outputLabel style="font-weight: bold" for="width" indicateRequired="flase"> Width(Feets) :  <span style="color:red;font-weight:bold;'">*</span>
+                                    </p:outputLabel>
+                                    <p:inputText id="width"  value="#{indiSiteDataEntryService.width}" required="true" requiredMessage="Required Width(Feets)">
+                                    </p:inputText>
+                                    <p:message for="width" display="icon"/>
+
+
+                                    <p:outputLabel for="wonership" value="Owner Ship : " />
+                                    <p:selectOneMenu id="wonership"   value="#{indiSiteDataEntryService.wonership}" requiredMessage="Woner Ship" style="width:150px">
+                                        <f:selectItem itemLabel="Freehold" itemValue="Freehold"/>
+                                        <f:selectItem itemLabel="Buying" itemValue="Buying"/>
+                                    </p:selectOneMenu>
+                                    <p:message for="wonership" display="icon"/>
+
+
+                                    <p:outputLabel for="transaction" value="Transaction : " />
+                                    <p:selectOneMenu id="transaction" value="#{indiSiteDataEntryService.transaction}" style="width:150px">
+                                        <f:selectItem itemLabel="Resale" itemValue="Resale"/>
+                                        <f:selectItem itemLabel="New Property" itemValue="New Property"/>
+                                    </p:selectOneMenu>
+                                    <p:message for="transaction" display="icon"/>
+
+                                    <p:outputLabel for="country" style="font-weight: bold" indicateRequired="false"> Primary Location: <span style="color: red; font-weight: bold;">*</span>
+                                    </p:outputLabel>
+                                    <p:selectOneMenu id="country" value="#{indiSiteDataEntryService.country}"
+                                                     style="width:150px" required="true"
+                                                     requiredMessage="Select Primary Location">
+                                        <p:ajax listener="#{indiSiteDataEntryService.onCountryChange}" update="city" />
+                                        <f:selectItem itemLabel="Select Primary Location" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{indiSiteDataEntryService.primLocationSort}" />
+                                    </p:selectOneMenu>
+
+                                    <p:message for="country" display="icon"/>
+
+
+                                    <p:outputLabel for="city" style="font-weight: bold" indicateRequired="false"> Secondary Location: <span style="color: red; font-weight: bold;">*</span>
+                                    </p:outputLabel>
+                                    <p:selectOneMenu id="city" value="#{indiSiteDataEntryService.city}"
+                                                     style="width:150px" required="true"
+                                                     requiredMessage="Select Secondary Location">
+                                        <f:selectItem itemLabel="Select Secondary Location" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{indiSiteDataEntryService.secondryLocation}" />
+                                    </p:selectOneMenu>
+
+                                    <p:message for="city" display="icon"/>
+
+
+                                    <p:outputLabel style="font-weight: bold" value="Description (150 char): " />
+                                    <p:inputTextarea rows="5" cols="40" maxlength="150" id="comment" value="#{indiSiteDataEntryService.comment}" >
+                                    </p:inputTextarea>
+                                    <p:message for="comment" display="icon"/>
+
+                                    <p:outputLabel for="facing" value="Facing : " />
+                                    <p:selectOneMenu id="facing" value="#{indiSiteDataEntryService.facing}" style="width:150px">
+                                        <f:selectItem itemLabel="--" itemValue="--"/>
+                                        <f:selectItem itemLabel="East" itemValue="East"/>
+                                        <f:selectItem itemLabel="West" itemValue="West"/>
+                                        <f:selectItem itemLabel="North" itemValue="North"/>
+                                        <f:selectItem itemLabel="South" itemValue="South"/>
+                                    </p:selectOneMenu>
+                                    <p:message for="facing" display="icon"/>
+
+                                    <p:outputLabel for="cornerbit" value="Corner Bit : " />
+                                    <p:selectOneMenu id="cornerbit" value="#{indiSiteDataEntryService.cornerBit}" style="width:150px">
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                        <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                                    </p:selectOneMenu>
+                                    <p:message for="cornerbit" display="icon"/>
+
+
+                                    <p:outputLabel style="font-weight: bold; width:210px;" value="Image Upload (JPG,PNG,JPEG): " />
+                                    <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                                        <p:fileUpload id="image" value="#{indiSiteDataEntryService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                                    </p:panelGrid>
+                                    <p:message for="image" display="icon"/>
+
+
+                                    <h:commandButton value="Submit"   type="submit"
+                                                     process="@this"
+                                                     update="@form"
+                                                     actionListener="#{indiSiteDataEntryService.upload}" onclick="PF('spinnerDialog').show()">
+                                        <p:resetInput target="form"/>
+                                    </h:commandButton>
+
+                                    <h:commandButton id="discardChangesButton"
+                                                     process="@this"
+                                                     value="Clear"
+                                                     update="@form"
+                                                     actionListener="#{indiSiteDataEntryService.clear}" >
+
+                                        <p:resetInput target="form"/>
+                                    </h:commandButton>
+                                </p:panelGrid>
+                                <p style="font-weight: bold;color: black; font-size: 18px"> Please provide your Individual Site property details which you want to sell.</p>
+                                <p style="font-weight: bold;color: black; font-size: 18px"> Please contact our customer care ,if any further assist required.</p>
+                                <p style="font-weight: bold;color: black; font-size: 18px"> Customer care number : 8088471208.</p>
+                                <p style="font-weight: bold;color: black; font-size: 18px">E-mail : customer.support@hansisofts.com</p>
+                                <p:graphicImage width="102%"  height="400px" name="images/indiv.jpg" />
+
+                            </p:panelGrid>
+
+
+
+
+                        </p:panel>
+
+
+
+                        <script type="text/javascript" src="resources/js/chatool.js"></script>
+                    </h:form>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
 </h:body>
 </html>
