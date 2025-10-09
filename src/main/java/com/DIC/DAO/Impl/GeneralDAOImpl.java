@@ -197,6 +197,7 @@ public class GeneralDAOImpl {
 
 
 			String SQL_LAYOUT_GALARY = "select * from public.prop_galary where is_active ='1' and user_id = ? and prop_id = ? and prop_type = ?";
+			String SQL_LATEST_VILLA_ID="select villa_id from villa_plot order by create_date desc limit 1";
 		}
 
 	}
@@ -249,6 +250,9 @@ public class GeneralDAOImpl {
 			int res = pstmt.executeUpdate();
 			if (res > 0) {
 				succVal = "Successful updated record";
+				int villaId=getVillaPropertyId();
+				System.out.println("Villa  id : "+villaId);
+				uploadGalary(villaModel, userId,villaId, GeneralConstants.PropertyType.villa);
 			}
 		} catch (Exception e) {
 
@@ -263,7 +267,69 @@ public class GeneralDAOImpl {
 
 		return succVal;
 	}
+//************************************************************************************************************************//
+public int getVillaPropertyId()
+{
 
+	int villaId=0;
+	try {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		con=ConnectionDAO.getConnection();
+		StringBuilder sq_latest_villa_id = new StringBuilder(GeneralDAOImpl.Constants.SQL.SQL_LATEST_VILLA_ID);
+		pstmt = con.prepareStatement(sq_latest_villa_id.toString());
+		ResultSet rs = pstmt.executeQuery();
+		while ( rs.next() ) {
+			villaId=rs.getInt("villa_id");
+
+		}
+
+		pstmt.close();
+		rs.close();
+		con.close();
+		//log.info("### : *** Connection Closed from getActiveModelList()");
+	} catch (Exception e) {
+		e.printStackTrace();
+		System.err.println(e.getClass().getName()+": "+e.getMessage());
+		log.error("An error occurred: {}", e.getMessage());
+	}
+	return villaId;
+}
+
+
+
+	//*********************************************
+
+	public void uploadGalary(VillaModel villaModel,  int userId, int villaId, int propType)
+	{
+		System.out.println("Database upload Image size :"+villaModel.getInputStreams().size());
+
+		try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			con = ConnectionDAO.getConnection();
+			StringBuilder sql_image_upload_galary = new StringBuilder(ConnectionDAOImpl.Constants.SQL.SQL_IMAGE_UPLOAD_GALARY);
+			PreparedStatement pstmtGalary = con.prepareStatement(sql_image_upload_galary.toString());
+			List<InputStream> inputStream = villaModel.getInputStreams();
+			for (int i = 0; i < villaModel.getInputStreams().size(); i++) {
+				pstmtGalary.setBinaryStream(1, inputStream.get(i));
+				pstmtGalary.setInt(2, userId);
+				pstmtGalary.setInt(3, villaId);
+				pstmtGalary.setInt(4, propType);
+				int x = pstmtGalary.executeUpdate();
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.out.println("Error message  - >"+e.getMessage());
+
+			log.error("An error occurred: {}", e.getMessage());
+
+		}
+
+	}
 
 //********************************************** Get Villa details *************************************************************
 
