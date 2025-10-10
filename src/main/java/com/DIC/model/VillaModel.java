@@ -2,7 +2,9 @@ package com.DIC.model;
 
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.file.UploadedFile;
@@ -43,6 +45,10 @@ public class VillaModel implements Serializable{
 	
 	private InputStream inputStream;
     private UploadedFile file;
+
+
+	private List<InputStream> inputStreams = new ArrayList<>();
+	private List<UploadedFile> files = new ArrayList<>();
 	
 	public String getI_am() {
 		return i_am;
@@ -233,7 +239,19 @@ public class VillaModel implements Serializable{
 		this.comment = comment;
 	}
 
-	
-	
-	
+	public List<InputStream> getInputStreams() {
+		return inputStreams;
+	}
+
+	public void setInputStreams(List<InputStream> inputStreams) {
+		this.inputStreams = inputStreams;
+	}
+
+	public List<UploadedFile> getFiles() {
+		return files;
+	}
+
+	public void setFiles(List<UploadedFile> files) {
+		this.files = files;
+	}
 }
