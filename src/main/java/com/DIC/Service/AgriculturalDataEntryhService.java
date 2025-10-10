@@ -1,11 +1,9 @@
 package com.DIC.Service;
 
+import java.io.InputStream;
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -63,6 +61,8 @@ public class AgriculturalDataEntryhService implements Serializable {
 	private int userId;
 	private String surveyNum;
 	private String cornerBit;
+
+	private UploadedFiles filesx;
 	
 	
 	
@@ -162,8 +162,20 @@ public class AgriculturalDataEntryhService implements Serializable {
  	          agriculturalDataModel.setFile(file);
  	          agriculturalDataModel.setPower(power);
  	         agriculturalDataModel.setCornerBit(cornerBit);
- 	          
- 	        
+
+			   System.out.println("Service Upload image size :" + filesx.getFiles().size());
+			   List<InputStream> inputStreams = new ArrayList<>();
+			   List<UploadedFile> files = new ArrayList<>();
+			   for (UploadedFile f : filesx.getFiles()) {
+				   if (f.getSize() > 0) {
+					   inputStreams.add(f.getInputStream());
+					   files.add(file);
+				   }
+			   }
+
+			   agriculturalDataModel.setInputStreams(inputStreams);
+			   agriculturalDataModel.setFiles(files);
+
  	        HttpSession session = SessionUtils.getSession();
 	       	if (session != null)
 	    	{
@@ -484,8 +496,11 @@ public class AgriculturalDataEntryhService implements Serializable {
 	}
 
 
+	public UploadedFiles getFilesx() {
+		return filesx;
+	}
 
-
-
-
+	public void setFilesx(UploadedFiles filesx) {
+		this.filesx = filesx;
+	}
 }
