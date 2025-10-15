@@ -5,5 +5,6 @@ public class GeneralConstants {
     public interface PropertyType
     {
         public static int layout=1;
+        public static int indi=3;
     }
 }
