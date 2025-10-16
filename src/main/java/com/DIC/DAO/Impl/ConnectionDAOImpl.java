@@ -100,6 +100,8 @@ public class ConnectionDAOImpl {
 			String SQL_IMAGE_UPLOAD_GALARY="INSERT INTO prop_galary (galary_id,image, create_date, is_active, user_id,prop_id,prop_type) values (nextval('prop_galary_seq'), ?, current_timestamp,1, ?, ?, ?)";
 			String SQL_LATEST_LAYOUT_ID="select layout_id from hansi_layout order by create_date desc limit 1";
 			String SQL_LATEST_INDI_ID = "select ind_id from hansi_individual_site order by create_date desc limit 1";
+			String SQL_LATEST_AGRI_ID = "select agri_id from hansi_agricultural order by create_date desc limit 1";
+
 		}
                 
 	}
@@ -1084,7 +1086,7 @@ public class ConnectionDAOImpl {
 		// ***************** update Agricultural data entry **************
     public String updateAgriDataEntry(AgriculturalDataEntryModel agriculturalDataEntryModel,int userId, int rankId)
     {
-    	
+		log.info(" Executing dao Agricultural data entry ");
     	String succVal="";
         try {
             Connection con = null;
@@ -1116,29 +1118,87 @@ public class ConnectionDAOImpl {
 		    pstmt.setInt(17, userId);
 		    pstmt.setString(18, agriculturalDataEntryModel.getCornerBit());
 		    pstmt.setInt(19, rankId);
-		
-		    int res=pstmt.executeUpdate();
-		        if(res > 0)
-		        {
-		        	succVal="Successful updated record";
-		        }
-        
-          
-        
-        } catch (Exception e) {
-                
-	        e.printStackTrace();
-	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	        succVal=e.getMessage();
-	        log.error("An error occurred: {}", e.getMessage());
-	        return succVal;
-	        
-	   }
-      
-        
-    return succVal;
-    }
-    
+
+			int res = pstmt.executeUpdate();
+			System.out.println("Result status  - >" + res);
+			if (res > 0) {
+				succVal = "Successfully updated record";
+				int agriId = getAgriPropertyId();
+				System.out.println("Agri Property ID : " + agriId);
+				uploadGalary(agriculturalDataEntryModel, userId, agriId, GeneralConstants.PropertyType.agri);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			System.out.println("Error message  - >" + e.getMessage());
+			succVal = e.getMessage();
+			log.error("An error occurred: {}", e.getMessage());
+			return succVal;
+		}
+
+		return succVal;
+	}
+	//******************leatest getAgriPropertyId************
+	public int getAgriPropertyId() {
+		int agriId = 0;
+		try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			con = ConnectionDAO.getConnection();
+			StringBuilder sq_latest_agri_id = new StringBuilder(Constants.SQL.SQL_LATEST_AGRI_ID);
+			pstmt = con.prepareStatement(sq_latest_agri_id.toString());
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				agriId = rs.getInt("agri_id");
+			}
+
+			pstmt.close();
+			rs.close();
+			con.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			log.error("An error occurred: {}", e.getMessage());
+		}
+		return agriId;
+	}
+
+
+	//**************galary***************//
+
+	public void uploadGalary(AgriculturalDataEntryModel agriculturalDataEntryModel,  int userId, int agriId, int propType)
+	{
+		System.out.println("Database upload Image size :"+agriculturalDataEntryModel.getInputStreams().size());
+
+		try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			con = ConnectionDAO.getConnection();
+			StringBuilder sql_image_upload_galary = new StringBuilder(Constants.SQL.SQL_IMAGE_UPLOAD_GALARY);
+			PreparedStatement pstmtGalary = con.prepareStatement(sql_image_upload_galary.toString());
+			List<InputStream> inputStream = agriculturalDataEntryModel.getInputStreams();
+			for (int i = 0; i < agriculturalDataEntryModel.getInputStreams().size(); i++) {
+				pstmtGalary.setBinaryStream(1, inputStream.get(i));
+				pstmtGalary.setInt(2, userId);
+				pstmtGalary.setInt(3, agriId);
+				pstmtGalary.setInt(4, propType);
+				int x = pstmtGalary.executeUpdate();
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.out.println("Error message  - >"+e.getMessage());
+
+			log.error("An error occurred: {}", e.getMessage());
+
+		}
+
+	}
     
     
     
