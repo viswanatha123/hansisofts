@@ -1,11 +1,9 @@
 package com.DIC.Service;
 
+import java.io.InputStream;
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -70,6 +68,7 @@ public class IndiSiteDataEntryService implements Serializable {
 	  private TreeMap<String, String> primLocationSort;
 	  private List<String> secondryLocation;
 
+	  private UploadedFiles filesx;
 
 
 	   ConnectionDAOImpl dao;
@@ -167,6 +166,18 @@ public class IndiSiteDataEntryService implements Serializable {
 	  	          indiSiteDataEntryModel.setInputStream(file.getInputStream());
 	  	          indiSiteDataEntryModel.setFile(file);
 	  	          indiSiteDataEntryModel.setCornerBit(cornerBit);
+
+					System.out.println("Service Upload image size :" + filesx.getFiles().size());
+					List<InputStream> inputStreams = new ArrayList<>();
+					List<UploadedFile> files = new ArrayList<>();
+					for (UploadedFile f : filesx.getFiles()) {
+						if (f.getSize() > 0) {
+							inputStreams.add(f.getInputStream());
+							files.add(file);
+						}
+					}
+					indiSiteDataEntryModel.setInputStreams(inputStreams);
+					indiSiteDataEntryModel.setFiles(files);
 	  	  	        
 	  	      HttpSession session = SessionUtils.getSession();
 		       	if (session != null)
@@ -530,4 +541,11 @@ public class IndiSiteDataEntryService implements Serializable {
 		}
 
 
+	    public UploadedFiles getFilesx() {
+		return filesx;
+	}
+
+	    public void setFilesx(UploadedFiles filesx) {
+		this.filesx = filesx;
+	}
 }

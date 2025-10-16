@@ -188,6 +188,12 @@
                                     </p:panelGrid>
                                     <p:message for="image" display="icon"/>
 
+                                    <p:outputLabel style="font-weight: bold; width:210px;" value="Upload Galary photos (JPG,PNG,JPEG) : "   />
+                                    <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                                        <p:fileUpload id="images" value="#{indiSiteDataEntryService.filesx}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  skinSimple="true" multiple="true" requiredMessage="Upload Image" />
+                                    </p:panelGrid>
+                                    <p:message for="images" display="icon"/>
+
 
                                     <h:commandButton value="Submit"   type="submit"
                                                      process="@this"
