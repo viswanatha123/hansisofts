@@ -1038,7 +1038,7 @@ public class ConnectionDAOImpl {
 			System.out.println("Result status  - >" + res);
 			if (res > 0) {
 				succVal = "Successfully updated record";
-				int indiId = getLatestPropertyId();
+				int indiId = getIndiPropertyId();
 				System.out.println("Indi Property ID : " + indiId);
 
 				// call the upload method (do NOT declare it here)
@@ -1080,6 +1080,39 @@ public class ConnectionDAOImpl {
 			log.error("An error occurred: {}", e.getMessage());
 		}
 		return indiId;
+	}
+
+	//*********************************
+
+	public void uploadGalary(IndiSiteDataEntryModel indiSiteDataEntryModel, int userId, int indiId, int propType)
+	{
+		System.out.println("Database upload Image size :"+indiSiteDataEntryModel.getInputStreams().size());
+
+		try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			con = ConnectionDAO.getConnection();
+			StringBuilder sql_image_upload_galary = new StringBuilder(Constants.SQL.SQL_IMAGE_UPLOAD_GALARY);
+			PreparedStatement pstmtGalary = con.prepareStatement(sql_image_upload_galary.toString());
+			List<InputStream> inputStream = indiSiteDataEntryModel.getInputStreams();
+			for (int i = 0; i < indiSiteDataEntryModel.getInputStreams().size(); i++) {
+				pstmtGalary.setBinaryStream(1, inputStream.get(i));
+				pstmtGalary.setInt(2, userId);
+				pstmtGalary.setInt(3, indiId);
+				pstmtGalary.setInt(4, propType);
+				int x = pstmtGalary.executeUpdate();
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.out.println("Error message  - >"+e.getMessage());
+
+			log.error("An error occurred: {}", e.getMessage());
+
+		}
+
 	}
 
 
