@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+
+<h:body>
+
+
+    <ui:composition template="/WEB-INF/facelets/template.xhtml">
+        <ui:param name="page" value="Layour Galary" />
+        <ui:define name="title" > <h:outputText style="font-weight: bold;color: green;font-size:15px;" value="Layout Name : #{indiGalaryService.intiName}" />
+            <div class="card">
+                <h:form id="mainForm">
+
+
+                    <p:dataTable id="product" widgetVar="dtProducts" var="product"   value="#{indiGalaryService.indiGalaryModel}" editable="true"  style="margin-bottom:20px"
+                                 reflow="true" styleClass="products-table" selection="#{crudView.selectedProducts}"
+                                 rowKey="#{product.promoId}" paginator="true" rows="1" rowSelectMode="add" paginatorPosition="bottom" >
+
+                        <p:column headerText="Galary">
+                            <h:panelGroup layout="block" style="display: flex; justify-content: center; align-items: center; width: 100%;">
+                                <p:graphicImage width="750" height="700" stream="false" cache="false" value="#{product.streamedContent}" />
+                            </h:panelGroup>
+                        </p:column>
+                    </p:dataTable>
+
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

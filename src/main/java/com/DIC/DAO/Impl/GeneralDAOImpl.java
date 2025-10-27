@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.DIC.Service.Galary.IndiGalaryModel;
 import com.DIC.Service.Galary.LayoutGalaryModel;
 import framework.utilities.GeneralConstants;
 import org.apache.commons.dbcp.BasicDataSource;
@@ -3660,4 +3661,73 @@ public int getVillaPropertyId()
 	}
 
 
-}
+//**************************** get Indi Galary images **************
+
+ public List<IndiGalaryModel> getIndiGalary(IndividualSiteModel individualSiteModel) {
+
+ List<IndiGalaryModel> IndiGalaryModellList = new ArrayList<>();
+
+			 try {
+			 Connection con = null;
+			 PreparedStatement pstmt = null;
+			 con = ConnectionDAO.getConnection();
+			 StringBuilder sql_layout_GALARY = new StringBuilder(GeneralDAOImpl.Constants.SQL.SQL_LAYOUT_GALARY);
+			 pstmt = con.prepareStatement(sql_layout_GALARY.toString());
+			 pstmt.setInt(1,individualSiteModel.getUserId());
+			 pstmt.setInt(2,individualSiteModel.getInd_id());
+			 pstmt.setInt(3, GeneralConstants.PropertyType.indi);
+
+			 ResultSet rs = pstmt.executeQuery();
+					 while (rs.next()) {
+						 IndiGalaryModel indiGalaryModel = new IndiGalaryModel();
+
+
+						 indiGalaryModel.setLayoutGalaryId(rs.getInt("galary_id"));
+						 indiGalaryModel.setCreateDate(rs.getDate("create_date"));
+						 indiGalaryModel.setIs_active(rs.getInt("is_active"));
+						 indiGalaryModel.setUserId(rs.getInt("user_id"));
+						 indiGalaryModel.setPropId(rs.getInt("prop_id"));
+						 indiGalaryModel.setPropType(rs.getInt("prop_type"));
+
+
+							 if (rs.getBytes("image").length != 0) {
+							 byte[] bb = rs.getBytes("image");
+
+								 indiGalaryModel.setStreamedContent(DefaultStreamedContent.builder()
+							 .name("US_Piechart.jpg")
+							 .contentType("image/jpg")
+							 .stream(() -> new ByteArrayInputStream(bb)).build());
+							 } else {
+							 // Defalut Image
+							 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+							 ResultSet rsDef = pstmtDefault.executeQuery();
+							 while (rsDef.next()) {
+							 byte[] def = rsDef.getBytes("image");
+								 indiGalaryModel.setStreamedContent(DefaultStreamedContent.builder()
+							 .name("US_Piechart.jpg")
+							 .contentType("image/jpg")
+							 .stream(() -> new ByteArrayInputStream(def)).build());
+							 }
+
+					 }
+
+						 IndiGalaryModellList.add(indiGalaryModel);
+					 }
+
+			 pstmt.close();
+			 rs.close();
+			 con.close();
+			 log.info("### : *** Connection Closed from getPromoImage()");
+			 } catch (Exception e) {
+			 e.printStackTrace();
+			 System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			 log.error("An error occurred getPromoImage() : {}", e.getMessage());
+			 }
+ 		return IndiGalaryModellList;
+
+ 		}
+
+
+ }
+
+
