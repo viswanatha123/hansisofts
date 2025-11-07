@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import com.DIC.DAO.Impl.*;
+import framework.utilities.SessionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,6 +17,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.PrimeFaces;
 
@@ -272,6 +274,8 @@ public class AgriculturalService implements Serializable{
 
 	public void getAgriDialog()
 	{
+		HttpSession session = SessionUtils.getSession();
+		session.setAttribute("agriId", selectedProperty);
 		agriData=pDao.getAgriData(selectedProperty.getAgriId());
 	}
 	           
