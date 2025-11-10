@@ -18,8 +18,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.DIC.Service.Galary.AgriGalaryModel;
 import com.DIC.Service.Galary.IndiGalaryModel;
 import com.DIC.Service.Galary.LayoutGalaryModel;
+import com.DIC.model.*;
 import framework.utilities.GeneralConstants;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
@@ -33,18 +35,6 @@ import org.primefaces.model.file.UploadedFile;
 
 import com.DIC.DAO.ConnectionDAO;
 import com.DIC.DAO.Impl.ConnectionDAOImpl.Constants;
-import com.DIC.model.BudgetModel;
-import com.DIC.model.ConnectorMode;
-import com.DIC.model.HomeLoanDataEntryModel;
-import com.DIC.model.IndividualSiteModel;
-import com.DIC.model.LayoutMode;
-import com.DIC.model.PackPriceModel;
-import com.DIC.model.PackageModel;
-import com.DIC.model.PlotsDataEntryModel;
-import com.DIC.model.PromoImageModel;
-import com.DIC.model.UserDetails;
-import com.DIC.model.UserRoleModel;
-import com.DIC.model.VillaModel;
 
 import framework.utilities.UtilConstants;
 
@@ -199,6 +189,7 @@ public class GeneralDAOImpl {
 
 			String SQL_LAYOUT_GALARY = "select * from public.prop_galary where is_active ='1' and user_id = ? and prop_id = ? and prop_type = ?";
 			String SQL_LATEST_VILLA_ID="select villa_id from villa_plot order by create_date desc limit 1";
+			String SQL_AGRI_GALARY = "select * from public.prop_galary where is_active ='1' and user_id = ? and prop_id = ? and prop_type = ?";
 		}
 
 	}
@@ -3727,6 +3718,69 @@ public int getVillaPropertyId()
 
  		}
 
+	public List<AgriGalaryModel> getAgriGalary(AgriculturalModel agriculturalModel) {
+
+		List<AgriGalaryModel> agriGalaryModellList = new ArrayList<>();
+
+		try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			con = ConnectionDAO.getConnection();
+			StringBuilder sql_agri_GALARY = new StringBuilder(GeneralDAOImpl.Constants.SQL.SQL_AGRI_GALARY);
+			pstmt = con.prepareStatement(sql_agri_GALARY.toString());
+			pstmt.setInt(1,agriculturalModel.getUserId());
+			pstmt.setInt(2,agriculturalModel.getAgriId());
+			pstmt.setInt(3, GeneralConstants.PropertyType.agri);
+
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				AgriGalaryModel agriGalaryModel = new AgriGalaryModel();
+
+
+				agriGalaryModel.setLayoutGalaryId(rs.getInt("galary_id"));
+				agriGalaryModel.setCreateDate(rs.getDate("create_date"));
+				agriGalaryModel.setIs_active(rs.getInt("is_active"));
+				agriGalaryModel.setUserId(rs.getInt("user_id"));
+				agriGalaryModel.setPropId(rs.getInt("prop_id"));
+				agriGalaryModel.setPropType(rs.getInt("prop_type"));
+
+
+				if (rs.getBytes("image").length != 0) {
+					byte[] bb = rs.getBytes("image");
+
+					agriGalaryModel.setStreamedContent(DefaultStreamedContent.builder()
+							.name("US_Piechart.jpg")
+							.contentType("image/jpg")
+							.stream(() -> new ByteArrayInputStream(bb)).build());
+				} else {
+					// Defalut Image
+					PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+					ResultSet rsDef = pstmtDefault.executeQuery();
+					while (rsDef.next()) {
+						byte[] def = rsDef.getBytes("image");
+						agriGalaryModel.setStreamedContent(DefaultStreamedContent.builder()
+								.name("US_Piechart.jpg")
+								.contentType("image/jpg")
+								.stream(() -> new ByteArrayInputStream(def)).build());
+					}
+
+				}
+
+				agriGalaryModellList.add(agriGalaryModel);
+			}
+
+			pstmt.close();
+			rs.close();
+			con.close();
+			log.info("### : *** Connection Closed from getPromoImage()");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			log.error("An error occurred getPromoImage() : {}", e.getMessage());
+		}
+		return agriGalaryModellList;
+
+	}
 
  }
 
