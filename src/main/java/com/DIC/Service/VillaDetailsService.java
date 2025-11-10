@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import com.DIC.DAO.Impl.*;
+import framework.utilities.SessionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,6 +26,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 //import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.PrimeFaces;
 
@@ -314,6 +316,8 @@ public class VillaDetailsService implements Serializable {
   }
 	public void getVillaDialog()
 	{
+		HttpSession session = SessionUtils.getSession();
+		session.setAttribute("villaId", selectedProperty);
 		villaData=pDao.getVillaData(selectedProperty.getVillaId());
 	}
    
