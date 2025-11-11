@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.DIC.Service.Galary.AgriGalaryModel;
 import com.DIC.Service.Galary.IndiGalaryModel;
 import com.DIC.Service.Galary.LayoutGalaryModel;
 import com.DIC.Service.Galary.VillaGalaryModel;
@@ -34,18 +35,6 @@ import org.primefaces.model.file.UploadedFile;
 
 import com.DIC.DAO.ConnectionDAO;
 import com.DIC.DAO.Impl.ConnectionDAOImpl.Constants;
-import com.DIC.model.BudgetModel;
-import com.DIC.model.ConnectorMode;
-import com.DIC.model.HomeLoanDataEntryModel;
-import com.DIC.model.IndividualSiteModel;
-import com.DIC.model.LayoutMode;
-import com.DIC.model.PackPriceModel;
-import com.DIC.model.PackageModel;
-import com.DIC.model.PlotsDataEntryModel;
-import com.DIC.model.PromoImageModel;
-import com.DIC.model.UserDetails;
-import com.DIC.model.UserRoleModel;
-import com.DIC.model.VillaModel;
 
 import framework.utilities.UtilConstants;
 
