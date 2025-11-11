@@ -322,8 +322,7 @@ public class VillaDetailsService implements Serializable {
 	}
    
    
-	    
-	    
+
 
 
 		public String getCountry() {

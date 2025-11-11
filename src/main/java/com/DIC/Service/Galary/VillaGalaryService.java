@@ -21,7 +21,6 @@ public class VillaGalaryService implements Serializable {
     private List<VillaGalaryModel> villaGalaryModel;
     private String villaName;
 
-
     GeneralDAOImpl gDao;
     public VillaGalaryService()
     {

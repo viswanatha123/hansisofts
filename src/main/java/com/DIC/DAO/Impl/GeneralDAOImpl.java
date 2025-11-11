@@ -3796,7 +3796,6 @@ public int getVillaPropertyId()
 	}
 
 
-
 }
 
 

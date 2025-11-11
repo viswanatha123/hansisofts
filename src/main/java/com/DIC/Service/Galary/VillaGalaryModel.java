@@ -79,5 +79,4 @@ public class VillaGalaryModel {
         this.inputStream = inputStream;
     }
 
-
 }
