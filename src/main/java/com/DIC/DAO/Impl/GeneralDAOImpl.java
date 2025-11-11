@@ -21,7 +21,7 @@ import java.util.Map;
 import com.DIC.Service.Galary.AgriGalaryModel;
 import com.DIC.Service.Galary.IndiGalaryModel;
 import com.DIC.Service.Galary.LayoutGalaryModel;
-import com.DIC.model.*;
+import com.DIC.Service.Galary.VillaGalaryModel;
 import framework.utilities.GeneralConstants;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
@@ -189,7 +189,7 @@ public class GeneralDAOImpl {
 
 			String SQL_LAYOUT_GALARY = "select * from public.prop_galary where is_active ='1' and user_id = ? and prop_id = ? and prop_type = ?";
 			String SQL_LATEST_VILLA_ID="select villa_id from villa_plot order by create_date desc limit 1";
-			String SQL_AGRI_GALARY = "select * from public.prop_galary where is_active ='1' and user_id = ? and prop_id = ? and prop_type = ?";
+			String SQL_VILLA_GALARY = "select * from public.prop_galary where is_active ='1' and user_id = ? and prop_id = ? and prop_type = ?";
 		}
 
 	}
@@ -3718,37 +3718,39 @@ public int getVillaPropertyId()
 
  		}
 
-	public List<AgriGalaryModel> getAgriGalary(AgriculturalModel agriculturalModel) {
+	//**************************** get Villa Galary images **************
 
-		List<AgriGalaryModel> agriGalaryModellList = new ArrayList<>();
+	public List<VillaGalaryModel> getVillaGalary(VillaModel villaModel) {
+
+		List<VillaGalaryModel> VillaGalaryModellList = new ArrayList<>();
 
 		try {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			con = ConnectionDAO.getConnection();
-			StringBuilder sql_agri_GALARY = new StringBuilder(GeneralDAOImpl.Constants.SQL.SQL_AGRI_GALARY);
-			pstmt = con.prepareStatement(sql_agri_GALARY.toString());
-			pstmt.setInt(1,agriculturalModel.getUserId());
-			pstmt.setInt(2,agriculturalModel.getAgriId());
-			pstmt.setInt(3, GeneralConstants.PropertyType.agri);
+			StringBuilder sql_villa_GALARY = new StringBuilder(GeneralDAOImpl.Constants.SQL.SQL_VILLA_GALARY);
+			pstmt = con.prepareStatement(sql_villa_GALARY.toString());
+			pstmt.setInt(1,villaModel.getUserId());
+			pstmt.setInt(2,villaModel.getVillaId());
+			pstmt.setInt(3, GeneralConstants.PropertyType.villa);
 
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				AgriGalaryModel agriGalaryModel = new AgriGalaryModel();
+				VillaGalaryModel villaGalaryModel = new VillaGalaryModel();
 
 
-				agriGalaryModel.setLayoutGalaryId(rs.getInt("galary_id"));
-				agriGalaryModel.setCreateDate(rs.getDate("create_date"));
-				agriGalaryModel.setIs_active(rs.getInt("is_active"));
-				agriGalaryModel.setUserId(rs.getInt("user_id"));
-				agriGalaryModel.setPropId(rs.getInt("prop_id"));
-				agriGalaryModel.setPropType(rs.getInt("prop_type"));
+				villaGalaryModel.setLayoutGalaryId(rs.getInt("galary_id"));
+				villaGalaryModel.setCreateDate(rs.getDate("create_date"));
+				villaGalaryModel.setIs_active(rs.getInt("is_active"));
+				villaGalaryModel.setUserId(rs.getInt("user_id"));
+				villaGalaryModel.setPropId(rs.getInt("prop_id"));
+				villaGalaryModel.setPropType(rs.getInt("prop_type"));
 
 
 				if (rs.getBytes("image").length != 0) {
 					byte[] bb = rs.getBytes("image");
 
-					agriGalaryModel.setStreamedContent(DefaultStreamedContent.builder()
+					villaGalaryModel.setStreamedContent(DefaultStreamedContent.builder()
 							.name("US_Piechart.jpg")
 							.contentType("image/jpg")
 							.stream(() -> new ByteArrayInputStream(bb)).build());
@@ -3758,7 +3760,7 @@ public int getVillaPropertyId()
 					ResultSet rsDef = pstmtDefault.executeQuery();
 					while (rsDef.next()) {
 						byte[] def = rsDef.getBytes("image");
-						agriGalaryModel.setStreamedContent(DefaultStreamedContent.builder()
+						villaGalaryModel.setStreamedContent(DefaultStreamedContent.builder()
 								.name("US_Piechart.jpg")
 								.contentType("image/jpg")
 								.stream(() -> new ByteArrayInputStream(def)).build());
@@ -3766,7 +3768,7 @@ public int getVillaPropertyId()
 
 				}
 
-				agriGalaryModellList.add(agriGalaryModel);
+				VillaGalaryModellList.add(villaGalaryModel);
 			}
 
 			pstmt.close();
@@ -3778,10 +3780,11 @@ public int getVillaPropertyId()
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			log.error("An error occurred getPromoImage() : {}", e.getMessage());
 		}
-		return agriGalaryModellList;
+		return VillaGalaryModellList;
 
 	}
 
- }
+
+}
 
 
