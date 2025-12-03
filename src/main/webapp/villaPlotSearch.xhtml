@@ -66,8 +66,7 @@
 		
 			<div style="display: flex; justify-content: center; align-items: center; ">
 					
-			
-				
+
 				
 			<h:panelGrid   columns="2" style="width: auto; text-align: center">
 			
@@ -88,7 +87,7 @@
               					
               					<h:panelGrid   columns="5" styleClass="Border" style="top : 0;right : 0; padding : 0; bottom : 0; font-size:15px; width:100%; ">
 
-									<p:commandLink action="#{villaDetailsService.getVillaDialog}" update=":mainForm:proImg1" oncomplete="PF('proImg').show()"  >
+									<p:commandLink action="#{villaDetailsService.getVillaDialog}" oncomplete="window.open('villaGalary.xhtml', '_blank'); return false;"  >
 										<p:graphicImage width="250" height="200"  cache="false" stream="false"  styleClass="rounded-image clickable-image-with-link" value="#{product.streamedContent}" alt="Image"   />
 										<f:setPropertyActionListener value="#{product}" target="#{villaDetailsService.selectedProperty}" />
 									</p:commandLink>

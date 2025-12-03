@@ -18,7 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.DIC.Service.Galary.AgriGalaryModel;
+import com.DIC.Service.Galary.IndiGalaryModel;
 import com.DIC.Service.Galary.LayoutGalaryModel;
+import com.DIC.Service.Galary.VillaGalaryModel;
+import com.DIC.model.*;
 import framework.utilities.GeneralConstants;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
@@ -32,18 +36,6 @@ import org.primefaces.model.file.UploadedFile;
 
 import com.DIC.DAO.ConnectionDAO;
 import com.DIC.DAO.Impl.ConnectionDAOImpl.Constants;
-import com.DIC.model.BudgetModel;
-import com.DIC.model.ConnectorMode;
-import com.DIC.model.HomeLoanDataEntryModel;
-import com.DIC.model.IndividualSiteModel;
-import com.DIC.model.LayoutMode;
-import com.DIC.model.PackPriceModel;
-import com.DIC.model.PackageModel;
-import com.DIC.model.PlotsDataEntryModel;
-import com.DIC.model.PromoImageModel;
-import com.DIC.model.UserDetails;
-import com.DIC.model.UserRoleModel;
-import com.DIC.model.VillaModel;
 
 import framework.utilities.UtilConstants;
 
@@ -58,8 +50,8 @@ public class GeneralDAOImpl {
 		// SQL
 		interface SQL {
 
-			String SQL_VILLA_INSERT = "insert into villa_plot (villa_id,i_am,owner_name,contact_owner,email,property_type,address,road_width,floors,bed_rooms,bath_rooms,furnished,plot_area,s_build_are,pro_avail,avail_date,persqft,prim_location,seco_location,image,total_feets,cost,create_date,is_active,user_id,floor_num,corner_bit,rank,facing,comment) \n" +
-					"values (nextval('hansi_villa_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,1,?,?,?,?,?,?);";
+			String SQL_VILLA_INSERT = "insert into villa_plot (villa_id,i_am,owner_name,contact_owner,email,property_type,address,road_width,floors,bed_rooms,bath_rooms,furnished,plot_area,s_build_are,pro_avail,avail_date,persqft,prim_location,seco_location,image,total_feets,cost,create_date,is_active,user_id,floor_num,corner_bit,rank,facing,comment,last_updated_date) \n" +
+					"values (nextval('hansi_villa_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,1,?,?,?,?,?,?,current_timestamp);";
 
 			String SQL_VILLA_DETAILS = "select * from villa_plot where prim_location = ? and seco_location = ?";
 			String SQL_VILLA_READY_TO_MOVE = "select * from villa_plot where pro_avail='Ready To Move' order by create_date desc LIMIT ? OFFSET ?;";
@@ -197,6 +189,10 @@ public class GeneralDAOImpl {
 
 
 			String SQL_LAYOUT_GALARY = "select * from public.prop_galary where is_active ='1' and user_id = ? and prop_id = ? and prop_type = ?";
+			String SQL_LATEST_VILLA_ID="select villa_id from villa_plot order by create_date desc limit 1";
+			String SQL_VILLA_GALARY = "select * from public.prop_galary where is_active ='1' and user_id = ? and prop_id = ? and prop_type = ?";
+			String SQL_AGRI_GALARY = "select * from public.prop_galary where is_active ='1' and user_id = ? and prop_id = ? and prop_type = ?";
+
 		}
 
 	}
@@ -249,6 +245,9 @@ public class GeneralDAOImpl {
 			int res = pstmt.executeUpdate();
 			if (res > 0) {
 				succVal = "Successful updated record";
+				int villaId=getVillaPropertyId();
+				System.out.println("Villa  id : "+villaId);
+				uploadGalary(villaModel, userId,villaId, GeneralConstants.PropertyType.villa);
 			}
 		} catch (Exception e) {
 
@@ -263,7 +262,69 @@ public class GeneralDAOImpl {
 
 		return succVal;
 	}
+//************************************************************************************************************************//
+public int getVillaPropertyId()
+{
 
+	int villaId=0;
+	try {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		con=ConnectionDAO.getConnection();
+		StringBuilder sq_latest_villa_id = new StringBuilder(GeneralDAOImpl.Constants.SQL.SQL_LATEST_VILLA_ID);
+		pstmt = con.prepareStatement(sq_latest_villa_id.toString());
+		ResultSet rs = pstmt.executeQuery();
+		while ( rs.next() ) {
+			villaId=rs.getInt("villa_id");
+
+		}
+
+		pstmt.close();
+		rs.close();
+		con.close();
+		//log.info("### : *** Connection Closed from getActiveModelList()");
+	} catch (Exception e) {
+		e.printStackTrace();
+		System.err.println(e.getClass().getName()+": "+e.getMessage());
+		log.error("An error occurred: {}", e.getMessage());
+	}
+	return villaId;
+}
+
+
+
+	//*********************************************
+
+	public void uploadGalary(VillaModel villaModel,  int userId, int villaId, int propType)
+	{
+		System.out.println("Database upload Image size :"+villaModel.getInputStreams().size());
+
+		try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			con = ConnectionDAO.getConnection();
+			StringBuilder sql_image_upload_galary = new StringBuilder(ConnectionDAOImpl.Constants.SQL.SQL_IMAGE_UPLOAD_GALARY);
+			PreparedStatement pstmtGalary = con.prepareStatement(sql_image_upload_galary.toString());
+			List<InputStream> inputStream = villaModel.getInputStreams();
+			for (int i = 0; i < villaModel.getInputStreams().size(); i++) {
+				pstmtGalary.setBinaryStream(1, inputStream.get(i));
+				pstmtGalary.setInt(2, userId);
+				pstmtGalary.setInt(3, villaId);
+				pstmtGalary.setInt(4, propType);
+				int x = pstmtGalary.executeUpdate();
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.out.println("Error message  - >"+e.getMessage());
+
+			log.error("An error occurred: {}", e.getMessage());
+
+		}
+
+	}
 
 //********************************************** Get Villa details *************************************************************
 
@@ -279,11 +340,11 @@ public class GeneralDAOImpl {
 			StringBuilder sql_villa_details = new StringBuilder(Constants.SQL.SQL_VILLA_DETAILS);
 
 			if (proType.equals("All")) {
-				sql_villa_details.append(" and property_type in ('Villa','House','Plot','Flat') order by CASE WHEN rank = 1 THEN 1 WHEN rank = 2 THEN 2 WHEN rank = 3 THEN 3 ELSE 4 END, create_date desc LIMIT ? OFFSET ?;");
+				sql_villa_details.append(" and property_type in ('Villa','House','Plot','Flat') order by last_updated_date desc NULLS last LIMIT ? OFFSET ?;");
 			} else if (proType.equals("Flat")) {
-				sql_villa_details.append(" and property_type in ('Flat','Plot') order by CASE WHEN rank = 1 THEN 1 WHEN rank = 2 THEN 2 WHEN rank = 3 THEN 3 ELSE 4 END, create_date desc LIMIT ? OFFSET ?;");
+				sql_villa_details.append(" and property_type in ('Flat','Plot') order by last_updated_date desc NULLS last LIMIT ? OFFSET ?;");
 			} else {
-				sql_villa_details.append(" and property_type='" + proType + "' order by CASE WHEN rank = 1 THEN 1 WHEN rank = 2 THEN 2 WHEN rank = 3 THEN 3 ELSE 4 END, create_date desc LIMIT ? OFFSET ?;");
+				sql_villa_details.append(" and property_type='" + proType + "' order by last_updated_date desc NULLS last LIMIT ? OFFSET ?;");
 			}
 			con = ConnectionDAO.getConnection();
 
@@ -3594,4 +3655,203 @@ public class GeneralDAOImpl {
 	}
 
 
+//**************************** get Indi Galary images **************
+
+ public List<IndiGalaryModel> getIndiGalary(IndividualSiteModel individualSiteModel) {
+
+ List<IndiGalaryModel> IndiGalaryModellList = new ArrayList<>();
+
+			 try {
+			 Connection con = null;
+			 PreparedStatement pstmt = null;
+			 con = ConnectionDAO.getConnection();
+			 StringBuilder sql_layout_GALARY = new StringBuilder(GeneralDAOImpl.Constants.SQL.SQL_LAYOUT_GALARY);
+			 pstmt = con.prepareStatement(sql_layout_GALARY.toString());
+			 pstmt.setInt(1,individualSiteModel.getUserId());
+			 pstmt.setInt(2,individualSiteModel.getInd_id());
+			 pstmt.setInt(3, GeneralConstants.PropertyType.indi);
+
+			 ResultSet rs = pstmt.executeQuery();
+					 while (rs.next()) {
+						 IndiGalaryModel indiGalaryModel = new IndiGalaryModel();
+
+
+						 indiGalaryModel.setLayoutGalaryId(rs.getInt("galary_id"));
+						 indiGalaryModel.setCreateDate(rs.getDate("create_date"));
+						 indiGalaryModel.setIs_active(rs.getInt("is_active"));
+						 indiGalaryModel.setUserId(rs.getInt("user_id"));
+						 indiGalaryModel.setPropId(rs.getInt("prop_id"));
+						 indiGalaryModel.setPropType(rs.getInt("prop_type"));
+
+
+							 if (rs.getBytes("image").length != 0) {
+							 byte[] bb = rs.getBytes("image");
+
+								 indiGalaryModel.setStreamedContent(DefaultStreamedContent.builder()
+							 .name("US_Piechart.jpg")
+							 .contentType("image/jpg")
+							 .stream(() -> new ByteArrayInputStream(bb)).build());
+							 } else {
+							 // Defalut Image
+							 PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+							 ResultSet rsDef = pstmtDefault.executeQuery();
+							 while (rsDef.next()) {
+							 byte[] def = rsDef.getBytes("image");
+								 indiGalaryModel.setStreamedContent(DefaultStreamedContent.builder()
+							 .name("US_Piechart.jpg")
+							 .contentType("image/jpg")
+							 .stream(() -> new ByteArrayInputStream(def)).build());
+							 }
+
+					 }
+
+						 IndiGalaryModellList.add(indiGalaryModel);
+					 }
+
+			 pstmt.close();
+			 rs.close();
+			 con.close();
+			 log.info("### : *** Connection Closed from getPromoImage()");
+			 } catch (Exception e) {
+			 e.printStackTrace();
+			 System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			 log.error("An error occurred getPromoImage() : {}", e.getMessage());
+			 }
+ 		return IndiGalaryModellList;
+
+ 		}
+
+	//**************************** get Agri Galary images **************
+	public List<AgriGalaryModel> getAgriGalary(AgriculturalModel agriculturalModel) {
+
+		List<AgriGalaryModel> agriGalaryModellList = new ArrayList<>();
+
+		try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			con = ConnectionDAO.getConnection();
+			StringBuilder sql_agri_GALARY = new StringBuilder(GeneralDAOImpl.Constants.SQL.SQL_AGRI_GALARY);
+			pstmt = con.prepareStatement(sql_agri_GALARY.toString());
+			pstmt.setInt(1,agriculturalModel.getUserId());
+			pstmt.setInt(2,agriculturalModel.getAgriId());
+			pstmt.setInt(3, GeneralConstants.PropertyType.agri);
+
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				AgriGalaryModel agriGalaryModel = new AgriGalaryModel();
+
+
+				agriGalaryModel.setLayoutGalaryId(rs.getInt("galary_id"));
+				agriGalaryModel.setCreateDate(rs.getDate("create_date"));
+				agriGalaryModel.setIs_active(rs.getInt("is_active"));
+				agriGalaryModel.setUserId(rs.getInt("user_id"));
+				agriGalaryModel.setPropId(rs.getInt("prop_id"));
+				agriGalaryModel.setPropType(rs.getInt("prop_type"));
+
+
+				if (rs.getBytes("image").length != 0) {
+					byte[] bb = rs.getBytes("image");
+
+					agriGalaryModel.setStreamedContent(DefaultStreamedContent.builder()
+							.name("US_Piechart.jpg")
+							.contentType("image/jpg")
+							.stream(() -> new ByteArrayInputStream(bb)).build());
+				} else {
+					// Defalut Image
+					PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+					ResultSet rsDef = pstmtDefault.executeQuery();
+					while (rsDef.next()) {
+						byte[] def = rsDef.getBytes("image");
+						agriGalaryModel.setStreamedContent(DefaultStreamedContent.builder()
+								.name("US_Piechart.jpg")
+								.contentType("image/jpg")
+								.stream(() -> new ByteArrayInputStream(def)).build());
+					}
+
+				}
+
+				agriGalaryModellList.add(agriGalaryModel);
+			}
+
+			pstmt.close();
+			rs.close();
+			con.close();
+			log.info("### : *** Connection Closed from getPromoImage()");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			log.error("An error occurred getPromoImage() : {}", e.getMessage());
+		}
+		return agriGalaryModellList;
+
+	}
+	//**************************** get Villa Galary images **************
+
+	public List<VillaGalaryModel> getVillaGalary(VillaModel villaModel) {
+
+		List<VillaGalaryModel> VillaGalaryModellList = new ArrayList<>();
+
+		try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			con = ConnectionDAO.getConnection();
+			StringBuilder sql_villa_GALARY = new StringBuilder(GeneralDAOImpl.Constants.SQL.SQL_VILLA_GALARY);
+			pstmt = con.prepareStatement(sql_villa_GALARY.toString());
+			pstmt.setInt(1,villaModel.getUserId());
+			pstmt.setInt(2,villaModel.getVillaId());
+			pstmt.setInt(3, GeneralConstants.PropertyType.villa);
+
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				VillaGalaryModel villaGalaryModel = new VillaGalaryModel();
+
+
+				villaGalaryModel.setLayoutGalaryId(rs.getInt("galary_id"));
+				villaGalaryModel.setCreateDate(rs.getDate("create_date"));
+				villaGalaryModel.setIs_active(rs.getInt("is_active"));
+				villaGalaryModel.setUserId(rs.getInt("user_id"));
+				villaGalaryModel.setPropId(rs.getInt("prop_id"));
+				villaGalaryModel.setPropType(rs.getInt("prop_type"));
+
+
+				if (rs.getBytes("image").length != 0) {
+					byte[] bb = rs.getBytes("image");
+
+					villaGalaryModel.setStreamedContent(DefaultStreamedContent.builder()
+							.name("US_Piechart.jpg")
+							.contentType("image/jpg")
+							.stream(() -> new ByteArrayInputStream(bb)).build());
+				} else {
+					// Defalut Image
+					PreparedStatement pstmtDefault = con.prepareStatement("select image from hansi_property_image where prop_img_id =1");
+					ResultSet rsDef = pstmtDefault.executeQuery();
+					while (rsDef.next()) {
+						byte[] def = rsDef.getBytes("image");
+						villaGalaryModel.setStreamedContent(DefaultStreamedContent.builder()
+								.name("US_Piechart.jpg")
+								.contentType("image/jpg")
+								.stream(() -> new ByteArrayInputStream(def)).build());
+					}
+
+				}
+
+				VillaGalaryModellList.add(villaGalaryModel);
+			}
+
+			pstmt.close();
+			rs.close();
+			con.close();
+			log.info("### : *** Connection Closed from getPromoImage()");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			log.error("An error occurred getPromoImage() : {}", e.getMessage());
+		}
+		return VillaGalaryModellList;
+
+	}
+
+
 }
+
+

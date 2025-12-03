@@ -62,15 +62,15 @@
 
 					<p:commandButton type="submit" value=" Contact Us " icon="ui-icon-calculator" style="background:#40E0D0;font-weight: bold;color: black;font-size: 15px; width: 150px;"
 									 process="@this"
-									 onclick="PF('leadDialog').show()">
+									 onclick="PF('leadDialog').show()" />
 
-					</p:commandButton>
+
 
 					<p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#DFFF00;font-weight: bold;color: black;font-size: 15px; width: 150px;"
 									 process="@this"
-									 onclick="PF('leadDialog').show()">
+									 onclick="PF('leadDialog').show()"/>
 
-					</p:commandButton>
+
 
 				</p:panelGrid>
 			</td>
@@ -117,15 +117,15 @@
 
 					<p:commandButton type="submit" value=" Contact Us " icon="ui-icon-calculator" style="background:#40E0D0;font-weight: bold;color: black;font-size: 15px; width: 150px;"
 									 process="@this"
-									 onclick="PF('leadDialog').show()">
+									 onclick="PF('leadDialog').show()"/>
 
-					</p:commandButton>
+
 
 					<p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#DFFF00;font-weight: bold;color: black;font-size: 15px; width: 150px;"
 									 process="@this"
-									 onclick="PF('leadDialog').show()">
+									 onclick="PF('leadDialog').show()"/>
 
-					</p:commandButton>
+
 				</p:panelGrid>
 			</td>
 
@@ -170,15 +170,15 @@
 
 					<p:commandButton type="submit" value=" Contact Us " icon="ui-icon-calculator" style="background:#40E0D0;font-weight: bold;color: black;font-size: 15px; width: 150px;"
 									 process="@this"
-									 onclick="PF('leadDialog').show()">
+									 onclick="PF('leadDialog').show()"/>
 
-					</p:commandButton>
+
 
 					<p:commandButton type="submit" value="Enquiry" icon="ui-icon-calculator" style="background:#DFFF00;font-weight: bold;color: black;font-size: 15px; width: 150px;"
 									 process="@this"
-									 onclick="PF('leadDialog').show()">
+									 onclick="PF('leadDialog').show()"/>
 
-					</p:commandButton>
+
 				</p:panelGrid>
 			</td>
 
@@ -219,7 +219,7 @@
 
 
 		<br></br>
-		<h:commandButton value="Submit"   type="submit"  process="@this" update="@form1" actionListener="#{packPriceService.submit}" >
+		<h:commandButton value="Submit"   type="submit"  process="@this" update="@form1" actionListener="#{packPriceService.submit}" onclick="PF('spinnerDialog').show()">
 			<p:resetInput target="form1"/>
 		</h:commandButton>
 		<p:commandButton value="Reset" update="panelDialog" process="@this"
@@ -227,6 +227,14 @@
 						 styleClass="mr-2 ui-button-outlined"/>
 
 	</p:dialog>
+	<p:dialog widgetVar="spinnerDialog"
+			  modal="true" closable="false" draggable="false" resizable="false"
+			  showEffect="fade" hideEffect="fade"
+			  style="background-color: #3A3B3C; text-align:center;">
+	<p:graphicImage name="images/spin/spin1.gif" width="70px" height="70px" />
+	</p:dialog>
+
+
 
 
 	<script type="text/javascript" src="resources/js/chatool.js"></script>

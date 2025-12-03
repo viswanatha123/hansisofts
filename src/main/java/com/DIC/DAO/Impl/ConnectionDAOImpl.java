@@ -3,25 +3,16 @@ package com.DIC.DAO.Impl;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
-import com.DIC.Service.Galary.LayoutGalaryModel;
-import framework.utilities.Constants;
 import framework.utilities.GeneralConstants;
-import framework.utilities.UtilConstants;
 import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 import org.primefaces.model.file.UploadedFile;
-import org.primefaces.util.SerializableSupplier;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.Format;
-import java.text.NumberFormat;
 
 import com.DIC.DAO.ConnectionDAO;
-import com.DIC.Service.AgriculturalService;
-import com.DIC.Service.UserLoginService;
 import com.DIC.model.AgriculturalDataEntryModel;
 import com.DIC.model.AgriculturalModel;
 import com.DIC.model.ConnectorMode;
@@ -38,28 +29,17 @@ import com.DIC.model.PromoImageModel;
 import com.DIC.model.RentalDataEntryModel;
 
 import java.sql.PreparedStatement;
-import static java.lang.Math.log;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-
-
-import org.primefaces.util.SerializableSupplier;
 
 @ManagedBean
 @ApplicationScoped
@@ -72,14 +52,7 @@ public class ConnectionDAOImpl {
 		interface SQL {
 			
 			//String SQL_LAYOUT="select * from hansi_layout where prim_location = ? and seco_location = ? order by create_date desc";
-			String SQL_LAYOUT="select * from hansi_layout where prim_location = ? and seco_location = ? order by \r\n"
-					+ "CASE \r\n"
-					+ "WHEN rank = 1 THEN 1\r\n"
-					+ "WHEN rank = 2 THEN 2 \r\n"
-					+ "WHEN rank = 3 THEN 3 \r\n"
-					+ "ELSE 4\r\n"
-					+ "END ,\r\n"
-					+ "create_date desc LIMIT ? OFFSET ?";
+			String SQL_LAYOUT="select * from hansi_layout where prim_location = ? and seco_location = ? order by last_updated_date desc NULLS last LIMIT ? OFFSET ?";
 			String SQL_EXCEPTION="select * from connector_model_status where dataset_id = ? and last_updated_on::date >= ? and last_updated_on::date <= ?";
 			String SQL_CONNECTOR = "select * from trn_connector_model where is_active = 1;";
 			String QUERY_STRING="select c.dataset_id,c.server_host,c.server_port, c.model_name,a.data_file, a.created_on, a.created_by, a.job_name,a.job_status,  b.step_information,case when b.step_status=1 then 'In Progess' when b.step_status=2 then 'Success' else 'Failed' end as Status,d.job_exception\n" +
@@ -93,29 +66,15 @@ public class ConnectionDAOImpl {
                     "and b.step_information\n" +
                     "not in ('Set model access for LDAP Groups') ";
 			//String SQL_AGRICULTURAL="select * from hansi_agricultural where prim_location = ? and seco_location = ? order by create_date desc";
-			String SQL_AGRICULTURAL="select * from hansi_agricultural where prim_location = ? and seco_location = ? order by \r\n"
-					+ "CASE \r\n"
-					+ "WHEN rank = 1 THEN 1\r\n"
-					+ "WHEN rank = 2 THEN 2 \r\n"
-					+ "WHEN rank = 3 THEN 3 \r\n"
-					+ "ELSE 4\r\n"
-					+ "END,\r\n"
-					+ "create_date desc LIMIT ? OFFSET ?";
-			String SQL_LAYOUT_INSERT="insert into hansi_layout (layout_id,name,location,persqft,contact_owner,owner_name,wonership,is_active,transaction,comment,length,width,prim_location,seco_location,create_date,swimingpool,playground,park,wall,community,facing,agent_name,image,cost,user_id,corner_bit,rank) \n" +
-					"values (nextval('hansi_layout_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?,?,?,?,?,?,?,?);";
+			String SQL_AGRICULTURAL="select * from hansi_agricultural where prim_location = ? and seco_location = ? order by last_updated_date desc NULLS last LIMIT ? OFFSET ?";
+			String SQL_LAYOUT_INSERT="insert into hansi_layout (layout_id,name,location,persqft,contact_owner,owner_name,wonership,is_active,transaction,comment,length,width,prim_location,seco_location,create_date,swimingpool,playground,park,wall,community,facing,agent_name,image,cost,user_id,corner_bit,rank,last_updated_date) \n" +
+					"values (nextval('hansi_layout_seq'),?,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp,?,?,?,?,?,?,?,?,?,?,?,?,current_timestamp);";
 				
 			//String SQL_IndividualSite="select * from hansi_individual_site where prim_location = ? and seco_location = ? order by create_date desc";
-			String SQL_IndividualSite="select * from hansi_individual_site where prim_location = ? and seco_location = ? order by \r\n"
-					+ "CASE \r\n"
-					+ "WHEN rank = 1 THEN 1\r\n"
-					+ "WHEN rank = 2 THEN 2 \r\n"
-					+ "WHEN rank = 3 THEN 3 \r\n"
-					+ "ELSE 4\r\n"
-					+ "END,\r\n"
-					+ "create_date desc LIMIT ? OFFSET ?";
+			String SQL_IndividualSite="select * from hansi_individual_site where prim_location = ? and seco_location = ? order by last_updated_date desc NULLS last LIMIT ? OFFSET ?";
 			
-			String SQL_INDI_INSERT="INSERT INTO hansi_individual_site (ind_id,owner_name, location, contact_no, site_no, persqft, length, width, wonership, transaction, prim_location, seco_location, create_date, is_active,comment,facing,agent_name,cost,image,user_id,corner_bit,rank) VALUES(nextval('hansi_individual_site_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,current_timestamp, 1, ?,?,?,?,?,?,?,?)";
-			String SQL_AGRIDATAENTRY_INSERT = "INSERT INTO hansi_agricultural (agri_id,owner_name, contact_no, survey_no, location, wonership, transaction, per_cent, number_cents, water_source, crop, prim_location, seco_location, create_date, is_active, comment,agent_name,cost,image,user_id,corner_bit,rank) VALUES(nextval('hansi_agricultural_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp, 1, ?,?,?,?,?,?,?)";
+			String SQL_INDI_INSERT="INSERT INTO hansi_individual_site (ind_id,owner_name, location, contact_no, site_no, persqft, length, width, wonership, transaction, prim_location, seco_location, create_date, is_active,comment,facing,agent_name,cost,image,user_id,corner_bit,rank,last_updated_date) VALUES(nextval('hansi_individual_site_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,current_timestamp, 1, ?,?,?,?,?,?,?,?,current_timestamp)";
+			String SQL_AGRIDATAENTRY_INSERT = "INSERT INTO hansi_agricultural (agri_id,owner_name, contact_no, survey_no, location, wonership, transaction, per_cent, number_cents, water_source, crop, prim_location, seco_location, create_date, is_active, comment,agent_name,cost,image,user_id,corner_bit,rank,last_updated_date) VALUES(nextval('hansi_agricultural_seq'),?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp, 1, ?,?,?,?,?,?,?,current_timestamp)";
 			String SQL_ENQU_INSERT="INSERT INTO hansi_enquiry (enqi_id, name, email, phone, create_date, is_active) VALUES(nextval('hansi_enquiry_seq'),?, ?, ?, current_timestamp, 1)";
 			String SQL_HELP_INSERT="INSERT INTO hansi_help (query_id, query, phone, create_date,is_active) VALUES(nextval('hansi_help_seq'),?, ?, current_timestamp,1)";
 			String SQL_IMAGE_UPLOAD="insert into hansi_property_image (prop_img_id,img_name,image) values (nextval('hansi_imageUpload_seq'),?,?)";
@@ -140,6 +99,8 @@ public class ConnectionDAOImpl {
 			String SQL_PROMO_IMAGE_VILLA="select * from promo_img where is_active ='1' LIMIT ? OFFSET ?";
 			String SQL_IMAGE_UPLOAD_GALARY="INSERT INTO prop_galary (galary_id,image, create_date, is_active, user_id,prop_id,prop_type) values (nextval('prop_galary_seq'), ?, current_timestamp,1, ?, ?, ?)";
 			String SQL_LATEST_LAYOUT_ID="select layout_id from hansi_layout order by create_date desc limit 1";
+			String SQL_LATEST_INDI_ID = "select ind_id from hansi_individual_site order by create_date desc limit 1";
+			String SQL_LATEST_AGRI_ID = "select agri_id from hansi_agricultural order by create_date desc limit 1";
 
 		}
                 
@@ -777,7 +738,10 @@ public class ConnectionDAOImpl {
 				succVal = "Successful updated record";
 				int layoutId=getLatestPropertyId();
 				System.out.println("Layout Layout id : "+layoutId);
-				uploadGalary(plotsDataEntryModel, userId,layoutId, GeneralConstants.PropertyType.layout );
+				uploadGalary(plotsDataEntryModel,
+						userId,
+						layoutId,
+						GeneralConstants.PropertyType.layout );
 			}
            
         } catch (Exception e) {
@@ -830,7 +794,7 @@ public class ConnectionDAOImpl {
 
     //*********************************************
 
-	public void uploadGalary(PlotsDataEntryModel plotsDataEntryModel,  int userId, int layoutId, int propType)
+	public void uploadGalary(PlotsDataEntryModel plotsDataEntryModel, int userId, int layoutId, int propType)
 	{
 		System.out.println("Database upload Image size :"+plotsDataEntryModel.getInputStreams().size());
 
@@ -1066,38 +1030,96 @@ public class ConnectionDAOImpl {
 			            pstmt.setInt(17,userId);
 			            pstmt.setString(18, indiSiteDataEntryModel.getCornerBit());
 			            pstmt.setInt(19, rankId);
-			    		
-			                 
-			            
-			            int res=pstmt.executeUpdate();
-			            if(res > 0)
-			            {
-			            	succVal="Successful updated record";
-			            }
-          
-          
-        
-	        } catch (Exception e) {
-	                
-		        e.printStackTrace();
-		        System.err.println(e.getClass().getName()+": "+e.getMessage());
-		        succVal=e.getMessage();
-		        log.error("An error occurred: {}", e.getMessage());
-		        return succVal;
-		   }
-      
-        
-    return succVal;
-    }
-    
-    
-    
-    
-    
-    // ***************** update Agricultural data entry **************
+
+
+
+			// ... prepare pstmt earlier ...
+			int res = pstmt.executeUpdate();
+			System.out.println("Result status  - >" + res);
+			if (res > 0) {
+				succVal = "Successfully updated record";
+				int indiId = getIndiPropertyId();
+				System.out.println("Indi Property ID : " + indiId);
+
+				// call the upload method (do NOT declare it here)
+				uploadGalary(indiSiteDataEntryModel, userId, indiId, GeneralConstants.PropertyType.indi);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			System.out.println("Error message  - >" + e.getMessage());
+			succVal = e.getMessage();
+			log.error("An error occurred: {}", e.getMessage());
+			return succVal;
+		}
+
+		return succVal;
+	}
+//indiproperty
+
+		public int getIndiPropertyId() {
+		int indiId = 0;
+		try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			con = ConnectionDAO.getConnection();
+			StringBuilder sq_latest_indi_id = new StringBuilder(Constants.SQL.SQL_LATEST_INDI_ID);
+			pstmt = con.prepareStatement(sq_latest_indi_id.toString());
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				indiId = rs.getInt("ind_id");
+			}
+
+			pstmt.close();
+			rs.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			log.error("An error occurred: {}", e.getMessage());
+		}
+		return indiId;
+	}
+
+	//*********************************
+
+	public void uploadGalary(IndiSiteDataEntryModel indiSiteDataEntryModel, int userId, int indiId, int propType)
+	{
+		System.out.println("Database upload Image size :"+indiSiteDataEntryModel.getInputStreams().size());
+
+		try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			con = ConnectionDAO.getConnection();
+			StringBuilder sql_image_upload_galary = new StringBuilder(Constants.SQL.SQL_IMAGE_UPLOAD_GALARY);
+			PreparedStatement pstmtGalary = con.prepareStatement(sql_image_upload_galary.toString());
+			List<InputStream> inputStream = indiSiteDataEntryModel.getInputStreams();
+			for (int i = 0; i < indiSiteDataEntryModel.getInputStreams().size(); i++) {
+				pstmtGalary.setBinaryStream(1, inputStream.get(i));
+				pstmtGalary.setInt(2, userId);
+				pstmtGalary.setInt(3, indiId);
+				pstmtGalary.setInt(4, propType);
+				int x = pstmtGalary.executeUpdate();
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.out.println("Error message  - >"+e.getMessage());
+
+			log.error("An error occurred: {}", e.getMessage());
+
+		}
+
+	}
+
+
+		// ***************** update Agricultural data entry **************
     public String updateAgriDataEntry(AgriculturalDataEntryModel agriculturalDataEntryModel,int userId, int rankId)
     {
-    	
+		log.info(" Executing dao Agricultural data entry ");
     	String succVal="";
         try {
             Connection con = null;
@@ -1129,29 +1151,87 @@ public class ConnectionDAOImpl {
 		    pstmt.setInt(17, userId);
 		    pstmt.setString(18, agriculturalDataEntryModel.getCornerBit());
 		    pstmt.setInt(19, rankId);
-		
-		    int res=pstmt.executeUpdate();
-		        if(res > 0)
-		        {
-		        	succVal="Successful updated record";
-		        }
-        
-          
-        
-        } catch (Exception e) {
-                
-	        e.printStackTrace();
-	        System.err.println(e.getClass().getName()+": "+e.getMessage());
-	        succVal=e.getMessage();
-	        log.error("An error occurred: {}", e.getMessage());
-	        return succVal;
-	        
-	   }
-      
-        
-    return succVal;
-    }
-    
+
+			int res = pstmt.executeUpdate();
+			System.out.println("Result status  - >" + res);
+			if (res > 0) {
+				succVal = "Successfully updated record";
+				int agriId = getAgriPropertyId();
+				System.out.println("Agri Property ID : " + agriId);
+				uploadGalary(agriculturalDataEntryModel, userId, agriId, GeneralConstants.PropertyType.agri);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			System.out.println("Error message  - >" + e.getMessage());
+			succVal = e.getMessage();
+			log.error("An error occurred: {}", e.getMessage());
+			return succVal;
+		}
+
+		return succVal;
+	}
+	//******************leatest getAgriPropertyId************
+	public int getAgriPropertyId() {
+		int agriId = 0;
+		try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			con = ConnectionDAO.getConnection();
+			StringBuilder sq_latest_agri_id = new StringBuilder(Constants.SQL.SQL_LATEST_AGRI_ID);
+			pstmt = con.prepareStatement(sq_latest_agri_id.toString());
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				agriId = rs.getInt("agri_id");
+			}
+
+			pstmt.close();
+			rs.close();
+			con.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			log.error("An error occurred: {}", e.getMessage());
+		}
+		return agriId;
+	}
+
+
+	//**************galary***************//
+
+	public void uploadGalary(AgriculturalDataEntryModel agriculturalDataEntryModel,  int userId, int agriId, int propType)
+	{
+		System.out.println("Database upload Image size :"+agriculturalDataEntryModel.getInputStreams().size());
+
+		try {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			con = ConnectionDAO.getConnection();
+			StringBuilder sql_image_upload_galary = new StringBuilder(Constants.SQL.SQL_IMAGE_UPLOAD_GALARY);
+			PreparedStatement pstmtGalary = con.prepareStatement(sql_image_upload_galary.toString());
+			List<InputStream> inputStream = agriculturalDataEntryModel.getInputStreams();
+			for (int i = 0; i < agriculturalDataEntryModel.getInputStreams().size(); i++) {
+				pstmtGalary.setBinaryStream(1, inputStream.get(i));
+				pstmtGalary.setInt(2, userId);
+				pstmtGalary.setInt(3, agriId);
+				pstmtGalary.setInt(4, propType);
+				int x = pstmtGalary.executeUpdate();
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.out.println("Error message  - >"+e.getMessage());
+
+			log.error("An error occurred: {}", e.getMessage());
+
+		}
+
+	}
     
     
     

@@ -2,12 +2,8 @@ package com.DIC.Service;
 
 import java.io.InputStream;
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,6 +26,7 @@ import com.DIC.model.VillaModel;
 
 import SMTPService.SMTPService;
 import framework.utilities.SessionUtils;
+import org.primefaces.model.file.UploadedFiles;
 
 
 @ManagedBean(name="villaDataEntryService")
@@ -70,6 +67,9 @@ public class VillaDataEntryService implements Serializable{
 	private String facing;
 	private String cornerBit;
 	private String comment;
+
+
+	private UploadedFiles filesx;
 	
 	
 	
@@ -176,6 +176,19 @@ public class VillaDataEntryService implements Serializable{
              villaModel.setFacing(facing);
              villaModel.setCornerBit(cornerBit);
              villaModel.setComment(comment);
+
+
+			 System.out.println("Service Upload image size :" + filesx.getFiles().size());
+			 List<InputStream> inputStreams = new ArrayList<>();
+			 List<UploadedFile> files = new ArrayList<>();
+			 for (UploadedFile f : filesx.getFiles()) {
+				 if (f.getSize() > 0) {
+					 inputStreams.add(f.getInputStream());
+					 files.add(file);
+				 }
+			 }
+			 villaModel.setInputStreams(inputStreams);
+			 villaModel.setFiles(files);
              
             HttpSession session = SessionUtils.getSession();
 		       	if (session != null)
@@ -543,5 +556,11 @@ public class VillaDataEntryService implements Serializable{
 		this.comment = comment;
 	}
 
+	public UploadedFiles getFilesx() {
+		return filesx;
+	}
 
+	public void setFilesx(UploadedFiles filesx) {
+		this.filesx = filesx;
+	}
 }
