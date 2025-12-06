@@ -13,9 +13,6 @@ import org.apache.logging.log4j.Logger;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
-import com.DIC.DAO.ConnectionDAO;
-import com.DIC.DAO.Impl.ConnectionDAOImpl.Constants;
-
 @ManagedBean
 @ApplicationScoped
 public class LocationDAOImpl {

@@ -1,53 +1,38 @@
 package com.DIC.Service;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
+import com.vaadin.shared.data.selection.SelectionServerRpc;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import com.DIC.DAO.ConnectionDAO;
 import com.DIC.DAO.Impl.CommonDAOImpl;
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
 import com.DIC.DAO.Impl.UserDAOImpl;
 //import com.DIC.DAO.Impl.ConnectionDAOImpl.Constants;
-import com.DIC.model.LayoutMode;
 import com.DIC.model.PlotsDataEntryModel;
 
 import SMTPService.SMTPService;
 import framework.utilities.SessionUtils;
-import framework.utilities.Utilities;
 
-import org.primefaces.PrimeFaces;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 import org.primefaces.model.file.UploadedFile;
 
 
 import org.primefaces.model.file.UploadedFiles;
-import org.primefaces.util.EscapeUtils;
 
 @ManagedBean(name="plotsDataEntryService")
 //@SessionScoped
@@ -77,7 +62,7 @@ public class PlotsDataEntryService implements Serializable{
       private String agentName;
   	  private UploadedFile file;
   	  private int listLimit;
-  	  private int listedCount=-1;
+  	  private int listedCount=0;
   	  private Boolean isEnable;
   	  private int userId;
   	  private String cornerBit;
@@ -111,159 +96,154 @@ public class PlotsDataEntryService implements Serializable{
 	          uDao=new UserDAOImpl();
 	          ur=new UserRoleService();
 	          comm=new CommonDAOImpl();
-	          
-              primLocation  = new HashMap<>(); 
-              for(Map.Entry<String, String> pp:primaryModel.entrySet())
-              {
-            	  log.info("Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
-            	  
-            	  primLocation.put(pp.getKey(), pp.getValue());
-            	  
-              }
-              primLocationSort=new TreeMap<>(primLocation);
-	          
-              
-	              HttpSession session = SessionUtils.getSession();
-			       	if (session != null)
-			    	{
-			    		if(session.getAttribute("userId")!=null)
-			    		{
-			    		   
-			    			userId= Integer.parseInt(session.getAttribute("userId").toString());
-			    		    		if(Integer.parseInt(session.getAttribute("listLimit").toString()) > 0)
-			    		    		{
-			    		    			 listLimit = Integer.parseInt(session.getAttribute("listLimit").toString());
-			    		    			 isEnable = Boolean.valueOf(session.getAttribute("isEnable").toString());
-			    		    			 
-			    		    			 
-			    		    			 
-			    		    			 listedCount=uDao.getAllPropByUserId(Integer.parseInt(session.getAttribute("userId").toString())).size();
-			    		    			  log.info("listedCount  listLimit :"+listedCount+"  <=  "+listLimit+"     "+isEnable);
-			    		    		}
-			    		    		    		    
-			    		}
-			    		if(session.getAttribute("userId")==null)
-		    		    {    	
-		    		    	
-			    			userId=-1;
-			    			listLimit=1;
-			    			listedCount=0;
-			    			
-			    			  log.info("listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
-		    		    }
-			    		
-			    	}
+			  checkDefault();
+	  	  }
+
+	  public void checkDefault()
+	  {
+		  primLocation  = new HashMap<>();
+		  for(Map.Entry<String, String> pp:primaryModel.entrySet())
+		  {
+			  log.info("Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
+
+			  primLocation.put(pp.getKey(), pp.getValue());
+
+		  }
+		  primLocationSort=new TreeMap<>(primLocation);
+
+
+		  HttpSession session = SessionUtils.getSession();
+		  if (session != null)
+		  {
+			  if(session.getAttribute("userId")!=null)
+			  {
+
+				  userId= Integer.parseInt(session.getAttribute("userId").toString());
+				  if(Integer.parseInt(session.getAttribute("listLimit").toString()) > 0)
+				  {
+					  listLimit = Integer.parseInt(session.getAttribute("listLimit").toString());
+					  isEnable = Boolean.valueOf(session.getAttribute("isEnable").toString());
+    				  listedCount=uDao.getAllPropByUserId(Integer.parseInt(session.getAttribute("userId").toString())).size();
+					  log.info("listedCount  listLimit :"+listedCount+"  <=  "+listLimit+"     "+isEnable);
+				  }
+
+			  }
+			  if(session.getAttribute("userId")==null)
+			  {
+
+				  userId=-1;
+				  listLimit=1;
+				  listedCount=0;
+
+				  log.info("listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
+			  }
+
+		  }
 	  }
 	      
 	public void upload() {
-		     if (file != null) {
-	            try {
-	            	
-	                log.info("Selected county and city ---------->:"+country+"     "+city);
+		checkDefault();
+		if (listedCount < listLimit) {
+			System.out.println(" True-listedCount : " + listedCount);
 
-					PlotsDataEntryModel plotsDataEntryModel = new PlotsDataEntryModel();
-					plotsDataEntryModel.setName(name);
-					plotsDataEntryModel.setLocation(location);
-					plotsDataEntryModel.setPersqft(persqft);
-					plotsDataEntryModel.setContactOwner(contactOwner);
-					plotsDataEntryModel.setOwnerName(ownerName);
-					plotsDataEntryModel.setWonership(wonership);
-					plotsDataEntryModel.setTransaction(transaction);
-					plotsDataEntryModel.setComment(comment);
-					plotsDataEntryModel.setLength(length);
-					plotsDataEntryModel.setWidth(width);
+					if (file != null) {
+						try {
 
-					plotsDataEntryModel.setPrimLocation(country);
-					plotsDataEntryModel.setSecoLocation(city);
-					plotsDataEntryModel.setSwimingPool(swimingPool);
-					plotsDataEntryModel.setPlayground(playground);
-					plotsDataEntryModel.setPark(park);
-					plotsDataEntryModel.setWall(wall);
-					plotsDataEntryModel.setCommunity(community);
-					plotsDataEntryModel.setFacing(facing);
-					plotsDataEntryModel.setAgentName(agentName);
-					plotsDataEntryModel.setInputStream(file.getInputStream());
-					plotsDataEntryModel.setFile(file);
-					plotsDataEntryModel.setCornerBit(cornerBit);
+							log.info("Selected county and city ---------->:" + country + "     " + city);
 
-					System.out.println("Service Upload image size :" + filesx.getFiles().size());
-					List<InputStream> inputStreams = new ArrayList<>();
-					List<UploadedFile> files = new ArrayList<>();
-					for (UploadedFile f : filesx.getFiles()) {
-						if (f.getSize() > 0) {
-							inputStreams.add(f.getInputStream());
-							files.add(file);
+							PlotsDataEntryModel plotsDataEntryModel = new PlotsDataEntryModel();
+							plotsDataEntryModel.setName(name);
+							plotsDataEntryModel.setLocation(location);
+							plotsDataEntryModel.setPersqft(persqft);
+							plotsDataEntryModel.setContactOwner(contactOwner);
+							plotsDataEntryModel.setOwnerName(ownerName);
+							plotsDataEntryModel.setWonership(wonership);
+							plotsDataEntryModel.setTransaction(transaction);
+							plotsDataEntryModel.setComment(comment);
+							plotsDataEntryModel.setLength(length);
+							plotsDataEntryModel.setWidth(width);
+
+							plotsDataEntryModel.setPrimLocation(country);
+							plotsDataEntryModel.setSecoLocation(city);
+							plotsDataEntryModel.setSwimingPool(swimingPool);
+							plotsDataEntryModel.setPlayground(playground);
+							plotsDataEntryModel.setPark(park);
+							plotsDataEntryModel.setWall(wall);
+							plotsDataEntryModel.setCommunity(community);
+							plotsDataEntryModel.setFacing(facing);
+							plotsDataEntryModel.setAgentName(agentName);
+							plotsDataEntryModel.setInputStream(file.getInputStream());
+							plotsDataEntryModel.setFile(file);
+							plotsDataEntryModel.setCornerBit(cornerBit);
+
+							System.out.println("Service Upload image size :" + filesx.getFiles().size());
+							List<InputStream> inputStreams = new ArrayList<>();
+							List<UploadedFile> files = new ArrayList<>();
+							for (UploadedFile f : filesx.getFiles()) {
+								if (f.getSize() > 0) {
+									inputStreams.add(f.getInputStream());
+									files.add(file);
+								}
+							}
+							plotsDataEntryModel.setInputStreams(inputStreams);
+							plotsDataEntryModel.setFiles(files);
+
+							HttpSession session = SessionUtils.getSession();
+							if (session != null) {
+								if (session.getAttribute("userId") != null) {
+									int userId = Integer.parseInt(session.getAttribute("userId").toString());
+									if (userId > 0) {
+
+										if (ur.getUserRole().contains("Rank")) {
+											updateResult = dao.updatePlotDataEntry(plotsDataEntryModel, userId, comm.getUserRank(userId));
+										} else {
+											updateResult = dao.updatePlotDataEntry(plotsDataEntryModel, userId, 0);
+										}
+										SMTPService.sendLayoutEmail(plotsDataEntryModel, userId);
+
+									}
+
+								}
+								if (session.getAttribute("userId") == null) {
+									int defaultUserId = 1;
+									updateResult = dao.updatePlotDataEntry(plotsDataEntryModel, defaultUserId, 0);
+
+								}
+							}
+
+
+							this.name = "";
+							this.location = "";
+							this.persqft = 0;
+							this.plotarea = 0;
+							this.contactOwner = "";
+							this.ownerName = "";
+							this.wonership = "";
+							this.transaction = "";
+							this.comment = "";
+							this.length = 0;
+							this.width = 0;
+							this.country = "";
+							this.city = "";
+							this.swimingPool = "";
+							this.playground = "";
+							this.park = "";
+							this.wall = "";
+							this.community = "";
+							this.agentName = "";
+							this.facing = "";
+
+
+						} catch (Exception e) {
+							System.out.println("Exception-File Upload." + e.getMessage());
 						}
+					} else {
+						FacesMessage msg = new FacesMessage("Please select image!!");
+						FacesContext.getCurrentInstance().addMessage(null, msg);
 					}
-					plotsDataEntryModel.setInputStreams(inputStreams);
-					plotsDataEntryModel.setFiles(files);
 
-	          		HttpSession session = SessionUtils.getSession();
-				       	if (session != null)
-				    	{
-				    		if(session.getAttribute("userId")!=null)
-				    		{
-				    		    int userId= Integer.parseInt(session.getAttribute("userId").toString());
-				    		    if(userId > 0)
-				    		    {    	
-				          
-				    		   		    	if(ur.getUserRole().contains("Rank"))
-			        						{
-						    		    		updateResult=dao.updatePlotDataEntry(plotsDataEntryModel, userId,comm.getUserRank(userId));
-						    				}
-						    		    	else
-						    		    	{
-						    		    		updateResult=dao.updatePlotDataEntry(plotsDataEntryModel, userId,0);
-						    		    	}
-							    	SMTPService.sendLayoutEmail(plotsDataEntryModel,userId);
-				    		    		
-				    		    }
-				    		    
-				    		}
-				    		if(session.getAttribute("userId")==null)
-			    		    {    	
-			    		    	int defaultUserId=1;
-			    		    	updateResult=dao.updatePlotDataEntry(plotsDataEntryModel, defaultUserId,0);
-			    		    		
-			    		    }
-				    	}
-	  	          
-	  	          
-	  	     
-	  	         
-	  	          this.name="";
-	  	          this.location="";
-	  	          this.persqft=0;
-	  	          this.plotarea=0;
-	  	          this.contactOwner="";
-	  	          this.ownerName="";
-	  	          this.wonership="";
-	  	          this.transaction="";
-	  	          this.comment="";
-	  	          this.length=0;
-	  	          this.width=0;
-	  	          this.country="";
-	  	          this.city="";
-	  	          this.swimingPool="";
-	  	          this.playground="";
-	  	          this.park="";
-	  	          this.wall="";
-	  	          this.community="";
-	  	          this.agentName="";
-	  	          this.facing="";
-	  	        
-	  	  
-	                
-	 
-	            } catch (Exception e) {
-	                System.out.println("Exception-File Upload." + e.getMessage());
-	            }
-	        }
-	        else{
-	        FacesMessage msg = new FacesMessage("Please select image!!");
-	                FacesContext.getCurrentInstance().addMessage(null, msg);
-	        }
-	    }
+			}
+	   }
 		
 	    
 	    
