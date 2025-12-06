@@ -9,38 +9,57 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/ConnectionDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/CommonDAOImpl$Constants$SQL.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/CommonDAOImpl$Constants$SQL.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/CommonDAOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/CommonDAOImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/ConnectionDAOImpl$Constants$SQL.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/ConnectionDAOImpl$Constants$SQL.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/ConnectionDAOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/ConnectionDAOImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/GeneralDAOImpl$Constants$SQL.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/GeneralDAOImpl$Constants$SQL.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/GeneralDAOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/GeneralDAOImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/LocationDAOImpl$Constants$SQL.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/LocationDAOImpl$Constants$SQL.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/LocationDAOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/LocationDAOImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/PropertyDAOImpl$Constants$SQL.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/PropertyDAOImpl$Constants$SQL.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/PropertyDAOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/PropertyDAOImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/QueryFactoryManagerImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/QueryFactoryManagerImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/UserDAOImpl$Constants$SQL.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/UserDAOImpl$Constants$SQL.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/UserDAOImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/DAO/Impl/UserDAOImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/CornerBitService.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/CornerBitService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/LayoutDetailService.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/LayoutDetailService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/OwnerPropertiesService.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/OwnerPropertiesService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/AgentPropertiesService.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/AgentPropertiesService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/AgriculturalDataEntryhService.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/AgriculturalDataEntryhService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/AgriculturalService.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/AgriculturalService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/IndiSiteDataEntryService.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/IndiSiteDataEntryService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/IndividualSiteService.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/IndividualSiteService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/PlotsDataEntryService.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/PlotsDataEntryService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/PromoImageService.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/PromoImageService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/PropertyLink/QueryConstantsService$QueryLink.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/PropertyLink/QueryConstantsService$QueryLink.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/PropertyLink/QueryConstantsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/PropertyLink/QueryConstantsService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/UserProfileService.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/UserProfileService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/UserRegistService.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/UserRegistService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/model/UserDetails.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/model/UserDetails.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/src/main/java/framework/utilities/Constants$SMTPServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/framework/utilities/Constants$SMTPServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/src/main/webapp/WEB-INF/facelets/default_menu.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/webapp/WEB-INF/facelets/default_menu.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/src/main/webapp/cornerBit.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/webapp/cornerBit.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/VillaDataEntryService.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/VillaDataEntryService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/VillaDetailsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/Service/VillaDetailsService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/model/AgriculturalDataEntryModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/model/AgriculturalDataEntryModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/model/IndiSiteDataEntryModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/model/IndiSiteDataEntryModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/java/com/DIC/model/VillaModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/java/com/DIC/model/VillaModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/webapp/agentProperties.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/webapp/agentProperties.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/webapp/agriDataEntry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/webapp/agriDataEntry.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/webapp/agricultural.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/webapp/agricultural.xhtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/src/main/webapp/index.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/webapp/index.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/src/main/webapp/layoutDetails.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/webapp/layoutDetails.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/src/main/webapp/ownerProperties.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/webapp/ownerProperties.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/src/main/webapp/packPrice.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/webapp/packPrice.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/webapp/indiSiteDataEntry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/webapp/indiSiteDataEntry.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/webapp/individualsite.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/webapp/individualsite.xhtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/src/main/webapp/plotsDataEntry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/webapp/plotsDataEntry.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/src/main/webapp/promoImage.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/webapp/promoImage.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/src/main/webapp/userDetails.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/webapp/userDetails.xhtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/src/main/webapp/userProfile.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/webapp/userProfile.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/src/main/webapp/userRegist.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/webapp/userRegist.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/webapp/villaLink.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/webapp/villaLink.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/webapp/villaPlotDataentry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/webapp/villaPlotDataentry.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/src/main/webapp/villaPlotSearch.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/src/main/webapp/villaPlotSearch.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/ConnectionDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/ConnectionDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/CommonDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/CommonDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/ConnectionDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/ConnectionDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/GeneralDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/GeneralDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/LocationDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/LocationDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/PropertyDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/PropertyDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/UserDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/Service/UserProfileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/Service/UserProfileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/userProfile.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/userProfile.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/Service/AgriculturalDataEntryhService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/Service/AgriculturalDataEntryhService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/Service/IndiSiteDataEntryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/Service/IndiSiteDataEntryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/Service/PlotsDataEntryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/Service/PlotsDataEntryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/Service/VillaDataEntryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/Service/VillaDataEntryService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,12 +99,13 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;pushpa&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/hansisofts&quot;
+    &quot;git-widget-placeholder&quot;: &quot;prod&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/hansisofts/src/main/java/com/DIC/DAO/Impl&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\hansisofts\src\main\java\com\DIC\DAO\Impl" />
       <recent name="D:\hansisofts\src\main\webapp" />
     </key>
   </component>

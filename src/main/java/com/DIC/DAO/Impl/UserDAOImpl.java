@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,8 +20,6 @@ import javax.faces.bean.ManagedBean;
 
 import org.primefaces.model.DefaultStreamedContent;
 
-import com.DIC.DAO.ConnectionDAO;
-import com.DIC.DAO.Impl.ConnectionDAOImpl.Constants;
 import com.DIC.model.AllPropertyList;
 import com.DIC.model.IndividualSiteModel;
 import com.DIC.model.LayoutMode;
@@ -30,7 +27,6 @@ import com.DIC.model.LeadModel;
 import com.DIC.model.PackageModel;
 import com.DIC.model.UserDetails;
 import com.DIC.model.UserProfileRoleModel;
-import org.primefaces.model.file.UploadedFile;
 
 @ManagedBean
 @ApplicationScoped

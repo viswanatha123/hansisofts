@@ -65,7 +65,7 @@
                 <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
                 	<p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
                     
-                    <p:outputLabel required="true" style="font-weight: bold" for="i_am" indicateRequired="true" value="I am  : " />
+                    <p:outputLabel  style="font-weight: bold" for="i_am" value="I am  : " />
                     <p:selectOneRadio id="i_am" value="#{villaDataEntryService.i_am}" layout="lineDirection">
 			            <f:selectItem itemLabel="Owner" itemValue="Owner" />
 			            <f:selectItem itemLabel="Agent" itemValue="Agent"/>
@@ -79,10 +79,12 @@
                     <p:inputText id="ownerName"  value="#{villaDataEntryService.owner_name}" >
                     </p:inputText>
                     <p:message for="ownerName" display="icon"/>
-                    
-                    
-                    <p:outputLabel style="font-weight: bold" for="mobileNumber" indicateRequired="true" value="Mobile Number : " />
-                    <p:inputMask id="mobileNumber"  mask="9999999999" required="true"  maxlength="10" value="#{villaDataEntryService.contact_owner}" >
+
+
+                        <p:outputLabel for="mobileNumber" style="font-weight: bold;" indicateRequired="false">
+                            Mobile Number : <span style="color: red; font-weight: bold;">*</span>
+                        </p:outputLabel>
+                        <p:inputMask id="mobileNumber"  mask="9999999999" required="true"  maxlength="10" value="#{villaDataEntryService.contact_owner}" >
                     </p:inputMask>
                     <p:message for="mobileNumber" display="icon"/>
                                         
@@ -92,7 +94,7 @@
 		            </p:inputText>
 		            <p:message for="email" display="icon"/>
                                                 
-                    <p:outputLabel required="true" style="font-weight: bold" for="proType" indicateRequired="true" value="Property Type : " />
+                    <p:outputLabel style="font-weight: bold" for="proType" value="Property Type : " />
                     <p:selectOneRadio id="proType" value="#{villaDataEntryService.property_type}" layout="lineDirection">
 			            <f:selectItem itemLabel="Villa" itemValue="Villa" />
 			            <f:selectItem itemLabel="Flat" itemValue="Flat"/>
@@ -111,7 +113,7 @@
                     </p:inputNumber>
                     <p:message for="roadWidth" display="icon"/>
                                         
-                    <p:outputLabel style="font-weight: bold" for="floors" indicateRequired="true" value="Number Of Floors : " />
+                    <p:outputLabel style="font-weight: bold" for="floors"  value="Number Of Floors : " />
                     <p:selectOneMenu id="floors" value="#{villaDataEntryService.floors}" style="width:150px"> 
                             <f:selectItem itemLabel="1" itemValue="1"/>
                             <f:selectItem itemLabel="2" itemValue="2"/>
@@ -121,7 +123,7 @@
                             </p:selectOneMenu>
                     <p:message for="floors" display="icon"/>
                     
-                    <p:outputLabel style="font-weight: bold" for="bedRooms" indicateRequired="true" value="Number OF Bed Rooms : " />
+                    <p:outputLabel style="font-weight: bold" for="bedRooms" value="Number OF Bed Rooms : " />
                     <p:selectOneMenu id="bedRooms" value="#{villaDataEntryService.bed_rooms}" style="width:150px"> 
                             <f:selectItem itemLabel="1" itemValue="1"/>
                             <f:selectItem itemLabel="2" itemValue="2"/>
@@ -131,7 +133,7 @@
                             </p:selectOneMenu>
                     <p:message for="bedRooms" display="icon"/>
                     
-                    <p:outputLabel style="font-weight: bold;width:190px" for="bathRooms" indicateRequired="true" value="Number OF Bath Rooms : " />
+                    <p:outputLabel style="font-weight: bold;width:190px" for="bathRooms" value="Number OF Bath Rooms : " />
                     <p:selectOneMenu id="bathRooms" value="#{villaDataEntryService.bath_rooms}" style="width:150px"> 
                             <f:selectItem itemLabel="1" itemValue="1"/>
                             <f:selectItem itemLabel="2" itemValue="2"/>
@@ -147,13 +149,17 @@
                         <f:selectItem itemLabel="No" itemValue="No"/>
                     </p:selectOneMenu>
                     <p:message for="furnishedStatus" display="icon"/>
-                    
-                    <p:outputLabel style="font-weight: bold" for="flatArea" indicateRequired="true" value="Flat Area  SQ Feet   :  " />
+
+                    <p:outputLabel style="font-weight: bold" for="flatArea" indicateRequired="false">
+                        Flat Area  SQ Feet   : <span style="color: red; font-weight: bold;">*</span>
+                    </p:outputLabel>
                     <p:inputNumber id="flatArea" value="#{villaDataEntryService.plot_area}" required="true" requiredMessage="Plot Area  SQ Feet"  decimalPlaces="0" modifyValueOnWheel="false">
                     </p:inputNumber>
                     <p:message for="flatArea" display="icon"/>
                     
-                    <p:outputLabel style="font-weight: bold;width:200px" for="sBArea" indicateRequired="true" value="Super Buildup Area  SQ Feet" />
+                    <p:outputLabel style="font-weight: bold;width:200px" for="sBArea" indicateRequired="false" >
+                        Super Buildup Area  SQ Feet : <span style="color: red; font-weight: bold;">*</span>
+                    </p:outputLabel>
                     <p:inputNumber id="sBArea" value="#{villaDataEntryService.s_build_are}" required="true" requiredMessage="Super Buildup Area  SQ Feet "  decimalPlaces="0" modifyValueOnWheel="false">
                     </p:inputNumber>
                     <p:message for="sBArea" display="icon"/>
@@ -173,7 +179,9 @@
                     <p:message for="availDate" display="icon"/>
                     
                                           
-                    <p:outputLabel style="font-weight: bold" for="persqft" indicateRequired="true" value="Per Square Feet(Cost) : " />
+                    <p:outputLabel style="font-weight: bold" for="persqft" indicateRequired="false" >
+                        Per Square Feet(Cost) : <span style="color: red; font-weight: bold;">*</span>
+                    </p:outputLabel>
                     <p:inputNumber id="persqft"  value="#{villaDataEntryService.persqft}" required="true" requiredMessage="Required Length"  modifyValueOnWheel="false" >
                     </p:inputNumber>
                     <p:message for="persqft" display="icon"/>
@@ -183,15 +191,19 @@
                     </p:inputNumber>
                     <p:message for="floorNumber" display="icon"/>
                                        
-                    <p:outputLabel for="country" value="Primary Location : " />  
-                            <p:selectOneMenu id="country" value="#{villaDataEntryService.country}" style="width:150px" required="true" requiredMessage="Select Primary Location">  
+                    <p:outputLabel for="country" indicateRequired="false">
+                        Primary Location : <span style="color: red; font-weight: bold;">*</span>
+                    </p:outputLabel>
+                            <p:selectOneMenu id="country" value="#{villaDataEntryService.country}" style="width:150px" required="true" requiredMessage="Select Primary Location">
                             <p:ajax listener="#{villaDataEntryService.onCountryChange}" update="city" />  
                             <f:selectItem itemLabel="Primary Location" itemValue="" noSelectionOption="true"/>  
                             <f:selectItems value="#{villaDataEntryService.primLocationSort}" />  
                     </p:selectOneMenu>
                     <p:message for="country" display="icon"/>
                    
-                    <p:outputLabel for="city" value="Secondary Location : " />  
+                    <p:outputLabel for="city" indicateRequired="false">
+                        Secondary Location :<span style="color: red; font-weight: bold;">*</span>
+                    </p:outputLabel>
                             <p:selectOneMenu id="city" value="#{villaDataEntryService.city}" style="width:150px" required="true" requiredMessage="Select Secondary Location">  
                             <f:selectItem itemLabel="Secondary Location" itemValue="" noSelectionOption="true" />  
                             <f:selectItems value="#{villaDataEntryService.secondryLocation}" />  
@@ -223,11 +235,17 @@
                             <p:message for="cornerbit" display="icon"/> 
                                          
                             
-                   <p:outputLabel style="font-weight: bold;width:210px;" value="Image Upload (JPG,PNG,JPEG) : "   />
+                   <p:outputLabel style="font-weight: bold;width:210px;" value="Property Profile upload (JPG,PNG,JPEG) :  "   />
                    <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
                    <p:fileUpload id="image" value="#{villaDataEntryService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  required="true" requiredMessage="Upload Image" /> 
             	   </p:panelGrid>
-             	   <p:message for="image" display="icon"/>      
+             	   <p:message for="image" display="icon"/>
+
+                   <p:outputLabel style="font-weight: bold; width:210px;" value="Upload Galary photos (JPG,PNG,JPEG) : "   />
+                   <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                   <p:fileUpload id="images" value="#{villaDataEntryService.filesx}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  skinSimple="true" multiple="true" requiredMessage="Upload Image" />
+                   </p:panelGrid>
+                   <p:message for="images" display="icon"/>
                     
                    <h:commandButton value="Submit"   type="submit" 
                                     process="@this"

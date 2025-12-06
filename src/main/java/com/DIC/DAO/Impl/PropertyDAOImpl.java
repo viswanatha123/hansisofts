@@ -1,7 +1,6 @@
 package com.DIC.DAO.Impl;
 
 
-import com.DIC.DAO.ConnectionDAO;
 import com.DIC.model.AgriculturalModel;
 import com.DIC.model.IndividualSiteModel;
 import com.DIC.model.LayoutMode;

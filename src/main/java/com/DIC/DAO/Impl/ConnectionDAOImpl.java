@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.DIC.DAO.ConnectionDAO;
 import com.DIC.model.AgriculturalDataEntryModel;
 import com.DIC.model.AgriculturalModel;
 import com.DIC.model.ConnectorMode;
