@@ -2,6 +2,7 @@ package com.DIC.DAO.Impl;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,6 +28,7 @@ import com.DIC.model.LeadModel;
 import com.DIC.model.PackageModel;
 import com.DIC.model.UserDetails;
 import com.DIC.model.UserProfileRoleModel;
+import org.primefaces.model.file.UploadedFile;
 
 @ManagedBean
 @ApplicationScoped
@@ -137,6 +139,7 @@ public class UserDAOImpl {
 			 String SQL_UPDATE_USER="update user_deta set fname = ?, lname = ?, user_name = ?, user_pass = ?, address = ?, phone = ?, create_date = ? ,is_active = ?,email = ? where user_id = ?";
 			 String SQL_ACCOUNT_RENEWEL="update user_deta set create_date = now() where user_id= ?";
 			 String SQL_RANK_UPDATE="update user_map_rank set rank = ? where user_id = ?";
+			String SQL_PROFILE_PHOTO="update user_deta set image = ? where user_id = ?";
 		}
 	}
 	
@@ -1236,5 +1239,36 @@ public class UserDAOImpl {
 		}
 	return finalLastDate;
 	}
+
+
+	public void updateProfilePhoto(UploadedFile file, int userId) {
+		try {
+
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			con = ConnectionDAO.getConnection();
+			StringBuilder sql_profile_photo = new StringBuilder(Constants.SQL.SQL_PROFILE_PHOTO);
+			pstmt = con.prepareStatement(sql_profile_photo.toString());
+			InputStream fin2 = file.getInputStream();
+			pstmt.setBinaryStream(1, fin2, file.getSize());
+			pstmt.setInt(2,userId);
+			int res = pstmt.executeUpdate();
+			if(res > 0) {
+				log.info("------------ successful upload photo -------------");
+			}
+			pstmt.close();
+			con.close();
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+
+			log.error("An error occurred: {}", e.getMessage());
+		}
+	}
+
+
+
+
 
 }

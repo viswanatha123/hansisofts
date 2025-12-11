@@ -1,5 +1,7 @@
 package com.DIC.Service;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
@@ -12,6 +14,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import com.DIC.DAO.Impl.ConnectionDAO;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.TabCloseEvent;
@@ -26,6 +30,7 @@ import com.DIC.model.UserDetails;
 import com.DIC.model.UserProfileRoleModel;
 
 import framework.utilities.SessionUtils;
+import org.primefaces.model.file.UploadedFile;
 
 @ManagedBean(name="userProfileService")
 @ViewScoped
@@ -52,6 +57,8 @@ public class UserProfileService {
 
 
   	 private int disLeadFlag=0;
+
+	private UploadedFile file;
 
 	 @PostConstruct
 	    public void init()
@@ -125,6 +132,15 @@ public class UserProfileService {
 			System.out.println("****************** Total records updated ************** :"+succReco);
 			findLastUpdatedDate();
 		}
+	}
+
+
+	public void uploadPhoto(FileUploadEvent event) {
+
+			 log.info("------Photoupload------"+SessionUtils.getUserId());
+		     uDao.updateProfilePhoto(event.getFile(),SessionUtils.getUserId());
+		     profileDetails();
+
 	}
 
 
@@ -226,5 +242,13 @@ public class UserProfileService {
 
 	public void setDefaultLastUpdateDate(String defaultLastUpdateDate) {
 		this.defaultLastUpdateDate = defaultLastUpdateDate;
+	}
+
+	public UploadedFile getFile() {
+		return file;
+	}
+
+	public void setFile(UploadedFile file) {
+		this.file = file;
 	}
 }
