@@ -152,7 +152,7 @@ This section is used to manage and list layout properties for sale." />
                             <p:message for="country" display="icon"/>
 
                       <p:outputLabel for="city" indicateRequired="false">
-                        value="Secondary Location :<span style="color: red; font-weight: bold;">*</span></p:outputLabel>
+                        Secondary Location :<span style="color: red; font-weight: bold;">*</span></p:outputLabel>
                             <p:selectOneMenu id="city" value="#{plotsDataEntryService.city}" style="width:150px" required="true" requiredMessage="Select Secondary Location">
                             <f:selectItem itemLabel="Secondary Location" itemValue="" noSelectionOption="true" />
                             <f:selectItems value="#{plotsDataEntryService.secondryLocation}" />
