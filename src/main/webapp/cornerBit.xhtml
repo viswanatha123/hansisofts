@@ -19,11 +19,16 @@
 				<h:form id="form">
 
 					<!-- Spinner -->
-					<p:dialog widgetVar="spinnerDialog" style="background-color: #3A3B3C;" modal="true"
-							  closable="false" draggable="false" resizable="false"
-							  showEffect="fade" hideEffect="fade">
-						<p:graphicImage name="images/spin/spin1.gif" width="70px" height="70px" />
-					</p:dialog>
+					<ui:include src="/WEB-INF/facelets/spinner.xhtml">
+						<ui:param name="spinnerTarget" value="form1"/>
+					</ui:include>
+
+					<h:form id="form1">
+						<p:commandButton value="Save"
+										 actionListener="#{bean.save}"
+										 onstart="PF('spinnerDialog').show()"
+										 oncomplete="PF('spinnerDialog').hide()"/>
+					</h:form>
 					<br/>
 
 					<!-- Properties Count -->

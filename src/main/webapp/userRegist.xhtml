@@ -32,9 +32,10 @@
   			
 <h:form id="form" enctype="multipart/form-data">
 
-    <p:dialog widgetVar="spinnerDialog"  style="background-color: #3A3B3C;"  modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
-        <p:graphicImage name="images/spin/spin1.gif" width="70px"  height="70px" />
-    </p:dialog>
+          <ui:include src="/WEB-INF/facelets/spinner.xhtml">
+              <ui:param name="spinnerTarget" value="form1"/>
+              <ui:param name="spinnerTrigger" value="form1"/>
+          </ui:include>
   <p:messages id="msgs"/>
    <br></br>
    <center>
@@ -101,6 +102,28 @@
 
                         <p:outputLabel style="font-weight: bold" indicateRequired="false">
                             ConfirmPassword :<span style="color:red">*</span>
+                    
+                    <p:outputLabel style="font-weight: bold" >
+                        User Name : <span style="color:red">*</span>
+                    </p:outputLabel>
+                        <p:inputText id="userName" required="true" value="#{userRegistService.userName}" requiredMessage="User name is required" >
+                    	<f:validateLength minimum="3" maximum="15"></f:validateLength>
+		    			<f:validateRegex pattern="^([a-zA-Z]+(.)?[\s]*)$" />
+		            </p:inputText>
+                    <p:message for="userName" display="icon"/>
+                    
+                    
+                    <p:outputLabel style="font-weight: bold" indicateRequired="false">
+                        Password :<span style="color:red">*</span>
+                    </p:outputLabel>
+                    <p:password id="UserPassword" required="true" value="#{userRegistService.userPassword}"  requiredMessage="Password is required">
+                        <f:validateLength minimum="8" maximum="15"></f:validateLength>
+                    	<f:validateRegex pattern="((?=.*\d)(?=.*[a-z]).{8,15})" />
+                    </p:password>
+                    <p:message for="UserPassword" display="icon"/>
+
+                        <p:outputLabel style="font-weight: bold" indicateRequired="false">
+                        ConfirmPassword :<span style="color:red">*</span>
                         </p:outputLabel>
                         <p:password id="ConfirmPassword" required="true" value="#{userRegistService.confirmPassword}"  requiredMessage="Confirm Password is required">
                             <f:validateLength minimum="8" maximum="15"></f:validateLength>
@@ -129,6 +152,21 @@
                             <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                         </p:inputText>
                         <p:message for="email" display="icon"/>
+                           
+                    <p:outputLabel style="font-weight: bold" for="contactNo" indicateRequired="false">
+                        Mobile Number :<span style="color:red">*</span>
+                    </p:outputLabel>
+                        <p:inputMask id="contactNo"  mask="9999999999" required="true"  maxlength="10" value="#{userRegistService.phone}" requiredMessage="Mobile Number is required">
+                    </p:inputMask>
+                    <p:message for="contactNo" display="icon"/>
+
+                        <p:outputLabel indicateRequired="false" style="font-weight: bold; font-size: 14px;color:black; text-align:left;">
+                        Email :<span style="color:red">*</span>
+                        </p:outputLabel>
+		            <p:inputText id="email"  size="30" value="#{userRegistService.email}" required="true" validatorMessage="Invalid email format">
+		            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+		            </p:inputText>
+		            <p:message for="email" display="icon"/>
 
                     <p:outputLabel style="font-weight: bold;width:210px;" value="Profile Upload (JPG,PNG,JPEG) : "   />
                     <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
