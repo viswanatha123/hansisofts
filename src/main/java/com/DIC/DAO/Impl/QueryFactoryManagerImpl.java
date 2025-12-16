@@ -45,6 +45,9 @@ public class QueryFactoryManagerImpl implements QueryFactoryManager {
         if (query.equals(QueryConstantsService.param_hyderabad_two_bhk)) {
             sql_query = QueryConstantsService.QueryLink.sql_hyderabad_two_bhk;
         }
+        if (query.equals(QueryConstantsService.param_hyderabad_three_bhk)) {
+            sql_query = QueryConstantsService.QueryLink.sql_hyderabad_three_bhk;
+        }
         if(query.equals(QueryConstantsService.param_properties_in_marthahalli))
         {
             sql_query= QueryConstantsService.QueryLink.sql_properties_in_marthahalli;
@@ -103,6 +106,11 @@ public class QueryFactoryManagerImpl implements QueryFactoryManager {
         if (query.equals(QueryConstantsService.param_hyderabad_two_bhk_count)) {
 
             sql_queryCount = QueryConstantsService.QueryLink.sql_hyderabad_two_bhk_count;
+
+        }
+        if (query.equals(QueryConstantsService.param_hyderabad_three_bhk_count)) {
+
+            sql_queryCount = QueryConstantsService.QueryLink.sql_hyderabad_three_bhk_count;
 
         }
         if(query.equals(QueryConstantsService.param_properties_in_marthahalli_count))
