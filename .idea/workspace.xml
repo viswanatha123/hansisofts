@@ -6,11 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="76596275-ec1a-466b-8bd4-b7c29350986d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/UserDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/Service/UserProfileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/Service/UserProfileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/facelets/template.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/facelets/template.xhtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/userProfile.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/userProfile.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/ConnectionDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/DAO/Impl/ConnectionDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/Service/PropertyListService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/Service/PropertyListService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/propertyList.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/propertyList.xhtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
