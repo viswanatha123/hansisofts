@@ -14,7 +14,7 @@
   <p>Property List</p>
   <br></br>
   <div class="card">
-  <h:form  id="form">
+  <h:form  id="form" enctype="multipart/form-data">
   <p:growl id="msgs" showDetail="true"/>
   
   			<p:dataTable id="pro" widgetVar="dtProducts" var="product"   value="#{propertyListService.allPropertyListVal}" editable="true"  style="margin-bottom:20px" 
@@ -91,7 +91,18 @@
 			                                 oncomplete="PF('deleteProductDialog').show()">
 			                    <f:setPropertyActionListener value="#{product}" target="#{propertyListService.selectedProperty}" />
 			                </p:commandButton>
-			             </p:column>
+			               </p:column>
+
+				           <p:column headerText="Galary upload">
+							  	   <p:fileUpload id="upload" value="#{propertyListService.files}"
+											 mode="simple" skinSimple="true" multiple="true" auto="true"
+											 allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+											 listener="#{propertyListService.uploadGalaryProperty}">
+									     <f:attribute name="selectedProperty" value="#{product}" />
+
+								   </p:fileUpload>
+						   </p:column>
+
 			               
 				 </p:dataTable>
 				 
