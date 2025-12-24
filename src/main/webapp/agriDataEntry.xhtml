@@ -47,7 +47,7 @@
   <ui:composition template="/WEB-INF/facelets/template.xhtml">
   <ui:param name="page" value="Admin" />
   <ui:define name="title">
-  <p>Agricultural Details Enter</p>
+  <p style="font-weight: normal; font-size: 14px;color: block;" >Agricultural Details Entry</p>
 	  <p>
 		  <h:outputText style="font-weight: normal; font-size: 14px;color: #555;" value=" Fill in the details of the agricultural land including location, size, cost per acre, and agent/owner information. This section is used to manage listings for farmland available for sale." />
 	  </p>
@@ -90,7 +90,7 @@
              
                   <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
 
-					  <p:outputLabel for="name" style="font-weight: bold" indicateRequired="false">
+					  <p:outputLabel for="name" style="font-weight: normal; font-size: 14px;color: block;" indicateRequired="false">
 						  Owner Name: <span style="color: red; font-weight: bold;">*</span>
 					  </p:outputLabel>
 
@@ -99,7 +99,7 @@
 
 					  <p:message for="name" display="icon"/>
 
-					  <p:outputLabel for="contactno" style="font-weight: bold" indicateRequired="false">
+					  <p:outputLabel for="contactno" style="font-weight: normal; font-size: 14px;color: block;" indicateRequired="false">
 						  Agent Contact No: <span style="color: red; font-weight: bold;">*</span>
 					  </p:outputLabel>
 
@@ -109,7 +109,7 @@
 
 					  <p:message for="contactno" display="icon"/>
 
-					  <p:outputLabel for="surveyNo" style="font-weight: bold" indicateRequired="false">
+					  <p:outputLabel for="surveyNo" style="font-weight: normal; font-size: 14px;color: block;" indicateRequired="false">
 						  Survey No : <span style="color: red; font-weight: bold;">*</span>
 					  </p:outputLabel>
 
@@ -118,14 +118,14 @@
 
 					  <p:message for="surveyNo" display="icon"/>
 			                    
-			                    <p:outputLabel for="wonership" value="Owner Ship : " />  
+			                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="wonership" value="Owner Ship : " />
 			                            <p:selectOneMenu id="wonership"  value="#{agriculturalDataEntryhService.wonership}"  style="width:150px">  
 			                                <f:selectItem itemLabel="Freehold" itemValue="Freehold"/>
 			                                <f:selectItem itemLabel="Buying" itemValue="Buying"/>
 			                    		</p:selectOneMenu>
 			                    <p:message for="wonership" display="icon"/>
 			                    
-			                   <p:outputLabel for="transaction" value="Transaction : " />  
+			                   <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="transaction" value="Transaction : " />
 			                            <p:selectOneMenu id="transaction" value="#{agriculturalDataEntryhService.transaction}" style="width:150px">  
 			                             <f:selectItem itemLabel="Resale" itemValue="Resale"/>
 			                             <f:selectItem itemLabel="New Property" itemValue="New Property"/>
@@ -133,7 +133,7 @@
 			                   <p:message for="transaction" display="icon"/>
 
 
-					  <p:outputLabel for="perAcer" style="font-weight: bold" indicateRequired="false">
+					  <p:outputLabel for="perAcer" style="font-weight: normal; font-size: 14px;color: block;" indicateRequired="false">
 						  Per Acre (Cost) : <span style="color: red; font-weight: bold;">*</span>
 					  </p:outputLabel>
 
@@ -143,7 +143,7 @@
 					  <p:message for="perAcer" display="icon"/>
 
 
-					  <p:outputLabel for="numberCents" style="font-weight: bold" indicateRequired="false">
+					  <p:outputLabel for="numberCents" style="font-weight: normal; font-size: 14px;color: block;" indicateRequired="false">
 						  Number of Acres : <span style="color: red; font-weight: bold;">*</span>
 					  </p:outputLabel>
 
@@ -153,7 +153,7 @@
 					  <p:message for="numberCents" display="icon"/>
                     
                       
-		                       <p:outputLabel for="waterSource" value="Water Source : " />  
+		                       <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="waterSource" value="Water Source : " />
 		                            <p:selectOneMenu id="waterSource" value="#{agriculturalDataEntryhService.waterSource}" style="width:150px">  
 		                             <f:selectItem itemLabel="Bore Well" itemValue="Bore Well"/>
 		                             <f:selectItem itemLabel="No Water" itemValue="No Water"/>
@@ -163,14 +163,14 @@
                     
                      
                     
-		                     <p:outputLabel for="crop" value="Crop :  " />  
+		                     <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="crop" value="Crop :  " />
 		                            <p:selectOneMenu id="crop" value="#{agriculturalDataEntryhService.crop}" style="width:150px">  
 		                             <f:selectItem itemLabel="Yes" itemValue="Yes"/>
 		                             <f:selectItem itemLabel="No" itemValue="No"/>
 		                     		</p:selectOneMenu>
 		                     <p:message for="crop" display="icon"/>
 		                     
-		                     <p:outputLabel for="power" value="Power Supply :  " />  
+		                     <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="power" value="Power Supply :  " />
 		                            <p:selectOneMenu id="power" value="#{agriculturalDataEntryhService.power}" style="width:150px">  
 		                             <f:selectItem itemLabel="Yes" itemValue="Yes"/>
 		                             <f:selectItem itemLabel="No" itemValue="No"/>
@@ -179,7 +179,7 @@
 
 
 
-					  <p:outputLabel for="country" style="font-weight: bold" indicateRequired="false">
+					  <p:outputLabel for="country" style="font-weight: normal; font-size: 14px;color: block;" indicateRequired="false">
 						  Primary Location : <span style="color: red; font-weight: bold;">*</span>
 					  </p:outputLabel>
 
@@ -193,7 +193,7 @@
 					  <p:message for="country" display="icon"/>
 
 
-					  <p:outputLabel for="city" style="font-weight: bold" indicateRequired="false">
+					  <p:outputLabel for="city" style="font-weight: normal; font-size: 14px;color: block;" indicateRequired="false">
 						  Secondary Location : <span style="color: red; font-weight: bold;">*</span>
 					  </p:outputLabel>
 
@@ -205,39 +205,39 @@
 
 					  <p:message for="city" display="icon"/>
      
-                             <p:outputLabel style="font-weight: bold" value="Description (150 char): " />
+                             <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" value="Description (150 char): " />
 					         <p:inputTextarea rows="5" cols="40" maxlength="150" id="comment" value="#{agriculturalDataEntryhService.comment}" >
 							 </p:inputTextarea>
 					         <p:message for="comment" display="icon"/>
 		                    
-		                    <p:outputLabel for="cornerbit" value="Corner Bit : " /> 
+		                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="cornerbit" value="Corner Bit : " />
                             <p:selectOneMenu id="cornerbit" value="#{agriculturalDataEntryhService.cornerBit}" style="width:150px"> 
                             <f:selectItem itemLabel="No" itemValue="No"/>
                             <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                             </p:selectOneMenu> 
                             <p:message for="cornerbit" display="icon"/>
                     
-                    		<p:outputLabel style="font-weight: bold; width:210px;" value="Image Upload (JPG,PNG,JPEG): "   />
+                    		<p:outputLabel style="font-weight: normal; font-size: 14px;color: block; width:210px;" value="Image Upload (JPG,PNG,JPEG): "   />
                     		<p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
                             <p:fileUpload id="image" value="#{agriculturalDataEntryhService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/> 
                             </p:panelGrid>
                             <p:message for="image" display="icon"/>
 
-					  <p:outputLabel style="font-weight: bold; width:210px;" value="Upload Galary photos (JPG,PNG,JPEG) : "   />
+					  <p:outputLabel style="font-weight: normal; font-size: 14px;color: block; width:210px;" value="Upload Galary photos (JPG,PNG,JPEG) : "   />
 					  <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
 						  <p:fileUpload id="images" value="#{agriculturalDataEntryhService.filesx}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  skinSimple="true" multiple="true" requiredMessage="Upload Image" />
 					  </p:panelGrid>
 					  <p:message for="images" display="icon"/>
                        
                        
-		                   <h:commandButton value="Submit"   type="submit" 
+		                   <h:commandButton style="font-weight: normal; font-size: 14px;color: block;" value="Submit"   type="submit"
 		                                    process="@this"
 		                                    update="@form"
 		                                    actionListener="#{agriculturalDataEntryhService.upload}" onclick="PF('spinnerDialog').show()">
 		                                    <p:resetInput target="form"/>
 		                   </h:commandButton>
                    
-		                   <h:commandButton id="discardChangesButton"
+		                   <h:commandButton style="font-weight: normal; font-size: 14px;color: block;" id="discardChangesButton"
 			                                   process="@this"
 			                                   value="Clear"
 		                                           update="@form"
@@ -247,10 +247,10 @@
 	                     </h:commandButton>
                   </p:panelGrid> 
                   
-                  <p style="font-weight: bold;color: black; font-size: 18px"> Please provide your agricultural property details which you want to sell.</p>
-                  <p style="font-weight: bold;color: black; font-size: 18px"> Please contact our customer care ,if any further assist required.</p>
-                  <p style="font-weight: bold;color: black; font-size: 18px"> Customer care number : 8088471208.</p>
-                   <p style="font-weight: bold;color: black; font-size: 18px">E-mail : customer.support@hansisofts.com</p>
+                  <p style="font-weight: normal; font-size: 14px;color: block; font-size: 18px"> Please provide your agricultural property details which you want to sell.</p>
+                  <p style="font-weight: normal; font-size: 14px;color: block; font-size: 18px"> Please contact our customer care ,if any further assist required.</p>
+                  <p style="font-weight: normal; font-size: 14px;color: block; font-size: 18px"> Customer care number : 8088471208.</p>
+                   <p style="font-weight: normal; font-size: 14px;color: block; font-size: 18px">E-mail : customer.support@hansisofts.com</p>
                   <p:graphicImage width="102%"  height="400px" name="images/Agri_img.jpg" />
                    
                </p:panelGrid>   
