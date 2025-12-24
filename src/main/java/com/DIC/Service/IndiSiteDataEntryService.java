@@ -51,7 +51,7 @@ public class IndiSiteDataEntryService implements Serializable {
 	  private UploadedFile file;
 	  private String updateResult;
 	  private int listLimit;
-  	  private int listedCount=-1;
+  	  private int listedCount=0;
   	  private Boolean isEnable;
  	  private int userId;
  	  private String cornerBit;
@@ -61,8 +61,7 @@ public class IndiSiteDataEntryService implements Serializable {
 	  private final Map<String,Map<String,String>> data = new HashMap<>();
 	  private String country;   
 	  private String city;  
-	  
-	  
+
 	  private Map<String, String> primaryModel;
 	  private Map<String,String> primLocation; 
 	  private TreeMap<String, String> primLocationSort;
@@ -87,85 +86,86 @@ public class IndiSiteDataEntryService implements Serializable {
           uDao=new UserDAOImpl();
           ur=new UserRoleService();
           comm=new CommonDAOImpl();
-          
-          
-          primLocation  = new HashMap<>(); 
-          for(Map.Entry<String, String> pp:primaryModel.entrySet())
-          {
-        	  log.info("Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
-        	  
-        	  primLocation.put(pp.getValue(), pp.getValue());
-        	  
-          }
-          primLocationSort=new TreeMap<>(primLocation);
-          HttpSession session = SessionUtils.getSession();
-	       	if (session != null)
-	    	{
-	    		if(session.getAttribute("userId")!=null)
-	    		{
-	    			userId= Integer.parseInt(session.getAttribute("userId").toString());
-	    		    		if(Integer.parseInt(session.getAttribute("listLimit").toString()) > 0)
-	    		    		{
-	    		    			 listLimit = Integer.parseInt(session.getAttribute("listLimit").toString());
-	    		    			 listedCount=uDao.getAllPropByUserId(Integer.parseInt(session.getAttribute("userId").toString())).size();
-	    		    			 isEnable = Boolean.valueOf(session.getAttribute("isEnable").toString());
-	    		    			 
-	    		    			  log.info("listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
-	    		    		}
-	    		    		    		    
-	    		}
-	    		if(session.getAttribute("userId")==null)
-  		       {    	
-	    			userId=-1;
-	    			listLimit=1;
-	    			listedCount=0;
-	    			
-	    			  log.info("listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
-  		       }
-	    		
-	    	}
-          
+		  checkDefault();
       }
-	  
-	 	  	
-	  
-	  public void onCountryChange() {  
-			  if(country !=null && !country.equals("")) 
-	          {
-				  secondryLocation=dao.getSecondryLocation(country);
-				  Collections.sort(secondryLocation);
-	          }
-          } 
-	  
-	  
-	  
-	  
-		public void upload() {
-	           if (file != null) {
-	            try {
-	               
-	                 log.info("Selected county and city ---------->:"+country+"     "+city);
-	  	             //dao=new ConnectionDAOImpl();
-	  	          
-	  	          IndiSiteDataEntryModel indiSiteDataEntryModel=new IndiSiteDataEntryModel();
-	  	          indiSiteDataEntryModel.setOwnerName(ownerName);
-	  	          indiSiteDataEntryModel.setLocation(location);
-	  	          indiSiteDataEntryModel.setContactNo(contactNo);
-	  	          indiSiteDataEntryModel.setSiteNo(siteNo);
-	  	          indiSiteDataEntryModel.setPersqft(persqft);
-	  	          indiSiteDataEntryModel.setLength(length);
-	  	          indiSiteDataEntryModel.setWidth(width);
-	  	          indiSiteDataEntryModel.setWonership(wonership);
-	  	          indiSiteDataEntryModel.setOwnerName(ownerName);
-	  	          indiSiteDataEntryModel.setTransaction(transaction);
-	  	          indiSiteDataEntryModel.setPrimLocation(country);
-	  	          indiSiteDataEntryModel.setSecoLocation(city);
-	  	          indiSiteDataEntryModel.setComment(comment);
-	  	          indiSiteDataEntryModel.setFacing(facing);
-	  	          indiSiteDataEntryModel.setAgentName(agentName);
-	  	          indiSiteDataEntryModel.setInputStream(file.getInputStream());
-	  	          indiSiteDataEntryModel.setFile(file);
-	  	          indiSiteDataEntryModel.setCornerBit(cornerBit);
+	public void checkDefault()
+	{
+		primLocation  = new HashMap<>();
+		for(Map.Entry<String, String> pp:primaryModel.entrySet())
+		{
+			log.info("Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
+
+			primLocation.put(pp.getValue(), pp.getValue());
+
+		}
+		primLocationSort=new TreeMap<>(primLocation);
+		HttpSession session = SessionUtils.getSession();
+		if (session != null)
+		{
+			if(session.getAttribute("userId")!=null)
+			{
+				userId= Integer.parseInt(session.getAttribute("userId").toString());
+				if(Integer.parseInt(session.getAttribute("listLimit").toString()) > 0)
+				{
+					listLimit = Integer.parseInt(session.getAttribute("listLimit").toString());
+					listedCount=uDao.getAllPropByUserId(Integer.parseInt(session.getAttribute("userId").toString())).size();
+					isEnable = Boolean.valueOf(session.getAttribute("isEnable").toString());
+
+					log.info("listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
+				}
+
+			}
+			if(session.getAttribute("userId")==null)
+			{
+				userId=-1;
+				listLimit=1;
+				listedCount=0;
+
+				log.info("listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
+			}
+
+		}
+
+	}
+
+
+	public void onCountryChange() {
+		if (country != null && !country.equals("")) {
+			secondryLocation = dao.getSecondryLocation(country);
+			Collections.sort(secondryLocation);
+		}
+	}
+
+
+	public void upload() {
+		checkDefault();
+		if (listedCount < listLimit) {
+			System.out.println(" True-listedCount : " + listedCount);
+			if (file != null) {
+				try {
+
+					log.info("Selected county and city ---------->:" + country + "     " + city);
+					//dao=new ConnectionDAOImpl();
+
+					IndiSiteDataEntryModel indiSiteDataEntryModel = new IndiSiteDataEntryModel();
+					indiSiteDataEntryModel.setOwnerName(ownerName);
+					indiSiteDataEntryModel.setLocation(location);
+					indiSiteDataEntryModel.setContactNo(contactNo);
+					indiSiteDataEntryModel.setSiteNo(siteNo);
+					indiSiteDataEntryModel.setPersqft(persqft);
+					indiSiteDataEntryModel.setLength(length);
+					indiSiteDataEntryModel.setWidth(width);
+					indiSiteDataEntryModel.setWonership(wonership);
+					indiSiteDataEntryModel.setOwnerName(ownerName);
+					indiSiteDataEntryModel.setTransaction(transaction);
+					indiSiteDataEntryModel.setPrimLocation(country);
+					indiSiteDataEntryModel.setSecoLocation(city);
+					indiSiteDataEntryModel.setComment(comment);
+					indiSiteDataEntryModel.setFacing(facing);
+					indiSiteDataEntryModel.setAgentName(agentName);
+					indiSiteDataEntryModel.setInputStream(file.getInputStream());
+					indiSiteDataEntryModel.setFile(file);
+					indiSiteDataEntryModel.setCornerBit(cornerBit);
 
 					System.out.println("Service Upload image size :" + filesx.getFiles().size());
 					List<InputStream> inputStreams = new ArrayList<>();
@@ -178,75 +178,59 @@ public class IndiSiteDataEntryService implements Serializable {
 					}
 					indiSiteDataEntryModel.setInputStreams(inputStreams);
 					indiSiteDataEntryModel.setFiles(files);
-	  	  	        
-	  	      HttpSession session = SessionUtils.getSession();
-		       	if (session != null)
-		    	{
-		    		if(session.getAttribute("userId")!=null)
-		    		{
-		    		    int userId= Integer.parseInt(session.getAttribute("userId").toString());
-		    		    if(userId > 0)
-		    		    {    	
-			              	//updateResult=dao.updateIndiDataEntry(indiSiteDataEntryModel,userId);
-			              	
-				              	if(ur.getUserRole().contains("Rank"))
-	    						{
-			    		    		
-			    		    			updateResult=dao.updateIndiDataEntry(indiSiteDataEntryModel,userId,comm.getUserRank(userId));
-		    		    			
-	    						}
-			    		    	else
-			    		    	{
-			    		    		updateResult=dao.updateIndiDataEntry(indiSiteDataEntryModel,userId,0);
-			    		    	}
-			              	SMTPService.sendIndiEmail(indiSiteDataEntryModel,userId);
-		    		    }
-		    		}
-		    		if(session.getAttribute("userId")==null)
-	    		    {    	
-	    		    	int defaultUserId=1;
-	      		    	updateResult=dao.updateIndiDataEntry(indiSiteDataEntryModel, defaultUserId,0);
-	    		    		
-	    		    }
-		    	}
-	  	             
-	  	  
-	  	              
-	  	          this.ownerName="";
-	  	          this.location="";
-	  	          this.contactNo="";
-	  	          this.siteNo="";
-	  	          this.persqft=0;
-	  	          this.length=0;
-	  	          this.width=0;
-	  	          this.wonership="";
-	  	          this.ownerName="";
-	  	          this.transaction="";
-	  	          this.agentName="";
-	  	          this.comment="";
-	  	          this.facing="";
-	  	          this.country="";
-	  	          this.city="";
-	  	          
-	 	          
-	  	          
-	            } catch (Exception e) {
-	                System.out.println("Exception-File Upload." + e.getMessage());
-	            }
-	        }
-	        else{
-	        FacesMessage msg = new FacesMessage("Please select image!!");
-	                FacesContext.getCurrentInstance().addMessage(null, msg);
-	        }
-	    }
-		
-		
-		
-		
 
-	  
-	 
-      
+					HttpSession session = SessionUtils.getSession();
+					if (session != null) {
+						if (session.getAttribute("userId") != null) {
+							int userId = Integer.parseInt(session.getAttribute("userId").toString());
+							if (userId > 0) {
+								//updateResult=dao.updateIndiDataEntry(indiSiteDataEntryModel,userId);
+
+								if (ur.getUserRole().contains("Rank")) {
+
+									updateResult = dao.updateIndiDataEntry(indiSiteDataEntryModel, userId, comm.getUserRank(userId));
+
+								} else {
+									updateResult = dao.updateIndiDataEntry(indiSiteDataEntryModel, userId, 0);
+								}
+								SMTPService.sendIndiEmail(indiSiteDataEntryModel, userId);
+							}
+						}
+						if (session.getAttribute("userId") == null) {
+							int defaultUserId = 1;
+							updateResult = dao.updateIndiDataEntry(indiSiteDataEntryModel, defaultUserId, 0);
+
+						}
+					}
+
+
+					this.ownerName = "";
+					this.location = "";
+					this.contactNo = "";
+					this.siteNo = "";
+					this.persqft = 0;
+					this.length = 0;
+					this.width = 0;
+					this.wonership = "";
+					this.ownerName = "";
+					this.transaction = "";
+					this.agentName = "";
+					this.comment = "";
+					this.facing = "";
+					this.country = "";
+					this.city = "";
+
+
+				} catch (Exception e) {
+					System.out.println("Exception-File Upload." + e.getMessage());
+				}
+			} else {
+				FacesMessage msg = new FacesMessage("Please select image!!");
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+			}
+		}
+	}
+
       public void clear()
       {
     	  this.ownerName="";
@@ -267,10 +251,7 @@ public class IndiSiteDataEntryService implements Serializable {
 	      this.city="";
           System.out.println("****** Clicked on Clear button*****");
       }
-      
-      
-      
-      
+
         public UploadedFile getFile() {
 	  		return file;
 	  	}

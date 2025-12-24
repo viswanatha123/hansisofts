@@ -64,6 +64,11 @@ a:hover {
     font-size:15px;
 }
 
+ .myUploadButtons .ui-button {
+              background-color: blue !important;
+              color: black !important;
+          }
+
 
 
 

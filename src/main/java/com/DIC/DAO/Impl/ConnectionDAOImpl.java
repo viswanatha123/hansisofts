@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.DIC.DAO.ConnectionDAO;
 import com.DIC.model.AgriculturalDataEntryModel;
 import com.DIC.model.AgriculturalModel;
 import com.DIC.model.ConnectorMode;
@@ -2042,6 +2041,40 @@ public class ConnectionDAOImpl {
  	 	   		
  	 	   	return promoImageModelList;		
  	 	   	}
+
+
+
+	public void uploadGalaryProp(List<InputStream> inputStreams, int userId, int layoutId, int propType)
+	{
+		System.out.println("Database upload Image size :"+inputStreams.size());
+
+		try {
+			Connection con = null;
+			PreparedStatement pstmtGalary = null;
+			con = ConnectionDAO.getConnection();
+			StringBuilder sql_image_upload_galary = new StringBuilder(Constants.SQL.SQL_IMAGE_UPLOAD_GALARY);
+			 pstmtGalary = con.prepareStatement(sql_image_upload_galary.toString());
+
+			for (int i = 0; i < inputStreams.size(); i++) {
+				pstmtGalary.setBinaryStream(1, inputStreams.get(i));
+				pstmtGalary.setInt(2, userId);
+				pstmtGalary.setInt(3, layoutId);
+				pstmtGalary.setInt(4, propType);
+				int x = pstmtGalary.executeUpdate();
+			}
+			con.close();
+			pstmtGalary.close();
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.out.println("Error message  - >"+e.getMessage());
+
+			log.error("An error occurred: {}", e.getMessage());
+
+		}
+
+	}
  	    
  			
  			 

@@ -2,12 +2,10 @@ package com.DIC.DAO.Impl;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -33,9 +31,6 @@ import javax.faces.bean.ManagedBean;
 
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.file.UploadedFile;
-
-import com.DIC.DAO.ConnectionDAO;
-import com.DIC.DAO.Impl.ConnectionDAOImpl.Constants;
 
 import framework.utilities.UtilConstants;
 

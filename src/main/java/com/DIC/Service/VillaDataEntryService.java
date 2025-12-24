@@ -60,7 +60,7 @@ public class VillaDataEntryService implements Serializable{
 	private int total_feets;
 	private int cost;
 	private int listLimit;
-	private int listedCount=-1;
+	private int listedCount=0;
 	private Boolean isEnable;
 	private int userId;
 	private int floorNum;
@@ -103,161 +103,160 @@ public class VillaDataEntryService implements Serializable{
 	          uDao=new UserDAOImpl();
 	          ur=new UserRoleService();
 	          comm=new CommonDAOImpl();
-	          
-           primLocation  = new HashMap<>(); 
-           for(Map.Entry<String, String> pp:primaryModel.entrySet())
-           {
-         	  log.info("Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
-         	  primLocation.put(pp.getKey(), pp.getValue());
-         	  
-           }
-           primLocationSort=new TreeMap<>(primLocation);
-           
-           HttpSession session = SessionUtils.getSession();
-	       	if (session != null)
-	    	{
-	    		if(session.getAttribute("userId")!=null)
-	    		{
-	    			userId= Integer.parseInt(session.getAttribute("userId").toString());
-	    		   
-	    		    		if(Integer.parseInt(session.getAttribute("listLimit").toString()) > 0)
-	    		    		{
-	    		    			 listLimit = Integer.parseInt(session.getAttribute("listLimit").toString());
-	    		    			 listedCount=uDao.getAllPropByUserId(Integer.parseInt(session.getAttribute("userId").toString())).size();
-	    		    			 isEnable = Boolean.valueOf(session.getAttribute("isEnable").toString());
-	    		    			  log.info("listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
-	    		    		}
-	    		    		    		    
-	    		}
-	    		if(session.getAttribute("userId")==null)
-   		       {    	
-	    			userId=-1;
-	    			listLimit=1;
-	    			listedCount=0;
-	    			
-	    			  log.info("listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
-   		       }
-	    		
-	    }
-	          
+			  checkDefault();
 	  }
-	
+
+	public void checkDefault()
+	{
+		primLocation  = new HashMap<>();
+		for(Map.Entry<String, String> pp:primaryModel.entrySet())
+		{
+			log.info("Primary location details ---------->:"+pp.getKey()+"   "+pp.getValue());
+			primLocation.put(pp.getKey(), pp.getValue());
+
+		}
+		primLocationSort=new TreeMap<>(primLocation);
+
+		HttpSession session = SessionUtils.getSession();
+		if (session != null)
+		{
+			if(session.getAttribute("userId")!=null)
+			{
+				userId= Integer.parseInt(session.getAttribute("userId").toString());
+
+				if(Integer.parseInt(session.getAttribute("listLimit").toString()) > 0)
+				{
+					listLimit = Integer.parseInt(session.getAttribute("listLimit").toString());
+					listedCount=uDao.getAllPropByUserId(Integer.parseInt(session.getAttribute("userId").toString())).size();
+					isEnable = Boolean.valueOf(session.getAttribute("isEnable").toString());
+					log.info("listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
+				}
+
+			}
+			if(session.getAttribute("userId")==null)
+			{
+				userId=-1;
+				listLimit=1;
+				listedCount=0;
+
+				log.info("listedCount  listLimit :"+listedCount+"  <=  "+listLimit);
+			}
+
+		}
+	}
+
 	public void upload() {
-        if (file != null) {
-         try {
-        	 this.updateResult="";
-             
-             log.info("Selected county and city ---------->:"+country+"     "+city);
-	         
-             VillaModel villaModel=new VillaModel();
-             
-             villaModel.setI_am(i_am);
-             villaModel.setOwner_name(owner_name);
-             villaModel.setContact_owner(contact_owner);
-             villaModel.setEmail(email);
-             villaModel.setProperty_type(property_type);
-             villaModel.setAddress(address);
-             villaModel.setRoad_width(road_width);
-             villaModel.setFloors(floors);
-             villaModel.setBed_rooms(bed_rooms);
-             villaModel.setBath_rooms(bath_rooms);
-             villaModel.setFurnished(furnished);
-             villaModel.setPlot_area(plot_area);
-             villaModel.setS_build_are(s_build_are);
-             villaModel.setPro_avail(pro_avail);
-             //villaModel.setAvail_date(avail_date);
-             villaModel.setAvail_date(avail_date);
-             villaModel.setPersqft(persqft);
-             villaModel.setPrim_location(country);
-             villaModel.setSeco_location(city);
-             villaModel.setInputStream(file.getInputStream());
-             villaModel.setFile(file);
-             villaModel.setFloorNum(floorNum);
-             villaModel.setFacing(facing);
-             villaModel.setCornerBit(cornerBit);
-             villaModel.setComment(comment);
+		checkDefault();
+		if (listedCount < listLimit) {
+			System.out.println(" True-listedCount : " + listedCount);
+			if (file != null) {
+				try {
+					this.updateResult = "";
+
+					log.info("Selected county and city ---------->:" + country + "     " + city);
+
+					VillaModel villaModel = new VillaModel();
+
+					villaModel.setI_am(i_am);
+					villaModel.setOwner_name(owner_name);
+					villaModel.setContact_owner(contact_owner);
+					villaModel.setEmail(email);
+					villaModel.setProperty_type(property_type);
+					villaModel.setAddress(address);
+					villaModel.setRoad_width(road_width);
+					villaModel.setFloors(floors);
+					villaModel.setBed_rooms(bed_rooms);
+					villaModel.setBath_rooms(bath_rooms);
+					villaModel.setFurnished(furnished);
+					villaModel.setPlot_area(plot_area);
+					villaModel.setS_build_are(s_build_are);
+					villaModel.setPro_avail(pro_avail);
+					//villaModel.setAvail_date(avail_date);
+					villaModel.setAvail_date(avail_date);
+					villaModel.setPersqft(persqft);
+					villaModel.setPrim_location(country);
+					villaModel.setSeco_location(city);
+					villaModel.setInputStream(file.getInputStream());
+					villaModel.setFile(file);
+					villaModel.setFloorNum(floorNum);
+					villaModel.setFacing(facing);
+					villaModel.setCornerBit(cornerBit);
+					villaModel.setComment(comment);
 
 
-			 System.out.println("Service Upload image size :" + filesx.getFiles().size());
-			 List<InputStream> inputStreams = new ArrayList<>();
-			 List<UploadedFile> files = new ArrayList<>();
-			 for (UploadedFile f : filesx.getFiles()) {
-				 if (f.getSize() > 0) {
-					 inputStreams.add(f.getInputStream());
-					 files.add(file);
-				 }
-			 }
-			 villaModel.setInputStreams(inputStreams);
-			 villaModel.setFiles(files);
-             
-            HttpSession session = SessionUtils.getSession();
-		       	if (session != null)
-		    	{
-		    		if(session.getAttribute("userId")!=null)
-		    		{
-		    		    int userId= Integer.parseInt(session.getAttribute("userId").toString());
-		    		    if(userId > 0)
-		    		    {    	
-			 	              	//updateResult=gdao.updateVillaDataEntry(villaModel,userId);
-			 	              	
-			 	              	if(ur.getUserRole().contains("Rank"))
-	    						{
-			    		    		
-			    		    			updateResult=gdao.updateVillaDataEntry(villaModel,userId,comm.getUserRank(userId));
-		    		    			
-	    						}
-			    		    	else
-			    		    	{
-			    		    		updateResult=gdao.updateVillaDataEntry(villaModel,userId,0);
-			    		    	}
-			 	              	SMTPService.sendVillaEmail(villaModel,userId);
-		    		    }
-		    		}
-		    		if(session.getAttribute("userId")==null)
-	    		    {    	
-	    		    	int defaultUserId=1;
-	      	    		    	updateResult=gdao.updateVillaDataEntry(villaModel,defaultUserId,0);
-	    		    		
-	    		    }
-		    	}
-		       	
-		   
-	              
-	        this.i_am="Owner";
-	     	this.owner_name="";
-	     	this.contact_owner="";
-	     	this.email="";
-	     	this.property_type="Villa";
-	     	this.address="";
-	     	this.road_width=0;
-	     	this.floors=0;
-	     	this.bed_rooms=0;
-	     	this.bath_rooms=0;
-	     	this.furnished="";
-	     	this.plot_area=0;
-	     	this.s_build_are=0;
-	     	this.pro_avail="";
-	     	this.avail_date=new Date();
-	     	this.persqft=0;
-	     	this.country="";
-	        this.city="";
-	        this.comment="";
-	     	//private InputStream inputStream;
-	         //private UploadedFile file;
-	     	this.total_feets=0;;
-	     	this.cost=0;
-	     	this.floorNum=0;
-	     	
-	 
-         } catch (Exception e) {
-             System.out.println("Exception-File Upload." + e.getMessage());
-         }
-     }
-     else{
-     FacesMessage msg = new FacesMessage("Please select image!!");
-             FacesContext.getCurrentInstance().addMessage(null, msg);
-     }
- }
+					System.out.println("Service Upload image size :" + filesx.getFiles().size());
+					List<InputStream> inputStreams = new ArrayList<>();
+					List<UploadedFile> files = new ArrayList<>();
+					for (UploadedFile f : filesx.getFiles()) {
+						if (f.getSize() > 0) {
+							inputStreams.add(f.getInputStream());
+							files.add(file);
+						}
+					}
+					villaModel.setInputStreams(inputStreams);
+					villaModel.setFiles(files);
+
+					HttpSession session = SessionUtils.getSession();
+					if (session != null) {
+						if (session.getAttribute("userId") != null) {
+							int userId = Integer.parseInt(session.getAttribute("userId").toString());
+							if (userId > 0) {
+								//updateResult=gdao.updateVillaDataEntry(villaModel,userId);
+
+								if (ur.getUserRole().contains("Rank")) {
+
+									updateResult = gdao.updateVillaDataEntry(villaModel, userId, comm.getUserRank(userId));
+
+								} else {
+									updateResult = gdao.updateVillaDataEntry(villaModel, userId, 0);
+								}
+								SMTPService.sendVillaEmail(villaModel, userId);
+							}
+						}
+						if (session.getAttribute("userId") == null) {
+							int defaultUserId = 1;
+							updateResult = gdao.updateVillaDataEntry(villaModel, defaultUserId, 0);
+
+						}
+					}
+
+
+					this.i_am = "Owner";
+					this.owner_name = "";
+					this.contact_owner = "";
+					this.email = "";
+					this.property_type = "Villa";
+					this.address = "";
+					this.road_width = 0;
+					this.floors = 0;
+					this.bed_rooms = 0;
+					this.bath_rooms = 0;
+					this.furnished = "";
+					this.plot_area = 0;
+					this.s_build_are = 0;
+					this.pro_avail = "";
+					this.avail_date = new Date();
+					this.persqft = 0;
+					this.country = "";
+					this.city = "";
+					this.comment = "";
+					//private InputStream inputStream;
+					//private UploadedFile file;
+					this.total_feets = 0;
+					;
+					this.cost = 0;
+					this.floorNum = 0;
+
+
+				} catch (Exception e) {
+					System.out.println("Exception-File Upload." + e.getMessage());
+				}
+			} else {
+				FacesMessage msg = new FacesMessage("Please select image!!");
+				FacesContext.getCurrentInstance().addMessage(null, msg);
+			}
+		}
+	}
 	
  
  
