@@ -19,7 +19,7 @@
 		  		<p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
 	  				<p:graphicImage width="200" height="200"  cache="false" stream="false"  style="border-radius: 50%; object-fit: cover;" value="#{userProfileService.userDetails.streamedContent}" alt="Image" />
 
-					<p:fileUpload id="upload" value="#{userProfileService.file}" styleClass="myUploadButtons"
+					<p:fileUpload id="upload" value="#{userProfileService.file}"
 								  mode="simple" skinSimple="true" auto="true" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
 								  label="  Upload photo  "
 								  process="@this" update=":userProfile"
