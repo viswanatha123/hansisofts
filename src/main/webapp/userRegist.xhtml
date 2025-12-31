@@ -19,7 +19,6 @@
    <link href="resources/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
    <link href="resources/css/demo/demo.css" rel="stylesheet" />
    </h:head>
-  
    <h:body>
   <ui:composition template="/WEB-INF/facelets/template.xhtml" style="background-image: url('back1.jpg'); ">
   <ui:param name="page" value="Admin" />
@@ -32,10 +31,9 @@
   			
 <h:form id="form" enctype="multipart/form-data">
 
-          <ui:include src="/WEB-INF/facelets/spinner.xhtml">
-              <ui:param name="spinnerTarget" value="form1"/>
-              <ui:param name="spinnerTrigger" value="form1"/>
-          </ui:include>
+    <p:dialog widgetVar="spinnerDialog"  style="background-color: #3A3B3C;"  modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
+        <p:graphicImage name="images/spin/spin1.gif" width="70px"  height="70px" />
+    </p:dialog>
   <p:messages id="msgs"/>
    <br></br>
    <center>
@@ -57,74 +55,36 @@
              <p:panel id="panel" style="background-image: url('back1.jpg'); ">   
                 <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0 ;">
                 	<p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
-
-
-
-
-                        <p:outputLabel style="font-weight: bold" indicateRequired="false">
-                            First Name : <span style="color:red">*</span>
-                        </p:outputLabel>
-
-                        <p:inputText id="firstName"
-                                     value="#{userRegistService.fName}"
-                                     required="true"
-                                     requiredMessage="Required First Name"/>
-
-                        <p:message for="firstName" display="icon"/>
-
-
-                        <p:outputLabel style="font-weight: bold">
-                            Last Name :  <span style="color:red">*</span>
-                        </p:outputLabel>
-                        <p:inputText id="lastName" required="true" value="#{userRegistService.lName}" requiredMessage="Required last Name"/>
-                        <p:message for="lastName" display="icon"/>
-
-
-
-                        <p:outputLabel style="font-weight: bold" >
-                            User Name : <span style="color:red">*</span>
-                        </p:outputLabel>
-                        <p:inputText id="userName" required="true" value="#{userRegistService.userName}" requiredMessage="User name is required" >
-                            <f:validateLength minimum="3" maximum="15"></f:validateLength>
-                            <f:validateRegex pattern="^([a-zA-Z]+(.)?[\s]*)$" />
-                        </p:inputText>
-                        <p:message for="userName" display="icon"/>
-
-
-                        <p:outputLabel style="font-weight: bold" indicateRequired="false">
-                            Password :<span style="color:red">*</span>
-                        </p:outputLabel>
-                        <p:password id="UserPassword" required="true" value="#{userRegistService.userPassword}"  requiredMessage="Password is required">
-                            <f:validateLength minimum="8" maximum="15"></f:validateLength>
-                            <f:validateRegex pattern="((?=.*\d)(?=.*[a-z]).{8,15})" />
-                        </p:password>
-                        <p:message for="UserPassword" display="icon"/>
-
-                        <p:outputLabel style="font-weight: bold" indicateRequired="false">
-                            ConfirmPassword :<span style="color:red">*</span>
+             
                     
-                    <p:outputLabel style="font-weight: bold" >
-                        User Name : <span style="color:red">*</span>
-                    </p:outputLabel>
-                        <p:inputText id="userName" required="true" value="#{userRegistService.userName}" requiredMessage="User name is required" >
+ 
+                    
+                    <p:outputLabel style="font-weight: bold" indicateRequired="true" value="First Name : " />
+                    <p:inputText id="firstName" required="true" value="#{userRegistService.fName}" >
+                    </p:inputText>
+                    <p:message for="firstName" display="icon"/>
+                   
+                    <p:outputLabel style="font-weight: bold" indicateRequired="true" value="Last Name : " />
+                    <p:inputText id="lastName" required="true" value="#{userRegistService.lName}" >
+                    </p:inputText>
+                    <p:message for="lastName" display="icon"/>
+                    
+                    <p:outputLabel style="font-weight: bold" indicateRequired="true" value="User Name : " />
+                    <p:inputText id="userName" required="true" value="#{userRegistService.userName}" requiredMessage="User name is required" >
                     	<f:validateLength minimum="3" maximum="15"></f:validateLength>
 		    			<f:validateRegex pattern="^([a-zA-Z]+(.)?[\s]*)$" />
 		            </p:inputText>
                     <p:message for="userName" display="icon"/>
                     
                     
-                    <p:outputLabel style="font-weight: bold" indicateRequired="false">
-                        Password :<span style="color:red">*</span>
-                    </p:outputLabel>
+                    <p:outputLabel style="font-weight: bold" indicateRequired="true" value="Password : " />
                     <p:password id="UserPassword" required="true" value="#{userRegistService.userPassword}"  requiredMessage="Password is required">
                         <f:validateLength minimum="8" maximum="15"></f:validateLength>
                     	<f:validateRegex pattern="((?=.*\d)(?=.*[a-z]).{8,15})" />
                     </p:password>
                     <p:message for="UserPassword" display="icon"/>
 
-                        <p:outputLabel style="font-weight: bold" indicateRequired="false">
-                        ConfirmPassword :<span style="color:red">*</span>
-                        </p:outputLabel>
+                        <p:outputLabel style="font-weight: bold" indicateRequired="true" value="ConfirmPassword : " />
                         <p:password id="ConfirmPassword" required="true" value="#{userRegistService.confirmPassword}"  requiredMessage="Confirm Password is required">
                             <f:validateLength minimum="8" maximum="15"></f:validateLength>
                             <f:validateRegex pattern="((?=.*\d)(?=.*[a-z]).{8,15})" />
@@ -132,37 +92,17 @@
                         <p:message for="ConfirmPassword" display="icon"/>
 
 
-
-                        <p:outputLabel style="font-weight: bold" value="Address :(150 char)" />
+                    <p:outputLabel style="font-weight: bold" value="Address :(150 char)" />
                     <p:inputTextarea rows="5" cols="40" maxlength="150" id="address"  value="#{userRegistService.address}" >
                     </p:inputTextarea>
                     <p:message for="address" display="icon"/>
-
-                        <p:outputLabel style="font-weight: bold" for="contactNo" indicateRequired="false">
-                            Mobile Number :<span style="color:red">*</span>
-                        </p:outputLabel>
-                        <p:inputMask id="contactNo"  mask="9999999999" required="true"  maxlength="10" value="#{userRegistService.phone}" requiredMessage="Mobile Number is required">
-                        </p:inputMask>
-                        <p:message for="contactNo" display="icon"/>
-
-                        <p:outputLabel indicateRequired="false" style="font-weight: bold; font-size: 14px;color:black; text-align:left;">
-                            Email :<span style="color:red">*</span>
-                        </p:outputLabel>
-                        <p:inputText id="email"  size="30" value="#{userRegistService.email}" required="true" validatorMessage="Invalid email format">
-                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-                        </p:inputText>
-                        <p:message for="email" display="icon"/>
                            
-                    <p:outputLabel style="font-weight: bold" for="contactNo" indicateRequired="false">
-                        Mobile Number :<span style="color:red">*</span>
-                    </p:outputLabel>
-                        <p:inputMask id="contactNo"  mask="9999999999" required="true"  maxlength="10" value="#{userRegistService.phone}" requiredMessage="Mobile Number is required">
+                    <p:outputLabel style="font-weight: bold" for="contactNo" indicateRequired="true" value="Mobile Number : " />
+                    <p:inputMask id="contactNo"  mask="9999999999" required="true"  maxlength="10" value="#{userRegistService.phone}" >
                     </p:inputMask>
                     <p:message for="contactNo" display="icon"/>
-
-                        <p:outputLabel indicateRequired="false" style="font-weight: bold; font-size: 14px;color:black; text-align:left;">
-                        Email :<span style="color:red">*</span>
-                        </p:outputLabel>
+                    
+                    <p:outputLabel indicateRequired="true" style="font-weight: bold; font-size: 14px;color:black; text-align:left;" value="Email : " />
 		            <p:inputText id="email"  size="30" value="#{userRegistService.email}" required="true" validatorMessage="Invalid email format">
 		            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 		            </p:inputText>
