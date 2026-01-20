@@ -13,12 +13,9 @@ import javax.faces.bean.ManagedBean;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.DIC.DAO.ConnectionDAO;
-import com.DIC.DAO.Impl.GeneralDAOImpl.Constants;
-import com.DIC.model.LayoutMode;
 import com.DIC.model.SMSModel;
 //import com.DIC.model.SMSModel;
-import com.DIC.model.UserDetails;
+
 
 @ManagedBean(name="commonDAOImpl")
 @ApplicationScoped

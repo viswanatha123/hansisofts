@@ -211,9 +211,26 @@
 						  <f:param name="villaLinkParamCount" value="#{queryConstantsService.param_flats_in_marthahalli_count}" />
 						  <f:param name="villaLinkParamHead" value="#{queryConstantsService.param_flats_in_marthahalli_head}" />
 					  </h:link>
+					  <br></br>
+					  <h:link value="properties in Marthahalli" outcome="villaLink" target="_blank" >
+						  <f:param name="villaLinkParam" value="#{queryConstantsService.param_properties_in_marthahalli}" />
+						  <f:param name="villaLinkParamCount" value="#{queryConstantsService.param_properties_in_marthahalli_count}" />
+						  <f:param name="villaLinkParamHead" value="#{queryConstantsService.param_properties_in_marthahalli_head}" />
+					  </h:link>
+					  <br></br>
+					  <h:link value="Flats in Whitefield" outcome="villaLink" target="_blank">
+						  <f:param name="villaLinkParam" value="#{queryConstantsService.param_flats_in_whitefield}" />
+						  <f:param name="villaLinkParamCount" value="#{queryConstantsService.param_flats_in_whitefield_count}" />
+						  <f:param name="villaLinkParamHead" value="#{queryConstantsService.param_flats_in_whitefield_head}" />
+					  </h:link>
 
 				  </p:tab>
 				  <p:tab title="Popular House Searches">
+					  <h:link value="House in Marthahalli" outcome="villaLink" target="_blank" >
+						  <f:param name="villaLinkParam" value="#{queryConstantsService.param_house_in_marthahalli}" />
+						  <f:param name="villaLinkParamCount" value="#{queryConstantsService.param_house_in_marthahalli_count}" />
+						  <f:param name="villaLinkParamHead" value="#{queryConstantsService.param_house_in_marthahalli_head}" />
+					  </h:link>
 
 				  </p:tab>
 			  </p:tabView>
@@ -226,6 +243,12 @@
 				  <f:param name="villaLinkParam" value="#{queryConstantsService.param_hyderabad_one_bhk}" />
 				  <f:param name="villaLinkParamCount" value="#{queryConstantsService.param_hyderabad_one_bhk_count}" />
 				  <f:param name="villaLinkParamHead" value="#{queryConstantsService.param_hyderabad_one_bhk_head}" />
+			  </h:link>
+			  <br></br>
+			  <h:link value="2 BHK Flats in hyderabad" outcome="villaLink" target="_blank" >
+				  <f:param name="villaLinkParam" value="#{queryConstantsService.param_hyderabad_two_bhk}" />
+				  <f:param name="villaLinkParamCount" value="#{queryConstantsService.param_hyderabad_two_bhk_count}" />
+				  <f:param name="villaLinkParamHead" value="#{queryConstantsService.param_hyderabad_two_bhk_head}" />
 			  </h:link>
 		  </p:tab>
 			  <p:tab title="Chennai">

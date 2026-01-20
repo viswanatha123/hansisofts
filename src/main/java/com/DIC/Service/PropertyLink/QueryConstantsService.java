@@ -34,6 +34,10 @@ public class QueryConstantsService implements Serializable {
 
     public static String param_hyderabad_two_bhk="param_hyderabad_two_bhk";
     public static String param_hyderabad_two_bhk_count="param_hyderabad_two_bhk_count";
+
+    public static String param_hyderabad_three_bhk="param_hyderabad_three_bhk";
+    public static String param_hyderabad_three_bhk_count="param_hyderabad_three_bhk_count";
+
     public static String param_properties_in_marthahalli="param_properties_in_marthahalli";
     public static String param_properties_in_marthahalli_count="param_properties_in_marthahalli_count";
 
@@ -50,6 +54,7 @@ public class QueryConstantsService implements Serializable {
     public static String param_flats_in_marthahalli_head="Flats in Marthahalli";
     public static String param_hyderabad_one_bhk_head="1 BHK Flat in Sale";
     public static String param_hyderabad_two_bhk_head="2 BHK Flat in Sale";
+    public static String param_hyderabad_three_bhk_head="3 BHK Flat in Sale";
     public static String param_properties_in_marthahalli_head="Properties in Marthahalli";
     public static String param_house_in_marthahalli_head="House in Marthahalli";
     public static String param_flats_in_whitefield_head = "Flats in Whitefield";
@@ -83,6 +88,9 @@ public class QueryConstantsService implements Serializable {
                 
         public static final String  sql_hyderabad_two_bhk="select * from villa_plot where bed_rooms='2' and prim_location ='Hyderabad' order by create_date desc LIMIT ? OFFSET ?";
         public static final String  sql_hyderabad_two_bhk_count="select count(*) from villa_plot where bed_rooms='2' and prim_location ='Hyderabad'";
+
+        public static final String  sql_hyderabad_three_bhk="select * from villa_plot where bed_rooms='3' and prim_location ='Hyderabad' order by create_date desc LIMIT ? OFFSET ?";
+        public static final String  sql_hyderabad_three_bhk_count="select count(*) from villa_plot where bed_rooms='3' and prim_location ='Hyderabad'";
 
         public static final String  sql_properties_in_marthahalli="select * from villa_plot where prim_location = 'Bangalore' and seco_location = 'Maratha Halli' order by create_date desc LIMIT ? OFFSET ?";
         public static final String  sql_properties_in_marthahalli_count="select count(*) from villa_plot where prim_location = 'Bangalore' and seco_location = 'Maratha Halli'";
@@ -315,6 +323,30 @@ public class QueryConstantsService implements Serializable {
 
     public void setParam_hyderabad_two_bhk_head(String param_hyderabad_two_bhk_head) {
         QueryConstantsService.param_hyderabad_two_bhk_head = param_hyderabad_two_bhk_head;
+    }
+
+    public String getParam_hyderabad_three_bhk() {
+        return param_hyderabad_three_bhk;
+    }
+
+    public void setParam_hyderabad_three_bhk(String param_hyderabad_three_bhk) {
+        QueryConstantsService.param_hyderabad_three_bhk = param_hyderabad_three_bhk;
+    }
+
+    public String getParam_hyderabad_three_bhk_count() {
+        return param_hyderabad_three_bhk_count;
+    }
+
+    public void setParam_hyderabad_three_bhk_count(String param_hyderabad_three_bhk_count) {
+        QueryConstantsService.param_hyderabad_three_bhk_count = param_hyderabad_three_bhk_count;
+    }
+
+    public String getParam_hyderabad_three_bhk_head() {
+        return param_hyderabad_three_bhk_head;
+    }
+
+    public void setParam_hyderabad_three_bhk_head(String param_hyderabad_three_bhk_head) {
+        QueryConstantsService.param_hyderabad_three_bhk_head = param_hyderabad_three_bhk_head;
     }
 
     public String getParam_flats_in_whitefield() {

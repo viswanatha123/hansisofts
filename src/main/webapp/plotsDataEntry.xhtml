@@ -25,7 +25,7 @@
   <ui:composition template="/WEB-INF/facelets/template.xhtml" style="background-image: url('back1.jpg'); ">
   <ui:param name="page" value="Admin" />
   <ui:define name="title">
-   <p>Layout Data Entry</p>
+   <p style="font-weight: normal; font-size: 14px;color: block;">Layout Data Entry</p>
       <p>
           <h:outputText style="font-weight: normal; font-size: 14px;color: #555;" value=" Enter complete details of the layout including cost per square foot, agent and owner information.
 This section is used to manage and list layout properties for sale." />
@@ -51,9 +51,10 @@ This section is used to manage and list layout properties for sale." />
 
   <div class="card">
   <h:form  id="form" enctype="multipart/form-data">
-      <p:dialog widgetVar="spinnerDialog"  style="background-color: #3A3B3C;"  modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
-          <p:graphicImage name="images/spin/spin1.gif" width="70px"  height="70px" />
-      </p:dialog>
+      <ui:include src="/WEB-INF/facelets/spinner.xhtml">
+          <ui:param name="spinnerTarget" value="form1"/>
+          <ui:param name="spinnerTrigger" value="form1"/>
+      </ui:include>
   <p:messages id="msgs"/>
    <br></br>
      <p:panel>
@@ -67,33 +68,33 @@ This section is used to manage and list layout properties for sale." />
                 	<p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
 
 
-                    <p:outputLabel required="true" style="font-weight: bold" for="name" indicateRequired="false" >
+                    <p:outputLabel required="true" style="font-weight: normal; font-size: 14px;color: block;" for="name" indicateRequired="false" >
                         Layout Name : <span style="color: red; font-weight: bold;">*</span></p:outputLabel>
 
                     <p:inputText id="name" value="#{plotsDataEntryService.name}" required="true" requiredMessage="Required Layout Name">
                     </p:inputText>
                     <p:message for="name" display="icon"/>
 
-                    <p:outputLabel style="font-weight: bold" value="Address : " />
+                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" value="Address : " />
                     <p:inputText id="location"  value="#{plotsDataEntryService.location}" >
                     </p:inputText>
                     <p:message for="location" display="icon"/>
 
-                    <p:outputLabel style="font-weight: bold" for="persqft" indicateRequired="false" required="true" >
+                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="persqft" indicateRequired="false" required="true" >
                         Per Square Feet(Cost) : <span style="color: red; font-weight: bold;">*</span></p:outputLabel>
                     <p:inputNumber id="persqft"  value="#{plotsDataEntryService.persqft}" required="true" requiredMessage="Required Length"  modifyValueOnWheel="false" >
                    </p:inputNumber>
                     <p:message for="persqft" display="icon"/>
 
 
-                    <p:outputLabel style="font-weight: bold" for="agentName" indicateRequired="false" >
+                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="agentName" indicateRequired="false" >
                         Agent Name :<span style="color: red; font-weight: bold;">*</span></p:outputLabel>
                     <p:inputText id="agentName"  required="true" value="#{plotsDataEntryService.agentName}" >
                     </p:inputText>
                     <p:message for="agentName" display="icon"/>
 
 
-                    <p:outputLabel style="font-weight: bold" for="contactOwner" indicateRequired="false" >
+                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="contactOwner" indicateRequired="false" >
                         Agent Contact No :<span style="color: red; font-weight: bold;">*</span></p:outputLabel>
                         <p:inputMask id="contactOwner"  mask="9999999999" required="true"  maxlength="10" value="#{plotsDataEntryService.contactOwner}" >
 
@@ -101,13 +102,13 @@ This section is used to manage and list layout properties for sale." />
                     <p:message for="contactOwner" display="icon"/>
 
 
-                    <p:outputLabel style="font-weight: bold" value="Owner Name : " />
+                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" value="Owner Name : " />
                     <p:inputText id="ownerName"  value="#{plotsDataEntryService.ownerName}" >
                     </p:inputText>
                     <p:message for="ownerName" display="icon"/>
 
 
-                   <p:outputLabel for="wonership" value="Owner Ship : " />
+                   <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="wonership" value="Owner Ship : " />
                             <p:selectOneMenu id="wonership" value="#{plotsDataEntryService.wonership}" requiredMessage="Woner Ship" style="width:150px">
                                 <f:selectItem itemLabel="Freehold" itemValue="Freehold"/>
                                 <f:selectItem itemLabel="Buying" itemValue="Buying"/>
@@ -116,7 +117,7 @@ This section is used to manage and list layout properties for sale." />
 
 
 
-                    <p:outputLabel for="transaction" value="Transaction : " />
+                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="transaction" value="Transaction : " />
                             <p:selectOneMenu id="transaction" value="#{plotsDataEntryService.transaction}" style="width:150px">
                              <f:selectItem itemLabel="Resale" itemValue="Resale"/>
                              <f:selectItem itemLabel="New Property" itemValue="New Property"/>
@@ -124,25 +125,25 @@ This section is used to manage and list layout properties for sale." />
                             <p:message for="transaction" display="icon"/>
 
 
-                    <p:outputLabel style="font-weight: bold" value="Description (150 char): " />
+                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" value="Description (150 char): " />
                     <p:inputTextarea rows="5" cols="40" maxlength="150" id="comment" value="#{plotsDataEntryService.comment}" >
                     </p:inputTextarea>
                     <p:message for="comment" display="icon"/>
 
-                    <p:outputLabel style="font-weight: bold" for="length" indicateRequired="false" >
+                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="length" indicateRequired="false" >
                         Length (Feets)  :<span style="color: red; font-weight: bold;">*</span></p:outputLabel>
                     <p:inputNumber id="length" value="#{plotsDataEntryService.length}" required="true" requiredMessage="Required Length"  decimalPlaces="0" modifyValueOnWheel="false">
                     </p:inputNumber>
                     <p:message for="length" display="icon"/>
 
 
-                    <p:outputLabel style="font-weight: bold" for="width" indicateRequired="false" >
+                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="width" indicateRequired="false" >
                         Width (Feets)  :   <span style="color: red; font-weight: bold;">*</span></p:outputLabel>
                     <p:inputNumber id="width" value="#{plotsDataEntryService.width}" required="true" requiredMessage="Required Width"  decimalPlaces="0" modifyValueOnWheel="false">
                     </p:inputNumber>
                     <p:message for="width" display="icon"/>
 
-                     <p:outputLabel for="country" indicateRequired="false">
+                     <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="country" indicateRequired="false">
                         Primary Location :<span style="color: red; font-weight: bold;" >*</span></p:outputLabel>
                             <p:selectOneMenu id="country" value="#{plotsDataEntryService.country}" style="width:150px" required="true" requiredMessage="Select Primary Location">
                             <p:ajax listener="#{plotsDataEntryService.onCountryChange}" update="city" />
@@ -151,43 +152,43 @@ This section is used to manage and list layout properties for sale." />
                             </p:selectOneMenu>
                             <p:message for="country" display="icon"/>
 
-                      <p:outputLabel for="city" indicateRequired="false">
-                        value="Secondary Location :<span style="color: red; font-weight: bold;">*</span></p:outputLabel>
+                      <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="city" indicateRequired="false">
+                        Secondary Location :<span style="color: red; font-weight: bold;">*</span></p:outputLabel>
                             <p:selectOneMenu id="city" value="#{plotsDataEntryService.city}" style="width:150px" required="true" requiredMessage="Select Secondary Location">
                             <f:selectItem itemLabel="Secondary Location" itemValue="" noSelectionOption="true" />
                             <f:selectItems value="#{plotsDataEntryService.secondryLocation}" />
                             </p:selectOneMenu>
                             <p:message for="city" display="icon"/>
 
-                      <p:outputLabel for="swimingPool" value="Swimming Pool : " />
+                      <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="swimingPool" value="Swimming Pool : " />
                             <p:selectOneMenu id="swimingPool" value="#{plotsDataEntryService.swimingPool}" style="width:150px">
                              <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                              <f:selectItem itemLabel="No" itemValue="No"/>
                             </p:selectOneMenu>
                             <p:message for="swimingPool" display="icon"/>
 
-                      <p:outputLabel for="playground" value="Play Ground : " />
+                      <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="playground" value="Play Ground : " />
                             <p:selectOneMenu id="playground" value="#{plotsDataEntryService.playground}" style="width:150px">
                              <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                              <f:selectItem itemLabel="No" itemValue="No"/>
                             </p:selectOneMenu>
                             <p:message for="playground" display="icon"/>
 
-                      <p:outputLabel for="park" value="Park : " />
+                      <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="park" value="Park : " />
                             <p:selectOneMenu id="park" value="#{plotsDataEntryService.park}"  style="width:150px">
                              <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                              <f:selectItem itemLabel="No" itemValue="No"/>
                             </p:selectOneMenu>
                             <p:message for="park" display="icon"/>
 
-                      <p:outputLabel for="wall" value="Compound Wall : " />
+                      <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="wall" value="Compound Wall : " />
                             <p:selectOneMenu id="wall" value="#{plotsDataEntryService.wall}"  style="width:150px">
                              <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                              <f:selectItem itemLabel="No" itemValue="No"/>
                             </p:selectOneMenu>
                             <p:message for="wall" display="icon"/>
 
-                      <p:outputLabel for="community" style="width:200px" value="Gated Community(Security) : " />
+                      <p:outputLabel for="community" style="font-weight: normal; font-size: 14px;color: block;" value="Gated Community(Security) : " />
                             <p:selectOneMenu id="community" value="#{plotsDataEntryService.community}"  style="width:150px">
                             <f:selectItem itemLabel="Yes" itemValue="Yes"/>
                              <f:selectItem itemLabel="No" itemValue="No"/>
@@ -195,7 +196,7 @@ This section is used to manage and list layout properties for sale." />
                             <p:message for="community" display="icon"/>
 
 
-                    <p:outputLabel for="facing" value="Facing : " />
+                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="facing" value="Facing : " />
                             <p:selectOneMenu id="facing" value="#{plotsDataEntryService.facing}" style="width:150px">
                             <f:selectItem itemLabel="--" itemValue="--"/>
                             <f:selectItem itemLabel="East" itemValue="East"/>
@@ -205,7 +206,7 @@ This section is used to manage and list layout properties for sale." />
                             </p:selectOneMenu>
                             <p:message for="facing" display="icon"/>
 
-                    <p:outputLabel for="cornerbit" value="Corner Bit : " />
+                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="cornerbit" value="Corner Bit : " />
                             <p:selectOneMenu id="cornerbit" value="#{plotsDataEntryService.cornerBit}" style="width:150px">
                             <f:selectItem itemLabel="No" itemValue="No"/>
                             <f:selectItem itemLabel="Yes" itemValue="Yes"/>
@@ -213,26 +214,26 @@ This section is used to manage and list layout properties for sale." />
                             <p:message for="cornerbit" display="icon"/>
 
 
-                   <p:outputLabel style="font-weight: bold; width:210px;" value="Property Profile upload (JPG,PNG,JPEG) : "   />
+                   <p:outputLabel style="font-weight: normal; font-size: 14px;color: block; width:210px;" value="Property Profile upload (JPG,PNG,JPEG) : "   />
                    <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
                    <p:fileUpload id="image" value="#{plotsDataEntryService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  required="true"  requiredMessage="Upload Image" />
             	   </p:panelGrid>
              	   <p:message for="image" display="icon"/>
 
-                   <p:outputLabel style="font-weight: bold; width:210px;" value="Upload Galary photos (JPG,PNG,JPEG) : "   />
+                   <p:outputLabel style="font-weight: normal; font-size: 14px;color: block; width:210px;" value="Upload Galary photos (JPG,PNG,JPEG) : "   />
                    <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
                    <p:fileUpload id="images" value="#{plotsDataEntryService.filesx}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  skinSimple="true" multiple="true" requiredMessage="Upload Image" />
                    </p:panelGrid>
                    <p:message for="images" display="icon"/>
 
-                   <h:commandButton value="Submit"   type="submit"
+                   <h:commandButton style="font-weight: normal; font-size: 14px;color: block;" value="Submit"   type="submit"
                                     process="@this"
                                     update="@form"
                                     actionListener="#{plotsDataEntryService.upload}" onclick="PF('spinnerDialog').show()">
                                     <p:resetInput target="form"/>
                    </h:commandButton>
 
-                   <h:commandButton id="discardChangesButton"
+                   <h:commandButton style="font-weight: normal; font-size: 14px;color: block;" id="discardChangesButton"
 	                                   process="@this"
 	                                   value="Clear"
                                            update="@form"
@@ -241,10 +242,10 @@ This section is used to manage and list layout properties for sale." />
 	                   <p:resetInput target="form"/>
 	               </h:commandButton>
                 </p:panelGrid>
-                  <p style="font-weight: bold;color: black; font-size: 18px"> Please provide your Residential property details which you want to sell.</p>
-                  <p style="font-weight: bold;color: black; font-size: 18px"> Please contact our customer care ,if any further assist required.</p>
-                  <p style="font-weight: bold;color: black; font-size: 18px"> Customer care number : 8088471208.</p>
-                  <p style="font-weight: bold;color: black; font-size: 18px">E-mail : customer.support@hansisofts.com</p>
+                  <p style="font-weight: normal; font-size: 14px;color: block; font-size: 18px"> Please provide your Residential property details which you want to sell.</p>
+                  <p style="font-weight: normal; font-size: 14px;color: block; font-size: 18px"> Please contact our customer care ,if any further assist required.</p>
+                  <p style="font-weight: normal; font-size: 14px;color: block; font-size: 18px"> Customer care number : 8088471208.</p>
+                  <p style="font-weight: normal; font-size: 14px;color: block; font-size: 18px">E-mail : customer.support@hansisofts.com</p>
                   <p:graphicImage width="102%"  height="400px" name="images/plot.jpg" />
 
                </p:panelGrid>

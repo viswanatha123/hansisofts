@@ -23,7 +23,7 @@
     <ui:composition template="/WEB-INF/facelets/template.xhtml">
         <ui:param name="page" value="Admin" />
         <ui:define name="title">
-            <p>Individual Site DataEntry</p>
+            <p style="font-weight: normal; font-size: 14px;color: block;" >Individual Site DataEntry</p>
             <p>
                 <h:outputText style="font-weight: normal; font-size: 14px;color: #555;" value="Enter the complete details of the individual site including site dimensions, location, cost per square foot, and agent/owner contact. This section is used to manage individual residential or commercial site listings." />
 
@@ -49,10 +49,11 @@
                 <div class="card">
                     <h:form id="form" enctype="multipart/form-data">
 
-                        <p:dialog widgetVar="spinnerDialog"  style="background-color: #3A3B3C;"  modal="true" closable="false" draggable="false" resizable="false" showEffect="fade" hideEffect="fade">
-                            <p:graphicImage name="images/spin/spin1.gif" width="70px"  height="70px" />
-                        </p:dialog>
-                        <p:messages id="msgs"/>
+
+                        <ui:include src="/WEB-INF/facelets/spinner.xhtml">
+                            <ui:param name="spinnerTarget" value="form1"/>
+                            <ui:param name="spinnerTrigger" value="form1"/>
+                        </ui:include>
                         <br></br>
 
 
@@ -67,24 +68,24 @@
 
                                 <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
 
-                                    <p:outputLabel style="font-weight: bold" for="name" indicateRequired="false"> Owner Name: <span style="color:red;font-weight:bold;'">*</span>
+                                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="name" indicateRequired="false"> Owner Name: <span style="color:red;font-weight:bold;'">*</span>
                                     </p:outputLabel>
                                     <p:inputText id="name"  value="#{indiSiteDataEntryService.ownerName}" required="true" requiredMessage="Required Owner Name">
                                     </p:inputText>
                                     <p:message for="name" display="icon"/>
 
-                                    <p:outputLabel style="font-weight: bold" value="Address : " />
+                                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" value="Address : " />
                                     <p:inputText id="location" value="#{indiSiteDataEntryService.location}" >
                                     </p:inputText>
                                     <p:message for="location" display="icon"/>
 
 
-                                    <p:outputLabel style="font-weight: bold" for="agentName"  value="Agent Name : " />
+                                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="agentName"  value="Agent Name : " />
                                     <p:inputText id="agentName"  value="#{indiSiteDataEntryService.agentName}" >
                                     </p:inputText>
                                     <p:message for="agentName" display="icon"/>
 
-                                    <p:outputLabel style="font-weight: bold" for="contactno" indicateRequired="false" > Agent Contact No : <span style="color:red;font-weight:bold;'">*</span>
+                                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="contactno" indicateRequired="false" > Agent Contact No : <span style="color:red;font-weight:bold;'">*</span>
                                     </p:outputLabel>
                                     <p:inputMask id="contactno" mask="9999999999" value="#{indiSiteDataEntryService.contactNo}" required="true" requiredMessage="Required Agent Contact No">
 
@@ -92,34 +93,34 @@
                                     <p:message for="contactno" display="icon"/>
 
 
-                                    <p:outputLabel style="font-weight: bold" value="Plot Number : " />
+                                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" value="Plot Number : " />
                                     <p:inputText id="siteno"  value="#{indiSiteDataEntryService.siteNo}" >
                                     </p:inputText>
                                     <p:message for="siteno" display="icon"/>
 
 
-                                    <p:outputLabel style="font-weight: bold;width:170px" for="persqft" indicateRequired="false" > Per Square Feet(Cost) : <span style="color:red;font-weight:bold;'">*</span>
+                                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;width:170px" for="persqft" indicateRequired="false" > Per Square Feet(Cost) : <span style="color:red;font-weight:bold;'">*</span>
                                     </p:outputLabel>
                                     <p:inputText id="persqft"  value="#{indiSiteDataEntryService.persqft}" required="true" requiredMessage="Required Per Square Feet(Cost)">
                                     </p:inputText>
                                     <p:message for="persqft" display="icon"/>
 
 
-                                    <p:outputLabel style="font-weight: bold" for="length" indicateRequired="false"> Length(Feets) :  <span style="color:red;font-weight:bold;'">*</span>
+                                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="length" indicateRequired="false"> Length(Feets) :  <span style="color:red;font-weight:bold;'">*</span>
                                     </p:outputLabel>
                                     <p:inputText id="length"  value="#{indiSiteDataEntryService.length}" required="true" requiredMessage="Required Length(Feets)">
                                     </p:inputText>
                                     <p:message for="length" display="icon"/>
 
 
-                                    <p:outputLabel style="font-weight: bold" for="width" indicateRequired="flase"> Width(Feets) :  <span style="color:red;font-weight:bold;'">*</span>
+                                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="width" indicateRequired="flase"> Width(Feets) :  <span style="color:red;font-weight:bold;'">*</span>
                                     </p:outputLabel>
                                     <p:inputText id="width"  value="#{indiSiteDataEntryService.width}" required="true" requiredMessage="Required Width(Feets)">
                                     </p:inputText>
                                     <p:message for="width" display="icon"/>
 
 
-                                    <p:outputLabel for="wonership" value="Owner Ship : " />
+                                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="wonership" value="Owner Ship : " />
                                     <p:selectOneMenu id="wonership"   value="#{indiSiteDataEntryService.wonership}" requiredMessage="Woner Ship" style="width:150px">
                                         <f:selectItem itemLabel="Freehold" itemValue="Freehold"/>
                                         <f:selectItem itemLabel="Buying" itemValue="Buying"/>
@@ -127,14 +128,14 @@
                                     <p:message for="wonership" display="icon"/>
 
 
-                                    <p:outputLabel for="transaction" value="Transaction : " />
+                                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="transaction" value="Transaction : " />
                                     <p:selectOneMenu id="transaction" value="#{indiSiteDataEntryService.transaction}" style="width:150px">
                                         <f:selectItem itemLabel="Resale" itemValue="Resale"/>
                                         <f:selectItem itemLabel="New Property" itemValue="New Property"/>
                                     </p:selectOneMenu>
                                     <p:message for="transaction" display="icon"/>
 
-                                    <p:outputLabel for="country" style="font-weight: bold" indicateRequired="false"> Primary Location: <span style="color: red; font-weight: bold;">*</span>
+                                    <p:outputLabel for="country" style="font-weight: normal; font-size: 14px;color: block;" indicateRequired="false"> Primary Location: <span style="color: red; font-weight: bold;">*</span>
                                     </p:outputLabel>
                                     <p:selectOneMenu id="country" value="#{indiSiteDataEntryService.country}"
                                                      style="width:150px" required="true"
@@ -147,7 +148,7 @@
                                     <p:message for="country" display="icon"/>
 
 
-                                    <p:outputLabel for="city" style="font-weight: bold" indicateRequired="false"> Secondary Location: <span style="color: red; font-weight: bold;">*</span>
+                                    <p:outputLabel for="city" style="font-weight: normal; font-size: 14px;color: block;" indicateRequired="false"> Secondary Location: <span style="color: red; font-weight: bold;">*</span>
                                     </p:outputLabel>
                                     <p:selectOneMenu id="city" value="#{indiSiteDataEntryService.city}"
                                                      style="width:150px" required="true"
@@ -159,12 +160,12 @@
                                     <p:message for="city" display="icon"/>
 
 
-                                    <p:outputLabel style="font-weight: bold" value="Description (150 char): " />
+                                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" value="Description (150 char): " />
                                     <p:inputTextarea rows="5" cols="40" maxlength="150" id="comment" value="#{indiSiteDataEntryService.comment}" >
                                     </p:inputTextarea>
                                     <p:message for="comment" display="icon"/>
 
-                                    <p:outputLabel for="facing" value="Facing : " />
+                                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="facing" value="Facing : " />
                                     <p:selectOneMenu id="facing" value="#{indiSiteDataEntryService.facing}" style="width:150px">
                                         <f:selectItem itemLabel="--" itemValue="--"/>
                                         <f:selectItem itemLabel="East" itemValue="East"/>
@@ -174,7 +175,7 @@
                                     </p:selectOneMenu>
                                     <p:message for="facing" display="icon"/>
 
-                                    <p:outputLabel for="cornerbit" value="Corner Bit : " />
+                                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="cornerbit" value="Corner Bit : " />
                                     <p:selectOneMenu id="cornerbit" value="#{indiSiteDataEntryService.cornerBit}" style="width:150px">
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                         <f:selectItem itemLabel="Yes" itemValue="Yes"/>
@@ -182,27 +183,27 @@
                                     <p:message for="cornerbit" display="icon"/>
 
 
-                                    <p:outputLabel style="font-weight: bold; width:210px;" value="Image Upload (JPG,PNG,JPEG): " />
+                                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block; width:210px;" value="Image Upload (JPG,PNG,JPEG): " />
                                     <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
                                         <p:fileUpload id="image" value="#{indiSiteDataEntryService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
                                     </p:panelGrid>
                                     <p:message for="image" display="icon"/>
 
-                                    <p:outputLabel style="font-weight: bold; width:210px;" value="Upload Galary photos (JPG,PNG,JPEG) : "   />
+                                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block; width:210px;" value="Upload Galary photos (JPG,PNG,JPEG) : "   />
                                     <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
                                         <p:fileUpload id="images" value="#{indiSiteDataEntryService.filesx}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  skinSimple="true" multiple="true" requiredMessage="Upload Image" />
                                     </p:panelGrid>
                                     <p:message for="images" display="icon"/>
 
 
-                                    <h:commandButton value="Submit"   type="submit"
+                                    <h:commandButton style="font-weight: normal; font-size: 14px;color: block;" value="Submit"   type="submit"
                                                      process="@this"
                                                      update="@form"
                                                      actionListener="#{indiSiteDataEntryService.upload}" onclick="PF('spinnerDialog').show()">
                                         <p:resetInput target="form"/>
                                     </h:commandButton>
 
-                                    <h:commandButton id="discardChangesButton"
+                                    <h:commandButton style="font-weight: normal; font-size: 14px;color: block;" id="discardChangesButton"
                                                      process="@this"
                                                      value="Clear"
                                                      update="@form"
@@ -211,10 +212,10 @@
                                         <p:resetInput target="form"/>
                                     </h:commandButton>
                                 </p:panelGrid>
-                                <p style="font-weight: bold;color: black; font-size: 18px"> Please provide your Individual Site property details which you want to sell.</p>
-                                <p style="font-weight: bold;color: black; font-size: 18px"> Please contact our customer care ,if any further assist required.</p>
-                                <p style="font-weight: bold;color: black; font-size: 18px"> Customer care number : 8088471208.</p>
-                                <p style="font-weight: bold;color: black; font-size: 18px">E-mail : customer.support@hansisofts.com</p>
+                                <p style="font-weight: normal; font-size: 14px;color: block; font-size: 18px"> Please provide your Individual Site property details which you want to sell.</p>
+                                <p style="font-weight: normal; font-size: 14px;color: block; font-size: 18px"> Please contact our customer care ,if any further assist required.</p>
+                                <p style="font-weight: normal; font-size: 14px;color: block; font-size: 18px"> Customer care number : 8088471208.</p>
+                                <p style="font-weight: normal; font-size: 14px;color: block; font-size: 18px">E-mail : customer.support@hansisofts.com</p>
                                 <p:graphicImage width="102%"  height="400px" name="images/indiv.jpg" />
 
                             </p:panelGrid>
