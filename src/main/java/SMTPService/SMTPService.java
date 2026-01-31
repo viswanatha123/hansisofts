@@ -2,7 +2,7 @@ package SMTPService;
 
 import javax.mail.*;
 import javax.mail.internet.*;
-
+import java.util.ArrayList;
 import com.DIC.DAO.Impl.UserDAOImpl;
 import com.DIC.Service.AgriculturalService;
 import com.DIC.model.AgriculturalDataEntryModel;
@@ -574,6 +574,44 @@ public class SMTPService {
 	    }
 		
 	}
- 
+	/********* Home loan email ******** /
+	 * @viswanatha
+	 * @param subject
+	 * @param body
+	 */
+
+	public static void sendHomeLoanEmail(String subject, String body)
+	{
+
+		try {
+
+			ArrayList<String> emailList=new ArrayList<>();
+			emailList.add("viswanathareddy120@gmail.com");
+			emailList.add("mittelikhitha2003@gmail.com");
+			emailList.add("msahithi2403@gmail.com");
+			emailList.add("pedaballigirireddy@gmail.com");
+
+
+			InternetAddress[] recipientAddresses = new InternetAddress[emailList.size()];
+			for (int i = 0; i < emailList.size(); i++) {
+				recipientAddresses[i] = new InternetAddress(emailList.get(i));
+			}
+			message.addRecipients(Message.RecipientType.TO, recipientAddresses);
+			message.setSubject(subject);
+			message.setText(body);
+			Transport.send(message);
+
+			log.info("Home loan email sent successfully.");
+
+
+		} catch (javax.mail.MessagingException e) {
+			log.error("Failed to send email: {}", e.getMessage(), e);
+			// Optionally: Notify users or take corrective action
+		} catch (Exception e) {
+			log.error("Unexpected error occurred: {}", e.getMessage(), e);
+			// Optionally: Notify users or take corrective action
+		}
+
+	}
 
 }
