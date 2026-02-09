@@ -1,6 +1,7 @@
 package com.DIC.Service;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import SMTPService.SMTPService;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -16,6 +18,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import framework.utilities.Constants;
 import org.primefaces.model.file.UploadedFile;
 
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
@@ -84,7 +87,19 @@ public class HomeLoanDataEntryService implements Serializable{
              homeLoanDataEntryModel.setEmpType(empType);
              
 	         updateResult=gdao.updateHomeLoanDataEntry(homeLoanDataEntryModel);
-	              
+				 if(updateResult!=null)
+				 {
+					 String homeLoanBody = "Hi Bank Agents \n\n I am interested in applying for a home loan to purchase a property,\n Please find my details below,\n" +
+							 " My Name  : "+agentName+".\n" +
+							 " Contact No : "+contactNo+".\n" +
+							 " Email : "+email+".\n" +
+							 " Loan Amount : "+loanAmt+".\n" +
+							 " Monthly Incom : "+monthlyInc+".\n" +
+							 "Kindly let me know if any additional details or documents are required to process my application.\n\n"+
+							 "Thank you\n HansiSoft Solutions.\n"+
+							 "Date : " + LocalDate.now().toString()+" .";
+					 SMTPService.sendHomeLoanEmail(Constants.PropertyConstants.HOME_LOAN_SUBJECT,homeLoanBody);
+				 }
 	        
 	     	this.agentName="";
 	     	this.age=0;

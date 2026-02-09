@@ -140,6 +140,7 @@ public class UserDAOImpl {
 			 String SQL_ACCOUNT_RENEWEL="update user_deta set create_date = now() where user_id= ?";
 			 String SQL_RANK_UPDATE="update user_map_rank set rank = ? where user_id = ?";
 			String SQL_PROFILE_PHOTO="update user_deta set image = ? where user_id = ?";
+			String SQL_BANK_AGENT_EMAIL="select email from bank_agent";
 		}
 	}
 	
@@ -1267,7 +1268,35 @@ public class UserDAOImpl {
 		}
 	}
 
+// ****** get Bank agent  email list ****/
+	// Author Viswanatha
 
+	public List<String> getBankAgentEmails() {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ArrayList<String> emails=new ArrayList<>();
+		try {
+			con = ConnectionDAO.getConnection();
+
+			StringBuilder sql_bank_agent_email = new StringBuilder(Constants.SQL.SQL_BANK_AGENT_EMAIL);
+			log.info("###: Qury for get bank agent email  : "+sql_bank_agent_email.toString());
+			ps = con.prepareStatement(sql_bank_agent_email.toString());
+			ResultSet rs = ps.executeQuery();
+
+
+			while ( rs.next() ) {
+
+				emails.add(rs.getString("email"));
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			log.error("An error occurred: {}", e.getMessage());
+		}
+
+		return emails;
+	}
 
 
 
