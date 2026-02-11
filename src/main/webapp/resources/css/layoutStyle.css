@@ -60,11 +60,6 @@ a:hover {
     font-size:1.3em;
 }
 
-.secondary-location-label {
-    color: red !important;
-}
-
-
 #footer {
     font-size:15px;
 }
@@ -75,6 +70,21 @@ a:hover {
           }
 
 
+.fixedGrid {
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.fixedGrid td.c1 { width: 50px; }
+.fixedGrid td.c2 { width: 100px; }
+.fixedGrid td.c3 { width: 50px; }
+
+.normalTextGrid,
+.normalTextGrid * {
+    font-size: 10px;
+    font-style: normal;
+    font-weight: normal;
+}
 
 
 
