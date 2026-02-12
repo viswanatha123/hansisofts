@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import SMTPService.SMTPService;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -115,19 +116,8 @@ public class HomeLoanDataEntryService implements Serializable{
 	         }
 	     }
 	     
-	 
-		
-	 
-	 
-	       
-	       	
-	  
-	
-	     	
-	         
-	        
-	  
-        public void clear()
+	 	  
+   public void clear()
    {
 
 	     	this.agentName="";

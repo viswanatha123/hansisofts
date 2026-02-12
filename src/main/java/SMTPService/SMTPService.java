@@ -18,6 +18,7 @@ import com.DIC.model.VillaModel;
 import framework.utilities.Constants;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -574,24 +575,16 @@ public class SMTPService {
 	    }
 		
 	}
-	/********* Home loan email ******** /
-	 * @viswanatha
-	 * @param subject
-	 * @param body
-	 */
-
-	public static void sendHomeLoanEmail(String subject, String body)
+public static void sendHomeLoanEmail(String subject, String body)
 	{
 
 		try {
-
+			List<String> emailList=uDao.getBankAgentEmails();
 			ArrayList<String> emailList=new ArrayList<>();
 			emailList.add("viswanathareddy120@gmail.com");
 			emailList.add("mittelikhitha2003@gmail.com");
 			emailList.add("msahithi2403@gmail.com");
 			emailList.add("pedaballigirireddy@gmail.com");
-
-
 			InternetAddress[] recipientAddresses = new InternetAddress[emailList.size()];
 			for (int i = 0; i < emailList.size(); i++) {
 				recipientAddresses[i] = new InternetAddress(emailList.get(i));
