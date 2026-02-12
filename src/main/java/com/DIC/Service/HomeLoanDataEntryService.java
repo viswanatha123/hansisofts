@@ -2,6 +2,7 @@ package com.DIC.Service;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import SMTPService.SMTPService;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -100,7 +101,6 @@ public class HomeLoanDataEntryService implements Serializable{
 							 "Date : " + LocalDate.now().toString()+" .";
 					 SMTPService.sendHomeLoanEmail(Constants.PropertyConstants.HOME_LOAN_SUBJECT,homeLoanBody);
 				 }
-	        
 	     	this.agentName="";
 	     	this.age=0;
 	     	this.gender="";
@@ -116,19 +116,8 @@ public class HomeLoanDataEntryService implements Serializable{
 	         }
 	     }
 	     
-	 
-		
-	 
-	 
-	       
-	       	
-	  
-	
-	     	
-	         
-	        
-	  
-        public void clear()
+	 	  
+   public void clear()
    {
 
 	     	this.agentName="";

@@ -35,6 +35,7 @@ public class  Constants {
 		public static final String VILLA_SUBJECT="HansiSoft Solutions,,. New Villa listed..";
 		public static final String LEAD_SUBJECT="HansiSoft Solutions,,. Lead Generated..";
 		public static final String HOME_LOAN_SUBJECT=" home enquiry.";
+
 	}
 	
 	public interface SMSServer
