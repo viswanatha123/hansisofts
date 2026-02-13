@@ -580,11 +580,6 @@ public static void sendHomeLoanEmail(String subject, String body)
 
 		try {
 			List<String> emailList=uDao.getBankAgentEmails();
-			ArrayList<String> emailList=new ArrayList<>();
-			emailList.add("viswanathareddy120@gmail.com");
-			emailList.add("mittelikhitha2003@gmail.com");
-			emailList.add("msahithi2403@gmail.com");
-			emailList.add("pedaballigirireddy@gmail.com");
 			InternetAddress[] recipientAddresses = new InternetAddress[emailList.size()];
 			for (int i = 0; i < emailList.size(); i++) {
 				recipientAddresses[i] = new InternetAddress(emailList.get(i));
