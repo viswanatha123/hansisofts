@@ -66,7 +66,7 @@
                    
                     <p:outputLabel style="font-weight: bold" indicateRequired="false" required="true" >
                         Last Name : <span style="color: red; font-weight: bold;">*</span></p:outputLabel>
-                        <p:inputText id="lastName" required="true" value="#{userRegistService.lName}" >
+                        <p:inputText id="lastName" required="true" value="#{userRegistService.lName}" requiredMessage="Required Last Name">
                     </p:inputText>
                     <p:message for="lastName" display="icon"/>
                     
@@ -81,7 +81,7 @@
                     
                     <p:outputLabel style="font-weight: bold" indicateRequired="false" required="true">
                         Password : <span style="color: red; font-weight: bold;">*</span></p:outputLabel>
-                        <p:password id="UserPassword" required="true" value="#{userRegistService.userPassword}"  requiredMessage="Password is required">
+                        <p:password id="UserPassword" required="true" redisplay="true" value="#{userRegistService.userPassword}"  requiredMessage="Password is required">
                         <f:validateLength minimum="8" maximum="15"></f:validateLength>
                     	<f:validateRegex pattern="((?=.*\d)(?=.*[a-z]).{8,15})" />
                     </p:password>
@@ -89,7 +89,7 @@
 
                         <p:outputLabel style="font-weight: bold" indicateRequired="false" required="true">
                         ConfirmPassword : <span style="color: red; font-weight: bold;">*</span></p:outputLabel>
-                        <p:password id="ConfirmPassword" required="true" value="#{userRegistService.confirmPassword}"  requiredMessage="Confirm Password is required">
+                        <p:password id="ConfirmPassword" required="true" redisplay="true" value="#{userRegistService.confirmPassword}"  requiredMessage="Confirm Password is required">
                             <f:validateLength minimum="8" maximum="15"></f:validateLength>
                             <f:validateRegex pattern="((?=.*\d)(?=.*[a-z]).{8,15})" />
                         </p:password>
@@ -107,29 +107,43 @@
                     </p:inputMask>
                     <p:message for="contactNo" display="icon"/>
                     
-                    <p:outputLabel indicateRequired="false" style="font-weight: bold; font-size: 14px;color:black; text-align:left;" required="true">
-                        Email : <span style="color: red; font-weight: bold;">*</span></p:outputLabel>
-                        <p:inputText id="email"  size="30" value="#{userRegistService.email}" required="true" validatorMessage="Invalid email format">
-		            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-		            </p:inputText>
-		            <p:message for="email" display="icon"/>
-
                     <p:outputLabel style="font-weight: bold;width:210px;" value="Profile Upload (JPG,PNG,JPEG) : "   />
                     <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
                     <p:fileUpload id="image" value="#{userRegistService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  required="true" requiredMessage="Upload Image" />
                     </p:panelGrid>
                     <p:message for="image" display="icon"/>
 
+                                    <p:outputLabel indicateRequired="false" style="font-weight: bold; font-size: 14px;color:black; text-align:left;" required="true">
+                                            Email : <span style="color: red; font-weight: bold;">*</span></p:outputLabel>
+                        <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+
+                                        <p:inputText id="email"  size="15" value="#{userRegistService.email}" required="true" validatorMessage="Invalid email format">
+                                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                        </p:inputText>
+                            <p:commandButton value="Generate OTP"
+                                             action="#{userRegistService.otp}"
+                                             process="@form"
+                                             ajax="true"
+                                             update="@form"
+                                             onstart="PF('spinnerDialog').show()"
+                                             oncomplete="PF('spinnerDialog').hide()" />
+
+                        </p:panelGrid>
+                        <p:messages showDetail="true" />
+
+                        <p:outputLabel style="font-weight: bold" for="otp" indicateRequired="false" required="true">
+                            Enter OTP Code : <span style="color: red; font-weight: bold;">*</span></p:outputLabel>
+                        <p:inputMask id="otp"  mask="999999"  required="true" maxlength="6" value="#{userRegistService.otp}" >
+                        </p:inputMask>
+                        <p:message for="otp" display="icon"/>
 
                         <h:commandButton value="Submit"   type="submit"
-                                    process="@this"
-                                    update="@form"
-                                    actionListener="#{userRegistService.save}" onclick="PF('spinnerDialog').show()">
-                                    <p:resetInput target="form"/>
-                                    
-                                    
-                   </h:commandButton>
-                   
+                                         process="@this"
+                                         update="@form"
+                                         resetValues="true"
+                                         actionListener="#{userRegistService.save}" onclick="PF('spinnerDialog').show()" >
+                            <p:resetInput target="form"/>
+                        </h:commandButton>
             	               
 	               
 	                 <p:commandButton value="Reset" update="panel" process="@this"
@@ -159,6 +173,16 @@
             </p:panel>
             
   </center>
+
+        <p:dialog header="Header"
+                  widgetVar="dlg1"
+                  minHeight="40"
+                  width="350"
+                  showEffect="fade"
+                  closeOnEscape="true">
+          <p class="m-0">OTP Generated</p>
+
+        </p:dialog>
  			
  <script type="text/javascript" src="resources/js/chatool.js"></script>   
  </h:form>
