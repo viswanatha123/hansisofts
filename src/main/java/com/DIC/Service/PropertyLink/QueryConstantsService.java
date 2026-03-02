@@ -47,14 +47,14 @@ public class QueryConstantsService implements Serializable {
 
 
 //*********** Header ***************//
-    public static String param_bangalore_one_bhk_head="1 BHK Flat in Sale";
-    public static String param_bangalore_two_bhk_head="2 BHK Flat in Sale";
-    public static String param_bangalore_three_bhk_head="3 BHK Flat in Sale";
+    public static String param_bangalore_one_bhk_head="1 BHK Flat in Sale  Bangalore";
+    public static String param_bangalore_two_bhk_head="2 BHK Flat in Sale Bangalore";
+    public static String param_bangalore_three_bhk_head="3 BHK Flat in Sale Bangalore";
     public static String param_bangalore_ready_to_move_head="Ready To Move  Bangalore";
     public static String param_flats_in_marthahalli_head="Flats in Marthahalli";
-    public static String param_hyderabad_one_bhk_head="1 BHK Flat in Sale";
-    public static String param_hyderabad_two_bhk_head="2 BHK Flat in Sale";
-    public static String param_hyderabad_three_bhk_head="3 BHK Flat in Sale";
+    public static String param_hyderabad_one_bhk_head="1 BHK Flat in Sale Hyderabad";
+    public static String param_hyderabad_two_bhk_head="2 BHK Flat in Sale Hyderabad";
+    public static String param_hyderabad_three_bhk_head="3 BHK Flat in Sale Hyderabad";
     public static String param_properties_in_marthahalli_head="Properties in Marthahalli";
     public static String param_house_in_marthahalli_head="House in Marthahalli";
     public static String param_flats_in_whitefield_head = "Flats in Whitefield";
