@@ -40,7 +40,7 @@
                     <center>
                         <p:panel>
                             <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
-                                <h:outputText style="font-weight: bold;color: green" value="#{bankAgentService.statusMessage}" />
+                                <h:outputText style="font-weight: bold;color: green"  value="#{bankAgentService.statusMessage}" />
                             </p:panelGrid>
 
                         </p:panel>
@@ -52,7 +52,7 @@
 
                                     <p:outputLabel style="font-weight: normal" indicateRequired="false" required="true" >
                                         Agent Name : <span style="color: red; font-weight: bold;">*</span></p:outputLabel>
-                                    <p:inputText id="gentName" required="true" value="#{bankAgentService.agentName}" requiredMessage="Required First Name">
+                                    <p:inputText id="gentName" required="true" value="#{bankAgentService.agentName}" requiredMessage="Required Agent Name">
                                     </p:inputText>
                                     <p:message for="gentName" display="icon"/>
 
@@ -66,7 +66,7 @@
 
                                     <p:outputLabel style="font-weight: normal" indicateRequired="false" required="true" >
                                         Bank Name : <span style="color: red; font-weight: bold;">*</span></p:outputLabel>
-                                    <p:inputText id="bankName" required="true" value="#{bankAgentService.bankName}" requiredMessage="User name is required" >
+                                    <p:inputText id="bankName" required="true" value="#{bankAgentService.bankName}" requiredMessage="Required Bank Name" >
                                     </p:inputText>
                                     <p:message for="bankName" display="icon"/>
 
@@ -105,7 +105,11 @@
                                                      process="@this"
                                                      update="@form"
                                                      actionListener="#{bankAgentService.save}" onclick="PF('spinnerDialog').show()">
-                                        <p:resetInput target="form"/>
+                                        <f:ajax execute="@form"
+                                                render="@form"
+                                                listener="#{bankAgentService.clearMessage}"
+                                                immediate="true" />
+                                     <p:resetInput target="form"/>
 
 
                                     </h:commandButton>
