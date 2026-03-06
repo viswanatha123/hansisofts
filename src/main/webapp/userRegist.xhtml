@@ -133,7 +133,7 @@
 
                         <p:outputLabel style="font-weight: bold" for="otp" indicateRequired="false" required="true">
                             Enter OTP Code : <span style="color: red; font-weight: bold;">*</span></p:outputLabel>
-                        <p:inputMask id="otp"  mask="999999"  required="true" maxlength="6" value="#{userRegistService.otp}" >
+                        <p:inputMask id="otp"  mask="999999"   maxlength="6" value="#{userRegistService.otp}" >
                         </p:inputMask>
                         <p:message for="otp" display="icon"/>
 

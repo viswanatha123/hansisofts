@@ -101,59 +101,65 @@ public class UserRegistService implements Serializable {
 				if (valid) {
 					statusMessage = "User name already exists, Please try with different user name.";
 				} else {
-					boolean checkOTP = OtpManager.validateOtp(email, otp);
-					if(checkOTP!=true) {
-						statusMessage = "Invalied OTP entered.";
+					if(otp.equals("") || otp==null)
+					{
+						statusMessage="OTP Required.";
 					} else {
 
-						if (userPassword.equals(confirmPassword)) {
+						boolean checkOTP = OtpManager.validateOtp(email, otp);
+						if (checkOTP != true) {
+							statusMessage = "Invalied OTP entered.";
+						} else {
+
+							if (userPassword.equals(confirmPassword)) {
 
 
-							UserDetails userDetails = new UserDetails();
+								UserDetails userDetails = new UserDetails();
 
-							userDetails.setfName(fName);
-							userDetails.setlName(lName);
-							userDetails.setUserName(userName.trim());
-							userDetails.setUserPassword(userPassword.trim());
-							userDetails.setAddress(address);
-							userDetails.setPhone(phone);
-							userDetails.setEmail(email);
-							userDetails.setInputStream(file.getInputStream());
-							userDetails.setFile(file);
+								userDetails.setfName(fName);
+								userDetails.setlName(lName);
+								userDetails.setUserName(userName.trim());
+								userDetails.setUserPassword(userPassword.trim());
+								userDetails.setAddress(address);
+								userDetails.setPhone(phone);
+								userDetails.setEmail(email);
+								userDetails.setInputStream(file.getInputStream());
+								userDetails.setFile(file);
 
-							int userId = gdao.saveUserRegist(userDetails, UtilConstants.BASIC_PACKAGE_LIST_LIMIT);
+								int userId = gdao.saveUserRegist(userDetails, UtilConstants.BASIC_PACKAGE_LIST_LIMIT);
 
-							if (userId > 0) {
+								if (userId > 0) {
 
 
-								String body = "Hi " + fName + " " + lName + ",\n\n Congratulation...\n Your account has been created successfully.\n\n"
-										+ " Customer ID : " + userId + "\n User Name : " + userName + "\n First Name : " + fName + "\n Last Name : " + lName + "\n Contact Number : " + phone + " \n Email : " + email + " \n Address : " + address + " \n Date : " + LocalDate.now().toString() + ". \n\n\n Thank you\n HansiSoft Solutions..";
+									String body = "Hi " + fName + " " + lName + ",\n\n Congratulation...\n Your account has been created successfully.\n\n"
+											+ " Customer ID : " + userId + "\n User Name : " + userName + "\n First Name : " + fName + "\n Last Name : " + lName + "\n Contact Number : " + phone + " \n Email : " + email + " \n Address : " + address + " \n Date : " + LocalDate.now().toString() + ". \n\n\n Thank you\n HansiSoft Solutions..";
 
-								SMTPService.sendRegiEmail(email, Constants.SMTPServer.SUBJECT, body);
+									SMTPService.sendRegiEmail(email, Constants.SMTPServer.SUBJECT, body);
 
-								statusMessage = "Successful Registerd.";
+									statusMessage = "Successful Registerd.";
 
-								this.fName = "";
-								this.lName = "";
-								this.userName = "";
-								this.userPassword = "";
-								this.confirmPassword = "";
-								this.address = "";
-								this.phone = "";
-								this.email = "";
-								this.otp="";
+									this.fName = "";
+									this.lName = "";
+									this.userName = "";
+									this.userPassword = "";
+									this.confirmPassword = "";
+									this.address = "";
+									this.phone = "";
+									this.email = "";
+									this.otp = "";
+
+								} else {
+									statusMessage = "Error Occured, Please contact support..";
+								}
 
 							} else {
-								statusMessage = "Error Occured, Please contact support..";
+								statusMessage = "Both password fields must match . Please try again";
 							}
-
-						} else {
-							statusMessage = "Both password fields must match . Please try again";
 						}
+
 					}
 
-
-				}
+				} //
 
 			} catch (Exception e) {
 				System.out.println("Exception-File Upload." + e.getMessage());

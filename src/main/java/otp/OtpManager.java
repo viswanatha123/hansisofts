@@ -36,6 +36,27 @@ public class OtpManager {
     }
 
 
+/*
+    public static boolean validateOtp(String email, String userOtp) {
+        OtpData data = otpStore.get(email);
+
+        if (data == null) return false;
+        if (LocalDateTime.now().isAfter(data.expiry)) {
+            otpStore.remove(email);
+            return false;
+        }
+
+        boolean isValid = data.otp.equals(userOtp);
+
+        if (isValid) {
+            otpStore.remove(email); // Remove after success
+        }
+
+        return isValid;
+    }
+*/
+
+
     /*
     String userEmail = "user@example.com";
 
