@@ -110,6 +110,7 @@ public class UserRegistService implements Serializable {
 						if (checkOTP != true) {
 							statusMessage = "Invalied OTP entered.";
 						} else {
+							
 
 							if (userPassword.equals(confirmPassword)) {
 
