@@ -58,7 +58,6 @@ public class BankAgentService implements Serializable {
         gdao=new GeneralDAOImpl();
    }
     public void save() {
-
         if (file != null) {
             try {
 
@@ -76,7 +75,7 @@ public class BankAgentService implements Serializable {
                 bankAgentModel.setIs_active(is_active);
                statusMessage = gdao.saveAgentRegist(bankAgentModel);
                     this.agentName = "";
-                    this.gender = "";
+                    this.gender = "Male";
                     this.bankName = "";
                     this.contactNo = "";
                     this.email = "";
@@ -90,6 +89,10 @@ public class BankAgentService implements Serializable {
         }
     }
 
+
+    public void clearMessage() {
+             statusMessage = "";
+    }
     public int getBankAgentId() {
         return bankAgentId;
     }
