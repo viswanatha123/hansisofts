@@ -12,17 +12,25 @@ import framework.utilities.Constants;
 import framework.utilities.UtilConstants;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+//import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.PrimeFaces;
 
 import com.DIC.DAO.Impl.GeneralDAOImpl;
 import org.primefaces.model.file.UploadedFile;
+import otp.OtpGenerator;
+import otp.OtpManager;
 
 
 @ManagedBean(name="userRegistService")
 @SessionScoped
+//@ViewScoped
+//@RequestScoped
 
 public class UserRegistService implements Serializable {
 	
@@ -48,10 +56,8 @@ public class UserRegistService implements Serializable {
 
 	private InputStream inputStream;
 	private UploadedFile file;
+	private String otp;
 
-
-
-	 
 	 public UserRegistService()
 	 {
 		 
@@ -80,9 +86,9 @@ public class UserRegistService implements Serializable {
 	   public void init()
 	      {
 	          log.info("Loading UserRegistService init()");
-	          
-	          gdao=new GeneralDAOImpl();
-	       
+	           gdao=new GeneralDAOImpl();
+			  //System.out.println("---------OTP---------> :"+OtpGenerator.generateOtp());
+
 	           
 	      }
 		      
@@ -95,54 +101,92 @@ public class UserRegistService implements Serializable {
 				if (valid) {
 					statusMessage = "User name already exists, Please try with different user name.";
 				} else {
-					if (userPassword.equals(confirmPassword)) {
+					if(otp.equals("") || otp==null)
+					{
+						statusMessage="OTP Required.";
+					} else {
 
-
-						UserDetails userDetails = new UserDetails();
-
-						userDetails.setfName(fName);
-						userDetails.setlName(lName);
-						userDetails.setUserName(userName.trim());
-						userDetails.setUserPassword(userPassword.trim());
-						userDetails.setAddress(address);
-						userDetails.setPhone(phone);
-						userDetails.setEmail(email);
-						userDetails.setInputStream(file.getInputStream());
-						userDetails.setFile(file);
-
-						int userId = gdao.saveUserRegist(userDetails, UtilConstants.BASIC_PACKAGE_LIST_LIMIT);
-
-						if (userId > 0) {
-
-
-							String body = "Hi " + fName + " " + lName + ",\n\n Congratulation...\n Your account has been created successfully.\n\n"
-									+ " Customer ID : " + userId + "\n User Name : " + userName + "\n First Name : " + fName + "\n Last Name : " + lName + "\n Contact Number : " + phone + " \n Email : " + email + " \n Address : " + address + " \n Date : " + LocalDate.now().toString() + ". \n\n\n Thank you\n HansiSoft Solutions..";
-
-							SMTPService.sendRegiEmail(email, Constants.SMTPServer.SUBJECT, body);
-
-							statusMessage = "Successful Registerd.";
-
-							this.fName = "";
-							this.lName = "";
-							this.userName = "";
-							this.userPassword = "";
-							this.address = "";
-							this.phone = "";
-							this.email = "";
-
+						boolean checkOTP = OtpManager.validateOtp(email, otp);
+						if (checkOTP != true) {
+							statusMessage = "Invalied OTP entered.";
 						} else {
-							statusMessage = "Error Occured, Please contact support..";
+
+
+							if (userPassword.equals(confirmPassword)) {
+
+
+								UserDetails userDetails = new UserDetails();
+
+								userDetails.setfName(fName);
+								userDetails.setlName(lName);
+								userDetails.setUserName(userName.trim());
+								userDetails.setUserPassword(userPassword.trim());
+								userDetails.setAddress(address);
+								userDetails.setPhone(phone);
+								userDetails.setEmail(email);
+								userDetails.setInputStream(file.getInputStream());
+								userDetails.setFile(file);
+
+								int userId = gdao.saveUserRegist(userDetails, UtilConstants.BASIC_PACKAGE_LIST_LIMIT);
+
+								if (userId > 0) {
+
+
+									String body = "Hi " + fName + " " + lName + ",\n\n Congratulation...\n Your account has been created successfully.\n\n"
+											+ " Customer ID : " + userId + "\n User Name : " + userName + "\n First Name : " + fName + "\n Last Name : " + lName + "\n Contact Number : " + phone + " \n Email : " + email + " \n Address : " + address + " \n Date : " + LocalDate.now().toString() + ". \n\n\n Thank you\n HansiSoft Solutions..";
+
+									SMTPService.sendRegiEmail(email, Constants.SMTPServer.SUBJECT, body);
+
+									statusMessage = "Successful Registerd.";
+
+									this.fName = "";
+									this.lName = "";
+									this.userName = "";
+									this.userPassword = "";
+									this.confirmPassword = "";
+									this.address = "";
+									this.phone = "";
+									this.email = "";
+									this.otp = "";
+
+								} else {
+									statusMessage = "Error Occured, Please contact support..";
+								}
+
+							} else {
+								statusMessage = "Both password fields must match . Please try again";
+							}
 						}
 
-					} else {
-						statusMessage = "Both password fields must match . Please try again";
 					}
-				}
+
+				} //
 
 			} catch (Exception e) {
 				System.out.println("Exception-File Upload." + e.getMessage());
 			}
 		}
+	}
+
+	public void otp() {
+
+		boolean valid = gdao.loginValidate(userName);
+		System.out.println("---------- User name----------> "+valid);
+		if (valid) {
+			statusMessage = "User name already exists, Please try with different user name.";
+		}
+		if (valid==false) {
+
+			String otp = OtpGenerator.generateOtp();
+			String OTPEmailBody = "Hi \n\n Congratulation...\n Your OTP " + otp + " \n\n" +
+					"Date : " + LocalDate.now().toString() + ". \n\n\n Thank you\n HansiSoft Solutions..";
+			log.info("---------OTP---------> :" + OtpGenerator.generateOtp());
+			OtpManager.storeOtp(email, otp);
+			SMTPService.sendOTP(email, Constants.SMTPServer.OTP, OTPEmailBody);
+			statusMessage = "OTP Generated.";
+
+		}
+
 	}
 
 	/*
@@ -279,5 +323,13 @@ public class UserRegistService implements Serializable {
 
 	public void setFile(UploadedFile file) {
 		this.file = file;
+	}
+
+	public String getOtp() {
+		return otp;
+	}
+
+	public void setOtp(String otp) {
+		this.otp = otp;
 	}
 }

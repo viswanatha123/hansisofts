@@ -602,4 +602,25 @@ public static void sendHomeLoanEmail(String subject, String body)
 
 	}
 
+	public static void sendOTP(String toEmail, String subject, String body) {
+		try {
+
+
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+			message.setSubject(subject);
+			message.setText(body);
+			Transport.send(message);
+
+			log.info("Email sent successfully!");
+
+
+		} catch (javax.mail.MessagingException e) {
+			log.error("Failed to send email: {}", e.getMessage(), e);
+			// Optionally: Notify users or take corrective action
+		} catch (Exception e) {
+			log.error("Unexpected error occurred: {}", e.getMessage(), e);
+			// Optionally: Notify users or take corrective action
+		}
+	}
+
 }
