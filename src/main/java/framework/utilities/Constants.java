@@ -14,6 +14,8 @@ public class  Constants {
     	public static final String PASSWORD="HansiSofts@1234";
     	public static final String FROMEMAIL="hansisoft.hr@hansisofts.com";
     	public static final String SUBJECT="HansiSoft Solutions,,. New Account created successfull..";
+
+		public static final String OTP="HansiSoft Solutions,,. OTP Generated";
     	/*
     	public static final String[] ADMIN_GROUP_EMAIL ={"viswanathareddy120@gmail.com"
     			,"sukumar.a@hansisofts.com"

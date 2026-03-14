@@ -4,9 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="76596275-ec1a-466b-8bd4-b7c29350986d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+=======
+
+    <list default="true" id="76596275-ec1a-466b-8bd4-b7c29350986d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/src/main/webapp/homeLoan.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/homeLoan.xhtml" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/DIC/Service/BankAgentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/DIC/Service/BankAgentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/bankAgent.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/bankAgent.xhtml" afterDir="false" />
+>>>>>>> 746253aca528fffc77e8650f4ccbea418a7fefea
+>>>>>>> 4996339b96235834c92d1758f13a5e2d32cf2093
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
