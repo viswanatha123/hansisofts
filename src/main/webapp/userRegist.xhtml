@@ -125,9 +125,12 @@
                                              process="@form"
                                              ajax="true"
                                              update="@form"
-                                             onstart="PF('spinnerDialog').show()"
-                                             oncomplete="PF('spinnerDialog').hide()" />
-
+                                             onclick="PF('spinnerDialog').show()">
+                                    <f:ajax execute="@form"
+                                    render="@form"
+                                    listener="#{userRegistService.clearMessage}"
+                                    immediate="true" />
+                            </p:commandButton>
                         </p:panelGrid>
                         <p:messages showDetail="true" />
 
@@ -142,6 +145,12 @@
                                          update="@form"
                                          resetValues="true"
                                          actionListener="#{userRegistService.save}" onclick="PF('spinnerDialog').show()" >
+
+                            <f:ajax execute="@form"
+                                    render="@form"
+                                    listener="#{userRegistService.clearMessage}"
+                                    immediate="true" />
+
                             <p:resetInput target="form"/>
                         </h:commandButton>
             	               
