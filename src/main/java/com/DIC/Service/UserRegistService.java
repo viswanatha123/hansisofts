@@ -189,6 +189,11 @@ public class UserRegistService implements Serializable {
 
 	}
 
+
+	public void clearMessage() {
+		statusMessage = "";
+	}
+
 	/*
 	public void clear()
 	{
