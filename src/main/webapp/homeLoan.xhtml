@@ -22,6 +22,7 @@
        </style>
 
    </h:head>
+
    <center>
        <font size="4" color="black" style="text-align: center;">Bank Agent Registration  </font>
    </center>
@@ -129,7 +130,7 @@
 			        <h:commandButton value="Submit"   type="submit" 
                     process="@this"
                     update="@form"
-                    actionListener="#{HomeLoanDataEntryService.upload}" >
+                    actionListener="#{HomeLoanDataEntryService.upload}" onclick="PF('spinnerDialog').show()" >
                     <p:resetInput target="form"/>
    </h:commandButton>
    
