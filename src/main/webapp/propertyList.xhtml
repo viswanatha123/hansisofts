@@ -20,9 +20,18 @@
   			<p:dataTable id="pro" widgetVar="dtProducts" var="product"   value="#{propertyListService.allPropertyListVal}" editable="true"  style="margin-bottom:20px" 
 				reflow="true" styleClass="products-table" selection="#{crudView.selectedProperty}"
                  rowKey="#{product.propId}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom" >
-						  
-												  
-			            
+
+				<p:column headerText="Property Id">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{product.propId}"/>
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText id="propid" value="#{product.propId}" style="width:100%"/>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				
 			              <p:column headerText="Property Name">
 			                <p:cellEditor>
 			                    <f:facet name="output">
