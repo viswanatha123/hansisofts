@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="76596275-ec1a-466b-8bd4-b7c29350986d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/resources/images/Agri_img.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/agriDataEntry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/agriDataEntry.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/indiSiteDataEntry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/indiSiteDataEntry.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/plotsDataEntry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/plotsDataEntry.xhtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/villaPlotDataentry.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/villaPlotDataentry.xhtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
