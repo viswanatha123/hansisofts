@@ -101,38 +101,30 @@ public class HomeLoanDataEntryService implements Serializable{
 							 "Date : " + LocalDate.now().toString()+" .";
 					 SMTPService.sendHomeLoanEmail(Constants.PropertyConstants.HOME_LOAN_SUBJECT,homeLoanBody);
 				 }
-	     	this.agentName="";
-	     	this.age=0;
-	     	this.gender="";
-	     	this.contactNo="";
-	     	this.email="";
-	     	this.loanAmt=0;
-	     	this.monthlyInc=0;
-	     	this.empType="";
-	     	
+				 this.agentName = "";
+				 this.contactNo = "";
 	     	
 	         } catch (Exception e) {
 	             System.out.println("Exception-File Upload." + e.getMessage());
 	         }
 	     }
-	     
-	 	  
-   public void clear()
-   {
+	public void clearMessage() {
+		updateResult = "";
+	}
 
-	     	this.agentName="";
-	     	this.age=0;
-	     	this.gender="";
-	     	this.contactNo="";
-	     	this.email="";
-	     	this.loanAmt=0;
-	     	this.monthlyInc=0;
-	     	this.empType="";
-	     	
-	     	
-	     	this.updateResult="";
-       System.out.println("****** Clicked on Clear button*****");
-   }
+	public void clear() {
+		this.agentName = "";
+		this.age = 0;
+		this.gender = "Male";
+		this.contactNo = "";
+		this.email = "";
+		this.loanAmt = 0;
+		this.monthlyInc = 0;
+		this.empType = "Salaried";
+		this.updateResult = "";
+		System.out.println("** Clicked on Clear button***");
+	}
+
         
        public String getAgentName() {
    		return agentName;
