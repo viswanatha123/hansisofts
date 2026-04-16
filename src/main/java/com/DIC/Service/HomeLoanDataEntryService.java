@@ -109,31 +109,29 @@ public class HomeLoanDataEntryService implements Serializable{
 	     	this.loanAmt=0;
 	     	this.monthlyInc=0;
 	     	this.empType="Salaried";
-	     	
-	     	
+     	
 	         } catch (Exception e) {
 	             System.out.println("Exception-File Upload." + e.getMessage());
 	         }
 	     }
-	     
-	 	  
-   public void clear()
-   {
+	public void clearMessage() {
+		updateResult = "";
+	}
 
-	     	this.agentName="";
-	     	this.age=0;
-	     	this.gender = "Male";
-	     	this.contactNo="";
-	     	this.email="";
-	     	this.loanAmt=0;
-	     	this.monthlyInc=0;
-	     	this.empType="Salaried";
-	     	
-	     	
-	     	this.updateResult="";
-       System.out.println("****** Clicked on Clear button*****");
-   }
-        
+	public void clear() {
+		this.agentName = "";
+		this.age = 0;
+		this.gender = "Male";
+		this.contactNo = "";
+		this.email = "";
+		this.loanAmt = 0;
+		this.monthlyInc = 0;
+		this.empType = "Salaried";
+		this.updateResult = "";
+		System.out.println("** Clicked on Clear button***");
+	}
+
+     
        public String getAgentName() {
    		return agentName;
    	}
