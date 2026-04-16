@@ -27,16 +27,21 @@
 
 		  		</p:panelGrid>
 
-		  <p:commandButton type="submit" value="Profile Refresh"
+		     <p:commandButton type="submit" value="Profile Refresh"
 							   process="@this"
 							   style="text-align: center; width: 200px; height: 40px; "
 							   actionListener="#{userProfileService.refresh}"
-							   onclick="PF('leadDialog').show()">
+							   onclick="PF('leadDialog').show()"
+							  disabled="#{userProfileService.defaultLastUpdateDate eq 'not found.'}">
 
 				  <p:resetInput target="userProfile"/>
 			  </p:commandButton>
-		      <h:outputText value="Last updated date #{userProfileService.defaultLastUpdateDate}" style="color: green;"/>
-
+		  <c:if test="#{userProfileService.defaultLastUpdateDate.equals('not found.')}">
+		      <h:outputText value="Properties are currently unavailable for refresh." style="color: red;"/>
+		  </c:if>
+		  <c:if test="#{userProfileService.defaultLastUpdateDate != null and userProfileService.defaultLastUpdateDate ne 'not found.'}">
+		     <h:outputText value="Last updated date #{userProfileService.defaultLastUpdateDate}" style="color: green;"/>
+		  </c:if>
 	  </h:panelGrid>
 
   <br></br>
