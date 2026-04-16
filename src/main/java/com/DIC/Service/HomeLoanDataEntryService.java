@@ -33,12 +33,12 @@ public class HomeLoanDataEntryService implements Serializable{
 	
 	private String agentName;
 	 private int age;
-	 private String gender;
+	private String gender = "Male";
 	 private String contactNo;
 	 private String email;
 	 private int loanAmt;
 	 private int monthlyInc;
-	 private String empType;
+	 private String empType="Salaried";
 	//private UploadedFile file;
 	 
 	 
@@ -101,9 +101,15 @@ public class HomeLoanDataEntryService implements Serializable{
 							 "Date : " + LocalDate.now().toString()+" .";
 					 SMTPService.sendHomeLoanEmail(Constants.PropertyConstants.HOME_LOAN_SUBJECT,homeLoanBody);
 				 }
-				 this.agentName = "";
-				 this.contactNo = "";
-	     	
+	     	this.agentName="";
+	     	this.age=0;
+	     	this.gender = "Male";
+	     	this.contactNo="";
+	     	this.email="";
+	     	this.loanAmt=0;
+	     	this.monthlyInc=0;
+	     	this.empType="Salaried";
+     	
 	         } catch (Exception e) {
 	             System.out.println("Exception-File Upload." + e.getMessage());
 	         }
@@ -125,7 +131,7 @@ public class HomeLoanDataEntryService implements Serializable{
 		System.out.println("** Clicked on Clear button***");
 	}
 
-        
+     
        public String getAgentName() {
    		return agentName;
    	}
