@@ -2044,8 +2044,9 @@ public class ConnectionDAOImpl {
 
 
 
-	public void uploadGalaryProp(List<InputStream> inputStreams, int userId, int layoutId, int propType)
+	public int uploadGalaryProp(List<InputStream> inputStreams, int userId, int layoutId, int propType)
 	{
+		int upload_stat_value=0;
 		System.out.println("Database upload Image size :"+inputStreams.size());
 
 		try {
@@ -2060,7 +2061,7 @@ public class ConnectionDAOImpl {
 				pstmtGalary.setInt(2, userId);
 				pstmtGalary.setInt(3, layoutId);
 				pstmtGalary.setInt(4, propType);
-				int x = pstmtGalary.executeUpdate();
+				upload_stat_value = pstmtGalary.executeUpdate();
 			}
 			con.close();
 			pstmtGalary.close();
@@ -2073,7 +2074,7 @@ public class ConnectionDAOImpl {
 			log.error("An error occurred: {}", e.getMessage());
 
 		}
-
+	return upload_stat_value;
 	}
  	    
  			
