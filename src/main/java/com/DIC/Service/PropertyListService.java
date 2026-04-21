@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import com.DIC.DAO.Impl.ConnectionDAOImpl;
@@ -35,6 +37,8 @@ public class PropertyListService {
 	private List<AllPropertyList> allPropertyListVal;
 	private AllPropertyList selectedProperty;
 	private UploadedFiles files;
+	private String statusMessage;
+
 
 
 	
@@ -73,6 +77,7 @@ public class PropertyListService {
     }
 
 	public void uploadGalaryProperty(FilesUploadEvent event) throws IOException {
+		statusMessage="";
 		List<InputStream> inputStreams = new ArrayList<>();
 		List<UploadedFile> files = new ArrayList<>();
 		for (UploadedFile f : event.getFiles().getFiles()) {
@@ -89,8 +94,14 @@ public class PropertyListService {
 		int propCode=getPropertyCode(selectedProperty.getPropType());
 		log.info("Property type code------> :"+propCode);
 
-		cDao.uploadGalaryProp(inputStreams,SessionUtils.getUserId(),selectedProperty.getPropId(),getPropertyCode(selectedProperty.getPropType()));
-
+		int upload_stat_val=cDao.uploadGalaryProp(inputStreams,SessionUtils.getUserId(),selectedProperty.getPropId(),getPropertyCode(selectedProperty.getPropType()));
+		log.info("state code------> :"+upload_stat_val);
+		if (upload_stat_val > 0) {
+			statusMessage = "Images uploaded successfully.";
+		} else {
+			statusMessage = "An error occurred. Please contact the support team";
+		}
+		log.info("state message------> :"+statusMessage);
 	}
 
 
@@ -137,5 +148,13 @@ public class PropertyListService {
 
 	public void setFiles(UploadedFiles files) {
 		this.files = files;
+	}
+
+	public String getStatusMessage() {
+		return statusMessage;
+	}
+
+	public void setStatusMessage(String statusMessage) {
+		this.statusMessage = statusMessage;
 	}
 }
