@@ -106,12 +106,6 @@
                         <p:inputMask id="contactNo"  mask="9999999999" required="true"  maxlength="10" value="#{userRegistService.phone}" >
                     </p:inputMask>
                     <p:message for="contactNo" display="icon"/>
-                    
-                    <p:outputLabel style="font-weight: bold;width:210px;" value="Profile Upload (JPG,PNG,JPEG) : "   />
-                    <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
-                    <p:fileUpload id="image" value="#{userRegistService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  required="true" requiredMessage="Upload Image" />
-                    </p:panelGrid>
-                    <p:message for="image" display="icon"/>
 
                                     <p:outputLabel indicateRequired="false" style="font-weight: bold; font-size: 14px;color:black; text-align:left;" required="true">
                                             Email : <span style="color: red; font-weight: bold;">*</span></p:outputLabel>
@@ -124,7 +118,7 @@
                                              action="#{userRegistService.otp}"
                                              process="@form"
                                              ajax="true"
-                                             update="@form"
+                                             update="@form fileSection"
                                              onclick="PF('spinnerDialog').show()">
                                     <f:ajax execute="@form"
                                     render="@form"
@@ -140,7 +134,15 @@
                         </p:inputMask>
                         <p:message for="otp" display="icon"/>
 
-                        <h:commandButton value="Submit"   type="submit"
+                        <p:outputLabel style="font-weight: bold;width:210px;" value="Profile Upload (JPG,PNG,JPEG) : "   />
+                        <p:panelGrid columns="1" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
+                            <h:panelGroup id="fileSection">
+                                <p:fileUpload id="image" value="#{userRegistService.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"  required="true" requiredMessage="Upload Image" />
+                            </h:panelGroup>
+                        </p:panelGrid>
+                        <p:message for="image" display="icon"/>
+
+                       <h:commandButton value="Submit"   type="submit"
                                          process="@this"
                                          update="@form"
                                          resetValues="true"
