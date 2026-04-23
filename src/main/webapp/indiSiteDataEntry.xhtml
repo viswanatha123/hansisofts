@@ -200,6 +200,10 @@
                                                      process="@this"
                                                      update="@form"
                                                      actionListener="#{indiSiteDataEntryService.upload}" onclick="PF('spinnerDialog').show()">
+                                        <f:ajax execute="@form"
+                                                render="@form"
+                                                listener="#{indiSiteDataEntryService.clearMessage}"
+                                                immediate="true" />
                                         <p:resetInput target="form"/>
                                     </h:commandButton>
 

@@ -231,26 +231,30 @@ public class IndiSiteDataEntryService implements Serializable {
 		}
 	}
 
-      public void clear()
-      {
-    	  this.ownerName="";
-          this.location="";
-          this.contactNo="";
-          this.siteNo="";
-          this.persqft=0;
-          this.length=0;
-          this.width=0;
-          this.wonership="";
-          this.ownerName="";
-          this.transaction="";
-          this.agentName="";
-          this.updateResult="";
-          this.comment="";
-          this.facing="";
-          this.country="";
-	      this.city="";
-          System.out.println("****** Clicked on Clear button*****");
+	public void clearMessage() {
+		updateResult = "";
       }
+
+	public void clear()
+	{
+		this.ownerName="";
+		this.location="";
+		this.contactNo="";
+		this.siteNo="";
+		this.persqft=0;
+		this.length=0;
+		this.width=0;
+		this.wonership="";
+		this.ownerName="";
+		this.transaction="";
+		this.agentName="";
+		this.updateResult="";
+		this.comment="";
+		this.facing="";
+		this.country="";
+		this.city="";
+		System.out.println("** Clicked on Clear button***");
+	}
 
         public UploadedFile getFile() {
 	  		return file;
