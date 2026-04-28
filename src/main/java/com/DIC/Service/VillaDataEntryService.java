@@ -268,7 +268,9 @@ public class VillaDataEntryService implements Serializable{
        }
        	
   }
- 
+	public void clearMessage() {
+		updateResult = "";
+	}
    
    public void clear()
    {

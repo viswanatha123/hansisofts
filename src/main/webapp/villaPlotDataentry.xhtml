@@ -252,6 +252,10 @@
                                     process="@this"
                                     update="@form"
                                     actionListener="#{villaDataEntryService.upload}" onclick="PF('spinnerDialog').show()">
+                       <f:ajax execute="@form"
+                               render="@form"
+                               listener="#{villaDataEntryService.clearMessage}"
+                               immediate="true" />
                                     <p:resetInput target="form"/>
                    </h:commandButton>
                    

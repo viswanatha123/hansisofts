@@ -239,7 +239,10 @@ public class AgriculturalDataEntryhService implements Serializable {
 					  Collections.sort(secondryLocation);
 		       }
 	        
-          }  
+          }
+	public void clearMessage() {
+		updateResult = "";
+	}
 
       public void clear()
       {
