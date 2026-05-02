@@ -255,7 +255,10 @@ public class PlotsDataEntryService implements Serializable{
 	          }
 	          	
 	     }
-	    
+
+	public void clearMessage() {
+		updateResult = "";
+	}
 	      
 	      public void clear()
 	      {

@@ -230,7 +230,11 @@ This section is used to manage and list layout properties for sale." />
                                     process="@this"
                                     update="@form"
                                     actionListener="#{plotsDataEntryService.upload}" onclick="PF('spinnerDialog').show()">
-                                    <p:resetInput target="form"/>
+                       <f:ajax execute="@form"
+                               render="@form"
+                               listener="#{plotsDataEntryService.clearMessage}"
+                               immediate="true" />
+                       <p:resetInput target="form"/>
                    </h:commandButton>
 
                    <h:commandButton style="font-weight: normal; font-size: 14px;color: block;" id="discardChangesButton"
