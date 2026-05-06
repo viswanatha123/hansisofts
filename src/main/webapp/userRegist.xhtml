@@ -120,9 +120,7 @@
                                              ajax="true"
                                              update="@form fileSection"
                                              onclick="PF('spinnerDialog').show()">
-                                    <f:ajax execute="@form"
-                                    render="@form"
-                                    listener="#{userRegistService.clearMessage}"
+                                    <f:ajax listener="#{userRegistService.clearMessage}"
                                     immediate="true" />
                             </p:commandButton>
                         </p:panelGrid>
