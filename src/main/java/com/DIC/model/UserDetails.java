@@ -32,6 +32,7 @@ public class UserDetails implements Serializable {
 	private InputStream inputStream;
 	private UploadedFile file;
 
+
 	public String getUserPassword() {
 		return userPassword;
 	}
@@ -205,4 +206,5 @@ public class UserDetails implements Serializable {
 	public void setFile(UploadedFile file) {
 		this.file = file;
 	}
+
 }

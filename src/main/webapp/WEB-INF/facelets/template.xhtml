@@ -59,21 +59,24 @@
           					   
           					  			  <h:form>
 	          					  			  <c:if test="#{userLoginService.userId!=0}">
-	          					  			
-	          					  
-													<p:megaMenu orientation="vertical" autoDisplay="false" style="background-color: #151B54">
-													            <p:submenu label="Welcome  :  #{userLoginService.disName}" icon="pi pi-user">
-													                <p:column>
-													                    <p:submenu label="#{userLoginService.fullName}">
-													                        <p:menuitem value="Profile" outcome="userProfile"/>
-													                        <p:menuitem value="Logout" action="#{userLoginService.logout}"/>
-													                       
-													                    </p:submenu>
-													                </p:column>
-													            </p:submenu>
-													         
-													 </p:megaMenu>
-			                    		     
+												  <p:panelGrid columns="2" >
+
+												  <p:megaMenu orientation="vertical" autoDisplay="false" style="background-color: #151B54">
+													    <p:submenu label="Welcome  :  #{userLoginService.disName}" icon="pi pi-user">
+														  <p:column>
+															  <p:submenu label="#{userLoginService.fullName}">
+																  <p:menuitem value="Profile" outcome="userProfile"/>
+																  <p:menuitem value="Logout" action="#{userLoginService.logout}"/>
+
+															  </p:submenu>
+														  </p:column>
+													  </p:submenu>
+
+												  </p:megaMenu>
+
+													  <p:graphicImage width="30" height="30"  cache="false" stream="false"  style="border-radius: 50%; object-fit: cover;" value="#{userProfileService.userDetails.streamedContent}" alt="Image" />
+
+												  </p:panelGrid>
 			                    		     </c:if>
 			                    		      
 		                    		      </h:form>
