@@ -30,6 +30,7 @@ import com.DIC.model.UserDetails;
 import com.DIC.model.UserProfileRoleModel;
 
 import framework.utilities.SessionUtils;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.file.UploadedFile;
 
 @ManagedBean(name="userProfileService")
@@ -59,6 +60,8 @@ public class UserProfileService {
   	 private int disLeadFlag=0;
 
 	private UploadedFile file;
+
+
 
 	 @PostConstruct
 	    public void init()
@@ -251,4 +254,6 @@ public class UserProfileService {
 	public void setFile(UploadedFile file) {
 		this.file = file;
 	}
+
+
 }

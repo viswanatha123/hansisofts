@@ -10,7 +10,11 @@
       <ui:composition template="/WEB-INF/facelets/template.xhtml">
          <ui:define name="title">
             <div class="card">
-               <h:form id="form">
+               <h:form id="form" >
+                  <ui:include src="/WEB-INF/facelets/spinner.xhtml">
+                     <ui:param name="spinnerTarget" value="form1"/>
+                     <ui:param name="spinnerTrigger" value="form1"/>
+                  </ui:include>
                   <br></br>  <br></br>
                   <font size="3" color="black" > User Login  </font><br></br>
                   <p:outputLabel style="font-weight:100 ;font-size: 16px;color:black;"  value="Create account free, if you have already account, Please login and post your
@@ -40,8 +44,9 @@
                            <p:outputLabel style="font-weight: bold" value="Password: " />
                            <p:password id="password"  value="#{userLoginService.password}"   required="true" requiredMessage="Password is required">
                            </p:password>
-                           <h:commandButton value="Submit" action="#{userLoginService.userLoingAction}" >
-                           </h:commandButton>
+                           <p:commandButton value="Submit" action="#{userLoginService.userLoingAction}"  onclick="PF('spinnerDialog').show()" >
+
+                           </p:commandButton>
                            <p:commandButton value="Reset" update="panel1" process="@this"
                               action="#{serLoginService.reset}"
                               styleClass="mr-2 ui-button-outlined"/>

@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -24,7 +25,7 @@ import SMTPService.SMTPService;
 import framework.EventHandler;
 import framework.utilities.DurationValidation;
 import framework.utilities.SessionUtils;
-
+import org.primefaces.model.StreamedContent;
 
 
 @ManagedBean(name="userLoginService")
@@ -45,9 +46,8 @@ public class UserLoginService implements Serializable{
 	    private String disName;
 	    private String fullName;
 	    private long remainDays;
-	    
-	    
-	    
+ 	    private UserDetails userDetails;
+
 	    
 	    
 	    GeneralDAOImpl gDao;
@@ -181,9 +181,8 @@ public class UserLoginService implements Serializable{
 	    		log.error("=============================Error=============================");
 	    		log.info("=============================info=============================");
 	    		
-				HttpSession session = SessionUtils.getSession();
-				
-				UserDetails userDetails=gDao.getUserDeta(userName, password);
+
+				userDetails=gDao.getUserDeta(userName, password);
 				System.out.println("User Details"+userDetails.getUserId()+"    "+userDetails.getUserName()+"    "+userDetails.getCreate_date());
 				
 				PackageModel packageModel=uDao.getPackageDetails(userDetails.getUserId());
@@ -209,6 +208,7 @@ public class UserLoginService implements Serializable{
 				disName=SessionUtils.getUserDisName();
 				fullName=SessionUtils.getUserFullName();
 				userId=SessionUtils.getUserId();
+
 				this.message="Welcome to HansiSoft Solutions";
 				System.out.println("******** Successful logged in  **********");
 				pageName= "index";
@@ -250,8 +250,14 @@ public class UserLoginService implements Serializable{
 		public void setRemainDays(long remainDays) {
 			this.remainDays = remainDays;
 		}
-		
-		
-		
+
+	public UserDetails getUserDetails() {
+		return userDetails;
+	}
+
+	public void setUserDetails(UserDetails userDetails) {
+		this.userDetails = userDetails;
+	}
+
 
 }

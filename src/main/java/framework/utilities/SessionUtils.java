@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import com.DIC.model.PackageModel;
 import com.DIC.model.UserDetails;
+import org.primefaces.model.StreamedContent;
 
 public class SessionUtils {
 	
@@ -52,6 +53,15 @@ public class SessionUtils {
 			return null;
 	}
 
+	public static StreamedContent getStream()
+	{
+		HttpSession session = getSession();
+		if (session != null)
+			return (StreamedContent) session.getAttribute("userPhotho");
+		else
+			return null;
+	}
+
 	
 	
 	
@@ -73,9 +83,7 @@ public class SessionUtils {
 						session.setAttribute("listLimit",packageModel.getListLimit());
 						session.setAttribute("isEnable",packageModel.getIsEnable());
 						session.setAttribute("remainDays",remainDays);
-						
-						
-						
+
 						
 					}
 					

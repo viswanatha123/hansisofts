@@ -321,11 +321,8 @@ public class UserDAOImpl {
 				userDetails.setCreate_date(rs.getDate("create_date"));
 				userDetails.setIs_active(rs.getInt("is_active"));
 				userDetails.setEmail(rs.getString("email"));
-				
-
 				InputStream imageStream = rs.getBinaryStream("image");
-				if (rs.getBytes("image").length!=0)  {
-
+				if (rs.getBytes("image").length!=0) {
 
 					BufferedInputStream bufferedStream = new BufferedInputStream(imageStream);
 
@@ -334,6 +331,10 @@ public class UserDAOImpl {
 							.contentType("image/jpg")
 							.stream(() -> bufferedStream) // Stream the content directly
 							.build());
+
+
+
+
 				}
 				else
 				{
