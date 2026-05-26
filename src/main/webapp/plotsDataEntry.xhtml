@@ -30,6 +30,9 @@
           <h:outputText style="font-weight: normal; font-size: 14px;color: #555;" value=" Enter complete details of the layout including cost per square foot, agent and owner information.
 This section is used to manage and list layout properties for sale." />
       </p>
+      <style>
+
+      </style>
 
 	   <div class="plotDataEntry" jsf:rendered="#{plotsDataEntryService.isEnable eq false and plotsDataEntryService.listedCount eq 0}">
 
@@ -68,39 +71,101 @@ This section is used to manage and list layout properties for sale." />
                 	<p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
 
 
-                    <p:outputLabel required="true" style="font-weight: normal; font-size: 14px;color: block;" for="name" indicateRequired="false" >
-                        Layout Name : <span style="color: red; font-weight: bold;">*</span></p:outputLabel>
+                        <p:outputLabel for="name"
+                                       style="font-weight: normal; font-size: 14px;color: block;"
+                                       styleClass="form-label"
+                                       indicateRequired="false">
 
-                    <p:inputText id="name" value="#{plotsDataEntryService.name}" required="true" requiredMessage="Required Layout Name">
-                    </p:inputText>
-                    <p:message for="name" display="icon"/>
+                            Layout Name
+                            <span style="color:red;">*</span>
+
+                        </p:outputLabel>
+
+                        <p:inputText id="name"
+                                     value="#{plotsDataEntryService.name}"
+                                     required="true"
+                                     requiredMessage="Please enter Layout Name"
+                                     styleClass="modern-input"/>
+
+                        <p:message for="name"
+                                   display="icon"
+                                   styleClass="modern-error"/>
 
                     <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" value="Address : " />
                     <p:inputText id="location"  value="#{plotsDataEntryService.location}" >
                     </p:inputText>
                     <p:message for="location" display="icon"/>
 
-                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="persqft" indicateRequired="false" required="true" >
-                        Per Square Feet(Cost) : <span style="color: red; font-weight: bold;">*</span></p:outputLabel>
-                    <p:inputNumber id="persqft"  value="#{plotsDataEntryService.persqft}" required="true" requiredMessage="Required Length"  modifyValueOnWheel="false" >
-                   </p:inputNumber>
-                    <p:message for="persqft" display="icon"/>
+                        <p:outputLabel for="persqft"
+                                       style="font-weight: normal; font-size: 14px;color: block;"
+                                       styleClass="form-label"
+                                       indicateRequired="false">
+
+                            Per Square Feet(Cost)
+                            <span style="color:red;">*</span>
+
+                        </p:outputLabel>
+
+                        <p:inputNumber id="persqft"
+                                       value="#{plotsDataEntryService.persqft}"
+                                       required="true"
+                                       requiredMessage="Please enter Per Square Feet Cost"
+                                       modifyValueOnWheel="false"
+                                       styleClass="modern-input">
+                        </p:inputNumber>
+
+                        <p:message for="persqft"
+                                   display="icon"
+                                   styleClass="modern-error"/>
 
 
-                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="agentName" indicateRequired="false" >
-                        Agent Name :<span style="color: red; font-weight: bold;">*</span></p:outputLabel>
-                    <p:inputText id="agentName"  required="true" value="#{plotsDataEntryService.agentName}" >
-                    </p:inputText>
-                    <p:message for="agentName" display="icon"/>
+                        <p:outputLabel for="agentName"
+                                       style="font-weight: normal; font-size: 14px;color: block;"
+                                       styleClass="form-label"
+                                       indicateRequired="false">
+
+                            Agent Name
+                            <span style="color:red;">*</span>
+
+                        </p:outputLabel>
+
+                        <p:inputText id="agentName"
+                                     value="#{plotsDataEntryService.agentName}"
+                                     required="true"
+                                     requiredMessage="Please enter Agent Name"
+                                     styleClass="modern-input">
+
+                        </p:inputText>
+
+                        <p:message for="agentName"
+                                   display="icon"
+                                   styleClass="modern-error"/>
 
 
-                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="contactOwner" indicateRequired="false" >
-                        Agent Contact No :<span style="color: red; font-weight: bold;">*</span></p:outputLabel>
-                        <p:inputMask id="contactOwner"  mask="9999999999" required="true"  maxlength="10" value="#{plotsDataEntryService.contactOwner}" >
+                        <p:outputLabel for="contactOwner"
+                                       style="font-weight: normal; font-size: 14px;color: block;"
+                                       styleClass="form-label"
+                                       indicateRequired="false">
 
-                    </p:inputMask>
-                    <p:message for="contactOwner" display="icon"/>
+                            Agent Contact No
+                            <span style="color:red;">*</span>
 
+                        </p:outputLabel>
+
+                        <p:inputMask id="contactOwner"
+                                     mask="9999999999"
+                                     maxlength="10"
+                                     value="#{plotsDataEntryService.contactOwner}"
+                                     required="true"
+                                     requiredMessage="Please enter Agent Contact Number"
+                                     styleClass="modern-input">
+
+                        </p:inputMask>
+
+                        <p:message for="contactOwner"
+                                   style="font-weight: normal; font-size: 14px;color: block;"
+                                   display="icon"
+                                   styleClass="modern-error"/>
 
                     <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" value="Owner Name : " />
                     <p:inputText id="ownerName"  value="#{plotsDataEntryService.ownerName}" >
@@ -108,12 +173,37 @@ This section is used to manage and list layout properties for sale." />
                     <p:message for="ownerName" display="icon"/>
 
 
-                   <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="wonership" value="Owner Ship : " />
-                            <p:selectOneMenu id="wonership" value="#{plotsDataEntryService.wonership}" requiredMessage="Woner Ship" style="width:150px">
-                                <f:selectItem itemLabel="Freehold" itemValue="Freehold"/>
-                                <f:selectItem itemLabel="Buying" itemValue="Buying"/>
-                            </p:selectOneMenu>
-                            <p:message for="wonership" display="icon"/>
+                        <p:outputLabel for="wonership"
+                                       style="font-weight: normal; font-size: 14px;color: block;"
+                                       styleClass="form-label"
+                                       indicateRequired="false">
+
+                            Owner Ship
+                            <span style="color:red;">*</span>
+
+                        </p:outputLabel>
+
+                        <p:selectOneMenu id="wonership"
+                                         value="#{plotsDataEntryService.wonership}"
+                                         required="true"
+                                         requiredMessage="Please select Owner Ship"
+                                         style="width:150px">
+
+                            <f:selectItem itemLabel="Select Owner Ship"
+                                          itemValue=""
+                                          noSelectionOption="true"/>
+
+                            <f:selectItem itemLabel="Freehold"
+                                          itemValue="Freehold"/>
+
+                            <f:selectItem itemLabel="Buying"
+                                          itemValue="Buying"/>
+
+                        </p:selectOneMenu>
+
+                        <p:message for="wonership"
+                                   display="icon"
+                                   styleClass="modern-error"/>
 
 
 
@@ -130,35 +220,113 @@ This section is used to manage and list layout properties for sale." />
                     </p:inputTextarea>
                     <p:message for="comment" display="icon"/>
 
-                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="length" indicateRequired="false" >
-                        Length (Feets)  :<span style="color: red; font-weight: bold;">*</span></p:outputLabel>
-                    <p:inputNumber id="length" value="#{plotsDataEntryService.length}" required="true" requiredMessage="Required Length"  decimalPlaces="0" modifyValueOnWheel="false">
-                    </p:inputNumber>
-                    <p:message for="length" display="icon"/>
+                        <p:outputLabel for="length"
+                                       style="font-weight: normal; font-size: 14px;color: block;"
+                                       styleClass="form-label"
+                                       indicateRequired="false">
+
+                            Length (Feets)
+                            <span style="color:red;">*</span>
+
+                        </p:outputLabel>
+
+                        <p:inputNumber id="length"
+                                       value="#{plotsDataEntryService.length}"
+                                       required="true"
+                                       requiredMessage="Please enter Length"
+                                       decimalPlaces="0"
+                                       modifyValueOnWheel="false"
+                                       styleClass="modern-input">
+
+                        </p:inputNumber>
+
+                        <p:message for="length"
+                                   display="icon"
+                                   styleClass="modern-error"/>
 
 
-                    <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="width" indicateRequired="false" >
-                        Width (Feets)  :   <span style="color: red; font-weight: bold;">*</span></p:outputLabel>
-                    <p:inputNumber id="width" value="#{plotsDataEntryService.width}" required="true" requiredMessage="Required Width"  decimalPlaces="0" modifyValueOnWheel="false">
-                    </p:inputNumber>
-                    <p:message for="width" display="icon"/>
+                        <p:outputLabel for="width"
+                                       style="font-weight: normal; font-size: 14px;color: block;"
+                                       styleClass="form-label"
+                                       indicateRequired="false">
 
-                     <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="country" indicateRequired="false">
-                        Primary Location :<span style="color: red; font-weight: bold;" >*</span></p:outputLabel>
-                            <p:selectOneMenu id="country" value="#{plotsDataEntryService.country}" style="width:150px" required="true" requiredMessage="Select Primary Location">
-                            <p:ajax listener="#{plotsDataEntryService.onCountryChange}" update="city" />
-                            <f:selectItem itemLabel="Primary Location" itemValue="" noSelectionOption="true"/>
+                            Width (Feets)
+                            <span style="color:red;">*</span>
+
+                        </p:outputLabel>
+
+                        <p:inputNumber id="width"
+                                       value="#{plotsDataEntryService.width}"
+                                       required="true"
+                                       requiredMessage="Please enter Width"
+                                       decimalPlaces="0"
+                                       modifyValueOnWheel="false"
+                                       styleClass="modern-input">
+
+                        </p:inputNumber>
+
+                        <p:message for="width"
+                                   display="icon"
+                                   styleClass="modern-error"/>
+
+                        <p:outputLabel for="country"
+                                       style="font-weight: normal; font-size: 14px;color: block;" 
+                                       styleClass="form-label"
+                                       indicateRequired="false">
+
+                            Primary Location
+                            <span style="color:red;">*</span>
+
+                        </p:outputLabel>
+
+                        <p:selectOneMenu id="country"
+                                         value="#{plotsDataEntryService.country}"
+                                         style="width:150px"
+                                         required="true"
+                                         requiredMessage="Please select Primary Location">
+
+                            <p:ajax listener="#{plotsDataEntryService.onCountryChange}"
+                                    update="city" />
+
+                            <f:selectItem itemLabel="Select Primary Location"
+                                          itemValue=""
+                                          noSelectionOption="true"/>
+
                             <f:selectItems value="#{plotsDataEntryService.primLocationSort}" />
-                            </p:selectOneMenu>
-                            <p:message for="country" display="icon"/>
 
-                      <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="city" indicateRequired="false">
-                        Secondary Location :<span style="color: red; font-weight: bold;">*</span></p:outputLabel>
-                            <p:selectOneMenu id="city" value="#{plotsDataEntryService.city}" style="width:150px" required="true" requiredMessage="Select Secondary Location">
-                            <f:selectItem itemLabel="Secondary Location" itemValue="" noSelectionOption="true" />
+                        </p:selectOneMenu>
+
+                        <p:message for="country"
+                                   display="icon"
+                                   styleClass="modern-error"/>
+
+                        <p:outputLabel for="city"
+                                       style="font-weight: normal; font-size: 14px;color: block;"
+                                       styleClass="form-label"
+                                       indicateRequired="false">
+
+                            Secondary Location
+                            <span style="color:red;">*</span>
+
+                        </p:outputLabel>
+
+                        <p:selectOneMenu id="city"
+                                         value="#{plotsDataEntryService.city}"
+                                         style="width:150px"
+                                         required="true"
+                                         requiredMessage="Please select Secondary Location">
+
+                            <f:selectItem itemLabel="Select Secondary Location"
+                                          itemValue=""
+                                          noSelectionOption="true"/>
+
                             <f:selectItems value="#{plotsDataEntryService.secondryLocation}" />
-                            </p:selectOneMenu>
-                            <p:message for="city" display="icon"/>
+
+                        </p:selectOneMenu>
+
+                        <p:message for="city"
+                                   display="icon"
+                                   styleClass="modern-error"/>
 
                       <p:outputLabel style="font-weight: normal; font-size: 14px;color: block;" for="swimingPool" value="Swimming Pool : " />
                             <p:selectOneMenu id="swimingPool" value="#{plotsDataEntryService.swimingPool}" style="width:150px">
