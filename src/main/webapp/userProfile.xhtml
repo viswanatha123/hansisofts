@@ -187,8 +187,7 @@
 				</p:dataTable>
 			  </h:panelGrid>
             </p:tab>
-    
-	          
+
 		           <p:tab title="Leads" >
 		           		<ui:include src="leads.xhtml"/>
 		           
@@ -197,19 +196,14 @@
 		           		<ui:include src="propertyList.xhtml"/>
 		           
 		           </p:tab>
-           
-        </p:tabView>
+          </p:tabView>
     </div>
-
 	  <p:dialog header="Refreshed Successful.." widgetVar="leadDialog" minHeight="200" width="300" showEffect="fade">
 		  <h:commandButton value="    Ok   "   type="submit"  process="@this" update="@form1"  onclick="PF('spinnerDialog').show()">
 
 		  </h:commandButton>
 	  </p:dialog>
-  
-  
-  
-<script type="text/javascript" src="resources/js/chatool.js"></script>
+ <script type="text/javascript" src="resources/js/chatool.js"></script>
   </h:form>
   </ui:define>
   </ui:composition>
