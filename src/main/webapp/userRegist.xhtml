@@ -112,7 +112,7 @@
                         <p:panelGrid columns="3" styleClass="noBorder" style="top : 0;left : 0; padding : 0; bottom : 0">
 
                                         <p:inputText id="email"  size="15" value="#{userRegistService.email}" required="true" validatorMessage="Invalid email format">
-                                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                            <f:validateRegex pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$" />
                                         </p:inputText>
                             <p:commandButton value="Generate OTP"
                                              action="#{userRegistService.otp}"
